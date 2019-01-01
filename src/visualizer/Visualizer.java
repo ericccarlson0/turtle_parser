@@ -450,8 +450,8 @@ public class Visualizer {
         Pane holderPane = new Pane(holder);
         holder.prefHeightProperty().bind(holderPane.heightProperty());
         holder.setPadding(MARGINS);
-        commandsPage = new Page();
-        variablesPage = new Page();
+        commandsPage = new Page("to", userInputTextArea);
+        variablesPage = new Page("set", userInputTextArea);
         initializeSummaryBox();
 
         envColorChoice = new ColorChoice("□", MAX_RGB, MAX_RGB, MAX_RGB);
