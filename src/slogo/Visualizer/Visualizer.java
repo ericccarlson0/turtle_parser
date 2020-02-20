@@ -1,5 +1,7 @@
 package slogo.Visualizer;
 // myButton.disableProperty().bind(myMode.getProperty(BrowserProperty.NEXT))
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import slogo.Visualizer.Turtle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -27,11 +29,11 @@ import java.util.ArrayList;
 public class Visualizer {
     private final int SPLASH_SIZE_HEIGHT = 700;
     private final int SPLASH_SIZE_WIDTH = 1300;
-    private final Color SPLASH_BACKGROUND = Color.WHITE;
+    private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
 
     private final int ENVIRONMENT_SIZE_HEIGHT = 700;
     private final int ENVIRONMENT_SIZE_WIDTH = 1300;
-    private final Color ENVIRONMENT_BACKGROUND = Color.WHITE;
+    private final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
 
     private final int FIELD_CENTER_X = 350;
     private final int FIELD_CENTER_Y = 350;
@@ -54,6 +56,11 @@ public class Visualizer {
     private ScrollPane inputScrollPane;
     private ScrollPane executedScrollPane;
     private ScrollPane commandScrollPane;
+
+    private Text userInputText;
+    private ScrollPane userInputScrollPane;
+    private TextField userInputTextField;
+    private Button inputButton;
 
     /**
      * Visualizer() - constructor for the visualizer.
@@ -169,15 +176,37 @@ public class Visualizer {
         myGroup.getChildren().add(initialTurtle);
 
         // create input scroll pane
-        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT, (ENVIRONMENT_SIZE_HEIGHT/7)/4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
+        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT/7)/4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
         myGroup.getChildren().add(inputScrollPane);
 
         // create executed scroll pane
-        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275, (ENVIRONMENT_SIZE_HEIGHT/7)/4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
+        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + 50, (ENVIRONMENT_SIZE_HEIGHT/7)/4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
         myGroup.getChildren().add(executedScrollPane);
 
         // create input text field
+        userInputText = new Text("Terminal");
+        userInputTextField = new TextField("");
+        userInputTextField.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER){
+                String x = userInputTextField.getText();
+                inputHistory.setText(inputHistory.getText() + '\n' + x);
+                userInputTextField.clear();
+            }
+        });
+        userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + 50);
+        userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT/7)*6 + 50);
 
+        //VBox c = new VBox();
+        //c.getChildren().add(userInputText);
+        //c.getChildren().add(userInputTextField);
+        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT/7)*4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
+        myGroup.getChildren().add(userInputScrollPane);
+        myGroup.getChildren().add(userInputTextField);
+
+        // create buttons
+        Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT/7)/4 + (ENVIRONMENT_SIZE_HEIGHT/7)*3, myGroup);
+        Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + 150, (ENVIRONMENT_SIZE_HEIGHT/7)/4 + (ENVIRONMENT_SIZE_HEIGHT/7)*3, myGroup);
+        Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + 250, (ENVIRONMENT_SIZE_HEIGHT/7)/4 + (ENVIRONMENT_SIZE_HEIGHT/7)*3, myGroup);
 
         return new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
     }
@@ -191,7 +220,7 @@ public class Visualizer {
         return myButton;
     }
 
-    private ScrollPane makeScrollPane(Text text, int x, int y, ScrollPane.ScrollBarPolicy hbar, ScrollPane.ScrollBarPolicy vbar, boolean fitHeight, boolean fitWidth, int width, int height) {
+    private ScrollPane makeScrollPane(javafx.scene.Node text, int x, int y, ScrollPane.ScrollBarPolicy hbar, ScrollPane.ScrollBarPolicy vbar, boolean fitHeight, boolean fitWidth, int width, int height) {
         ScrollPane scrollPane = new ScrollPane(text);
         scrollPane.setLayoutX(x);
         scrollPane.setLayoutY(y);
