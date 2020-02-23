@@ -1,4 +1,4 @@
-package ParserModel;
+package parser_model;
 
 //To be implemented, just here so that the Java compiler doesn't complain
 public interface Action {

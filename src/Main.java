@@ -1,5 +1,3 @@
-package slogo;
-
 /**
  * Feel free to completely change this code or delete it entirely. 
  */

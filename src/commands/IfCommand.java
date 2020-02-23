@@ -1,4 +1,4 @@
-package slogo;
+package commands;
 
 import java.util.List;
 
@@ -13,16 +13,16 @@ public class IfCommand extends Command {
   }
 
   public int doCommand() {
-    int ret = 0;
-    int condReturn = 0;
-    for (Command cond : conditions) {
-      condReturn = cond.doCommand();
+    int commandReturn = 0;
+    int conditionReturn = 0;
+    for (Command condition : conditions) {
+      conditionReturn = condition.doCommand();
     }
-    if (condReturn == 0) {
-      for (Command comm : commands) {
-        ret = comm.doCommand();
+    if (conditionReturn == 0) {
+      for (Command c : commands) {
+        commandReturn = c.doCommand();
       }
     }
-    return ret;
+    return commandReturn;
   }
 }

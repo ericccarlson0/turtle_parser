@@ -1,4 +1,4 @@
-package slogo;
+package commands;
 
 public abstract class Command {
   enum CommandType {
