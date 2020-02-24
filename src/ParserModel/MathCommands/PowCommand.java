@@ -1,6 +1,8 @@
 package ParserModel.MathCommands;
 
-public class PowCommand extends BinaryOperationNode{
+import ParserModel.BinaryOperationNode;
+
+public class PowCommand extends BinaryOperationNode {
 
     @Override
     public double execute() {

@@ -1,5 +1,6 @@
 package ParserModel;
 
+import ParserModel.BooleanCommands.*;
 import ParserModel.MathCommands.*;
 import ParserModel.TurtleCommands.*;
 
@@ -65,6 +66,21 @@ public class CommandFactory {
                 return new PowCommand();
             case "Pi":
                 return new PiCommand();
+
+            case "LessThan":
+                return new LessCommand();
+            case "GreaterThan":
+                return new GreaterCommand();
+            case "Equal":
+                return new EqualCommand();
+            case "NotEqual":
+                return new NotEqualCommand();
+            case "And":
+                return new AndCommand();
+            case "Or":
+                return new OrCommand();
+            case "Not":
+                return new NotCommand();
 
             case "DoTimes":
                 return new RepeatParserNode();

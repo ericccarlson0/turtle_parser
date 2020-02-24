@@ -1,5 +1,7 @@
 package ParserModel.MathCommands;
 
+import ParserModel.BinaryOperationNode;
+
 public class SumCommand extends BinaryOperationNode {
 
     @Override

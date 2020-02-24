@@ -1,5 +1,7 @@
 package ParserModel.MathCommands;
 
+import ParserModel.UnaryOperationNode;
+
 public class CosineCommand extends UnaryOperationNode {
     @Override
     public double execute() {

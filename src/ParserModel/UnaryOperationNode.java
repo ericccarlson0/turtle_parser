@@ -1,4 +1,4 @@
-package ParserModel.MathCommands;
+package ParserModel;
 
 import ParserModel.ParserNode;
 

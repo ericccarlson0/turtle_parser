@@ -1,6 +1,8 @@
 package ParserModel.MathCommands;
 
-public class MinusCommand extends UnaryOperationNode{
+import ParserModel.UnaryOperationNode;
+
+public class MinusCommand extends UnaryOperationNode {
 
     @Override
     public double execute() {
