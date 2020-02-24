@@ -1,19 +1,22 @@
-package slogo;
+import ParserModel.ParserNode;
+import ParserModel.TreeParser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
-/**
- * Feel free to completely change this code or delete it entirely. 
- */
 public class Main {
-    private static final String RESOURCE_PACKAGE = "resources.languages.";
+    private static final String LANGUAGE_PACKAGE = "resources.languages.";
     private static final String LANGUAGE = "English";
-    public static final ResourceBundle RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + LANGUAGE);
+    public static final ResourceBundle RESOURCES = ResourceBundle.getBundle(LANGUAGE_PACKAGE + LANGUAGE);
     public static final ResourceBundle SYNTAX = ResourceBundle.getBundle("resources.regex.syntax");
-    /**
-     * Start of the program.
-     */
-    public static void main (String[] args) {
-        System.out.println("Hello world");
+    public static void main(String[] args){
+        String[] commands = new String[]{"DOTIMES","20","[", "Forward","40","Forward","20","]"};
+        List<String> listCommands = Arrays.asList(commands);
+        TreeParser parser = new TreeParser();
+        ParserNode node = parser.parse(listCommands);
+        node.execute();
+
     }
 }
