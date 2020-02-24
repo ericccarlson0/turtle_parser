@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class leftExecutable extends Executable {
   String[] parameters;
@@ -10,6 +10,4 @@ public class leftExecutable extends Executable {
     double degrees = Double.parseDouble(parameters[0]);
     //Turtle rotate ccw
   }
-
-
 }

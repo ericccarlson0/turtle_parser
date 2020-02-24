@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class rightExecutable extends Executable {
 
@@ -10,6 +10,4 @@ public class rightExecutable extends Executable {
     double degrees = Double.parseDouble(parameters[0]);
     //Turtle clockwise turn
   }
-
-
 }

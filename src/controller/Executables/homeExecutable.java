@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class homeExecutable extends Executable {
 
@@ -9,6 +9,4 @@ public class homeExecutable extends Executable {
   public void run(){
     //home
   }
-
-
 }

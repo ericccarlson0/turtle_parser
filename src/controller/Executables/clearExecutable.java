@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class clearExecutable extends Executable {
 
@@ -9,6 +9,4 @@ public class clearExecutable extends Executable {
   public void run(){
     //clearscreen
   }
-
-
 }
