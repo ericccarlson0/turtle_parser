@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 public class Main {
     private static final String LANGUAGE_PACKAGE = "resources.languages.";
     private static final String LANGUAGE = "English";
+    public static final String RESOURCE_FOLDER = "resources";
     public static final ResourceBundle RESOURCES = ResourceBundle.getBundle(LANGUAGE_PACKAGE + LANGUAGE);
     public static final ResourceBundle SYNTAX = ResourceBundle.getBundle("resources.regex.syntax");
     public static void main(String[] args){

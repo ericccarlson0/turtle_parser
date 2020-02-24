@@ -7,5 +7,5 @@ public abstract class ParserNode {
 
     public abstract double execute();
 
-    public abstract int numberOfNodes();
+    public abstract boolean isComplete();
 }

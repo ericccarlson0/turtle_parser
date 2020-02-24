@@ -6,18 +6,20 @@ public class BackwardNode extends ParserNode {
     private ParserNode myLength;
 
     public BackwardNode(){
-
+        super();
     }
 
     @Override
     public double execute() {
+        double distanceToTravel = myLength.execute();
         System.out.println(toString());
-        return 0; //FIXME
+        //TODO
+        return distanceToTravel;
     }
 
     @Override
-    public int numberOfNodes() {
-        return 1;
+    public boolean isComplete() {
+        return myLength != null;
     }
 
     @Override
@@ -27,6 +29,6 @@ public class BackwardNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "Moving backward " + myLength.execute();
+        return "Moving backward " + myLength;
     }
 }
