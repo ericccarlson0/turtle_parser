@@ -33,6 +33,6 @@ public class HeadingNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "Setting Heading "+myDegrees;
+        return "Setting Heading "+ myDegrees;
     }
 }

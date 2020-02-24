@@ -3,9 +3,14 @@ package ParserModel.Commands;
 import ParserModel.ParserNode;
 
 public class HomeNode extends ParserNode {
+
+    public HomeNode(){
+        super();
+    }
+
     @Override
     public void addNode(ParserNode node) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
