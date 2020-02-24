@@ -1,11 +1,12 @@
-package ParserModel;
+package ParserModel.TurtleCommands;
 
-public class ConstantNode extends ParserNode {
+import ParserModel.ParserNode;
 
-    private double myValue;
+public class PenUpNode extends ParserNode {
 
-    public ConstantNode(double value){
-        myValue = value;
+
+    public PenUpNode(){
+        super();
     }
 
     @Override
@@ -15,15 +16,19 @@ public class ConstantNode extends ParserNode {
 
     @Override
     public double execute() {
-        return myValue;
+        System.out.println(toString());
+        //TODO
+        return 0;
     }
+
 
     @Override
     public boolean isComplete() {
         return true;
     }
 
+    @Override
     public String toString(){
-        return "" + myValue;
+        return "Pen Up";
     }
 }

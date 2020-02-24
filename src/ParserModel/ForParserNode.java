@@ -17,11 +17,13 @@ public class ForParserNode extends ParserNode {
 
     @Override
     public double execute() {
+        //TODO
         return 0;
     }
 
     @Override
-    public int numberOfNodes() {
-        return 2;
+    public boolean isComplete() {
+        return bodyNode != null;
     }
+
 }

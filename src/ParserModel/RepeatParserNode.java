@@ -26,7 +26,7 @@ public class RepeatParserNode extends ParserNode {
     }
 
     @Override
-    public int numberOfNodes() {
-        return 2;
+    public boolean isComplete() {
+        return executeNode != null;
     }
 }

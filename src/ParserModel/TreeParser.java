@@ -2,6 +2,8 @@ package ParserModel;
 
 import slogo.Main;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import ParserModel.TokenAnalyzer.TokenType;
@@ -16,7 +18,24 @@ public class TreeParser {
         myTokenAnalyzer = new TokenAnalyzer();
     }
 
-    public ParserNode parse(List<String> input){
+    public ParserNode parse(String input){
+        List<String> inputElements = new ArrayList<>();
+        inputElements.addAll(Arrays.asList(input.split(" ")));
+        //remove white spaces
+        int index = 0;
+        while (index < inputElements.size()) {
+            if(inputElements.get(index).equals("")){
+                inputElements.remove(index);
+            } else{
+                index++;
+            }
+        }
+
+        System.out.println(inputElements);
+        return parse(inputElements);
+    }
+
+    private ParserNode parse(List<String> input){
         InputIterator inputs = new InputIterator(input);
         RootParserNode root = new RootParserNode();
         while(inputs.hasNext()){
@@ -31,7 +50,7 @@ public class TreeParser {
         switch(tokenType){
             case Command:
                 ParserNode root = new CommandFactory().createCommand(myTokenAnalyzer.getKey(nextCommand));
-                for(int i = 0; i < root.numberOfNodes(); i++){
+                while(! root.isComplete()){
                     root.addNode(recursiveParse(iterator));
                 }
                 return root;
