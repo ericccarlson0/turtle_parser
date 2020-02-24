@@ -1,13 +1,13 @@
-package ParserModel;
+package ParserModel.Control;
+
+import ParserModel.ParserNode;
 
 public class RepeatParserNode extends ParserNode {
     private ParserNode myTimesNode;
     private ParserNode executeNode;
-    private int mytimes;
 
     @Override
     public void addNode(ParserNode node) {
-        //System.out.println("adding node" + node);
         if(myTimesNode == null){
             myTimesNode = node;
         } else if(executeNode == null){
@@ -18,11 +18,11 @@ public class RepeatParserNode extends ParserNode {
 
     @Override
     public double execute() {
-        while(mytimes < myTimesNode.execute()){
-            executeNode.execute();
-            mytimes ++;
+        double returnValue = 0;
+        for(int i = 0; i < myTimesNode.execute(); i++){
+            returnValue = executeNode.execute();
         }
-        return 0;
+        return returnValue;
     }
 
     @Override
