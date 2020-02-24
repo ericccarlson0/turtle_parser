@@ -1,16 +1,30 @@
 package ParserModel;
 
-public class MoveAction implements Action{
-    private double myMoveLength;
+public class MoveAction extends ParserNode{
+    private ParserNode myLength;
 
-    public MoveAction(double moveLength){
-        myMoveLength = moveLength;
+    public MoveAction(){
+
     }
 
     @Override
-    public boolean execute() {
-        //TODO: implement this
-        System.out.println("");
-        return false;
+    public double execute() {
+        System.out.println(toString());
+        return 0; //FIXME
+    }
+
+    @Override
+    public int numberOfNodes() {
+        return 1;
+    }
+
+    @Override
+    public void addNode(ParserNode node) {
+        myLength = node;
+    }
+
+    @Override
+    public String toString(){
+        return "Moving forward " + myLength.execute();
     }
 }
