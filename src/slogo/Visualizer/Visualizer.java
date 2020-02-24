@@ -186,10 +186,13 @@ public class Visualizer {
         // create input text field
         userInputText = new Text("Terminal");
         userInputTextField = new TextField("");
-        userInputTextField.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.ENTER){
+        inputButton = makeButton("Enter", ENVIRONMENT_SIZE_HEIGHT + 300,(ENVIRONMENT_SIZE_HEIGHT/7)*6 + 50, myGroup);
+        inputButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
                 String x = userInputTextField.getText();
                 inputHistory.setText(inputHistory.getText() + '\n' + x);
+                userInputText.setText(userInputText.getText() + '\n' + "Command entered");
                 userInputTextField.clear();
             }
         });

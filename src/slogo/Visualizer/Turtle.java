@@ -39,8 +39,6 @@ public class Turtle extends ImageView{
         //setyPos(yPos);
         setX(xPos);
         setY(yPos);
-
-
     }
 
     public double getxPos(){
@@ -67,6 +65,4 @@ public class Turtle extends ImageView{
     public void setAngle(double angle){
         this.angle = angle;
     }
-
-
 }
