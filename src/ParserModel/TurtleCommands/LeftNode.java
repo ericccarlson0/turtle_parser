@@ -1,4 +1,4 @@
-package ParserModel.Commands;
+package ParserModel.TurtleCommands;
 
 import ParserModel.ParserNode;
 

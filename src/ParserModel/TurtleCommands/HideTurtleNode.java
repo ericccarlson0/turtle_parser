@@ -1,10 +1,11 @@
-package ParserModel.Commands;
+package ParserModel.TurtleCommands;
 
 import ParserModel.ParserNode;
 
-public class PenDownNode extends ParserNode {
+public class HideTurtleNode extends ParserNode {
+    private static final double EXIT_SUCCESS = 0;
 
-    public PenDownNode(){
+    public HideTurtleNode(){
         super();
     }
 
@@ -16,8 +17,7 @@ public class PenDownNode extends ParserNode {
     @Override
     public double execute() {
         System.out.println(toString());
-        //TODO
-        return 1;
+        return EXIT_SUCCESS;
     }
 
     @Override
@@ -27,6 +27,6 @@ public class PenDownNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "Pen Down";
+        return "Hiding Turtle";
     }
 }

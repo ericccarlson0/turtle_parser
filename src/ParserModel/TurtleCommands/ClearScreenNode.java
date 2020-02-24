@@ -1,11 +1,10 @@
-package ParserModel.Commands;
+package ParserModel.TurtleCommands;
 
 import ParserModel.ParserNode;
 
-public class PenUpNode extends ParserNode {
+public class ClearScreenNode extends ParserNode {
 
-
-    public PenUpNode(){
+    public ClearScreenNode(){
         super();
     }
 
@@ -18,9 +17,8 @@ public class PenUpNode extends ParserNode {
     public double execute() {
         System.out.println(toString());
         //TODO
-        return 0;
+        return 0; //FIXME
     }
-
 
     @Override
     public boolean isComplete() {
@@ -29,6 +27,6 @@ public class PenUpNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "Pen Up";
+        return "Clearing Screen";
     }
 }

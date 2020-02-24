@@ -1,10 +1,11 @@
-package ParserModel.Commands;
+package ParserModel.TurtleCommands;
 
 import ParserModel.ParserNode;
 
-public class ShowTurtleNode extends ParserNode {
+public class PenUpNode extends ParserNode {
 
-    public ShowTurtleNode(){
+
+    public PenUpNode(){
         super();
     }
 
@@ -17,8 +18,9 @@ public class ShowTurtleNode extends ParserNode {
     public double execute() {
         System.out.println(toString());
         //TODO
-        return 1;
+        return 0;
     }
+
 
     @Override
     public boolean isComplete() {
@@ -27,6 +29,6 @@ public class ShowTurtleNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "Showing Turtle";
+        return "Pen Up";
     }
 }

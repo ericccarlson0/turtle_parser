@@ -1,10 +1,10 @@
-package ParserModel.Commands;
+package ParserModel.TurtleCommands;
 
 import ParserModel.ParserNode;
 
-public class ClearScreenNode extends ParserNode {
+public class ShowTurtleNode extends ParserNode {
 
-    public ClearScreenNode(){
+    public ShowTurtleNode(){
         super();
     }
 
@@ -17,7 +17,7 @@ public class ClearScreenNode extends ParserNode {
     public double execute() {
         System.out.println(toString());
         //TODO
-        return 0; //FIXME
+        return 1;
     }
 
     @Override
@@ -27,6 +27,6 @@ public class ClearScreenNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "Clearing Screen";
+        return "Showing Turtle";
     }
 }
