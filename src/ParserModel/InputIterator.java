@@ -4,24 +4,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class InputIterator implements Iterator<String>{
-    private List<String> myInputs;
+public class InputIterator implements Iterator<String> {
+    private List<String> myElements;
     private int index;
 
     public InputIterator(List<String> inputs){
-        myInputs = inputs;
+        myElements = List.copyOf(inputs);
     }
 
     @Override
     public boolean hasNext() {
-        return index < myInputs.size();
+        return index < myElements.size();
     }
 
     @Override
     public String next() {
-        if (!hasNext()){
+        if (! hasNext()){
             throw new NoSuchElementException();
         }
-        return myInputs.get(index++);
+        return myElements.get(index++);
     }
 }

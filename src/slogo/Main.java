@@ -15,7 +15,7 @@ public class Main {
         Scanner kbReader = new Scanner(System.in);
         TreeParser parser = new TreeParser();
         while(true){
-            ParserNode node = parser.parse(kbReader.nextLine());
+            ParserNode node = parser.parseString(kbReader.nextLine());
             node.execute();
         }
 

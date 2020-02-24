@@ -7,11 +7,10 @@ import ParserModel.TurtleCommands.*;
 
 public class CommandFactory {
 
-    public CommandFactory(){
-    }
+    public CommandFactory(){ }
 
     public ParserNode createCommand(String identifier){
-        switch(identifier){
+        switch (identifier) {
             case "Forward":
                 return new ForwardNode();
             case "Backward":
@@ -82,7 +81,6 @@ public class CommandFactory {
                 return new OrCommand();
             case "Not":
                 return new NotCommand();
-
             case "DoTimes":
                 return new RepeatParserNode();
             case "For":

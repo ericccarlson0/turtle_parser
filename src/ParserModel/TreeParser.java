@@ -2,7 +2,6 @@ package ParserModel;
 
 import slogo.Main;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,77 +10,74 @@ import ParserModel.TokenAnalyzer.TokenType;
 public class TreeParser {
     private static final ResourceBundle COMMANDS = Main.RESOURCES;
     private static final ResourceBundle REGEX = Main.SYNTAX;
-
     private TokenAnalyzer myTokenAnalyzer;
+    private CommandFactory myCommandFactory;
 
-    public TreeParser(){
+    public TreeParser() {
         myTokenAnalyzer = new TokenAnalyzer();
+        myCommandFactory = new CommandFactory();
     }
 
-    public ParserNode parse(String input){
-        List<String> inputElements = new ArrayList<>();
-        inputElements.addAll(Arrays.asList(input.split(" ")));
-        //remove white spaces
-        int index = 0;
-        while (index < inputElements.size()) {
-            if(inputElements.get(index).equals("")){
-                inputElements.remove(index);
-            } else{
-                index++;
+    public ParserNode parseString(String input){
+        List<String> inputElements = Arrays.asList(input.split(" "));
+        for(int i = 0; i < inputElements.size(); i++) {
+            if(inputElements.get(i).equals("")){
+                inputElements.remove(i);
+                i--;
             }
         }
-
-        System.out.println(inputElements);
-        return parse(inputElements);
+        System.out.println(inputElements); // *** testing...
+        return parseList(inputElements);
     }
 
-    private ParserNode parse(List<String> input){
-        InputIterator inputs = new InputIterator(input);
+    private ParserNode parseList(List<String> input){
+        InputIterator iterator = new InputIterator(input);
         RootParserNode root = new RootParserNode();
-        while(inputs.hasNext()){
-            root.addNode(recursiveParse(inputs));
+        while(iterator.hasNext()) {
+            root.addNode(parseIteratorElement(iterator));
         }
         return root;
     }
 
-    private ParserNode recursiveParse(InputIterator iterator){
-        String nextCommand = iterator.next();
-        TokenType tokenType = myTokenAnalyzer.typeOfToken(nextCommand);
-        switch(tokenType){
+    /**
+     * NOTE: this is a recursive method
+     */
+    private ParserNode parseIteratorElement(InputIterator iterator) {
+        String nextElement = iterator.next();
+        TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
+        switch (tokenType) {
             case Command:
-                ParserNode root = new CommandFactory().createCommand(myTokenAnalyzer.getKey(nextCommand));
-                while(! root.isComplete()){
-                    root.addNode(recursiveParse(iterator));
-                }
+                ParserNode root = myCommandFactory.createCommand(myTokenAnalyzer.getTokenKey(nextElement));
+                while(! root.isComplete()) {
+                    root.addNode(parseIteratorElement(iterator));
+                }   // This will go through the iterator until the root has its conditions
+                    // (parameters, etc.) satisfied.
                 return root;
             case Comment:
-                return recursiveParse(iterator); // just keep going
-            case GroupEnd:
-                break;
+                return parseIteratorElement(iterator); // This moves on to the next element.
             case Constant:
-                return new ConstantNode(Double.parseDouble(nextCommand));
+                return new ConstantNode(Double.parseDouble(nextElement));
+            case Variable:
+                //TODO: parse variable
+            case ListStart:
+                ParserNode group = new RootParserNode();
+                ParserNode groupElement;
+                while((groupElement = parseIteratorElement(iterator)) != null) {
+                    group.addNode(groupElement);
+                }
+                return group;
             case ListEnd:
                 return null; //FIXME
-            case Variable:
-                break;
+                //TODO: parse list end
             case GroupStart:
-                break;
-            case ListStart:
-                ParserNode myGroup = new RootParserNode();
-                ParserNode adding;
-                while((adding = recursiveParse(iterator)) != null){
-                    myGroup.addNode(adding);
-                }
-                return myGroup;
+                //TODO: parse group start
+            case GroupEnd:
+                //TODO: parse group end
         }
-
-        /*
-        System.out.println(nextCommand);
-        if(nextCommand.equals("Forward")){
-            return new MoveAction(Double.parseDouble(iterator.next()));
-        }
-        */
+//        System.out.println(nextElement);
+//        if(nextElement.equals("Forward")){
+//            return new MoveAction(Double.parseDouble(iterator.next()));
+//        }
         return null; //FIXME
     }
-
 }

@@ -17,18 +17,14 @@ public class ForwardNode extends ParserNode {
         return distanceToMove;
     }
 
-    @Override
     public boolean isComplete(){
         return myLength != null;
     }
 
-    @Override
-    public void addNode(ParserNode node) {
-        myLength = node;
-    }
+    public void addNode(ParserNode node) { myLength = node; }
 
     @Override
     public String toString(){
-        return "Moving forward " + myLength;
+        return "FD " + myLength;
     }
 }

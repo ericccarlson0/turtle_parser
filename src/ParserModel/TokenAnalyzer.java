@@ -1,7 +1,6 @@
 package ParserModel;
 
 import slogo.Main;
-
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
@@ -32,65 +31,43 @@ public class TokenAnalyzer {
         ListEnd,
         GroupStart,
         GroupEnd
-
     }
 
-    public TokenAnalyzer(){
-        addCommands();
-        addPatterns();
+    public TokenAnalyzer() {
+        initializeCommands();
+        initializePatterns();
         initializeTokenMap();
     }
 
-    public TokenType typeOfToken(String token){
-        return myTokens.get(checkArgument(token));
+    public TokenType typeOfToken(String token) {
+        return myTokens.get(getTokenKey(token));
     }
 
-    private boolean match(String text, Pattern regex) {
-        return regex.matcher(text).matches();
-    }
-
-    private String checkArgument(String text) {
+    public String getTokenKey(String text) {
         for (Entry<String, Pattern> e : mySymbols) {
-            if (match(text, e.getValue())) {
-                //System.out.println(e.getKey());
+            if (e.getValue().matcher(text).matches()) {
+                // System.out.println(e.getKey());
                 return e.getKey();
             }
         }
         return "";
     }
 
-    public String getKey(String text){
-        final String ERROR = "NO MATCH";
-        for (Entry<String, Pattern> e : myCommands) {
-            if (match(text, e.getValue())) {
-                return e.getKey();
-            }
+    private List<Entry<String, Pattern>> createEntryList(ResourceBundle bundle) {
+        List<Entry<String, Pattern>> newEntryList = new ArrayList();
+        for (String key : Collections.list(bundle.getKeys())) {
+            String regex = bundle.getString(key);
+            newEntryList.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
         }
-        // FIXME: perhaps throw an exception instead
-        return ERROR;
-
+        return newEntryList;
     }
 
-    private void addCommands(){
-        myCommands = new ArrayList<>();
-        for (String key : Collections.list(LANGUAGE.getKeys())) {
-            String regex = LANGUAGE.getString(key);
-            myCommands.add(new SimpleEntry<>(key,
-                    Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
-        }
+    private void initializeCommands() {
+        myCommands = createEntryList(LANGUAGE);
     }
 
-
-    /**
-     * Adds the given resource file to this language's recognized types
-     */
-    private void addPatterns () {
-        mySymbols = new ArrayList<>();
-        for (String key : Collections.list(SYNTAX.getKeys())) {
-            String regex = SYNTAX.getString(key);
-            mySymbols.add(new SimpleEntry<>(key,
-                    Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
-        }
+    private void initializePatterns() {
+        mySymbols = createEntryList(SYNTAX);
     }
 
     private void initializeTokenMap(){
