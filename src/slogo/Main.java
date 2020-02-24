@@ -13,7 +13,7 @@ public class Main {
     private static final String LANGUAGE = "English";
     public static final String RESOURCE_FOLDER = "resources";
     public static final ResourceBundle RESOURCES = ResourceBundle.getBundle(LANGUAGE_PACKAGE + LANGUAGE);
-    public static final ResourceBundle SYNTAX = ResourceBundle.getBundle("resources.regex.syntax");
+    public static final ResourceBundle SYNTAX = ResourceBundle.getBundle("resources.parsing.syntax");
     public static void main(String[] args){
         String[] commands = new String[]{"DOTIMES","20","[", "Forward","40","Forward","20","]"};
         List<String> listCommands = Arrays.asList(commands);

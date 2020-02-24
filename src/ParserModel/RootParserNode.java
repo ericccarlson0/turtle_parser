@@ -25,8 +25,8 @@ public class RootParserNode extends ParserNode{
     }
 
     @Override
-    public int numberOfNodes() {
-        return Integer.MAX_VALUE;
+    public boolean isComplete() {
+        return false;
     }
 
     @Override

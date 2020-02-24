@@ -19,8 +19,8 @@ public class ConstantNode extends ParserNode {
     }
 
     @Override
-    public int numberOfNodes() {
-        return 0;
+    public boolean isComplete() {
+        return true;
     }
 
     public String toString(){

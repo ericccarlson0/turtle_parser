@@ -31,7 +31,7 @@ public class TreeParser {
         switch(tokenType){
             case Command:
                 ParserNode root = new CommandFactory().createCommand(myTokenAnalyzer.getKey(nextCommand));
-                for(int i = 0; i < root.numberOfNodes(); i++){
+                while(! root.isComplete()){
                     root.addNode(recursiveParse(iterator));
                 }
                 return root;
