@@ -137,9 +137,16 @@ This project is divided into three main areas:
         * Alternatively, a better design could be for the exception to be caught internal to the ParserModel, and to catch it by simply returning a command that says the controller should tell the view to display an error message
     * Controller: iterates through the commands, sees that it has to tell the Visualizer to display the error message
     * Visualizer: displays the error message.
-
+    
+    
 ### **Cemal**
-* Case 1:
+* Case 1: A recursive Procedure is defined where the procedure calls upon itself.
+    * Visualizer calls getCommand().
+    * Parser parses the procedure into a list of executable commands and stores it for a later call.
 
-* Case 2: 
+* Case 2: The recursive procedure is called after being defined.
+    * Visualizer calls getCommand().
+    * While parsing, parser recognizes predefined procedure call, calls execute on predefined executable list of commands.
+    * Executer executes the defined list for the procedure, and adds it to its 2D array of command history (for possible extra feature)
+    * Executed commands update the visualizer's dependant variables and thus draws the turtles movement.
     
