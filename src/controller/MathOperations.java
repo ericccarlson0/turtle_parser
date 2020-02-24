@@ -49,6 +49,6 @@ public class MathOperations {
     return Math.pow(base,exponent);
   }
   public double pi(){
-    return PI;
+    return Math.PI;
   }
 }
