@@ -59,13 +59,13 @@ This project is divided into three main areas:
     * Primary: Frontend
     * Secondary: TBD
 * Mariusz
-    * Primary: Backend *(ParserInterface)*
+    * Primary: Backend: ParserModel
     * Secondary: help with Executioner/Visualizer interface *(experience with roperties and bindings)*
 * Eric
-    * Primary: Backend *(Command heirarchy)*
-    * Secondary: ParserStack
+    * Primary: Backend data structures and communication with the frontend.
+    * Secondary: help with Parser
 * Cemal
-    * Primary: Backend *(Excecutioner)*
+    * Primary: Backend: Excecutioner
     * Secondary: TBD
 
 # Use Cases
