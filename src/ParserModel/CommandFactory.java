@@ -1,6 +1,7 @@
 package ParserModel;
 
 import ParserModel.BooleanCommands.*;
+import ParserModel.Control.RepeatParserNode;
 import ParserModel.MathCommands.*;
 import ParserModel.TurtleCommands.*;
 
