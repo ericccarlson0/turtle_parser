@@ -1,5 +1,6 @@
 package ParserModel;
 
+import ParserModel.MathCommands.*;
 import ParserModel.TurtleCommands.*;
 
 public class CommandFactory {
@@ -36,8 +37,34 @@ public class CommandFactory {
             case "ClearScreen":
                 return new ClearScreenNode();
 
-
-
+            case "Sum":
+                return new SumCommand();
+            case "Difference":
+                return new DifferenceCommand();
+            case "Product":
+                return new ProductCommand();
+            case "Quotient":
+                return new QuotientCommand();
+            case "Remainder":
+                return new RemainderCommand();
+            case "Random":
+                return new RandomCommand();
+            case "Minus":
+                return new MinusCommand();
+            case "Sine":
+                return new SineCommand();
+            case "Cosine":
+                return new CosineCommand();
+            case "Tangent":
+                return new TangentCommand();
+            case "ArcTangent":
+                return new ArctanCommand();
+            case "NaturalLog":
+                return new LogCommand();
+            case "Power":
+                return new PowCommand();
+            case "Pi":
+                return new PiCommand();
 
             case "DoTimes":
                 return new RepeatParserNode();

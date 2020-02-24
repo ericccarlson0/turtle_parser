@@ -12,7 +12,7 @@ public class ForwardNode extends ParserNode {
     @Override
     public double execute() {
         double distanceToMove = myLength.execute();
-        System.out.println(toString());
+        System.out.println(toString() + " " + distanceToMove);
         //TODO
         return distanceToMove;
     }
