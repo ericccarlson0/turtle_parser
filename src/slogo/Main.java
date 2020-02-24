@@ -1,3 +1,5 @@
+package slogo;
+
 import ParserModel.ParserNode;
 import ParserModel.TreeParser;
 
