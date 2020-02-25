@@ -1,13 +1,22 @@
+<<<<<<< HEAD:src/executables/leftExecutable.java
 package executables;
+=======
+package controller.Executables;
+import Visualizer.Visualizer;
+>>>>>>> cy111:src/controller/Executables/leftExecutable.java
 
 public class leftExecutable extends Executable {
-  String[] parameters;
-  public leftExecutable(String distanceUnit){
-    super();
+  private double angle;
+  public leftExecutable(double angleInput){
+    angle = angleInput;
   }
 
-  public void run(){
-    double degrees = Double.parseDouble(parameters[0]);
-    //Turtle rotate ccw
+  public double run(Visualizer visualizerObject){
+    double currentAngle = visualizerObject.getTurtleAngle();
+    double newAngle = (currentAngle+angle)%360;
+    visualizerObject.setTurtleAngle(newAngle);
+    return angle;
   }
+
+
 }

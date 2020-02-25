@@ -1,14 +1,25 @@
+<<<<<<< HEAD:src/executables/forwardExecutable.java
 package executables;
+=======
+package controller.Executables;
+import Visualizer.Visualizer;
+>>>>>>> cy111:src/controller/Executables/forwardExecutable.java
 
 public class forwardExecutable extends Executable {
-
-  public forwardExecutable(String distanceUnit){
-    super();
+  private double distance;
+  public forwardExecutable(double distanceUnit){
+    distance = distanceUnit;
   }
 
-  public void run(){
-    double distance = Double.parseDouble(parameters[0]);
-    //Turtle calculated x distance and y distance and add them
+  public double run(Visualizer visualizerObject){
+    double currentXPosition = visualizerObject.getTurtleX();
+    double currentYPosition = visualizerObject.getTurtleY();
+    double currentAngle = visualizerObject.getTurtleAngle();
+    double newXPosition = currentXPosition + Math.cos(currentAngle)*distance;
+    double newYPosition = currentYPosition + Math.sin(currentAngle)*distance;
+    visualizerObject.setTurtleX(newXPosition);
+    visualizerObject.setTurtleY(newYPosition);
+    return distance;
   }
 
 

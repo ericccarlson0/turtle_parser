@@ -1,12 +1,18 @@
+<<<<<<< HEAD:src/executables/hideTurtleExecutable.java
 package executables;
+=======
+package controller.Executables;
+import Visualizer.Visualizer;
+>>>>>>> cy111:src/controller/Executables/hideTurtleExecutable.java
 
 public class hideTurtleExecutable extends Executable {
-
-  public hideTurtleExecutable(String distanceUnit){
-    super();
+  public hideTurtleExecutable(){
   }
 
-  public void run(){
-    //hideturtle
+  public double run(Visualizer visualizerObject){
+    visualizerObject.hide();
+    return 0;
   }
+
+
 }

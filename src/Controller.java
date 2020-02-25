@@ -2,7 +2,7 @@ import parserModel.ParserNode;
 import parserModel.TreeParser;
 
 public class Controller {
-  private TreeParser myTreeParser;
+  public TreeParser myTreeParser;
 
   public Controller () {
     myTreeParser = new TreeParser();
