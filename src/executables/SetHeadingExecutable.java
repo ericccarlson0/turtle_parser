@@ -3,7 +3,7 @@ import visualizer.Visualizer;
 
 
 public class SetHeadingExecutable extends Executable {
-
+  private final String executableType = "SetHeading";
   private double angle;
 
   public SetHeadingExecutable(double angleInput) {
@@ -16,6 +16,12 @@ public class SetHeadingExecutable extends Executable {
     double degreesMoved = newAngle-currentAngle;
     visualizerObject.setTurtleAngle(newAngle);
     return degreesMoved;
+  }
+
+
+  public String getString(){
+    return getExecutableName(executableType)+" "+angle;
+
   }
 }
 

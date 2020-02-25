@@ -1,8 +1,9 @@
 package parserModel.Control;
 
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class IfElseNode extends ParserNode {
+public class IfElseNode extends CommandParserNode {
     private ParserNode myConditional;
     private ParserNode myIfNode;
     private ParserNode myElseNode;

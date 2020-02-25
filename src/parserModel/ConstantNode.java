@@ -1,6 +1,6 @@
 package parserModel;
 
-public class ConstantNode extends ParserNode {
+public class ConstantNode extends CommandParserNode {
     private double myValue;
 
     public ConstantNode(double value){

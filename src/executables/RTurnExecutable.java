@@ -3,6 +3,7 @@ import visualizer.Visualizer;
 
 
 public class RTurnExecutable extends Executable {
+  private final String executableType = "Right";
   private double angle;
   public RTurnExecutable(double angleInput){
     angle = angleInput;
@@ -13,6 +14,11 @@ public class RTurnExecutable extends Executable {
     double newAngle = (currentAngle-angle)%360;
     visualizerObject.setTurtleAngle(newAngle);
     return angle;
+  }
+
+
+  public String getString(){
+    return getExecutableName(executableType)+" "+angle;
   }
 
 

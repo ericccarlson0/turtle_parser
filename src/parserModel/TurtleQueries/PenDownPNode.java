@@ -3,9 +3,11 @@ import executables.Executable;
 import executables.PenDownPExecutable;
 import executables.PenDownPExecutable;
 import java.util.List;
+
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class PenDownPNode extends ParserNode {
+public class PenDownPNode extends CommandParserNode {
   private List<Executable> executableQueue;
 
   public PenDownPNode(List<Executable> queue){

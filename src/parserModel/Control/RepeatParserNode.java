@@ -1,8 +1,9 @@
 package parserModel.Control;
 
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class RepeatParserNode extends ParserNode {
+public class RepeatParserNode extends CommandParserNode {
     private ParserNode myTimesNode;
     private ParserNode executeNode;
 
