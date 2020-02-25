@@ -3,8 +3,12 @@ package parserModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Variables {
-    private static final Map<String, Double> myVariables = new HashMap<>();
+public class GlobalData {
+    private static final GlobalData INSTANCE = new GlobalData();
+
+    private TurtleData
+
+    private GlobalData()
 
     public void setVariable(String name, double value){
         myVariables.put(name, value);
