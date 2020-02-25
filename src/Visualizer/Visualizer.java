@@ -18,7 +18,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 /**
@@ -63,7 +62,8 @@ public class Visualizer {
     private Button inputButton;
 
     private int step = 0;
-    private String command;
+    private String command = "";
+
 
     /**
      * Visualizer() - constructor for the visualizer.
@@ -128,7 +128,6 @@ public class Visualizer {
         else if(myTurtles.get(turtleIndex).getYCoordinate() < 25){
             myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 650);
             myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 25);
-
         }
         else{
             myTurtles.get(turtleIndex).setYCoordinate(yPos);
@@ -164,7 +163,26 @@ public class Visualizer {
      * @return
      */
     public void resetCommand(){
-        command = null;
+        command = "";
+    }
+
+    public void clearScreen(){
+        playAnimation();
+    }
+
+    public boolean getTurtlePen(){
+        return myTurtles.get(turtleIndex).getPen();
+    }
+
+    public boolean getShowing(){
+        return myTurtles.get(turtleIndex).isVisible();
+    }
+
+    public void showTurtle(){
+        myTurtles.get(turtleIndex).setVisible(true);
+    }
+    public void hideTurtle(){
+        myTurtles.get(turtleIndex).setVisible(false);
     }
 
     /**
@@ -223,13 +241,6 @@ public class Visualizer {
         myScene = setUpEnvironment();
         myStage.setScene(myScene);
         myStage.show();
-        KeyFrame frame = new KeyFrame(Duration.millis(10), e -> {
-            step();
-        });
-        animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
     }
 
     public void draw(){

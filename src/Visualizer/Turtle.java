@@ -34,6 +34,7 @@ public class Turtle extends ImageView{
         setXCoordinate(0);
         setYCoordinate(0);
         id = 0;
+        setAngle(0);
     }
 
     /**
@@ -49,6 +50,7 @@ public class Turtle extends ImageView{
         old_x_coordinate = getXCoordinate();
         old_y_coordinate = getYCoordinate();
         id = turtleIndex;
+        setAngle(0);
     }
     /**
     public double getNextX(){

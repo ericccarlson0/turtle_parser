@@ -1,5 +1,5 @@
 package ParserModel.TurtleCommands;
-
+import Visualizer.Controller;
 import ParserModel.ParserNode;
 
 public class BackwardNode extends ParserNode {
@@ -12,6 +12,7 @@ public class BackwardNode extends ParserNode {
     public double execute() {
         double distanceToTravel = myLength.execute();
         System.out.println(toString());
+
         //TODO
         return distanceToTravel;
     }
