@@ -263,7 +263,8 @@ public class Visualizer {
     }
 
     public void draw(){
-        if((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate()))<20 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate()))<20 ){
+        System.out.println("draw");
+        if((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate()))<650 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate()))<650 ){
             if(myTurtles.get(turtleIndex).getPen()){
                 Line line = new Line();
                 line.setStartX(myTurtles.get(turtleIndex).getOldXCoordinate());
