@@ -8,14 +8,14 @@ package slogo;
         import java.util.*;
 
 public class Main extends Application {
-    /**
+
     private static final String LANGUAGE_PACKAGE = "languages.";
     private static final String LANGUAGE = "English";
-    public static final String RESOURCE_FOLDER = "resources.";
-    public static final ResourceBundle SYNTAX = ResourceBundle.getBundle("resources.parsing.syntax");
-    public static final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.languages.English.properties");
-    //public static final ResourceBundle RESOURCES = ResourceBundle.getBundle(RESOURCE_FOLDER + LANGUAGE_PACKAGE + LANGUAGE);
-    */
+    //public static final String RESOURCE_FOLDER = "resources.";
+    //public static final ResourceBundle SYNTAX = ResourceBundle.getBundle("resources.parsing.syntax");
+    //public static final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.languages.English");
+
+
      public static void main (String[] args) {
         launch(args);
     }

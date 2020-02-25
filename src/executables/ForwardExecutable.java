@@ -16,6 +16,7 @@ public class ForwardExecutable extends Executable {
     double newYPosition = currentYPosition + Math.sin(currentAngle)*distance;
     visualizerObject.setTurtleX(newXPosition);
     visualizerObject.setTurtleY(newYPosition);
+    System.out.println("1");
     return distance;
   }
 
