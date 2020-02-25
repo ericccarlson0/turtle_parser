@@ -165,18 +165,24 @@ public class Visualizer {
         playAnimation();
     }
 
-    public boolean getTurtlePen(){
-        return myTurtles.get(turtleIndex).getPen();
+    public double getTurtlePen(){
+        if(myTurtles.get(turtleIndex).getPen()){
+            return 1;
+        }
+        return 0;
     }
 
-    public boolean getShowing(){
-        return myTurtles.get(turtleIndex).isVisible();
+    public double getShowing(){
+        if(myTurtles.get(turtleIndex).isVisible()){
+            return 1;
+        }
+        return 0;
     }
 
-    public void showTurtle(){
+    public void show(){
         myTurtles.get(turtleIndex).setVisible(true);
     }
-    public void hideTurtle(){
+    public void hide(){
         myTurtles.get(turtleIndex).setVisible(false);
     }
 
@@ -380,17 +386,19 @@ public class Visualizer {
         return scrollPane;
     }
 
-    public void hide() {
-    }
-
-    public void show() {
-    }
-
-    public double getPenDown() {
-        return 0;
-    }
-
-    public double getShowing() {
-        return 0;
-    }
+    /**
+     * public void hide() {
+     *     }
+     *
+     *     public void show() {
+     *     }
+     *
+     *     public double getPenDown() {
+     *         return 0;
+     *     }
+     *
+     *     public double getShowing() {
+     *         return 0;
+     *     }
+     */
 }

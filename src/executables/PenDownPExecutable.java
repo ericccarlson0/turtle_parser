@@ -9,7 +9,7 @@ public class PenDownPExecutable extends Executable {
   }
 
   public double run(Visualizer visualizerObject){
-    return visualizerObject.getPenDown();
+    return visualizerObject.getTurtlePen();
   }
 
   public String getString() {

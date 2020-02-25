@@ -1,8 +1,11 @@
 package parserModel.Control;
 
 import parserModel.*;
-import parserModel.BooleanCommands.NotEqualCommand;
-import parserModel.MathCommands.SumCommand;
+import parserModel.BooleanNodes.NotEqualNode;
+import parserModel.MathNodes.SumNode;
+
+//import parserModel.BooleanCommands.NotEqualCommand;
+//import parserModel.MathCommands.SumCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +51,10 @@ public class LoopCounterNode extends CommandParserNode {
         SetVariable initializerNode = new SetVariable(myVariableNode);
         initializerNode.addNode(new ConstantNode(initialValue));
         initializerNode.execute();
-        myIteratingNode = new NotEqualCommand();
+        myIteratingNode = new NotEqualNode();
 
 
-        SumCommand adder = new SumCommand();
+        SumNode adder = new SumNode();
         adder.addNode(myVariableNode);
         adder.addNode(new ConstantNode(incrementValue));
 
