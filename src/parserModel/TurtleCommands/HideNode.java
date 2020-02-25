@@ -1,32 +1,32 @@
 package parserModel.TurtleCommands;
 
+import executables.Executable;
+import executables.HideExecutable;
+import java.util.List;
 import parserModel.ParserNode;
 
-public class ClearScreenNode extends ParserNode {
+public class HideNode extends ParserNode {
+    private List<Executable> executableQueue;
 
-    public ClearScreenNode(){
-        super();
+    public HideNode(List<Executable> queue){
+        executableQueue = queue;
     }
 
-    @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public double execute() {
-        System.out.println(toString());
-        //TODO
+        executableQueue.add(new HideExecutable());
         return 0; //FIXME
     }
 
-    @Override
     public boolean isComplete() {
         return true;
     }
 
     @Override
     public String toString(){
-        return "Clearing Screen";
+        return "HIDE";
     }
 }

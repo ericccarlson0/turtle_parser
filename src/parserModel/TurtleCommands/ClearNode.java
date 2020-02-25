@@ -1,24 +1,22 @@
 package parserModel.TurtleCommands;
 
+import executables.ClearExecutable;
 import executables.Executable;
-import executables.PenDownExecutable;
 import java.util.List;
 import parserModel.ParserNode;
 
-public class PenDownNode extends ParserNode {
+public class ClearNode extends ParserNode {
     private List<Executable> executableQueue;
 
-    public PenDownNode(List<Executable> queue){
+    public ClearNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
-    public void addNode(ParserNode node) {
-        throw new UnsupportedOperationException();
-    }
+    public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
 
     public double execute() {
-        executableQueue.add(new PenDownExecutable());
-        return 0; // FIXME
+        executableQueue.add(new ClearExecutable());
+        return 0; //FIXME
     }
 
     public boolean isComplete() {
@@ -27,6 +25,6 @@ public class PenDownNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "PENDOWN";
+        return "CLEAR";
     }
 }

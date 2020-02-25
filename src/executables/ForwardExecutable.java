@@ -1,10 +1,9 @@
 package executables;
 import Visualizer.Visualizer;
 
-
-public class backExecutable extends Executable {
+public class ForwardExecutable extends Executable {
   private double distance;
-  public backExecutable(double distanceUnit){
+  public ForwardExecutable(double distanceUnit){
     distance = distanceUnit;
   }
 
@@ -12,8 +11,8 @@ public class backExecutable extends Executable {
     double currentXPosition = visualizerObject.getTurtleX();
     double currentYPosition = visualizerObject.getTurtleY();
     double currentAngle = visualizerObject.getTurtleAngle();
-    double newXPosition = currentXPosition - Math.cos(currentAngle)*distance;
-    double newYPosition = currentYPosition - Math.sin(currentAngle)*distance;
+    double newXPosition = currentXPosition + Math.cos(currentAngle)*distance;
+    double newYPosition = currentYPosition + Math.sin(currentAngle)*distance;
     visualizerObject.setTurtleX(newXPosition);
     visualizerObject.setTurtleY(newYPosition);
     return distance;

@@ -2,10 +2,10 @@ package executables;
 import Visualizer.Visualizer;
 
 
-public class towardsExecutable extends Executable {
+public class TowardsExecutable extends Executable {
   private double xHeading;
   private double yHeading;
-  public towardsExecutable(double xInput, double yInput){
+  public TowardsExecutable(double xInput, double yInput){
     xHeading=xInput;
     yHeading=yInput;
   }

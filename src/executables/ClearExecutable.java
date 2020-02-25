@@ -1,19 +1,18 @@
 package executables;
-import static executables.setxyExecutable.getDistanceTraveled;
+
+import static executables.SetXYExecutable.getDistanceTraveled;
 import Visualizer.Visualizer;
 
 
-public class clearExecutable extends Executable {
-  public clearExecutable(){
+public class ClearExecutable extends Executable {
+  public ClearExecutable(){
   }
 
   public double run(Visualizer visualizerObject){
-    visualizerObject.clear();
+    //TODO visualizerObject.clear();
     double distanceTraveled = getDistanceTraveled(visualizerObject,0,0);
     visualizerObject.setTurtleX(0);
     visualizerObject.setTurtleY(0);
     return distanceTraveled;
   }
-
-
 }

@@ -1,20 +1,22 @@
 package parserModel.TurtleCommands;
 
+import executables.Executable;
+import executables.ForwardExecutable;
+import java.util.List;
 import parserModel.ParserNode;
 
 public class ForwardNode extends ParserNode {
     private ParserNode myLength;
+    private List<Executable> executableQueue;
 
-    public ForwardNode(){
-        super();
+    public ForwardNode(List<Executable> queue){
+        executableQueue = queue;
     }
 
-    @Override
     public double execute() {
-        double distanceToMove = myLength.execute();
-        System.out.println(toString() + " " + distanceToMove);
-        //TODO
-        return distanceToMove;
+        double distance = myLength.execute();
+        executableQueue.add(new ForwardExecutable(distance));
+        return distance;
     }
 
     public boolean isComplete(){

@@ -1,11 +1,11 @@
 package executables;
-import static executables.setxyExecutable.getDistanceTraveled;
+import static executables.SetXYExecutable.getDistanceTraveled;
 import Visualizer.Visualizer;
 
 
-public class homeExecutable extends Executable {
+public class HomeExecutable extends Executable {
 
-  public homeExecutable(){ }
+  public HomeExecutable(){ }
 
   public double run(Visualizer visualizerObject){
     double distanceTraveled = getDistanceTraveled(visualizerObject,0,0);

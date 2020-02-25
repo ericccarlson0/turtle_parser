@@ -1,9 +1,9 @@
 package executables;
 import Visualizer.Visualizer;
 
-public class leftExecutable extends Executable {
+public class LTurnExecutable extends Executable {
   private double angle;
-  public leftExecutable(double angleInput){
+  public LTurnExecutable(double angleInput){
     angle = angleInput;
   }
 

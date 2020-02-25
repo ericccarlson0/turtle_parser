@@ -1,28 +1,22 @@
 package parserModel.TurtleCommands;
 
-import ParserStack.ParserStack;
-
+import executables.BackwardExecutable;
+import executables.Executable;
+import java.util.List;
 import parserModel.ParserNode;
-import executables.;
-
 
 public class BackwardNode extends ParserNode {
     private ParserNode myLength;
+    private List<Executable> executableQueue;
 
-    public BackwardNode(){
-        super();
+    public BackwardNode(List<Executable> queue){
+        executableQueue = queue;
     }
 
-    public double execute(ParserStack parserStack) {
-        /*
-        double distanceToTravel = myLength.execute();
-        System.out.println(toString());
-        //TODO
-        return distanceToTravel;
-         */
-        //ps.pushCommand(new backExecutable())
-        parserStack.pushCommand(new backExecutable(myLength.execute()));
-        return 0;
+    public double execute() {
+        double distance = myLength.execute();
+        executableQueue.add(new BackwardExecutable(distance));
+        return distance;
     }
 
     public boolean isComplete() {

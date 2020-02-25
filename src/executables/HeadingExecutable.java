@@ -2,11 +2,11 @@ package executables;
 import Visualizer.Visualizer;
 
 
-public class sethExecutable extends Executable {
+public class HeadingExecutable extends Executable {
 
   private double angle;
 
-  public sethExecutable(double angleInput) {
+  public HeadingExecutable(double angleInput) {
     angle = angleInput;
   }
 

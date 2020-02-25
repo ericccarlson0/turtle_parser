@@ -2,10 +2,10 @@ package executables;
 import Visualizer.Visualizer;
 
 
-public class setxyExecutable extends Executable {
+public class SetXYExecutable extends Executable {
   private double xSet;
   private double ySet;
-  public setxyExecutable(double xInput, double yInput){
+  public SetXYExecutable(double xInput, double yInput){
     xSet=xInput;
     ySet=yInput;
   }

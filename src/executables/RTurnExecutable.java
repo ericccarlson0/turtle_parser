@@ -2,9 +2,9 @@ package executables;
 import Visualizer.Visualizer;
 
 
-public class rightExecutable extends Executable {
+public class RTurnExecutable extends Executable {
   private double angle;
-  public rightExecutable(double angleInput){
+  public RTurnExecutable(double angleInput){
     angle = angleInput;
   }
 

@@ -1,5 +1,7 @@
 package parserModel;
 
+import executables.Executable;
+import java.util.List;
 import parserModel.BooleanCommands.*;
 import parserModel.Control.RepeatParserNode;
 import parserModel.MathCommands.*;
@@ -15,35 +17,36 @@ public class CommandFactory {
      * @param identifier    A particular string associated with a particular type of ParserNode.
      * @return              Returns subclass of ParserNode.
      */
-    public ParserNode createCommand(String identifier){
+    public ParserNode createCommand(String identifier, List<Executable> queue){
         switch (identifier) {
+            // TURTLE COMMANDS
             case "Forward":
-                return new ForwardNode();
+                return new ForwardNode(queue);
             case "Backward":
-                return new BackwardNode();
+                return new BackwardNode(queue);
             case "Left":
-                return new LeftNode();
+                return new LTurnNode(queue);
             case "Right":
-                return new RightNode();
+                return new RTurnNode(queue);
             case "SetHeading":
-                return new HeadingNode();
+                return new HeadingNode(queue);
             case "SetTowards":
-                return new TowardsNode();
+                return new TowardsNode(queue);
             case "SetPosition":
-                return new PositionNode();
+                return new SetXYNode(queue);
             case "PenDown":
-                return new PenDownNode();
+                return new PenDownNode(queue);
             case "PenUp":
-                return new PenUpNode();
+                return new PenUpNode(queue);
             case "ShowTurtle":
-                return new ShowTurtleNode();
+                return new ShowNode(queue);
             case "HideTurtle":
-                return new HideTurtleNode();
+                return new HideNode(queue);
             case "Home":
-                return new HomeNode();
+                return new HomeNode(queue);
             case "ClearScreen":
-                return new ClearScreenNode();
-
+                return new ClearNode(queue);
+            // MATH COMMANDS
             case "Sum":
                 return new SumCommand();
             case "Difference":
@@ -72,7 +75,7 @@ public class CommandFactory {
                 return new PowCommand();
             case "Pi":
                 return new PiCommand();
-
+            // BOOLEAN COMMANDS
             case "LessThan":
                 return new LessCommand();
             case "GreaterThan":
@@ -87,6 +90,7 @@ public class CommandFactory {
                 return new OrCommand();
             case "Not":
                 return new NotCommand();
+            // COMPOUND COMMANDS
             case "DoTimes":
                 return new RepeatParserNode();
             case "For":

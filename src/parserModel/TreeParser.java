@@ -1,17 +1,17 @@
 package parserModel;
 
+import executables.Executable;
 import java.util.Arrays;
 import java.util.List;
 import parserModel.TokenAnalyzer.TokenType;
 
 public class TreeParser {
-//    private static final ResourceBundle COMMANDS = Main.RESOURCES;
-//    private static final ResourceBundle REGEX = Main.SYNTAX;
     private TokenAnalyzer myTokenAnalyzer;
     private CommandFactory myCommandFactory;
+    private List<Executable> myQueue;
 
-
-    public TreeParser() {
+    public TreeParser(List<Executable> queue) {
+        myQueue = queue;
         myTokenAnalyzer = new TokenAnalyzer();
         myCommandFactory = new CommandFactory();
     }
@@ -32,56 +32,49 @@ public class TreeParser {
         InputIterator iterator = new InputIterator(input);
         RootParserNode root = new RootParserNode();
         while(iterator.hasNext()) {
-            root.addNode(parseIteratorElement(iterator, root));
+            root.addNode(parseIteratorElement(iterator));
         }
         return root;
     }
 
     /**
-     * This is a recursive method that leverages a tree-like data structure to correctly order
-     * commands.
+     * This is a recursive method that leverages a tree-like data structure to correctly order the
+     * various commands.
      */
-    private ParserNode parseIteratorElement(InputIterator iterator, ParserNode parent) {
+    private ParserNode parseIteratorElement(InputIterator iterator) {
         String nextElement = iterator.next();
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
         switch (tokenType) {
             case Command:
                 String key = myTokenAnalyzer.getTokenKey(nextElement);
-                ParserNode root = myCommandFactory.createCommand(key);
+                ParserNode root = myCommandFactory.createCommand(key, myQueue);
                 while(! root.isComplete()) {
-                    // This will go through the iterator until the root has its conditions
-                    // (parameters, etc.) satisfied.
-                    root.addNode(parseIteratorElement(iterator, root));
+                    root.addNode(parseIteratorElement(iterator));
                 }
                 return root;
             case Comment:
-                // Necessary because a comment can end a block of code...
                 if (iterator.hasNext()) {
-                    return parseIteratorElement(iterator, parent);
+                    return parseIteratorElement(iterator);
                 }
             case Constant:
                 return new ConstantNode(Double.parseDouble(nextElement));
             case Variable:
-                //TODO: parse variable
+                // TODO
             case ListStart:
                 ParserNode list = new RootParserNode();
-                ParserNode listElement = parseIteratorElement(iterator, list);
-                while(listElement != null) {
+                ParserNode listElement = parseIteratorElement(iterator);
+                while (listElement != null) {
                     list.addNode(listElement);
-                    listElement = parseIteratorElement(iterator, list);
+                    listElement = parseIteratorElement(iterator);
                 }
                 return list;
             case ListEnd:
                 return null;
             case GroupStart:
-                //TODO: parse group start
+                // TODO
             case GroupEnd:
-                //TODO: parse group end
+                // TODO
         }
-//        System.out.println(nextElement);
-//        if(nextElement.equals("Forward")){
-//            return new MoveAction(Double.parseDouble(iterator.next()));
-//        }
         return null; //FIXME
     }
 }

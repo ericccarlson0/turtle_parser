@@ -1,16 +1,16 @@
 package parserModel.TurtleCommands;
 
 import executables.Executable;
-import executables.TowardsExecutable;
+import executables.SetXYExecutable;
 import java.util.List;
 import parserModel.ParserNode;
 
-public class TowardsNode extends ParserNode {
+public class SetXYNode extends ParserNode {
     private ParserNode myXNode;
     private ParserNode myYNode;
     private List<Executable> executableQueue;
 
-    public TowardsNode(List<Executable> queue) {
+    public SetXYNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
@@ -25,10 +25,10 @@ public class TowardsNode extends ParserNode {
     }
 
     public double execute() {
-        double xTowards = myXNode.execute();
-        double yTowards = myYNode.execute();
-        executableQueue.add(new TowardsExecutable(xTowards, yTowards));
-        return xTowards; // TODO (is this return correct?)
+        double xPos = myXNode.execute();
+        double yPos = myYNode.execute();
+        executableQueue.add(new SetXYExecutable(xPos, yPos));
+        return xPos; // TODO (is this return correct?)
     }
 
     public boolean isComplete() {
@@ -37,6 +37,6 @@ public class TowardsNode extends ParserNode {
 
     @Override
     public String toString(){
-        return "TOWARDS: " + myXNode + " " + myYNode;
+        return "SETXY: " + myXNode + " " + myYNode;
     }
 }

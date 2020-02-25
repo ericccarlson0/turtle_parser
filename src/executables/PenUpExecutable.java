@@ -2,12 +2,12 @@ package executables;
 import Visualizer.Visualizer;
 
 
-public class hideTurtleExecutable extends Executable {
-  public hideTurtleExecutable(){
+public class PenUpExecutable extends Executable {
+  public PenUpExecutable(){
   }
 
   public double run(Visualizer visualizerObject){
-    visualizerObject.hide();
+    visualizerObject.setTurtlePen(false);
     return 0;
   }
 
