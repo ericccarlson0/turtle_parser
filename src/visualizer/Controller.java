@@ -3,6 +3,7 @@ package visualizer;
 import executables.Executable;
 import parserModel.ParserNode;
 import parserModel.TreeParser;
+
 //import controller.Executables.Executable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

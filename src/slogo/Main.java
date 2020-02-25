@@ -1,11 +1,10 @@
 package slogo;
-        import visualizer.Controller;
-        import javafx.application.Application;
-        import javafx.stage.Stage;
 
-
-        import java.io.IOException;
-        import java.util.*;
+import visualizer.Controller;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import java.io.IOException;
+import java.util.*;
 
 public class Main extends Application {
 
@@ -14,7 +13,6 @@ public class Main extends Application {
     //public static final String RESOURCE_FOLDER = "resources.";
     //public static final ResourceBundle SYNTAX = ResourceBundle.getBundle("resources.parsing.syntax");
     //public static final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.languages.English");
-
 
      public static void main (String[] args) {
         launch(args);
