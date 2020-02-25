@@ -3,9 +3,10 @@ package parserModel.TurtleCommands;
 import executables.Executable;
 import executables.ShowExecutable;
 import java.util.List;
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class ShowNode extends ParserNode {
+public class ShowNode extends CommandParserNode {
     private List<Executable> executableQueue;
 
     public ShowNode(List<Executable> queue) { executableQueue = queue; }

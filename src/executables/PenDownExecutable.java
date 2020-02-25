@@ -11,5 +11,10 @@ public class PenDownExecutable extends Executable {
     return 1;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

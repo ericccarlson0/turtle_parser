@@ -22,5 +22,10 @@ public class TowardsExecutable extends Executable {
     return (newAngle-currentAngle)%360;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

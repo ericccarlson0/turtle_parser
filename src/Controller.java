@@ -2,7 +2,7 @@ import Visualizer.Visualizer;
 import executables.Executable;
 import java.util.ArrayList;
 import java.util.List;
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 import parserModel.TreeParser;
 
 public class Controller {
@@ -17,7 +17,7 @@ public class Controller {
   }
 
   public void step (String input) {
-    ParserNode root = myTreeParser.parseString(input);
+    CommandParserNode root = myTreeParser.parseString(input);
     root.execute(); // ***
     for (Executable e : myExecutableQueue) {
       e.run(myVisualizer);

@@ -14,5 +14,10 @@ public class HomeExecutable extends Executable {
     return distanceTraveled;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

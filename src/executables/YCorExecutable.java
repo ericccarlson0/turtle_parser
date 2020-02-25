@@ -10,5 +10,10 @@ public class YCorExecutable extends Executable {
     return visualizerObject.getTurtleY();
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

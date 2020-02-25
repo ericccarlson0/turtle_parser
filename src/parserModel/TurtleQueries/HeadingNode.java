@@ -2,9 +2,11 @@ package parserModel.TurtleQueries;
 import executables.Executable;
 import executables.HeadingExecutable;
 import java.util.List;
+
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class HeadingNode extends ParserNode {
+public class HeadingNode extends CommandParserNode {
   private List<Executable> executableQueue;
 
   public HeadingNode(List<Executable> queue){

@@ -18,5 +18,10 @@ public class ForwardExecutable extends Executable {
     return distance;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

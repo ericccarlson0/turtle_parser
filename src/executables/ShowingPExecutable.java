@@ -10,5 +10,10 @@ public class ShowingPExecutable extends Executable {
     return visualizerObject.getShowing();
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

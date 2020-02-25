@@ -1,6 +1,10 @@
-package parserModel;
+package parserModel.Control;
 
-public class ForParserNode extends ParserNode {
+import parserModel.CommandParserNode;
+import parserModel.ControlParserNode;
+import parserModel.ParserNode;
+
+public class ForParserNode extends ControlParserNode {
     private ParserNode myForNode;
     private ParserNode myBodyNode;
 
@@ -13,8 +17,11 @@ public class ForParserNode extends ParserNode {
     }
 
     public double execute() {
-        //TODO
-        return 0;
+        double lastValue = 0;
+        while(myForNode.execute() != 0){
+            lastValue = myBodyNode.execute();
+        }
+        return lastValue;
     }
 
     public boolean isComplete() {

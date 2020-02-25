@@ -3,6 +3,9 @@ package parserModel;
 import executables.Executable;
 import java.util.List;
 import parserModel.BooleanCommands.*;
+import parserModel.Control.ForParserNode;
+import parserModel.Control.IfElseNode;
+import parserModel.Control.IfNode;
 import parserModel.Control.RepeatParserNode;
 import parserModel.MathCommands.*;
 import parserModel.TurtleCommands.*;
@@ -30,7 +33,7 @@ public class CommandFactory {
             case "Right":
                 return new RTurnNode(queue);
             case "SetHeading":
-                return new SetHeadingNode(queue);
+                // return new HeadingNode(); //FIXME
             case "SetTowards":
                 return new TowardsNode(queue);
             case "SetPosition":
@@ -91,11 +94,18 @@ public class CommandFactory {
                 return new OrCommand();
             case "Not":
                 return new NotCommand();
+
             // COMPOUND COMMANDS
             case "DoTimes":
-                return new RepeatParserNode();
+                return new ForParserNode();
             case "For":
                 return new ForParserNode();
+            case "Repeat":
+                return new RepeatParserNode();
+            case "If":
+                return new IfNode();
+            case "IfElse":
+                return new IfElseNode();
 
              // TURTLE QUERIES
             case "Xcor":
@@ -103,7 +113,7 @@ public class CommandFactory {
             case "Ycor":
                 return new YCorNode(queue);
             case "Heading":
-                return new HeadingNode(queue);
+                // return new HeadingNode(); FIXME
             case "PenDownNp":
                 return new PenDownPNode(queue);
             case "ShowingP":
