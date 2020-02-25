@@ -3,16 +3,16 @@ package parserModel.TurtleCommands;
 import executables.Executable;
 import executables.PenUpExecutable;
 import java.util.List;
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 
-public class PenUpNode extends ParserNode {
+public class PenUpNode extends CommandParserNode {
     private List<Executable> executableQueue;
 
     public PenUpNode(List<Executable> queue){
         executableQueue = queue;
     }
 
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         throw new UnsupportedOperationException();
     }
 

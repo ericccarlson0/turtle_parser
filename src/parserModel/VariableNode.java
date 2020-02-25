@@ -1,8 +1,6 @@
-package parserModel.MathCommands;
+package parserModel;
 
-import parserModel.CommandParserNode;
-
-public class PiCommand extends CommandParserNode {
+public class VariableNode extends CommandParserNode {
 
     @Override
     public void addNode(CommandParserNode node) {
@@ -11,7 +9,7 @@ public class PiCommand extends CommandParserNode {
 
     @Override
     public double execute() {
-        return Math.PI;
+        return 1.0; //TODO
     }
 
     @Override

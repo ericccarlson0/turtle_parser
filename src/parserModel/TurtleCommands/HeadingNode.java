@@ -1,38 +1,38 @@
 package parserModel.TurtleCommands;
 
-import executables.Executable;
-import executables.HeadingExecutable;
-import java.util.List;
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 
-public class HeadingNode extends ParserNode {
-    public ParserNode myDegrees;
-    private List<Executable> executableQueue;
+public class HeadingNode extends CommandParserNode {
+    public CommandParserNode myDegrees;
 
-    public HeadingNode(List<Executable> queue) {
-        executableQueue = queue;
+    public HeadingNode(){
+        super();
     }
 
-    public void addNode(ParserNode node) {
-        if (myDegrees == null) {
+    @Override
+    public void addNode(CommandParserNode node) {
+        if(myDegrees == null) {
             myDegrees = node;
-        } else {
-            throw new UnsupportedOperationException();
+        } else{
+            // throw exception
         }
     }
 
+    @Override
     public double execute() {
-        double degrees = myDegrees.execute();
-        executableQueue.add(new HeadingExecutable(degrees));
-        return degrees;
+        double degreesToRotate = myDegrees.execute();
+        System.out.println(toString());
+        //iplementi
+        return degreesToRotate;
     }
 
+    @Override
     public boolean isComplete() {
-        return myDegrees != null;
+        return myDegrees == null;
     }
 
     @Override
     public String toString(){
-        return "HEADING: " + myDegrees;
+        return "Setting Heading "+ myDegrees;
     }
 }

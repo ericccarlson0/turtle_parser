@@ -16,7 +16,7 @@ public class TreeParser {
         myCommandFactory = new CommandFactory();
     }
 
-    public ParserNode parseString(String input){
+    public CommandParserNode parseString(String input){
         List<String> inputElements = Arrays.asList(input.split(" "));
         for(int i = 0; i < inputElements.size(); i++) {
             if(inputElements.get(i).equals("")){
@@ -28,7 +28,7 @@ public class TreeParser {
         return parseList(inputElements);
     }
 
-    private ParserNode parseList(List<String> input){
+    private CommandParserNode parseList(List<String> input){
         InputIterator iterator = new InputIterator(input);
         RootParserNode root = new RootParserNode();
         while(iterator.hasNext()) {
@@ -41,13 +41,42 @@ public class TreeParser {
      * This is a recursive method that leverages a tree-like data structure to correctly order the
      * various commands.
      */
-    private ParserNode parseIteratorElement(InputIterator iterator) {
+    private CommandParserNode parseIteratorElement(InputIterator iterator) {
         String nextElement = iterator.next();
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
+        return getParserNode(iterator, nextElement, tokenType);
+    }
+
+    private CommandParserNode parseForSpecificNode(InputIterator iterator, TokenType nodeType){
+        String nextElement = iterator.next();
+        TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
+        if(tokenType != nodeType){
+            System.out.println("Exception!");
+        } else {
+            return getParserNode(iterator, nextElement, tokenType); //TODO
+        }
+        return null;
+    }
+    private LoopCounterNode parseForLoopCounter(InputIterator iterator){
+        if(myTokenAnalyzer.typeOfToken(iterator.next()) != TokenType.ListStart){
+            // TODO: throw an exception
+        }
+        String variableName = iterator.next();
+        if(myTokenAnalyzer.typeOfToken(variableName) != TokenType.Variable){
+            //throw an exception
+        }
+        ParserNode variableNode = getParserNode(iterator, variableName, TokenType.Variable);
+        LoopCounterNode loopCounter = new LoopCounterNode();
+        return loopCounter;
+    }
+    private CommandParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {
         switch (tokenType) {
             case Command:
                 String key = myTokenAnalyzer.getTokenKey(nextElement);
-                ParserNode root = myCommandFactory.createCommand(key, myQueue);
+                CommandParserNode root = myCommandFactory.createCommand(key, myQueue);
+                if(root.typeOfNode() == ParserNode.NodeType.LOOP){
+                    root.addNode(parseForLoopCounter(iterator));
+                }
                 while(! root.isComplete()) {
                     root.addNode(parseIteratorElement(iterator));
                 }
@@ -61,8 +90,8 @@ public class TreeParser {
             case Variable:
                 // TODO
             case ListStart:
-                ParserNode list = new RootParserNode();
-                ParserNode listElement = parseIteratorElement(iterator);
+                CommandParserNode list = new RootParserNode();
+                CommandParserNode listElement = parseIteratorElement(iterator);
                 while (listElement != null) {
                     list.addNode(listElement);
                     listElement = parseIteratorElement(iterator);

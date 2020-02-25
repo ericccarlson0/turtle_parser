@@ -3,16 +3,16 @@ package parserModel.TurtleCommands;
 import executables.ClearExecutable;
 import executables.Executable;
 import java.util.List;
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 
-public class ClearNode extends ParserNode {
+public class ClearNode extends CommandParserNode {
     private List<Executable> executableQueue;
 
     public ClearNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
-    public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
+    public void addNode(CommandParserNode node) { throw new UnsupportedOperationException(); }
 
     public double execute() {
         executableQueue.add(new ClearExecutable());

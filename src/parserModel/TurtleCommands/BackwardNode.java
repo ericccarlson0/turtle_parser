@@ -3,10 +3,10 @@ package parserModel.TurtleCommands;
 import executables.BackwardExecutable;
 import executables.Executable;
 import java.util.List;
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 
-public class BackwardNode extends ParserNode {
-    private ParserNode myLength;
+public class BackwardNode extends CommandParserNode {
+    private CommandParserNode myLength;
     private List<Executable> executableQueue;
 
     public BackwardNode(List<Executable> queue){
@@ -23,7 +23,7 @@ public class BackwardNode extends ParserNode {
         return myLength != null;
     }
 
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         myLength = node;
     }
 

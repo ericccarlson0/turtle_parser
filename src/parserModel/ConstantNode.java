@@ -1,13 +1,13 @@
 package parserModel;
 
-public class ConstantNode extends ParserNode {
+public class ConstantNode extends CommandParserNode {
     private double myValue;
 
     public ConstantNode(double value){
         myValue = value;
     }
 
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         throw new UnsupportedOperationException();
     }
 

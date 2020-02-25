@@ -3,14 +3,14 @@ package parserModel.TurtleCommands;
 import executables.Executable;
 import executables.ShowExecutable;
 import java.util.List;
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 
-public class ShowNode extends ParserNode {
+public class ShowNode extends CommandParserNode {
     private List<Executable> executableQueue;
 
     public ShowNode(List<Executable> queue) { executableQueue = queue; }
 
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         throw new UnsupportedOperationException();
     }
 

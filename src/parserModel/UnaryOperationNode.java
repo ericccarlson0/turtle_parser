@@ -1,9 +1,9 @@
 package parserModel;
 
-public abstract class UnaryOperationNode extends ParserNode {
-    protected ParserNode myArgumentNode;
+public abstract class UnaryOperationNode extends CommandParserNode {
+    protected CommandParserNode myArgumentNode;
 
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         if (myArgumentNode == null){
             myArgumentNode = node;
         } else {

@@ -3,18 +3,18 @@ package parserModel.TurtleCommands;
 import executables.Executable;
 import executables.SetXYExecutable;
 import java.util.List;
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 
-public class SetXYNode extends ParserNode {
-    private ParserNode myXNode;
-    private ParserNode myYNode;
+public class SetXYNode extends CommandParserNode {
+    private CommandParserNode myXNode;
+    private CommandParserNode myYNode;
     private List<Executable> executableQueue;
 
     public SetXYNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         if (myXNode == null) {
             myXNode = node;
         } else if (myYNode == null) {

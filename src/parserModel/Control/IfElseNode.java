@@ -1,14 +1,14 @@
 package parserModel.Control;
 
-import parserModel.ParserNode;
+import parserModel.CommandParserNode;
 
-public class IfElseNode extends ParserNode {
-    private ParserNode myConditional;
-    private ParserNode myIfNode;
-    private ParserNode myElseNode;
+public class IfElseNode extends CommandParserNode {
+    private CommandParserNode myConditional;
+    private CommandParserNode myIfNode;
+    private CommandParserNode myElseNode;
 
     @Override
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         if(myConditional == null){
             myConditional = node;
         } else if (myIfNode == null){

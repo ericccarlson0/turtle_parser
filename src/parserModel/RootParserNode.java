@@ -1,21 +1,22 @@
 package parserModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class RootParserNode extends ParserNode {
+public class RootParserNode extends CommandParserNode {
+    protected List<CommandParserNode> myChildren;
 
     public RootParserNode() {
-        complete = false;
-        myParent = null;
-        myChildren = new ArrayList<ParserNode>();
+        myChildren = new ArrayList<CommandParserNode>();
     }
 
-    public void addNode(ParserNode node) {
+    public void addNode(CommandParserNode node) {
         myChildren.add(node);
     }
 
     public double execute() {
-        for (ParserNode node : myChildren){
+
+        for (CommandParserNode node : myChildren){
             node.execute();
         }
         return 1;
@@ -23,13 +24,13 @@ public class RootParserNode extends ParserNode {
     }
 
     public boolean isComplete() {
-        return complete;
+        return true;
     }
 
     @Override
     public String toString(){
         StringBuilder ret = new StringBuilder();
-        for (ParserNode node : myChildren){
+        for (CommandParserNode node : myChildren){
             ret.append(node);
             ret.append(" ");
         }

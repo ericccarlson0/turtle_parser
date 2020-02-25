@@ -373,4 +373,10 @@ public class Visualizer {
         scrollPane.setPrefSize(width, height);
         return scrollPane;
     }
+
+    public void hide() {
+    }
+
+    public void show() {
+    }
 }

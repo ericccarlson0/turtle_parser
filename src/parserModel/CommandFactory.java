@@ -3,6 +3,7 @@ package parserModel;
 import executables.Executable;
 import java.util.List;
 import parserModel.BooleanCommands.*;
+import parserModel.Control.ForParserNode;
 import parserModel.Control.RepeatParserNode;
 import parserModel.MathCommands.*;
 import parserModel.TurtleCommands.*;
@@ -17,7 +18,7 @@ public class CommandFactory {
      * @param identifier    A particular string associated with a particular type of ParserNode.
      * @return              Returns subclass of ParserNode.
      */
-    public ParserNode createCommand(String identifier, List<Executable> queue){
+    public CommandParserNode createCommand(String identifier, List<Executable> queue){
         switch (identifier) {
             // TURTLE COMMANDS
             case "Forward":
@@ -29,7 +30,7 @@ public class CommandFactory {
             case "Right":
                 return new RTurnNode(queue);
             case "SetHeading":
-                return new HeadingNode(queue);
+                return new HeadingNode(); //?
             case "SetTowards":
                 return new TowardsNode(queue);
             case "SetPosition":
