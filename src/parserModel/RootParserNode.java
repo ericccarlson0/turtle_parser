@@ -4,23 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RootParserNode extends CommandParserNode {
-    protected List<CommandParserNode> myChildren;
+    protected List<ParserNode> myChildren;
 
     public RootParserNode() {
-        myChildren = new ArrayList<CommandParserNode>();
+        myChildren = new ArrayList<>();
     }
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         myChildren.add(node);
     }
 
     public double execute() {
-
-        for (CommandParserNode node : myChildren){
-            node.execute();
+        double returning = 0.0;
+        for (ParserNode node : myChildren){
+            returning = node.execute();
         }
-        return 1;
-        //FIXME
+        return returning;
     }
 
     public boolean isComplete() {
@@ -30,7 +29,7 @@ public class RootParserNode extends CommandParserNode {
     @Override
     public String toString(){
         StringBuilder ret = new StringBuilder();
-        for (CommandParserNode node : myChildren){
+        for (ParserNode node : myChildren){
             ret.append(node);
             ret.append(" ");
         }

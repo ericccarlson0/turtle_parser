@@ -1,5 +1,8 @@
 package parserModel;
 
+import parserModel.BooleanCommands.NotEqualCommand;
+import parserModel.MathCommands.SumCommand;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +31,33 @@ public class LoopCounterNode extends CommandParserNode{
         if(! validated){
             switch(myIterableParameters.size()){
                 case 1:
-                    SetVariable initializerNode = new SetVariable(myVariableNode);
-                    initializerNode.addNode(new ConstantNode(1.0));
-                    initializerNode.execute();
-                    myVariableNode = new RootParserNode();
+                    validateLoop(0,1,myIterableParameters.get(0).execute() + 1);
+                    break;
+                case 3:
+                    validateLoop(myIterableParameters.get(0).execute(),myIterableParameters.get(2).execute(),myIterableParameters.get(1).execute());
+                    break;
             }
+            validated = true;
         }
+        return myIteratingNode.execute();
+    }
+
+    private void validateLoop(double initialValue, double incrementValue, double endValue){
+        SetVariable initializerNode = new SetVariable(myVariableNode);
+        initializerNode.addNode(new ConstantNode(initialValue));
+        initializerNode.execute();
+        myIteratingNode = new NotEqualCommand();
+
+
+        SumCommand adder = new SumCommand();
+        adder.addNode(myVariableNode);
+        adder.addNode(new ConstantNode(incrementValue));
+
+        ParserNode incrementNode = new SetVariable(myVariableNode);
+        incrementNode.addNode(adder);
+
+        myIteratingNode.addNode(incrementNode);
+        myIteratingNode.addNode(new ConstantNode(endValue));
     }
 
     @Override

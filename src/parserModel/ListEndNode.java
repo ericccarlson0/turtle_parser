@@ -3,7 +3,7 @@ package parserModel;
 public class ListEndNode extends ParserNode{
 
     @Override
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         //throw exception
     }
 

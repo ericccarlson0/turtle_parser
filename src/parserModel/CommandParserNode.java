@@ -1,7 +1,5 @@
 package parserModel;
 
-import executables.Executable;
-import java.util.Queue;
 
 public abstract class CommandParserNode extends ParserNode{
 

@@ -8,7 +8,7 @@ public class VariableNode extends CommandParserNode {
     }
 
     @Override
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
