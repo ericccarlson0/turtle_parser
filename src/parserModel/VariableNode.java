@@ -1,6 +1,11 @@
 package parserModel;
 
 public class VariableNode extends CommandParserNode {
+    private String myVariableName;
+
+    public VariableNode(String variableName){
+        myVariableName = variableName;
+    }
 
     @Override
     public void addNode(CommandParserNode node) {

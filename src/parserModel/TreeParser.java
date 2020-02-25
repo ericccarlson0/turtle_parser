@@ -3,6 +3,8 @@ package parserModel;
 import executables.Executable;
 import java.util.Arrays;
 import java.util.List;
+
+import javafx.scene.Parent;
 import parserModel.TokenAnalyzer.TokenType;
 
 public class TreeParser {
@@ -65,8 +67,12 @@ public class TreeParser {
         if(myTokenAnalyzer.typeOfToken(variableName) != TokenType.Variable){
             //throw an exception
         }
-        ParserNode variableNode = getParserNode(iterator, variableName, TokenType.Variable);
-        LoopCounterNode loopCounter = new LoopCounterNode();
+        VariableNode variableNode = new VariableNode(variableName);
+        LoopCounterNode loopCounter = new LoopCounterNode(variableNode);
+        CommandParserNode adding;
+        while((adding = parseIteratorElement(iterator)).typeOfNode() != ParserNode.NodeType.LISTEND){
+            loopCounter.addNode(adding);
+        }
         return loopCounter;
     }
     private CommandParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {

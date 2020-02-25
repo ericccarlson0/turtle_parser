@@ -1,9 +1,11 @@
 package executables;
 import Visualizer.Visualizer;
+import java.util.ResourceBundle;
 
 
 public class BackwardExecutable extends Executable {
   private double distance;
+  private final String executableType = "Backward";
   public BackwardExecutable(double distanceUnit){
     distance = distanceUnit;
   }
@@ -17,5 +19,9 @@ public class BackwardExecutable extends Executable {
     visualizerObject.setTurtleX(newXPosition);
     visualizerObject.setTurtleY(newYPosition);
     return distance;
+  }
+
+  public String getString(){
+    return executableName +
   }
 }

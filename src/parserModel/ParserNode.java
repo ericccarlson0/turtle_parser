@@ -11,7 +11,7 @@ public abstract class ParserNode {
         LISTEND
     }
     public Queue<Executable> executableQueue;
-    public abstract void addNode(CommandParserNode node);
+    public abstract void addNode(ParserNode node);
     public abstract double execute();
     public abstract boolean isComplete();
     public abstract NodeType typeOfNode();

@@ -7,7 +7,7 @@ public class ConstantNode extends CommandParserNode {
         myValue = value;
     }
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
