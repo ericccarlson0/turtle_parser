@@ -4,7 +4,6 @@ import executables.Executable;
 import java.util.Queue;
 
 public abstract class ParserNode {
-  public Queue<Executable> executableQueue;
   public abstract void addNode(ParserNode node);
   public abstract double execute();
   public abstract boolean isComplete();

@@ -29,7 +29,7 @@ public class CommandFactory {
             case "Right":
                 return new RTurnNode(queue);
             case "SetHeading":
-                return new HeadingNode(queue);
+                return new SetHeadingNode(queue);
             case "SetTowards":
                 return new TowardsNode(queue);
             case "SetPosition":
@@ -95,6 +95,18 @@ public class CommandFactory {
                 return new RepeatParserNode();
             case "For":
                 return new ForParserNode();
+
+             // TURTLE QUERIES
+            case "Xcor":
+                return new XCorNode();
+            case "Ycor":
+                return new YCorNode();
+            case "Heading":
+                return new HeadingNode();
+            case "PenDownNp":
+                return new PenDownNpNode();
+            case "ShowingP":
+                return new ShowingPNode();
         }
         return null;
     }

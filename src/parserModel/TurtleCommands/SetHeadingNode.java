@@ -1,15 +1,15 @@
 package parserModel.TurtleCommands;
 
 import executables.Executable;
-import executables.HeadingExecutable;
+import executables.SetHeadingExecutable;
 import java.util.List;
 import parserModel.ParserNode;
 
-public class HeadingNode extends ParserNode {
+public class SetHeadingNode extends ParserNode {
     public ParserNode myDegrees;
     private List<Executable> executableQueue;
 
-    public HeadingNode(List<Executable> queue) {
+    public SetHeadingNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
@@ -23,7 +23,7 @@ public class HeadingNode extends ParserNode {
 
     public double execute() {
         double degrees = myDegrees.execute();
-        executableQueue.add(new HeadingExecutable(degrees));
+        executableQueue.add(new SetHeadingExecutable(degrees));
         return degrees;
     }
 
