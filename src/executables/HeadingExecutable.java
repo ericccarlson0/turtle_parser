@@ -3,6 +3,7 @@ import Visualizer.Visualizer;
 
 
 public class HeadingExecutable extends Executable {
+  private final String executableType = "Backward";
   public HeadingExecutable(){
   }
 
@@ -10,5 +11,8 @@ public class HeadingExecutable extends Executable {
     return visualizerObject.getTurtleAngle();
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
 
 }

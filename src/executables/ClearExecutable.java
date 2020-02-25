@@ -5,6 +5,7 @@ import Visualizer.Visualizer;
 
 
 public class ClearExecutable extends Executable {
+  private final String executableType = "ClearScreen";
   public ClearExecutable(){
   }
 
@@ -14,5 +15,9 @@ public class ClearExecutable extends Executable {
     visualizerObject.setTurtleX(0);
     visualizerObject.setTurtleY(0);
     return distanceTraveled;
+  }
+
+  public String getString(){
+    return getExecutableName(executableType);
   }
 }

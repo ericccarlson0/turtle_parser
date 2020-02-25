@@ -15,5 +15,9 @@ public class RTurnExecutable extends Executable {
     return angle;
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
+
 
 }

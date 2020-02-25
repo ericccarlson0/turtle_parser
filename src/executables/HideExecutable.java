@@ -11,5 +11,8 @@ public class HideExecutable extends Executable {
     return 0;
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
 
 }

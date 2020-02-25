@@ -14,5 +14,9 @@ public class HomeExecutable extends Executable {
     return distanceTraveled;
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
+
 
 }

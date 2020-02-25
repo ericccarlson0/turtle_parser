@@ -25,5 +25,9 @@ public class SetXYExecutable extends Executable {
     return Math.sqrt(Math.pow(xDistance,2)+Math.pow(yDistance,2));
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
+
 
 }

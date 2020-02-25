@@ -11,5 +11,8 @@ public class PenDownExecutable extends Executable {
     return 1;
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
 
 }

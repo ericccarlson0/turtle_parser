@@ -22,6 +22,6 @@ public class BackwardExecutable extends Executable {
   }
 
   public String getString(){
-    return executableName +
+    return getExecutableName(executableType)+" "+distance;
   }
 }

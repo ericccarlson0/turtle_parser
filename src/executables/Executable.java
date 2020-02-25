@@ -4,7 +4,9 @@ import Visualizer.Visualizer;
 import java.util.ResourceBundle;
 
 public abstract class Executable {
-  private final String ""
+  public static final String RESOURCES = "Resources.Languages.";
+  private final String languageChosen = ResourceBundle.getBundle(RESOURCES+"LanguageChoice").getString("Language");
+  public static final String DEFAULT_RESOURCE_PACKAGE = RESOURCES + ".";
   public Executable(String... args){ }
 
   public abstract double run(Visualizer visualizerObject);
@@ -12,8 +14,7 @@ public abstract class Executable {
   public abstract String getString();
 
   protected String getExecutableName(String executableType){
-    private final String languageChosen = ResourceBundle.getBundle("b").getString("Language");
-    private final String executableName = ResourceBundle.getBundle(""+languageChosen).getString("Bac");
+    return ResourceBundle.getBundle(RESOURCES+languageChosen).getString(executableType).split("|")[0];
   }
 }
 

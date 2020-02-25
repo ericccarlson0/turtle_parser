@@ -17,6 +17,10 @@ public class SetHeadingExecutable extends Executable {
     visualizerObject.setTurtleAngle(newAngle);
     return degreesMoved;
   }
+
+  public String getString(){
+    return getExecutableName(executableType);
+  }
 }
 
 

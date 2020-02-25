@@ -10,5 +10,9 @@ public class PenDownPExecutable extends Executable {
     return visualizerObject.getPenDown();
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
+
 
 }

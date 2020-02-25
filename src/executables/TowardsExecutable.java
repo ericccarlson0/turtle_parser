@@ -22,5 +22,9 @@ public class TowardsExecutable extends Executable {
     return (newAngle-currentAngle)%360;
   }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
+
 
 }
