@@ -2,12 +2,13 @@ package parserModel.Control;
 
 import parserModel.CommandParserNode;
 import parserModel.ControlParserNode;
+import parserModel.ParserNode;
 
 public class ForParserNode extends ControlParserNode {
-    private CommandParserNode myForNode;
-    private CommandParserNode myBodyNode;
+    private ParserNode myForNode;
+    private ParserNode myBodyNode;
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         if (myForNode == null){
             myForNode = node;
         } else if (myBodyNode == null){

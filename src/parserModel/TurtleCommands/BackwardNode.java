@@ -4,9 +4,10 @@ import executables.BackwardExecutable;
 import executables.Executable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class BackwardNode extends CommandParserNode {
-    private CommandParserNode myLength;
+    private ParserNode myLength;
     private List<Executable> executableQueue;
 
     public BackwardNode(List<Executable> queue){
@@ -23,7 +24,7 @@ public class BackwardNode extends CommandParserNode {
         return myLength != null;
     }
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         myLength = node;
     }
 

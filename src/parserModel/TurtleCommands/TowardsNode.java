@@ -4,17 +4,18 @@ import executables.Executable;
 import executables.TowardsExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class TowardsNode extends CommandParserNode {
-    private CommandParserNode myXNode;
-    private CommandParserNode myYNode;
+    private ParserNode myXNode;
+    private ParserNode myYNode;
     private List<Executable> executableQueue;
 
     public TowardsNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         if (myXNode == null) {
             myXNode = node;
         } else if (myYNode == null) {

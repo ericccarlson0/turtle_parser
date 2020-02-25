@@ -4,16 +4,17 @@ import executables.Executable;
 import executables.LTurnExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class LTurnNode extends CommandParserNode {
-    private CommandParserNode myRotationNode;
+    private ParserNode myRotationNode;
     private List<Executable> executableQueue;
 
     public LTurnNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         if (myRotationNode == null){
             myRotationNode = node;
         } else {

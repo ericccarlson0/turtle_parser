@@ -15,5 +15,10 @@ public class RTurnExecutable extends Executable {
     return angle;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

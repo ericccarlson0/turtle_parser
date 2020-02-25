@@ -1,13 +1,14 @@
 package parserModel.Control;
 
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class RepeatParserNode extends CommandParserNode {
-    private CommandParserNode myTimesNode;
-    private CommandParserNode executeNode;
+    private ParserNode myTimesNode;
+    private ParserNode executeNode;
 
     @Override
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         if(myTimesNode == null){
             myTimesNode = node;
         } else if(executeNode == null){

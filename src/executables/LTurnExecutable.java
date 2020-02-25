@@ -14,5 +14,10 @@ public class LTurnExecutable extends Executable {
     return angle;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

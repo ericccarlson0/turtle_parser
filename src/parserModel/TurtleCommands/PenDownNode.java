@@ -4,6 +4,7 @@ import executables.Executable;
 import executables.PenDownExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class PenDownNode extends CommandParserNode {
     private List<Executable> executableQueue;
@@ -12,7 +13,7 @@ public class PenDownNode extends CommandParserNode {
         executableQueue = queue;
     }
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 

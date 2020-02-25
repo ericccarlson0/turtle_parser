@@ -1,11 +1,12 @@
 package parserModel.MathCommands;
 
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class PiCommand extends CommandParserNode {
 
     @Override
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 

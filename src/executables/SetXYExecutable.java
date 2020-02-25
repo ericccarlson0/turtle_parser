@@ -17,6 +17,11 @@ public class SetXYExecutable extends Executable {
     return distanceTraveled;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
   public static double getDistanceTraveled(Visualizer visualizerObject, double xSet, double ySet) {
     double currentXPosition = visualizerObject.getTurtleX();
     double currentYPosition = visualizerObject.getTurtleY();

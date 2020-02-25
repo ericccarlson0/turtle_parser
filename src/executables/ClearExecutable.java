@@ -15,4 +15,9 @@ public class ClearExecutable extends Executable {
     visualizerObject.setTurtleY(0);
     return distanceTraveled;
   }
+
+  @Override
+  public String getString() {
+    return null;
+  }
 }

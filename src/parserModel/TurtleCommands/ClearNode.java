@@ -4,6 +4,7 @@ import executables.ClearExecutable;
 import executables.Executable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class ClearNode extends CommandParserNode {
     private List<Executable> executableQueue;
@@ -12,7 +13,7 @@ public class ClearNode extends CommandParserNode {
         executableQueue = queue;
     }
 
-    public void addNode(CommandParserNode node) { throw new UnsupportedOperationException(); }
+    public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
 
     public double execute() {
         executableQueue.add(new ClearExecutable());

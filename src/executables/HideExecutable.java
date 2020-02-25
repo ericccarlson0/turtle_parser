@@ -11,5 +11,10 @@ public class HideExecutable extends Executable {
     return 0;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

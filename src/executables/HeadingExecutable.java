@@ -10,5 +10,10 @@ public class HeadingExecutable extends Executable {
     return visualizerObject.getTurtleAngle();
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

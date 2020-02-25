@@ -11,5 +11,10 @@ public class PenUpExecutable extends Executable {
     return 0;
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }

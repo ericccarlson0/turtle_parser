@@ -379,4 +379,12 @@ public class Visualizer {
 
     public void show() {
     }
+
+    public double getPenDown() {
+        return 0;
+    }
+
+    public double getShowing() {
+        return 0;
+    }
 }

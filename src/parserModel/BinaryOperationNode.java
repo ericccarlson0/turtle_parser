@@ -1,10 +1,10 @@
 package parserModel;
 
 public abstract class BinaryOperationNode extends CommandParserNode {
-    protected CommandParserNode operand1;
-    protected CommandParserNode operand2;
+    protected ParserNode operand1;
+    protected ParserNode operand2;
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         if (operand1 == null) {
             operand1 = node;
         } else if (operand2 == null) {

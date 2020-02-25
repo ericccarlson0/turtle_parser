@@ -4,17 +4,18 @@ import executables.Executable;
 import executables.SetXYExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.ParserNode;
 
 public class SetXYNode extends CommandParserNode {
-    private CommandParserNode myXNode;
-    private CommandParserNode myYNode;
+    private ParserNode myXNode;
+    private ParserNode myYNode;
     private List<Executable> executableQueue;
 
     public SetXYNode(List<Executable> queue) {
         executableQueue = queue;
     }
 
-    public void addNode(CommandParserNode node) {
+    public void addNode(ParserNode node) {
         if (myXNode == null) {
             myXNode = node;
         } else if (myYNode == null) {

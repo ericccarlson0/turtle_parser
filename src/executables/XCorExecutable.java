@@ -10,5 +10,10 @@ public class XCorExecutable extends Executable {
     return visualizerObject.getTurtleX();
   }
 
+  @Override
+  public String getString() {
+    return null;
+  }
+
 
 }
