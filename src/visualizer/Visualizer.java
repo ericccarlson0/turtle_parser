@@ -165,18 +165,12 @@ public class Visualizer {
         playAnimation();
     }
 
-    public double getTurtlePen(){
-        if(myTurtles.get(turtleIndex).getPen()){
-            return 1;
-        }
-        return 0;
+    public boolean getTurtlePen(){
+        return myTurtles.get(turtleIndex).getPen();
     }
 
-    public double getShowing(){
-        if(myTurtles.get(turtleIndex).isVisible()){
-            return 1;
-        }
-        return 0;
+    public boolean getShowing(){
+        return myTurtles.get(turtleIndex).isVisible();
     }
 
     public void show(){
