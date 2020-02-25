@@ -6,6 +6,7 @@ import parserModel.BooleanCommands.*;
 import parserModel.Control.RepeatParserNode;
 import parserModel.MathCommands.*;
 import parserModel.TurtleCommands.*;
+import parserModel.TurtleQueries.*;
 
 public class CommandFactory {
 
@@ -98,15 +99,15 @@ public class CommandFactory {
 
              // TURTLE QUERIES
             case "Xcor":
-                return new XCorNode();
+                return new XCorNode(queue);
             case "Ycor":
-                return new YCorNode();
+                return new YCorNode(queue);
             case "Heading":
-                return new HeadingNode();
+                return new HeadingNode(queue);
             case "PenDownNp":
-                return new PenDownNpNode();
+                return new PenDownPNode(queue);
             case "ShowingP":
-                return new ShowingPNode();
+                return new ShowingPNode(queue);
         }
         return null;
     }
