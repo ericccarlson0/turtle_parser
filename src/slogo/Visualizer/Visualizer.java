@@ -2,6 +2,7 @@ package slogo.Visualizer;
 // myButton.disableProperty().bind(myMode.getProperty(BrowserProperty.NEXT))
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import slogo.Visualizer.Turtle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -62,6 +63,9 @@ public class Visualizer {
     private TextField userInputTextField;
     private Button inputButton;
 
+    private int step = 0;
+    private String command;
+
     /**
      * Visualizer() - constructor for the visualizer.
      */
@@ -74,7 +78,7 @@ public class Visualizer {
      * @return int x for turtle's x coordinate.
      */
     public double getTurtleX(){
-        return myTurtles.get(turtleIndex).getX();
+        return myTurtles.get(turtleIndex).getXCoordinate();
     }
 
     /**
@@ -82,7 +86,15 @@ public class Visualizer {
      * @return int y for turtle's y coordinate.
      */
     public double getTurtleY(){
-        return myTurtles.get(turtleIndex).getY();
+        return myTurtles.get(turtleIndex).getYCoordinate();
+    }
+
+    /**
+     * getTurtleX() - getter for turtle's x coordinate.
+     * @return int x for turtle's x coordinate.
+     */
+    public double getTurtleAngle(){
+        return myTurtles.get(turtleIndex).getAngle();
     }
 
     /**
@@ -90,15 +102,94 @@ public class Visualizer {
      * @param xPos turtle's x coordinate.
      */
     public void setTurtleX(double xPos){
-        myTurtles.get(turtleIndex).setX(xPos);
-    }
+        if(myTurtles.get(turtleIndex).getXCoordinate() > 675){
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 650);
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 25);
 
+        }
+        else if(myTurtles.get(turtleIndex).getXCoordinate() < 25){
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 650);
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 25);
+
+        }
+        else{
+            myTurtles.get(turtleIndex).setXCoordinate(xPos);
+        }
+
+    }
     /**
      * setTurtleY() - setter for turtle's y coordinate.
      * @param yPos turtle's y coordinate.
      */
     public void setTurtleY(double yPos){
-        myTurtles.get(turtleIndex).setY(yPos);
+        if(myTurtles.get(turtleIndex).getYCoordinate() > 675){
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 650);
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 25);
+        }
+        else if(myTurtles.get(turtleIndex).getYCoordinate() < 25){
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 650);
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 25);
+
+        }
+        else{
+            myTurtles.get(turtleIndex).setYCoordinate(yPos);
+        }
+    }
+
+    public void setTurtlePen(boolean x){
+        myTurtles.get(turtleIndex).setPen(x);
+    }
+
+    /**
+     * setTurtleX() - setter for turtle's x coordinate.
+     * @param angle turtle's x coordinate.
+     */
+    public void setTurtleAngle(double angle){
+        myTurtles.get(turtleIndex).setAngle(angle);
+    }
+
+    public void setCommand(String command){
+        this.command = command;
+    }
+
+    /**
+     * getCommand() - getter for the string the user inputs.
+     * @return
+     */
+    public String getCommand(){
+        return command;
+    }
+
+    /**
+     * resetCommand() - resets the command to null.
+     * @return
+     */
+    public void resetCommand(){
+        command = null;
+    }
+
+    /**
+     * addInputHistory() - add a string for the history of the input.
+     * @return
+     */
+    public void addInputHistory(String history) {
+        inputHistory.setText(inputHistory.getText() + '\n' + history);
+    }
+
+    /**
+     * addUserInput() - add a string to the actual user input. Acts like a terminal
+     * @return
+     */
+    public void addUserInput(String input){
+        userInputText.setText(userInputText.getText() + '\n' + input);
+    }
+
+    /**
+     * addExecutedHistory() - add a string to the executed commands.
+     * @return
+     */
+    public void addExecutedHistory(String executed){
+        executedHistory.setText(executedHistory.getText() + '\n' + executed);
     }
 
     /**
@@ -117,11 +208,13 @@ public class Visualizer {
         turtleIndex = index;
     }
 
+
     private void start(){
         myStage = new Stage();
-        myScene = setUpSplash();
-        myStage.setScene(myScene);
-        myStage.show();
+        playAnimation();
+        //myScene = setUpSplash();
+        //myStage.setScene(myScene);
+        //myStage.show();
         // start stage with splash
         // initiate stage
         // Scene = setUpSplash()
@@ -131,7 +224,7 @@ public class Visualizer {
         myScene = setUpEnvironment();
         myStage.setScene(myScene);
         myStage.show();
-        KeyFrame frame = new KeyFrame(Duration.millis(1), e -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(10), e -> {
             step();
         });
         animation = new Timeline();
@@ -140,12 +233,58 @@ public class Visualizer {
         animation.play();
     }
 
-    private void step(){
-        // update turtle
-        // position, pen, rotate, etc.
-        System.out.println("Hi");
+    public void draw(){
+        if((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate()))<20 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate()))<20 ){
+            if(myTurtles.get(turtleIndex).getPen()){
+                Line line = new Line();
+                line.setStartX(myTurtles.get(turtleIndex).getOldXCoordinate());
+                line.setStartY(myTurtles.get(turtleIndex).getOldYCoordinate());
+                line.setEndX(myTurtles.get(turtleIndex).getXCoordinate());
+                line.setEndY(myTurtles.get(turtleIndex).getYCoordinate());
+                myGroup.getChildren().add(line);
+            }
+        }
     }
+    private void step(){
 
+    }
+/**
+    private void step(){
+        System.out.println(step);
+        step = step + 1;
+        myTurtles.get(turtleIndex).setPen(isOutOfBounds());
+        myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate());
+        myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate());
+
+    }
+    private boolean isOutOfBounds(){
+        if(myTurtles.get(turtleIndex).getXCoordinate() < 25){
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 650);
+            boolean x = myTurtles.get(turtleIndex).getPen();
+            myTurtles.get(turtleIndex).setPen(false);
+            return x;
+        }
+        if(myTurtles.get(turtleIndex).getXCoordinate() > 675){
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 650);
+            boolean x = myTurtles.get(turtleIndex).getPen();
+            myTurtles.get(turtleIndex).setPen(false);
+            return x;
+        }
+        if(myTurtles.get(turtleIndex).getYCoordinate() < 25){
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 650);
+            boolean x = myTurtles.get(turtleIndex).getPen();
+            myTurtles.get(turtleIndex).setPen(false);
+            return x;
+        }
+        if(myTurtles.get(turtleIndex).getYCoordinate() > 675){
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 650);
+            boolean x = myTurtles.get(turtleIndex).getPen();
+            myTurtles.get(turtleIndex).setPen(false);
+            return x;
+        }
+        return false;
+   }
+*/
     private Scene setUpSplash(){
         myGroup = new Group();
         // create button that has event handler that calls playAnimation
@@ -171,7 +310,7 @@ public class Visualizer {
         myGroup.getChildren().add(field);
 
         // create turtle
-        Turtle initialTurtle = new Turtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y);
+        Turtle initialTurtle = new Turtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
         myTurtles.add(initialTurtle);
         myGroup.getChildren().add(initialTurtle);
 
@@ -194,6 +333,7 @@ public class Visualizer {
                 inputHistory.setText(inputHistory.getText() + '\n' + x);
                 userInputText.setText(userInputText.getText() + '\n' + "Command entered");
                 userInputTextField.clear();
+                setCommand(x);
             }
         });
         userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + 50);
