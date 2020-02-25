@@ -1,8 +1,8 @@
-package slogo;
+package Visualizer;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import slogo.Visualizer.Visualizer;
+import Visualizer.Visualizer;
 
 import java.io.IOException;
 

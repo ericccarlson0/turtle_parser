@@ -1,9 +1,8 @@
-package slogo.Visualizer;
-// myButton.disableProperty().bind(myMode.getProperty(BrowserProperty.NEXT))
+package Visualizer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import slogo.Visualizer.Turtle;
+import Visualizer.Turtle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
