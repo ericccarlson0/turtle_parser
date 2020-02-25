@@ -4,31 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RootParserNode extends ParserNode {
-    private List<ParserNode> myNodes;
 
     public RootParserNode() {
-        myNodes = new ArrayList<>();
+        complete = false;
+        nodeType = NodeType.LIST;
+        myParent = null;
+        myChildren = new ArrayList<ParserNode>();
     }
 
     public void addNode(ParserNode node) {
-        myNodes.add(node);
+        myChildren.add(node);
     }
 
     public double execute() {
-        for (ParserNode node : myNodes){
+        for (ParserNode node : myChildren){
             node.execute();
         }
-        return 1; //FIXME
+        return 1;
+        //FIXME
     }
 
     public boolean isComplete() {
-        return false; //FIXME
+        return complete;
     }
 
     @Override
     public String toString(){
         StringBuilder ret = new StringBuilder();
-        for (ParserNode node : myNodes){
+        for (ParserNode node : myChildren){
             ret.append(node);
             ret.append(" ");
         }
