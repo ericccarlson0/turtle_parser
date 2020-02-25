@@ -1,10 +1,11 @@
 package executables;
 
 import static executables.SetXYExecutable.getDistanceTraveled;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class ClearExecutable extends Executable {
+  private final String executableType = "ClearScreen";
   public ClearExecutable(){
   }
 
@@ -16,8 +17,7 @@ public class ClearExecutable extends Executable {
     return distanceTraveled;
   }
 
-  @Override
-  public String getString() {
-    return null;
+  public String getString(){
+    return getExecutableName(executableType);
   }
 }

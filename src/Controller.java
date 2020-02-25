@@ -1,4 +1,4 @@
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 import executables.Executable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,8 @@ public class Controller {
     myExecutableQueue = new ArrayList<>();
     myTreeParser = new TreeParser(myExecutableQueue);
   }
+
+
 
   public void step (String input) {
     CommandParserNode root = myTreeParser.parseString(input);

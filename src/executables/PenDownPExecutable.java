@@ -1,19 +1,19 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class PenDownPExecutable extends Executable {
+  private final String executableType = "IsPenDown";
+
   public PenDownPExecutable(){
   }
 
   public double run(Visualizer visualizerObject){
-    return visualizerObject.getPenDown();
+    return visualizerObject.getTurtlePen();
   }
 
-  @Override
   public String getString() {
-    return null;
+    return getExecutableName(executableType);
   }
-
 
 }

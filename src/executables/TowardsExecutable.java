@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class TowardsExecutable extends Executable {
+  private final String executableType = "SetTowards";
   private double xHeading;
   private double yHeading;
   public TowardsExecutable(double xInput, double yInput){
@@ -22,9 +23,9 @@ public class TowardsExecutable extends Executable {
     return (newAngle-currentAngle)%360;
   }
 
-  @Override
+
   public String getString() {
-    return null;
+    return getExecutableName(executableType) + " " + xHeading + " " + yHeading;
   }
 
 

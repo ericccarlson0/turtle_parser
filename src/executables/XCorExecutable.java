@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class XCorExecutable extends Executable {
+  private final String executableType = "XCoordinate";
   public XCorExecutable(){
   }
 
@@ -10,9 +11,9 @@ public class XCorExecutable extends Executable {
     return visualizerObject.getTurtleX();
   }
 
-  @Override
+
   public String getString() {
-    return null;
+    return getExecutableName(executableType);
   }
 
 

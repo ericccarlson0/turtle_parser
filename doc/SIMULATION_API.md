@@ -18,8 +18,8 @@ Controller Class:
     
 
 * **should not be part of API**: 
-* Visualizer Class
-    *  ```public Visualizer(Stage stage, Controller controller, String language) ```
+* visualizer Class
+    *  ```public visualizer(Stage stage, Controller controller, String language) ```
     * ```public void step(double elapsedTime) ```
     * ```public Scene makeScene(int width, int height) throws Throwable ```
 

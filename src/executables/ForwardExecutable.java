@@ -1,7 +1,8 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 public class ForwardExecutable extends Executable {
+  private final String executableType = "Backward";
   private double distance;
   public ForwardExecutable(double distanceUnit){
     distance = distanceUnit;
@@ -15,12 +16,12 @@ public class ForwardExecutable extends Executable {
     double newYPosition = currentYPosition + Math.sin(currentAngle)*distance;
     visualizerObject.setTurtleX(newXPosition);
     visualizerObject.setTurtleY(newYPosition);
+    System.out.println("1");
     return distance;
   }
 
-  @Override
-  public String getString() {
-    return null;
+  public String getString(){
+    return getExecutableName(executableType)+" "+distance;
   }
 
 

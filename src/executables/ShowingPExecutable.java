@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class ShowingPExecutable extends Executable {
+  private final String executableType = "IsShowing";
   public ShowingPExecutable(){
   }
 
@@ -10,10 +11,9 @@ public class ShowingPExecutable extends Executable {
     return visualizerObject.getShowing();
   }
 
-  @Override
-  public String getString() {
-    return null;
-  }
 
+  public String getString() {
+    return getExecutableName(executableType);
+  }
 
 }

@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class RTurnExecutable extends Executable {
+  private final String executableType = "Right";
   private double angle;
   public RTurnExecutable(double angleInput){
     angle = angleInput;
@@ -15,9 +16,9 @@ public class RTurnExecutable extends Executable {
     return angle;
   }
 
-  @Override
-  public String getString() {
-    return null;
+
+  public String getString(){
+    return getExecutableName(executableType)+" "+angle;
   }
 
 

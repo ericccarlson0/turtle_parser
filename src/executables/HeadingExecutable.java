@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class HeadingExecutable extends Executable {
+  private final String executableType = "Heading";
   public HeadingExecutable(){
   }
 
@@ -10,10 +11,9 @@ public class HeadingExecutable extends Executable {
     return visualizerObject.getTurtleAngle();
   }
 
-  @Override
-  public String getString() {
-    return null;
-  }
 
+  public String getString(){
+    return getExecutableName(executableType);
+  }
 
 }

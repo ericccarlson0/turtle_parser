@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class YCorExecutable extends Executable {
+  private final String executableType = "YCoordinate";
   public YCorExecutable(){
   }
 
@@ -10,9 +11,9 @@ public class YCorExecutable extends Executable {
     return visualizerObject.getTurtleY();
   }
 
-  @Override
+
   public String getString() {
-    return null;
+    return getExecutableName(executableType);
   }
 
 

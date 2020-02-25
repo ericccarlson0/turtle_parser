@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class PenUpExecutable extends Executable {
+  private final String executableType = "PenUp";
   public PenUpExecutable(){
   }
 
@@ -11,9 +12,9 @@ public class PenUpExecutable extends Executable {
     return 0;
   }
 
-  @Override
-  public String getString() {
-    return null;
+  public String getString(){
+    return getExecutableName(executableType);
+
   }
 
 

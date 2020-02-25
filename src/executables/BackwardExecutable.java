@@ -1,6 +1,5 @@
 package executables;
-import Visualizer.Visualizer;
-import java.util.ResourceBundle;
+import visualizer.Visualizer;
 
 
 public class BackwardExecutable extends Executable {
@@ -22,6 +21,7 @@ public class BackwardExecutable extends Executable {
   }
 
   public String getString(){
-    return executableType;
+    return getExecutableName(executableType)+" "+distance;
+
   }
 }

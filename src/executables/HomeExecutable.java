@@ -1,12 +1,11 @@
 package executables;
 import static executables.SetXYExecutable.getDistanceTraveled;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class HomeExecutable extends Executable {
-
+  private final String executableType = "Home";
   public HomeExecutable(){ }
-
   public double run(Visualizer visualizerObject){
     double distanceTraveled = getDistanceTraveled(visualizerObject,0,0);
     visualizerObject.setTurtleX(0);
@@ -14,10 +13,11 @@ public class HomeExecutable extends Executable {
     return distanceTraveled;
   }
 
-  @Override
+
   public String getString() {
-    return null;
+    return getExecutableName(executableType);
   }
+
 
 
 }

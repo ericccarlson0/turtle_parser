@@ -1,9 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class SetHeadingExecutable extends Executable {
-
+  private final String executableType = "SetHeading";
   private double angle;
 
   public SetHeadingExecutable(double angleInput) {
@@ -18,9 +18,10 @@ public class SetHeadingExecutable extends Executable {
     return degreesMoved;
   }
 
-  @Override
-  public String getString() {
-    return null;
+
+  public String getString(){
+    return getExecutableName(executableType)+" "+angle;
+
   }
 }
 

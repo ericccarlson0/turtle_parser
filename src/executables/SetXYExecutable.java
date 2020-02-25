@@ -1,8 +1,9 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class SetXYExecutable extends Executable {
+  private final String executableType = "SetPosition";
   private double xSet;
   private double ySet;
   public SetXYExecutable(double xInput, double yInput){
@@ -17,10 +18,6 @@ public class SetXYExecutable extends Executable {
     return distanceTraveled;
   }
 
-  @Override
-  public String getString() {
-    return null;
-  }
 
   public static double getDistanceTraveled(Visualizer visualizerObject, double xSet, double ySet) {
     double currentXPosition = visualizerObject.getTurtleX();
@@ -28,6 +25,10 @@ public class SetXYExecutable extends Executable {
     double xDistance = xSet - currentXPosition;
     double yDistance = ySet - currentYPosition;
     return Math.sqrt(Math.pow(xDistance,2)+Math.pow(yDistance,2));
+  }
+
+  public String getString(){
+    return getExecutableName(executableType)+" "+xSet+" "+ySet;
   }
 
 

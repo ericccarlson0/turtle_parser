@@ -1,8 +1,10 @@
 package executables;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class ShowExecutable extends Executable {
+  private final String executableType = "ShowTurtles";
+
   public ShowExecutable(){
   }
 
@@ -11,10 +13,9 @@ public class ShowExecutable extends Executable {
     return 1;
   }
 
-  @Override
   public String getString() {
-    return null;
-  }
+    return getExecutableName(executableType);
 
+  }
 
 }

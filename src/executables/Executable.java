@@ -1,10 +1,13 @@
 package executables;
 
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 import java.util.ResourceBundle;
 
 public abstract class Executable {
-  private final String MISSING = "";
+  public static final String RESOURCES = "parserModel.languages.";
+  //private final String languageChosen = ResourceBundle.getBundle("Resources.Languages."+"LanguageChoice").getString("Language");
+  private final String languageChosen = "English";
+
   public Executable(String... args){ }
 
   public abstract double run(Visualizer visualizerObject);
@@ -12,9 +15,7 @@ public abstract class Executable {
   public abstract String getString();
 
   protected String getExecutableName(String executableType){
-    //private final String languageChosen = ResourceBundle.getBundle("b").getString("Language");
-    //private final String executableName = ResourceBundle.getBundle(""+languageChosen).getString("Bac");
-    return null;
+    return ResourceBundle.getBundle(RESOURCES+languageChosen).getString(executableType).split("|")[0];
   }
 }
 
