@@ -7,7 +7,7 @@
 This project is divided into three main areas:
 #### Model
  - a Parser that can convert text into Command objects (or throw Exceptions),
- - **ParserInterface API** represents the External Backend API in a single interface, which is encapsulated in the ParserModel package. The ParserModel will need to have public methods for parsing a String command, as well as storing and deleting user-defined commands and constants. The ParserModel class will be the core public class within the ParserModel package -- the rest of the classes should be package-protected to make sure that the public-facing API of this package is compact and difficuly to misuse. 
+ - **ParserInterface API** represents the External Backend API in a single interface, which is encapsulated in the parserModel package. The parserModel will need to have public methods for parsing a String command, as well as storing and deleting user-defined commands and constants. The parserModel class will be the core public class within the parserModel package -- the rest of the classes should be package-protected to make sure that the public-facing API of this package is compact and difficuly to misuse.
  - **Command API** will be the main component of the Internal Backend API, as it will provide a means for adding additional commands. More than an API, the Command interface is at the top of an inheritance heirarchy of Command objects. These include, but are not restricted to, the 'primitives' *(RIGHT, LEFT, LTURN, RTURN, SETHEADING, SHOW, HIDE, PENUP, PENDOWN)*, MATH Commands, BOOLEAN Commands, and COMPOUND Commands.
 #### View
  - a screen that includes the turtle, its environment, and various text boxes,
@@ -44,7 +44,7 @@ This project is divided into three main areas:
      - **getPenStatus**, which returns the status of the pen.
      - **changeBackground**, which sets the background color.
 
-- The Visualizer internal API will include the following method signatures:
+- The visualizer internal API will include the following method signatures:
      - **setTurtleX**, which sets the Turtle's x coordinate.
      - **setTurtleY**, which sets the Turtle's y coordinate.
          - Optional: these could include parameter which determines whether or not to include an animaition
@@ -59,8 +59,8 @@ This project is divided into three main areas:
     * Primary: Frontend
     * Secondary: TBD
 * Mariusz
-    * Primary: Backend: ParserModel
-    * Secondary: help with Executioner/Visualizer interface *(experience with roperties and bindings)*
+    * Primary: Backend: parserModel
+    * Secondary: help with Executioner/visualizer interface *(experience with roperties and bindings)*
 * Eric
     * Primary: Backend data structures and communication with the frontend.
     * Secondary: help with Parser
@@ -90,9 +90,9 @@ This project is divided into three main areas:
     * setCurrentX(Turtle.getX());
     * setCurrentY(Turtle.getY());
     * setCurrentAngle(Turtle.getAngle());
-    * if(!Visualizer.getSetHistoryReplay);{history.add(command)} // the backend does not store the commands in the history replay
+    * if(!visualizer.getSetHistoryReplay);{history.add(command)} // the backend does not store the commands in the history replay
     * ... runs commands
-    * Visualizer.doneReplay();
+    * visualizer.doneReplay();
     * Turtle.setX(currentX);
     * Turtle.setY(currentY);
     * Turtle.setAngle(currentAngle);
@@ -102,7 +102,7 @@ This project is divided into three main areas:
 * Frontend:
     * EventHandler(input): command = input;
 * Backend:
-    * Parser: Visualizer.setError(ErrorMessage);
+    * Parser: visualizer.setError(ErrorMessage);
 * Frontend:
     * displayError(ErrorMessage);
 
@@ -125,27 +125,27 @@ This project is divided into three main areas:
 ### **Mariusz**
 * Case 1: The user enters a command to store a variable called myVar to the value 10.
     * Frontend: updates a StringProperty with the text of the new command
-    * Controller: calls the getCommands method of the ParserModel with the String of the new command as a paremeter
+    * Controller: calls the getCommands method of the parserModel with the String of the new command as a paremeter
     * ParserInterface: parses the String and returns a list of commands based on the parse.
     * Controller: iterates through the commands that are returned by the parser
-        * stores a variable in the ParserModel using the addVariable method
-        * calls a method in the Visualizer to display that the variable has been stored
+        * stores a variable in the parserModel using the addVariable method
+        * calls a method in the visualizer to display that the variable has been stored
 * Case 2: The user enters an incorrectly formatted command
     * Frontend: updates a StringProperty with the text of the new command
-    * Controller: calls the getCommands method of the ParserModel with the String of the new command as a paremeter
+    * Controller: calls the getCommands method of the parserModel with the String of the new command as a paremeter
     * ParserInterface: parses the String and at some point in the parsing, throws an InvalidNLogoSyntaxException which encapsulates some details about the error
-        * Alternatively, a better design could be for the exception to be caught internal to the ParserModel, and to catch it by simply returning a command that says the controller should tell the view to display an error message
-    * Controller: iterates through the commands, sees that it has to tell the Visualizer to display the error message
-    * Visualizer: displays the error message.
+        * Alternatively, a better design could be for the exception to be caught internal to the parserModel, and to catch it by simply returning a command that says the controller should tell the view to display an error message
+    * Controller: iterates through the commands, sees that it has to tell the visualizer to display the error message
+    * visualizer: displays the error message.
     
     
 ### **Cemal**
 * Case 1: A recursive Procedure is defined where the procedure calls upon itself.
-    * Visualizer calls getCommand().
+    * visualizer calls getCommand().
     * Parser parses the procedure into a list of executable commands and stores it for a later call.
 
 * Case 2: The recursive procedure is called after being defined.
-    * Visualizer calls getCommand().
+    * visualizer calls getCommand().
     * While parsing, parser recognizes predefined procedure call, calls execute on predefined executable list of commands.
     * Executer executes the defined list for the procedure, and adds it to its 2D array of command history (for possible extra feature)
     * Executed commands update the visualizer's dependant variables and thus draws the turtles movement.
