@@ -22,6 +22,7 @@ public class Controller {
 
     public Controller () {
         myVisualizer = new Visualizer();
+        myVisualizer.setTurtlePen(true);
         executables = new ArrayList<>();
         myTreeParser = new TreeParser(executables);
         start();
@@ -44,15 +45,14 @@ public class Controller {
             ParserNode root = myTreeParser.parseString(myVisualizer.getCommand());
             myVisualizer.resetCommand();
             root.execute();
-            for (Executable e : executables) {
-                e.run(myVisualizer);
-            }
         }
+        if(executables.size() != 0){
+            executables.get(0).run(myVisualizer);
+            executables.remove(0);
+        }
+
     }
-    public Queue<Executable> getExeutableQueue(){
-        Queue<Executable> x = new LinkedList<Executable>();
-        return x;
-    }
+
 
 
     private void testVisualizer(){
