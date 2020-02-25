@@ -16,6 +16,7 @@ public class ForwardNode extends CommandParserNode {
 
     public double execute() {
         double distance = myLength.execute();
+        System.out.println("forward " + distance);
         executableQueue.add(new ForwardExecutable(distance));
         return distance;
     }

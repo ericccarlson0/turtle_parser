@@ -1,6 +1,9 @@
-package parserModel;
+package parserModel.Control;
 
-public class ListEndNode extends ParserNode{
+import parserModel.ParserNode;
+
+public class ListEndNode extends ParserNode {
+
 
     @Override
     public void addNode(ParserNode node) {

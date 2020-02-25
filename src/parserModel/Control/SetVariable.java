@@ -1,6 +1,10 @@
-package parserModel;
+package parserModel.Control;
 
-public class SetVariable extends CommandParserNode{
+import parserModel.CommandParserNode;
+import parserModel.ParserNode;
+import parserModel.Variables;
+
+public class SetVariable extends CommandParserNode {
     private VariableNode myVariableNode;
     private ParserNode myAssignmentNode;
 
@@ -17,7 +21,9 @@ public class SetVariable extends CommandParserNode{
 
     @Override
     public double execute() {
-        return 0; //FIXME
+        double executeValue = myAssignmentNode.execute();
+        new Variables().setVariable(myVariableNode.name(),executeValue);
+        return executeValue;
     }
 
     @Override

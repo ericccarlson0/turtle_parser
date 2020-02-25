@@ -17,8 +17,11 @@ public class ForParserNode extends ControlParserNode {
     }
 
     public double execute() {
-        //TODO
-        return 0;
+        double lastValue = 0;
+        while(myForNode.execute() != 0){
+            lastValue = myBodyNode.execute();
+        }
+        return lastValue;
     }
 
     public boolean isComplete() {

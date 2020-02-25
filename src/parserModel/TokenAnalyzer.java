@@ -47,17 +47,16 @@ public class TokenAnalyzer {
     private String getTokenType(String text) {
         for (Entry<String, Pattern> e : mySymbols) {
             if (e.getValue().matcher(text).matches()) {
-                System.out.println(e.getKey());
+                //System.out.println(e.getKey());
                 return e.getKey();
             }
         }
-        return "";
+        return "MESSED UP";
     }
 
     public String getTokenKey(String text) {
         for (Entry<String, Pattern> e : myCommands) {
             if (e.getValue().matcher(text).matches()) {
-                System.out.println(e.getKey());
                 return e.getKey();
             }
         }

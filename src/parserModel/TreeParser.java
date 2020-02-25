@@ -4,7 +4,9 @@ import executables.Executable;
 import java.util.Arrays;
 import java.util.List;
 
-import javafx.scene.Parent;
+import parserModel.Control.ListEndNode;
+import parserModel.Control.LoopCounterNode;
+import parserModel.Control.VariableNode;
 import parserModel.TokenAnalyzer.TokenType;
 
 public class TreeParser {
@@ -46,6 +48,8 @@ public class TreeParser {
     private ParserNode parseIteratorElement(InputIterator iterator) {
         String nextElement = iterator.next();
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
+        System.out.println(tokenType);
+
         return getParserNode(iterator, nextElement, tokenType);
     }
 
@@ -70,7 +74,9 @@ public class TreeParser {
         VariableNode variableNode = new VariableNode(variableName);
         LoopCounterNode loopCounter = new LoopCounterNode(variableNode);
         ParserNode adding;
-        while((adding = parseIteratorElement(iterator)).typeOfNode() != ParserNode.NodeType.LISTEND){
+        while((adding = parseIteratorElement(iterator))
+                .typeOfNode()
+                != ParserNode.NodeType.LISTEND){
             loopCounter.addNode(adding);
         }
         return loopCounter;
@@ -94,17 +100,17 @@ public class TreeParser {
             case Constant:
                 return new ConstantNode(Double.parseDouble(nextElement));
             case Variable:
-                // TODO
+                return new VariableNode(nextElement);
             case ListStart:
                 CommandParserNode list = new RootParserNode();
                 ParserNode listElement = parseIteratorElement(iterator);
-                while (listElement != null) {
+                while (listElement.typeOfNode() != ParserNode.NodeType.LISTEND) {
                     list.addNode(listElement);
                     listElement = parseIteratorElement(iterator);
                 }
                 return list;
             case ListEnd:
-                return null;
+                return new ListEndNode();
             case GroupStart:
                 // TODO
             case GroupEnd:

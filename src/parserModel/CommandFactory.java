@@ -4,6 +4,8 @@ import executables.Executable;
 import java.util.List;
 import parserModel.BooleanCommands.*;
 import parserModel.Control.ForParserNode;
+import parserModel.Control.IfElseNode;
+import parserModel.Control.IfNode;
 import parserModel.Control.RepeatParserNode;
 import parserModel.MathCommands.*;
 import parserModel.TurtleCommands.*;
@@ -92,11 +94,18 @@ public class CommandFactory {
                 return new OrCommand();
             case "Not":
                 return new NotCommand();
+
             // COMPOUND COMMANDS
             case "DoTimes":
-                return new RepeatParserNode();
+                return new ForParserNode();
             case "For":
                 return new ForParserNode();
+            case "Repeat":
+                return new RepeatParserNode();
+            case "If":
+                return new IfNode();
+            case "IfElse":
+                return new IfElseNode();
 
              // TURTLE QUERIES
             case "Xcor":

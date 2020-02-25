@@ -1,12 +1,13 @@
-package parserModel;
+package parserModel.Control;
 
+import parserModel.*;
 import parserModel.BooleanCommands.NotEqualCommand;
 import parserModel.MathCommands.SumCommand;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoopCounterNode extends CommandParserNode{
+public class LoopCounterNode extends CommandParserNode {
     private List<ParserNode> myIterableParameters;
     private VariableNode myVariableNode;
     private ParserNode myIteratingNode;
@@ -29,12 +30,13 @@ public class LoopCounterNode extends CommandParserNode{
     @Override
     public double execute() {
         if(! validated){
+            System.out.println(myIterableParameters);
             switch(myIterableParameters.size()){
                 case 1:
                     validateLoop(0,1,myIterableParameters.get(0).execute() + 1);
                     break;
                 case 3:
-                    validateLoop(myIterableParameters.get(0).execute(),myIterableParameters.get(2).execute(),myIterableParameters.get(1).execute());
+                    validateLoop(myIterableParameters.get(0).execute() - 1 ,myIterableParameters.get(2).execute() ,myIterableParameters.get(1).execute() + 1);
                     break;
             }
             validated = true;
