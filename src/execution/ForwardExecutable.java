@@ -1,12 +1,10 @@
-package executables;
+package execution;
 import Visualizer.Visualizer;
-import java.util.ResourceBundle;
 
-
-public class BackwardExecutable extends Executable {
-  private double distance;
+public class ForwardExecutable extends Executable {
   private final String executableType = "Backward";
-  public BackwardExecutable(double distanceUnit){
+  private double distance;
+  public ForwardExecutable(double distanceUnit){
     distance = distanceUnit;
   }
 
@@ -14,8 +12,8 @@ public class BackwardExecutable extends Executable {
     double currentXPosition = visualizerObject.getTurtleX();
     double currentYPosition = visualizerObject.getTurtleY();
     double currentAngle = visualizerObject.getTurtleAngle();
-    double newXPosition = currentXPosition - Math.cos(currentAngle)*distance;
-    double newYPosition = currentYPosition - Math.sin(currentAngle)*distance;
+    double newXPosition = currentXPosition + Math.cos(currentAngle)*distance;
+    double newYPosition = currentYPosition + Math.sin(currentAngle)*distance;
     visualizerObject.setTurtleX(newXPosition);
     visualizerObject.setTurtleY(newYPosition);
     return distance;
@@ -23,6 +21,7 @@ public class BackwardExecutable extends Executable {
 
   public String getString(){
     return getExecutableName(executableType)+" "+distance;
-
   }
+
+
 }

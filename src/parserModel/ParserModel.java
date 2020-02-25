@@ -2,6 +2,7 @@ package parserModel;
 
 import java.util.List;
 
+@Deprecated
 public interface ParserModel {
     /**
      * This represents the core functionality of the Parser API; it allows for a user-entered string

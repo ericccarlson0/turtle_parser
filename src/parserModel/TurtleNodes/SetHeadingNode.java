@@ -1,12 +1,9 @@
 package parserModel.TurtleNodes;
-import executables.Executable;
-import executables.SetHeadingExecutable;
+import execution.Executable;
+import execution.SetHeadingExecutable;
 import java.util.List;
 import parserModel.ParserNode;
-import executables.SetHeadingExecutable;
 import parserModel.CommandParserNode;
-import parserModel.ParserNode;
-import parserModel.TurtleQueries.HeadingNode;
 
 
 public class SetHeadingNode extends CommandParserNode {

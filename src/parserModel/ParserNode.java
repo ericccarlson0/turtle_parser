@@ -1,6 +1,6 @@
 package parserModel;
 
-import executables.Executable;
+import execution.Executable;
 
 import java.util.Queue;
 

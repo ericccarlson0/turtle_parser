@@ -1,6 +1,6 @@
 package parserModel.TurtleQueries;
-import executables.Executable;
-import executables.YCorExecutable;
+import execution.Executable;
+import execution.YCorExecutable;
 import java.util.List;
 
 import parserModel.CommandParserNode;

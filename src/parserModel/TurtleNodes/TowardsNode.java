@@ -1,7 +1,7 @@
 package parserModel.TurtleNodes;
 
-import executables.Executable;
-import executables.TowardsExecutable;
+import execution.Executable;
+import execution.TowardsExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;

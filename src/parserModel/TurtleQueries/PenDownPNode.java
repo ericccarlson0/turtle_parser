@@ -1,7 +1,6 @@
 package parserModel.TurtleQueries;
-import executables.Executable;
-import executables.PenDownPExecutable;
-import executables.PenDownPExecutable;
+import execution.Executable;
+import execution.PenDownPExecutable;
 import java.util.List;
 
 import parserModel.CommandParserNode;

@@ -1,4 +1,4 @@
-package executables;
+package execution;
 
 import Visualizer.Visualizer;
 import java.util.ResourceBundle;

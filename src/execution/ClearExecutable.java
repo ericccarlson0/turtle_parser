@@ -1,6 +1,6 @@
-package executables;
+package execution;
 
-import static executables.SetXYExecutable.getDistanceTraveled;
+import static execution.SetXYExecutable.getDistanceTraveled;
 import Visualizer.Visualizer;
 
 

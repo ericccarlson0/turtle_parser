@@ -45,6 +45,14 @@ public class TurtleData {
     this.color = new double[]{0, 0, 0};
   }
 
+  public double getX() {
+    return xPos;
+  }
+
+  public double getY() {
+    return yPos;
+  }
+
   /**
    * A setter for the turtle's pen width that
    * @param width
