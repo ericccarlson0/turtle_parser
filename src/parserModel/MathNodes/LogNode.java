@@ -1,9 +1,8 @@
-package parserModel.MathCommands;
+package parserModel.MathNodes;
 
 import parserModel.UnaryOperationNode;
 
-public class LogCommand extends UnaryOperationNode {
-    @Override
+public class LogNode extends UnaryOperationNode {
     public double execute() {
         return Math.log(myArgumentNode.execute());
     }

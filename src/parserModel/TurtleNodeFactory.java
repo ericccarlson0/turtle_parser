@@ -1,9 +1,9 @@
 package parserModel;
 
-import parserModel.BooleanCommands.*;
+import parserModel.BooleanNodes.*;
 import parserModel.Control.RepeatParserNode;
-import parserModel.MathCommands.*;
-import parserModel.TurtleCommands.*;
+import parserModel.MathNodes.*;
+import parserModel.TurtleNodes.*;
 
 public class CommandFactory {
 
@@ -45,48 +45,48 @@ public class CommandFactory {
                 return new ClearScreenNode();
 
             case "Sum":
-                return new SumCommand();
+                return new SumNode();
             case "Difference":
-                return new DifferenceCommand();
+                return new DifferenceNode();
             case "Product":
-                return new ProductCommand();
+                return new ProductNode();
             case "Quotient":
-                return new QuotientCommand();
+                return new QuotientNode();
             case "Remainder":
-                return new RemainderCommand();
+                return new RemainderNode();
             case "Random":
-                return new RandomCommand();
+                return new RandomNode();
             case "Minus":
-                return new MinusCommand();
+                return new MinusNode();
             case "Sine":
-                return new SineCommand();
+                return new SineNode();
             case "Cosine":
-                return new CosineCommand();
+                return new CosineNode();
             case "Tangent":
-                return new TangentCommand();
+                return new TangentNode();
             case "ArcTangent":
-                return new ArctanCommand();
+                return new ArctanNode();
             case "NaturalLog":
-                return new LogCommand();
+                return new LogNode();
             case "Power":
-                return new PowCommand();
+                return new PowNode();
             case "Pi":
-                return new PiCommand();
+                return new PiNode();
 
             case "LessThan":
-                return new LessCommand();
+                return new LessNode();
             case "GreaterThan":
-                return new GreaterCommand();
+                return new GreaterNode();
             case "Equal":
-                return new EqualCommand();
+                return new EqualNode();
             case "NotEqual":
-                return new NotEqualCommand();
+                return new NotEqualNode();
             case "And":
-                return new AndCommand();
+                return new AndNode();
             case "Or":
                 return new OrCommand();
             case "Not":
-                return new NotCommand();
+                return new NotNode();
             case "DoTimes":
                 return new RepeatParserNode();
             case "For":
