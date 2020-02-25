@@ -19,7 +19,7 @@ public class CommandFactory {
      * @param identifier    A particular string associated with a particular type of ParserNode.
      * @return              Returns subclass of ParserNode.
      */
-    public CommandParserNode createCommand(String identifier, List<Executable> queue){
+    public ParserNode createCommand(String identifier, List<Executable> queue){
         switch (identifier) {
             // TURTLE COMMANDS
             case "Forward":
@@ -31,7 +31,7 @@ public class CommandFactory {
             case "Right":
                 return new RTurnNode(queue);
             case "SetHeading":
-                return new HeadingNode(); //?
+                // return new HeadingNode(); //FIXME
             case "SetTowards":
                 return new TowardsNode(queue);
             case "SetPosition":
@@ -104,7 +104,7 @@ public class CommandFactory {
             case "Ycor":
                 return new YCorNode(queue);
             case "Heading":
-                return new HeadingNode(queue);
+                // return new HeadingNode(); FIXME
             case "PenDownNp":
                 return new PenDownPNode(queue);
             case "ShowingP":

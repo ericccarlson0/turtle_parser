@@ -6,7 +6,7 @@ import java.util.List;
 public class LoopCounterNode extends CommandParserNode{
     private List<ParserNode> myIterableParameters;
     private VariableNode myVariableNode;
-    private
+    private ParserNode myIteratingNode;
     private boolean validated;
 
     public LoopCounterNode(VariableNode variableNode){
@@ -31,6 +31,7 @@ public class LoopCounterNode extends CommandParserNode{
                     SetVariable initializerNode = new SetVariable(myVariableNode);
                     initializerNode.addNode(new ConstantNode(1.0));
                     initializerNode.execute();
+                    myVariableNode = new RootParserNode();
             }
         }
     }

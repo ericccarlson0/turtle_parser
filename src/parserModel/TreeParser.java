@@ -43,13 +43,13 @@ public class TreeParser {
      * This is a recursive method that leverages a tree-like data structure to correctly order the
      * various commands.
      */
-    private CommandParserNode parseIteratorElement(InputIterator iterator) {
+    private ParserNode parseIteratorElement(InputIterator iterator) {
         String nextElement = iterator.next();
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
         return getParserNode(iterator, nextElement, tokenType);
     }
 
-    private CommandParserNode parseForSpecificNode(InputIterator iterator, TokenType nodeType){
+    private ParserNode parseForSpecificNode(InputIterator iterator, TokenType nodeType){
         String nextElement = iterator.next();
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
         if(tokenType != nodeType){
@@ -69,17 +69,17 @@ public class TreeParser {
         }
         VariableNode variableNode = new VariableNode(variableName);
         LoopCounterNode loopCounter = new LoopCounterNode(variableNode);
-        CommandParserNode adding;
+        ParserNode adding;
         while((adding = parseIteratorElement(iterator)).typeOfNode() != ParserNode.NodeType.LISTEND){
             loopCounter.addNode(adding);
         }
         return loopCounter;
     }
-    private CommandParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {
+    private ParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {
         switch (tokenType) {
             case Command:
                 String key = myTokenAnalyzer.getTokenKey(nextElement);
-                CommandParserNode root = myCommandFactory.createCommand(key, myQueue);
+                ParserNode root = myCommandFactory.createCommand(key, myQueue);
                 if(root.typeOfNode() == ParserNode.NodeType.LOOP){
                     root.addNode(parseForLoopCounter(iterator));
                 }
@@ -97,7 +97,7 @@ public class TreeParser {
                 // TODO
             case ListStart:
                 CommandParserNode list = new RootParserNode();
-                CommandParserNode listElement = parseIteratorElement(iterator);
+                ParserNode listElement = parseIteratorElement(iterator);
                 while (listElement != null) {
                     list.addNode(listElement);
                     listElement = parseIteratorElement(iterator);
