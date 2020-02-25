@@ -4,9 +4,8 @@ import Visualizer.Visualizer;
 import java.util.ResourceBundle;
 
 public abstract class Executable {
-  public static final String RESOURCES = "Resources.Languages.";
-  private final String languageChosen = ResourceBundle.getBundle(RESOURCES+"LanguageChoice").getString("Language");
-  public static final String DEFAULT_RESOURCE_PACKAGE = RESOURCES + ".";
+  public static final String RESOURCES = "parserModel.languages.";
+  private final String languageChosen = ResourceBundle.getBundle("Resources.Languages."+"LanguageChoice").getString("Language");
 
   public Executable(String... args){ }
 
