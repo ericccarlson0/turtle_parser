@@ -1,7 +1,7 @@
 package slogo;
 
-import ParserModel.ParserNode;
-import ParserModel.TreeParser;
+import parserModel.ParserNode;
+import parserModel.TreeParser;
 
 import java.util.*;
 

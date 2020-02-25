@@ -1,5 +1,5 @@
-import ParserModel.ParserNode;
-import ParserModel.TreeParser;
+import parserModel.ParserNode;
+import parserModel.TreeParser;
 
 public class Controller {
   private TreeParser myTreeParser;
@@ -9,7 +9,10 @@ public class Controller {
   }
 
   public void step (String input) {
+
+
     ParserNode root = myTreeParser.parseString(input);
+    root.execute(); // ***
   }
   // getTurtleX/Y, setTurtleX/Y, getIndex, setTurtleAngle, ...
 }
