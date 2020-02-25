@@ -1,12 +1,17 @@
 package controller.Executables;
+import static controller.Executables.setxyExecutable.getDistanceTraveled;
+import Visualizer.Visualizer;
 
 public class homeExecutable extends Executable {
 
-  public homeExecutable(String distanceUnit){
-    super();
+  public homeExecutable(){ }
+
+  public double run(Visualizer visualizerObject){
+    double distanceTraveled = getDistanceTraveled(visualizerObject,0,0);
+    visualizerObject.setTurtleX(0);
+    visualizerObject.setTurtleY(0);
+    return distanceTraveled;
   }
 
-  public void run(){
-    //home
-  }
+
 }

@@ -1,15 +1,25 @@
 package controller.Executables;
+import Visualizer.Visualizer;
 
 public class towardsExecutable extends Executable {
-
-  public towardsExecutable(String distanceUnit){
-    super();
+  private double xHeading;
+  private double yHeading;
+  public towardsExecutable(double xInput, double yInput){
+    xHeading=xInput;
+    yHeading=yInput;
   }
 
-  public void run(){
-    double xLoc = Double.parseDouble(parameters[0]);
-    double yLoc = Double.parseDouble(parameters[1]);
-    //Turns turtle to face the point (x, y), where (0, 0) is the center of the screen
-    //returns the number of degrees turtle turned
+  public double run(Visualizer visualizerObject){
+    double currentXPosition = visualizerObject.getTurtleX();
+    double currentYPosition = visualizerObject.getTurtleY();
+    double currentAngle = visualizerObject.getTurtleAngle();
+    double newAngle = Math.atan((yHeading-currentYPosition)/(xHeading-currentXPosition));
+    if(xHeading-currentXPosition<0){
+      newAngle+=180;
+    }
+    visualizerObject.setTurtleAngle(newAngle);
+    return (newAngle-currentAngle)%360;
   }
+
+
 }

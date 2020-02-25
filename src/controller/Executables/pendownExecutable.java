@@ -1,12 +1,14 @@
 package controller.Executables;
+import Visualizer.Visualizer;
 
 public class pendownExecutable extends Executable {
-
-  public pendownExecutable(String distanceUnit){
-    super();
+  public pendownExecutable(){
   }
 
-  public void run(){
-    //pendown
+  public double run(Visualizer visualizerObject){
+    visualizerObject.setTurtlePen(true);
+    return 1;
   }
+
+
 }

@@ -1,12 +1,12 @@
 package controller.Executables;
 
+import Visualizer.Visualizer;
+
 public abstract class Executable {
-  public String[] parameters;
-  //defined parameters
+
   public Executable(String... args){
-    parameters = args;
   }
 
-  abstract protected void run();
+  abstract protected double run(Visualizer visualizerObject);
 }
 
