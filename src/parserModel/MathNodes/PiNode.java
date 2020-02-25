@@ -1,8 +1,9 @@
 package parserModel.MathNodes;
 
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class PiNode extends ParserNode {
+public class PiNode extends CommandParserNode {
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }

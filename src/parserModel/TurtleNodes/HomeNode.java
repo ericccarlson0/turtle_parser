@@ -1,32 +1,33 @@
-package parserModel.TurtleCommands;
+package parserModel.TurtleNodes;
 
+import executables.Executable;
+import executables.HomeExecutable;
+import java.util.List;
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class HomeNode extends ParserNode {
+public class HomeNode extends CommandParserNode {
+    private List<Executable> executableQueue;
 
-    public HomeNode(){
-        super();
+    public HomeNode(List<Executable> queue) {
+       executableQueue = queue;
     }
 
-    @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public double execute() {
-        System.out.println(toString());
-
+        executableQueue.add(new HomeExecutable());
         return 0; //FIXME
     }
 
-    @Override
     public boolean isComplete() {
         return true;
     }
 
     @Override
     public String toString(){
-        return "Home";
+        return "HOME";
     }
 }

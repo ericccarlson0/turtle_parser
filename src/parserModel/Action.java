@@ -1,5 +1,6 @@
 package parserModel;
 
+@Deprecated
 public interface Action {
     /**
      * Execute the action. This could involve multiple actions, to be taken on both the View and

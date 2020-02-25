@@ -1,14 +1,11 @@
 package parserModel;
 
-import slogo.Main;
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 public class TokenAnalyzer {
-    private static final ResourceBundle SYNTAX = Main.SYNTAX;
-    private static final ResourceBundle LANGUAGE = Main.RESOURCES;
     private static final String COMMENT = "Comment";
     private static final String CONSTANT = "Constant";
     private static final String VARIABLE = "Variable";
@@ -21,6 +18,8 @@ public class TokenAnalyzer {
     private List<Entry<String, Pattern>> mySymbols;
     private List<Entry<String, Pattern>> myCommands;
     private Map<String, TokenType> myTokens;
+    private ResourceBundle SYNTAX;
+    private ResourceBundle LANGUAGE;
 
     public enum TokenType {
         Comment,
@@ -34,19 +33,30 @@ public class TokenAnalyzer {
     }
 
     public TokenAnalyzer() {
+        LANGUAGE = ResourceBundle.getBundle("parserModel.languages.English");
+        SYNTAX = ResourceBundle.getBundle("parserModel.parsing.syntax");
         initializeCommands();
         initializePatterns();
         initializeTokenMap();
     }
 
     public TokenType typeOfToken(String token) {
-        return myTokens.get(getTokenKey(token));
+        return myTokens.get(getTokenType(token));
+    }
+
+    private String getTokenType(String text) {
+        for (Entry<String, Pattern> e : mySymbols) {
+            if (e.getValue().matcher(text).matches()) {
+                //System.out.println(e.getKey());
+                return e.getKey();
+            }
+        }
+        return "MESSED UP";
     }
 
     public String getTokenKey(String text) {
-        for (Entry<String, Pattern> e : mySymbols) {
+        for (Entry<String, Pattern> e : myCommands) {
             if (e.getValue().matcher(text).matches()) {
-                // System.out.println(e.getKey());
                 return e.getKey();
             }
         }
