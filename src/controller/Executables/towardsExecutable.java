@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class towardsExecutable extends Executable {
 
@@ -12,6 +12,4 @@ public class towardsExecutable extends Executable {
     //Turns turtle to face the point (x, y), where (0, 0) is the center of the screen
     //returns the number of degrees turtle turned
   }
-
-
 }

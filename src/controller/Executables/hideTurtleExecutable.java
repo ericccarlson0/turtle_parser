@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class hideTurtleExecutable extends Executable {
 
@@ -9,6 +9,4 @@ public class hideTurtleExecutable extends Executable {
   public void run(){
     //hideturtle
   }
-
-
 }

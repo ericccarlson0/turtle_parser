@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public abstract class Executable {
   public String[] parameters;
@@ -8,6 +8,5 @@ public abstract class Executable {
   }
 
   abstract protected void run();
-
 }
 

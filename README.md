@@ -22,7 +22,7 @@ Hours Spent:
 
 ### Running the Program
 
-Main class:
+slogo.Main class:
 
 Data files needed: 
 

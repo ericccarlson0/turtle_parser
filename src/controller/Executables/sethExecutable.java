@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class sethExecutable extends Executable {
 
@@ -11,6 +11,4 @@ public class sethExecutable extends Executable {
     //Turns turtle to an absolute heading
     //returns number of degrees moved
   }
-
-
 }

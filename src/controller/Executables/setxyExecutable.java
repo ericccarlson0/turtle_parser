@@ -1,4 +1,4 @@
-package Controller.Executables;
+package controller.Executables;
 
 public class setxyExecutable extends Executable {
 
@@ -11,6 +11,4 @@ public class setxyExecutable extends Executable {
     double yLoc = Double.parseDouble(parameters[1]);
     //set x y positions.
   }
-
-
 }
