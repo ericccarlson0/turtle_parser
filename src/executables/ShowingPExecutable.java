@@ -3,6 +3,7 @@ import Visualizer.Visualizer;
 
 
 public class ShowingPExecutable extends Executable {
+  private final String executableType = "IsShowing";
   public ShowingPExecutable(){
   }
 
@@ -10,9 +11,9 @@ public class ShowingPExecutable extends Executable {
     return visualizerObject.getShowing();
   }
 
-  public String getString(){
+
+  public String getString() {
     return getExecutableName(executableType);
   }
-
 
 }

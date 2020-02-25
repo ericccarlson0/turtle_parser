@@ -3,6 +3,8 @@ import Visualizer.Visualizer;
 
 
 public class ShowExecutable extends Executable {
+  private final String executableType = "ShowTurtles";
+
   public ShowExecutable(){
   }
 
@@ -11,9 +13,9 @@ public class ShowExecutable extends Executable {
     return 1;
   }
 
-  public String getString(){
+  public String getString() {
     return getExecutableName(executableType);
-  }
 
+  }
 
 }

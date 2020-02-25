@@ -3,6 +3,7 @@ import Visualizer.Visualizer;
 
 
 public class YCorExecutable extends Executable {
+  private final String executableType = "YCoordinate";
   public YCorExecutable(){
   }
 
@@ -10,7 +11,8 @@ public class YCorExecutable extends Executable {
     return visualizerObject.getTurtleY();
   }
 
-  public String getString(){
+
+  public String getString() {
     return getExecutableName(executableType);
   }
 

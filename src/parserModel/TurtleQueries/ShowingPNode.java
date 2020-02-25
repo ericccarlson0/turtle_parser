@@ -2,9 +2,11 @@ package parserModel.TurtleQueries;
 import executables.Executable;
 import executables.ShowingPExecutable;
 import java.util.List;
+
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class ShowingPNode extends ParserNode {
+public class ShowingPNode extends CommandParserNode {
   private List<Executable> executableQueue;
 
   public ShowingPNode(List<Executable> queue){

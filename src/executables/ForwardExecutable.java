@@ -20,7 +20,7 @@ public class ForwardExecutable extends Executable {
   }
 
   public String getString(){
-    return getExecutableName(executableType);
+    return getExecutableName(executableType)+" "+distance;
   }
 
 

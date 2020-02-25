@@ -3,6 +3,7 @@ import Visualizer.Visualizer;
 
 
 public class RTurnExecutable extends Executable {
+  private final String executableType = "Right";
   private double angle;
   public RTurnExecutable(double angleInput){
     angle = angleInput;
@@ -15,8 +16,9 @@ public class RTurnExecutable extends Executable {
     return angle;
   }
 
+
   public String getString(){
-    return getExecutableName(executableType);
+    return getExecutableName(executableType)+" "+angle;
   }
 
 

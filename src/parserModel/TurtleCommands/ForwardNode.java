@@ -3,9 +3,10 @@ package parserModel.TurtleCommands;
 import executables.Executable;
 import executables.ForwardExecutable;
 import java.util.List;
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class ForwardNode extends ParserNode {
+public class ForwardNode extends CommandParserNode {
     private ParserNode myLength;
     private List<Executable> executableQueue;
 
@@ -15,6 +16,7 @@ public class ForwardNode extends ParserNode {
 
     public double execute() {
         double distance = myLength.execute();
+        System.out.println("forward " + distance);
         executableQueue.add(new ForwardExecutable(distance));
         return distance;
     }

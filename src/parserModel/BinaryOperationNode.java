@@ -1,6 +1,6 @@
 package parserModel;
 
-public abstract class BinaryOperationNode extends ParserNode {
+public abstract class BinaryOperationNode extends CommandParserNode {
     protected ParserNode operand1;
     protected ParserNode operand2;
 

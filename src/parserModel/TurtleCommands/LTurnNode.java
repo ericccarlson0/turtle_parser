@@ -3,9 +3,10 @@ package parserModel.TurtleCommands;
 import executables.Executable;
 import executables.LTurnExecutable;
 import java.util.List;
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class LTurnNode extends ParserNode {
+public class LTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
     private List<Executable> executableQueue;
 

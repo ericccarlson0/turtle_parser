@@ -3,6 +3,7 @@ import Visualizer.Visualizer;
 
 
 public class TowardsExecutable extends Executable {
+  private final String executableType = "SetTowards";
   private double xHeading;
   private double yHeading;
   public TowardsExecutable(double xInput, double yInput){
@@ -22,8 +23,9 @@ public class TowardsExecutable extends Executable {
     return (newAngle-currentAngle)%360;
   }
 
-  public String getString(){
-    return getExecutableName(executableType);
+
+  public String getString() {
+    return getExecutableName(executableType) + " " + xHeading + " " + yHeading;
   }
 
 

@@ -3,6 +3,8 @@ import Visualizer.Visualizer;
 
 
 public class PenDownPExecutable extends Executable {
+  private final String executableType = "IsPenDown";
+
   public PenDownPExecutable(){
   }
 
@@ -10,9 +12,8 @@ public class PenDownPExecutable extends Executable {
     return visualizerObject.getPenDown();
   }
 
-  public String getString(){
+  public String getString() {
     return getExecutableName(executableType);
   }
-
 
 }

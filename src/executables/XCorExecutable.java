@@ -3,6 +3,7 @@ import Visualizer.Visualizer;
 
 
 public class XCorExecutable extends Executable {
+  private final String executableType = "XCoordinate";
   public XCorExecutable(){
   }
 
@@ -10,7 +11,8 @@ public class XCorExecutable extends Executable {
     return visualizerObject.getTurtleX();
   }
 
-  public String getString(){
+
+  public String getString() {
     return getExecutableName(executableType);
   }
 

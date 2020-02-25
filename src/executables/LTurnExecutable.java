@@ -2,6 +2,7 @@ package executables;
 import Visualizer.Visualizer;
 
 public class LTurnExecutable extends Executable {
+  private final String executableType = "Left";
   private double angle;
   public LTurnExecutable(double angleInput){
     angle = angleInput;
@@ -15,7 +16,7 @@ public class LTurnExecutable extends Executable {
   }
 
   public String getString(){
-    return getExecutableName(executableType);
+    return getExecutableName(executableType)+" "+angle;
   }
 
 

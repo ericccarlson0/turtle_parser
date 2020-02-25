@@ -1,13 +1,13 @@
 package parserModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class RootParserNode extends ParserNode {
+public class RootParserNode extends CommandParserNode {
+    protected List<ParserNode> myChildren;
 
     public RootParserNode() {
-        complete = false;
-        myParent = null;
-        myChildren = new ArrayList<ParserNode>();
+        myChildren = new ArrayList<>();
     }
 
     public void addNode(ParserNode node) {
@@ -15,15 +15,15 @@ public class RootParserNode extends ParserNode {
     }
 
     public double execute() {
+        double returning = 0.0;
         for (ParserNode node : myChildren){
-            node.execute();
+            returning = node.execute();
         }
-        return 1;
-        //FIXME
+        return returning;
     }
 
     public boolean isComplete() {
-        return complete;
+        return true;
     }
 
     @Override

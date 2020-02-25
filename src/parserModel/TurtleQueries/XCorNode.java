@@ -2,9 +2,11 @@ package parserModel.TurtleQueries;
 import executables.Executable;
 import executables.XCorExecutable;
 import java.util.List;
+
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class XCorNode extends ParserNode {
+public class XCorNode extends CommandParserNode {
   private List<Executable> executableQueue;
 
   public XCorNode(List<Executable> queue){

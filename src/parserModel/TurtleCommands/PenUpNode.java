@@ -3,9 +3,10 @@ package parserModel.TurtleCommands;
 import executables.Executable;
 import executables.PenUpExecutable;
 import java.util.List;
+import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 
-public class PenUpNode extends ParserNode {
+public class PenUpNode extends CommandParserNode {
     private List<Executable> executableQueue;
 
     public PenUpNode(List<Executable> queue){
