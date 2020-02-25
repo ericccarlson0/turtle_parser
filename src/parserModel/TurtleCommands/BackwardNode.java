@@ -1,6 +1,9 @@
 package parserModel.TurtleCommands;
 
+import ParserStack.ParserStack;
+
 import parserModel.ParserNode;
+import executables.;
 
 
 public class BackwardNode extends ParserNode {
@@ -10,7 +13,7 @@ public class BackwardNode extends ParserNode {
         super();
     }
 
-    public double execute() {
+    public double execute(ParserStack parserStack) {
         /*
         double distanceToTravel = myLength.execute();
         System.out.println(toString());
@@ -18,6 +21,7 @@ public class BackwardNode extends ParserNode {
         return distanceToTravel;
          */
         //ps.pushCommand(new backExecutable())
+        parserStack.pushCommand(new backExecutable(myLength.execute()));
         return 0;
     }
 
