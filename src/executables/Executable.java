@@ -5,7 +5,8 @@ import java.util.ResourceBundle;
 
 public abstract class Executable {
   public static final String RESOURCES = "parserModel.languages.";
-  private final String languageChosen = ResourceBundle.getBundle("Resources.Languages."+"LanguageChoice").getString("Language");
+  //private final String languageChosen = ResourceBundle.getBundle("Resources.Languages."+"LanguageChoice").getString("Language");
+  private final String languageChosen = "English";
 
   public Executable(String... args){ }
 

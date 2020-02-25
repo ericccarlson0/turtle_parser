@@ -17,10 +17,12 @@ public class Controller {
     private TreeParser myTreeParser;
     public Visualizer myVisualizer;
     private Timeline animation;
-    private List<Executable> executables = new ArrayList<Executable>();
+    private List<Executable> executables;
+
 
     public Controller () {
         myVisualizer = new Visualizer();
+        executables = new ArrayList<>();
         myTreeParser = new TreeParser(executables);
         start();
     }
@@ -33,7 +35,7 @@ public class Controller {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
-        testVisualizer();
+        //testVisualizer();
     }
 
 
@@ -41,7 +43,10 @@ public class Controller {
         if(!myVisualizer.getCommand().equals("")) {
             ParserNode root = myTreeParser.parseString(myVisualizer.getCommand());
             myVisualizer.resetCommand();
-            root.execute(); // adds execuables to the queue
+            root.execute();
+            for (Executable e : executables) {
+                e.run(myVisualizer);
+            }
         }
     }
     public Queue<Executable> getExeutableQueue(){

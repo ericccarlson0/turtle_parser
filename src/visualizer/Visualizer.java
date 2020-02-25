@@ -164,13 +164,28 @@ public class Visualizer {
     public void clearScreen(){
         playAnimation();
     }
-
+    /**
     public boolean getTurtlePen(){
         return myTurtles.get(turtleIndex).getPen();
     }
 
     public boolean getShowing(){
         return myTurtles.get(turtleIndex).isVisible();
+    }
+     */
+
+    public double getTurtlePen(){
+        if(myTurtles.get(turtleIndex).getPen()) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public double getShowing(){
+        if(myTurtles.get(turtleIndex).isVisible()) {
+            return 1;
+        }
+        return 0;
     }
 
     public void show(){
