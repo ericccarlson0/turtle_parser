@@ -11,13 +11,13 @@ import parserModel.TokenAnalyzer.TokenType;
 
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
-    private CommandFactory myCommandFactory;
+    private TurtleNodeFactory myCommandFactory;
     private List<Executable> myQueue;
 
     public TreeParser(List<Executable> queue) {
         myQueue = queue;
         myTokenAnalyzer = new TokenAnalyzer();
-        myCommandFactory = new CommandFactory();
+        myCommandFactory = new TurtleNodeFactory();
     }
 
     public CommandParserNode parseString(String input){
