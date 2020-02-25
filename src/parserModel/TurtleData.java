@@ -1,3 +1,5 @@
+package parserModel;
+
 public class TurtleData {
   public static final double DEFAULT_MIN_WIDTH = 2;
   public static final double DEFAULT_PEN_WIDTH = 4;
