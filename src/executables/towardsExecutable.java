@@ -1,9 +1,6 @@
-<<<<<<< HEAD:src/executables/towardsExecutable.java
 package executables;
-=======
-package controller.Executables;
 import Visualizer.Visualizer;
->>>>>>> cy111:src/controller/Executables/towardsExecutable.java
+
 
 public class towardsExecutable extends Executable {
   private double xHeading;

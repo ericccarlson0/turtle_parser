@@ -1,10 +1,7 @@
-<<<<<<< HEAD:src/executables/homeExecutable.java
 package executables;
-=======
-package controller.Executables;
-import static controller.Executables.setxyExecutable.getDistanceTraveled;
+import static executables.setxyExecutable.getDistanceTraveled;
 import Visualizer.Visualizer;
->>>>>>> cy111:src/controller/Executables/homeExecutable.java
+
 
 public class homeExecutable extends Executable {
 

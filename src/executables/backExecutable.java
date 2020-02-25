@@ -1,9 +1,6 @@
-<<<<<<< HEAD:src/executables/backExecutable.java
 package executables;
-=======
-package controller.Executables;
 import Visualizer.Visualizer;
->>>>>>> cy111:src/controller/Executables/backExecutable.java
+
 
 public class backExecutable extends Executable {
   private double distance;

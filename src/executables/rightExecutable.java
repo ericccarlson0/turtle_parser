@@ -1,9 +1,6 @@
-<<<<<<< HEAD:src/executables/rightExecutable.java
 package executables;
-=======
-package controller.Executables;
 import Visualizer.Visualizer;
->>>>>>> cy111:src/controller/Executables/rightExecutable.java
+
 
 public class rightExecutable extends Executable {
   private double angle;

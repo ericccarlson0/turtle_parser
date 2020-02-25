@@ -1,9 +1,5 @@
-<<<<<<< HEAD:src/executables/forwardExecutable.java
 package executables;
-=======
-package controller.Executables;
 import Visualizer.Visualizer;
->>>>>>> cy111:src/controller/Executables/forwardExecutable.java
 
 public class forwardExecutable extends Executable {
   private double distance;

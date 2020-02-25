@@ -1,9 +1,6 @@
-<<<<<<< HEAD:src/executables/setxyExecutable.java
 package executables;
-=======
-package controller.Executables;
 import Visualizer.Visualizer;
->>>>>>> cy111:src/controller/Executables/setxyExecutable.java
+
 
 public class setxyExecutable extends Executable {
   private double xSet;

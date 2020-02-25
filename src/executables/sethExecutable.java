@@ -1,9 +1,6 @@
-<<<<<<< HEAD:src/executables/sethExecutable.java
 package executables;
-=======
-package controller.Executables;
 import Visualizer.Visualizer;
->>>>>>> cy111:src/controller/Executables/sethExecutable.java
+
 
 public class sethExecutable extends Executable {
 
