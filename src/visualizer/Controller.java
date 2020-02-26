@@ -49,6 +49,7 @@ public class Controller {
         }
         if(executables.size() != 0){
             executables.get(0).run(myVisualizer);
+            myVisualizer.addExecutedHistory(executables.get(0).getString());
             executables.remove(0);
         }
 
