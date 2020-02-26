@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.scene.control.ComboBox;
 import javafx.scene.shape.Line;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -34,11 +33,10 @@ import java.util.ArrayList;
 
 /**
  * visualizer.java - a class for managing the frontend.
- * @author  Lorne Zhang
+ * @author  Lorne Zhang, Eric Carlson
  * @version 1.0
  */
 public class Visualizer {
-
     private static final String RESOURCE_FOLDER = "/stylesheets";
     private static final String STYLESHEET = "/default.css";
     private final int ENVIRONMENT_SIZE_HEIGHT = 800;
@@ -53,18 +51,33 @@ public class Visualizer {
     private final int OFFSET = 25; //25
     private final int SCROLLPANE_SIZE = 250;
     private final int TEXTINPUT_SIZE = 150;
+
+    private final int SPLASH_SIZE_HEIGHT = 700;
+    private final int SPLASH_SIZE_WIDTH = 1300;
+    private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
+
     private Stage myStage;
     private Scene myScene;
     private Group myGroup;
     private Group parserField;
     private ArrayList<visualizer.Turtle> myTurtles;
     private int turtleIndex = 0;
+
     private final static String TURTLE_FILE = "images/turtle.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
     private Text executedHistory;
     private Text inputHistory;
     private ScrollPane inputScrollPane;
     private ScrollPane executedScrollPane;
+
+    private static final String COMMAND_HISTORY = "EXECUTED COMMAND HISTORY: " ;
+    private static final String INPUT_HISTORY = "USER INPUT HISTORY: ";
+
+    private Text availableCommands;
+    private Text availableVariables;
+    private ScrollPane commandScrollPane;
+    private ScrollPane variableScrollPane;
+
     private Text userInputText;
     private ScrollPane userInputScrollPane;
     private TextArea userInputTextField;
@@ -82,7 +95,6 @@ public class Visualizer {
 
     /**
      * getTurtleX() - getter for turtle's x coordinate.
-     *
      * @return int x for turtle's x coordinate.
      */
     public double getTurtleX() {
@@ -91,7 +103,6 @@ public class Visualizer {
 
     /**
      * getTurtleY() - getter for turtle's y coordinate.
-     *
      * @return int y for turtle's y coordinate.
      */
     public double getTurtleY() {
@@ -99,8 +110,7 @@ public class Visualizer {
     }
 
     /**
-     * getTurtleX() - getter for turtle's x coordinate.
-     *
+     * getTurtleAngle() - getter for turtle's heading (angle).
      * @return int x for turtle's x coordinate.
      */
     public double getTurtleAngle() {
@@ -117,38 +127,38 @@ public class Visualizer {
 
     /**
      * setTurtleX() - setter for turtle's x coordinate.
-     *
      * @param xPos turtle's x coordinate.
      */
     public void setTurtleX(double xPos) {
-        if (myTurtles.get(turtleIndex).getXCoordinate() > FIELD_RIGHT_EDGE) {
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - FIELD_HEIGHT);
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - OFFSET);
+        Turtle currTurtle = myTurtles.get(turtleIndex);
+        if (currTurtle.getXCoordinate() > 675) {
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 650);
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 25);
 
-        } else if (myTurtles.get(turtleIndex).getXCoordinate() < FIELD_LEFT_EDGE) {
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + FIELD_HEIGHT);
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + OFFSET);
-
+        } else if (currTurtle.getXCoordinate() < 25) {
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 650);
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() + 25);
         } else {
-            myTurtles.get(turtleIndex).setXCoordinate(xPos);
+            currTurtle.setXCoordinate(xPos);
         }
 
     }
 
     /**
      * setTurtleY() - setter for turtle's y coordinate.
-     *
      * @param yPos turtle's y coordinate.
      */
     public void setTurtleY(double yPos) {
-        if (myTurtles.get(turtleIndex).getYCoordinate() > FIELD_RIGHT_EDGE) {
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - FIELD_HEIGHT);
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - OFFSET);
-        } else if (myTurtles.get(turtleIndex).getYCoordinate() < FIELD_LEFT_EDGE) {
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate()+ FIELD_HEIGHT);
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + OFFSET);
+
+        Turtle currTurtle = myTurtles.get(turtleIndex);
+        if (currTurtle.getYCoordinate() > 675) {
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 650);
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 25);
+        } else if (currTurtle.getYCoordinate() < 25) {
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate()+ 650);
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 25);
         } else {
-            myTurtles.get(turtleIndex).setYCoordinate(yPos);
+            currTurtle.setYCoordinate(yPos);
         }
     }
 
@@ -157,8 +167,7 @@ public class Visualizer {
     }
 
     /**
-     * setTurtleX() - setter for turtle's x coordinate.
-     *
+     * setTurtleAngle() - setter for turtle's heading (angle).
      * @param angle turtle's x coordinate.
      */
     public void setTurtleAngle(double angle) {
@@ -178,8 +187,7 @@ public class Visualizer {
     }
 
     /**
-     * getCommand() - getter for the string the user inputs.
-     *
+     * getCommand() - getter for the String the user inputs.
      * @return
      */
     public String getCommand() {
@@ -188,7 +196,6 @@ public class Visualizer {
 
     /**
      * resetCommand() - resets the command to null.
-     *
      * @return
      */
     public void resetCommand() {
@@ -200,16 +207,12 @@ public class Visualizer {
     }
 
     public double getTurtlePen() {
-        if (myTurtles.get(turtleIndex).getPen()) {
-            return 1;
-        }
+        if (myTurtles.get(turtleIndex).getPen()) { return 1; }
         return 0;
     }
 
     public double getShowing() {
-        if (myTurtles.get(turtleIndex).isVisible()) {
-            return 1;
-        }
+        if (myTurtles.get(turtleIndex).isVisible()) { return 1; }
         return 0;
 
     }
@@ -223,8 +226,7 @@ public class Visualizer {
     }
 
     /**
-     * addInputHistory() - add a string for the history of the input.
-     *
+     * addInputHistory() - add a String for the history of the input.
      * @return
      */
     public void addInputHistory(String history) {
@@ -232,8 +234,7 @@ public class Visualizer {
     }
 
     /**
-     * addUserInput() - add a string to the actual user input. Acts like a terminal
-     *
+     * addUserInput() - add a String to the actual user inputl; acts like a terminal.
      * @return
      */
     public void addUserInput(String input) {
@@ -241,8 +242,7 @@ public class Visualizer {
     }
 
     /**
-     * addExecutedHistory() - add a string to the executed commands.
-     *
+     * addExecutedHistory() - add a String to the executed commands.
      * @return
      */
     public void addExecutedHistory(String executed) {
@@ -251,8 +251,7 @@ public class Visualizer {
 
     /**
      * getTurtleIndex() - getter for turtle index.
-     *
-     * @return int turtleIndex which indexes which turtle is in control.
+     * @return int turtleIndex, the index of the turtle that is in control at the moment.
      */
     public int getTurtleIndex() {
         return turtleIndex;
@@ -260,13 +259,11 @@ public class Visualizer {
 
     /**
      * setTurtleIndex() - setter for turtle index.
-     *
-     * @param index new turtle index.
+     * @param index the index of the new Turtle in control.
      */
     public void setTurtleIndex(int index) {
         turtleIndex = index;
     }
-
 
     private void start() {
         myStage = new Stage();
@@ -281,14 +278,16 @@ public class Visualizer {
     }
 
     public void draw() {
-        System.out.println("draw");
-        if ((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate())) < FIELD_HEIGHT && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate())) < FIELD_HEIGHT) {
-            if (myTurtles.get(turtleIndex).getPen()) {
+        System.out.println("DRAW");
+        Turtle currTurtle = myTurtles.get(turtleIndex);
+        if ((Math.abs(currTurtle.getOldXCoordinate() - currTurtle.getXCoordinate())) < 650
+            && (Math.abs(currTurtle.getOldYCoordinate() - currTurtle.getYCoordinate())) < 650) {
+            if (currTurtle.getPen()) {
                 Line line = new Line();
-                line.setStartX(myTurtles.get(turtleIndex).getOldXCoordinate());
-                line.setStartY(myTurtles.get(turtleIndex).getOldYCoordinate());
-                line.setEndX(myTurtles.get(turtleIndex).getXCoordinate());
-                line.setEndY(myTurtles.get(turtleIndex).getYCoordinate());
+                line.setStartX(currTurtle.getOldXCoordinate());
+                line.setStartY(currTurtle.getOldYCoordinate());
+                line.setEndX(currTurtle.getXCoordinate());
+                line.setEndY(currTurtle.getYCoordinate());
                 parserField.getChildren().add(line);
             }
         }
@@ -309,13 +308,12 @@ public class Visualizer {
         inputBox.getChildren().add(userInputTextField);
         inputButton = makeButton("Enter", 0, 0, inputBox);
         inputButton.setOnAction(new EventHandler<>() {
-            @Override
             public void handle(ActionEvent event) {
-                String x = userInputTextField.getText();
-                inputHistory.setText(inputHistory.getText() + '\n' + x);
-                userInputText.setText(userInputText.getText() + '\n' + "Command entered");
+                String newText = userInputTextField.getText();
+                inputHistory.setText(inputHistory.getText() + '\n' + newText);
+                userInputText.setText(userInputText.getText() + '\n' + "(command entered)");
                 userInputTextField.clear();
-                setCommand(x);
+                setCommand(newText);
             }
         });
         inputBox.getChildren().add(userInputScrollPane);
@@ -335,6 +333,12 @@ public class Visualizer {
         layout.setAlignment(parserField,Pos.CENTER);
 
         myGroup.getChildren().add(layout);
+    }
+
+    private Node createTurtle(Image turtleImage, int x, int y, int turtleIndex) {
+        Turtle initialTurtle = new visualizer.Turtle(turtleImage, x, y, turtleIndex);
+        myTurtles.add(initialTurtle);
+        return initialTurtle;
     }
 
     private Node createEnvironmentLists() {
@@ -392,12 +396,6 @@ public class Visualizer {
         Page popup = new Page(list);
     }
 
-    private Node createTurtle(Image turtleImage, int x, int y, int turtleIndex) {
-        Turtle initialTurtle = new visualizer.Turtle(turtleImage, x, y, turtleIndex);
-        myTurtles.add(initialTurtle);
-        return initialTurtle;
-    }
-
     private Node createField(int x, int y, int width, int height, Color color) {
         Rectangle field = new Rectangle(x, y, width, height);
         field.setFill(color);
@@ -413,7 +411,8 @@ public class Visualizer {
         return myButton;
     }
 
-    private ScrollPane makeScrollPane(javafx.scene.Node text, int x, int y, ScrollPane.ScrollBarPolicy hbar, ScrollPane.ScrollBarPolicy vbar, boolean fitHeight, boolean fitWidth, int width, int height) {
+    private ScrollPane makeScrollPane(Node text, int x, int y, ScrollPane.ScrollBarPolicy hbar,
+        ScrollPane.ScrollBarPolicy vbar, boolean fitHeight, boolean fitWidth, int width, int height) {
         ScrollPane scrollPane = new ScrollPane(text);
         scrollPane.setLayoutX(x);
         scrollPane.setLayoutY(y);
@@ -469,7 +468,5 @@ public class Visualizer {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
     }
-
 }
