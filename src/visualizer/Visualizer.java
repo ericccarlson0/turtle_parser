@@ -17,13 +17,11 @@ import java.util.ArrayList;
 
 /**
  * visualizer.java - a class for managing the frontend.
- * @author  Lorne Zhang
+ * @author  Lorne Zhang, Eric Carlson
  * @version 1.0
  */
 public class Visualizer {
 
-    private static final String RESOURCE_FOLDER = "/stylesheets";
-    private static final String STYLESHEET = "/default.css";
     private final int SPLASH_SIZE_HEIGHT = 700;
     private final int SPLASH_SIZE_WIDTH = 1300;
     private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
@@ -36,23 +34,30 @@ public class Visualizer {
     private final int FIELD_CENTER_Y = 350;
     private final int FIELD_HEIGHT = 650;
     private final int FIELD_WIDTH = 650;
+    private final int OFF_SCREEN_BUFFER = 25;
 
-    private Timeline animation;
     private Stage myStage;
     private Scene myScene;
     private Group myGroup;
 
     private ArrayList<visualizer.Turtle> myTurtles;
     private int turtleIndex = 0;
-    private final static String TURTLE_FILE = "images/turtle.jpg";
-    private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
+    private static final String TURTLE_FILE = "images/turtle.jpg";
+    private static final Image TURTLE_IMAGE = new Image(TURTLE_FILE);
+
+    private static final String RESOURCE_FOLDER = "/stylesheets";
+    private static final String STYLESHEET = "/default.css";
+    private static final String COMMAND_HISTORY = "EXECUTED COMMAND HISTORY: " ;
+    private static final String INPUT_HISTORY = "USER INPUT HISTORY: ";
 
     private Text executedHistory;
     private Text inputHistory;
-    private Text possibleCommands;
+    private Text availableCommands;
+    private Text availableVariables;
     private ScrollPane inputScrollPane;
     private ScrollPane executedScrollPane;
     private ScrollPane commandScrollPane;
+    private ScrollPane variableScrollPane;
 
     private Text userInputText;
     private ScrollPane userInputScrollPane;
@@ -72,7 +77,6 @@ public class Visualizer {
 
     /**
      * getTurtleX() - getter for turtle's x coordinate.
-     *
      * @return int x for turtle's x coordinate.
      */
     public double getTurtleX() {
@@ -81,7 +85,6 @@ public class Visualizer {
 
     /**
      * getTurtleY() - getter for turtle's y coordinate.
-     *
      * @return int y for turtle's y coordinate.
      */
     public double getTurtleY() {
@@ -89,8 +92,7 @@ public class Visualizer {
     }
 
     /**
-     * getTurtleX() - getter for turtle's x coordinate.
-     *
+     * getTurtleAngle() - getter for turtle's heading (angle).
      * @return int x for turtle's x coordinate.
      */
     public double getTurtleAngle() {
@@ -99,22 +101,39 @@ public class Visualizer {
 
     /**
      * setTurtleX() - setter for turtle's x coordinate.
-     *
      * @param xPos turtle's x coordinate.
      */
     public void setTurtleX(double xPos) {
-        if (myTurtles.get(turtleIndex).getXCoordinate() > 675) {
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 650);
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 25);
+        Turtle currTurtle = myTurtles.get(turtleIndex);
+        if (currTurtle.getXCoordinate() > 675) {
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 650);
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 25);
 
-        } else if (myTurtles.get(turtleIndex).getXCoordinate() < 25) {
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 650);
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 25);
+        } else if (currTurtle.getXCoordinate() < 25) {
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 650);
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() + 25);
 
         } else {
-            myTurtles.get(turtleIndex).setXCoordinate(xPos);
+            currTurtle.setXCoordinate(xPos);
         }
 
+    }
+
+    /**
+     * setTurtleY() - setter for turtle's y coordinate.
+     * @param yPos turtle's y coordinate.
+     */
+    public void setTurtleY(double yPos) {
+        Turtle currTurtle = myTurtles.get(turtleIndex);
+        if (currTurtle.getYCoordinate() > 675) {
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 650);
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 25);
+        } else if (currTurtle.getYCoordinate() < 25) {
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate()+ 650);
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 25);
+        } else {
+            currTurtle.setYCoordinate(yPos);
+        }
     }
 
     public void setTurtleGameX(double xPos){
@@ -125,30 +144,12 @@ public class Visualizer {
         myTurtles.get(turtleIndex).setYGameCoordinate(yPos);
     }
 
-    /**
-     * setTurtleY() - setter for turtle's y coordinate.
-     *
-     * @param yPos turtle's y coordinate.
-     */
-    public void setTurtleY(double yPos) {
-        if (myTurtles.get(turtleIndex).getYCoordinate() > 675) {
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 650);
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 25);
-        } else if (myTurtles.get(turtleIndex).getYCoordinate() < 25) {
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate()+ 650);
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 25);
-        } else {
-            myTurtles.get(turtleIndex).setYCoordinate(yPos);
-        }
-    }
-
     public void setTurtlePen(boolean x) {
         myTurtles.get(turtleIndex).setPen(x);
     }
 
     /**
-     * setTurtleX() - setter for turtle's x coordinate.
-     *
+     * setTurtleAngle() - setter for turtle's heading (angle).
      * @param angle turtle's x coordinate.
      */
     public void setTurtleAngle(double angle) {
@@ -160,8 +161,7 @@ public class Visualizer {
     }
 
     /**
-     * getCommand() - getter for the string the user inputs.
-     *
+     * getCommand() - getter for the String the user inputs.
      * @return
      */
     public String getCommand() {
@@ -170,7 +170,6 @@ public class Visualizer {
 
     /**
      * resetCommand() - resets the command to null.
-     *
      * @return
      */
     public void resetCommand() {
@@ -182,16 +181,12 @@ public class Visualizer {
     }
 
     public double getTurtlePen() {
-        if (myTurtles.get(turtleIndex).getPen()) {
-            return 1;
-        }
+        if (myTurtles.get(turtleIndex).getPen()) { return 1; }
         return 0;
     }
 
     public double getShowing() {
-        if (myTurtles.get(turtleIndex).isVisible()) {
-            return 1;
-        }
+        if (myTurtles.get(turtleIndex).isVisible()) { return 1; }
         return 0;
 
     }
@@ -205,8 +200,7 @@ public class Visualizer {
     }
 
     /**
-     * addInputHistory() - add a string for the history of the input.
-     *
+     * addInputHistory() - add a String for the history of the input.
      * @return
      */
     public void addInputHistory(String history) {
@@ -214,8 +208,7 @@ public class Visualizer {
     }
 
     /**
-     * addUserInput() - add a string to the actual user input. Acts like a terminal
-     *
+     * addUserInput() - add a String to the actual user inputl; acts like a terminal.
      * @return
      */
     public void addUserInput(String input) {
@@ -223,8 +216,7 @@ public class Visualizer {
     }
 
     /**
-     * addExecutedHistory() - add a string to the executed commands.
-     *
+     * addExecutedHistory() - add a String to the executed commands.
      * @return
      */
     public void addExecutedHistory(String executed) {
@@ -233,8 +225,7 @@ public class Visualizer {
 
     /**
      * getTurtleIndex() - getter for turtle index.
-     *
-     * @return int turtleIndex which indexes which turtle is in control.
+     * @return int turtleIndex, the index of the turtle that is in control at the moment.
      */
     public int getTurtleIndex() {
         return turtleIndex;
@@ -242,8 +233,7 @@ public class Visualizer {
 
     /**
      * setTurtleIndex() - setter for turtle index.
-     *
-     * @param index new turtle index.
+     * @param index the index of the new Turtle in control.
      */
     public void setTurtleIndex(int index) {
         turtleIndex = index;
@@ -263,41 +253,26 @@ public class Visualizer {
     }
 
     public void draw() {
-        System.out.println("draw");
-        if ((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate())) < 650 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate())) < 650) {
-            if (myTurtles.get(turtleIndex).getPen()) {
+        System.out.println("DRAW");
+        Turtle currTurtle = myTurtles.get(turtleIndex);
+        if ((Math.abs(currTurtle.getOldXCoordinate() - currTurtle.getXCoordinate())) < 650
+            && (Math.abs(currTurtle.getOldYCoordinate() - currTurtle.getYCoordinate())) < 650) {
+            if (currTurtle.getPen()) {
                 Line line = new Line();
-                line.setStartX(myTurtles.get(turtleIndex).getOldXCoordinate());
-                line.setStartY(myTurtles.get(turtleIndex).getOldYCoordinate());
-                line.setEndX(myTurtles.get(turtleIndex).getXCoordinate());
-                line.setEndY(myTurtles.get(turtleIndex).getYCoordinate());
+                line.setStartX(currTurtle.getOldXCoordinate());
+                line.setStartY(currTurtle.getOldYCoordinate());
+                line.setEndX(currTurtle.getXCoordinate());
+                line.setEndY(currTurtle.getYCoordinate());
                 myGroup.getChildren().add(line);
             }
         }
     }
 
-    private void step() {
-
-    }
-
-    private Scene setUpSplash() {
-        myGroup = new Group();
-        // create button that has event handler that calls playAnimation
-        Button playButon = makeButton("Press to Play", SPLASH_SIZE_WIDTH / 4, SPLASH_SIZE_HEIGHT / 4, myGroup);
-        playButon.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                playAnimation();
-            }
-        });
-        return new Scene(myGroup, SPLASH_SIZE_WIDTH, SPLASH_SIZE_HEIGHT, SPLASH_BACKGROUND);
-    }
-
     private void setUpEnvironment() {
         myGroup = new Group();
-        myTurtles = new ArrayList<visualizer.Turtle>();
-        inputHistory = new Text("user input history");
-        executedHistory = new Text("executed command history");
+        myTurtles = new ArrayList<>();
+        inputHistory = new Text(INPUT_HISTORY);
+        executedHistory = new Text(COMMAND_HISTORY);
 
         // create field
         Rectangle field = new Rectangle((ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, (ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, FIELD_WIDTH, FIELD_HEIGHT);
@@ -357,10 +332,23 @@ public class Visualizer {
                 playAnimation();
             }
         });
-        
+
         myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
         String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
         myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+    }
+
+    private Scene setUpSplash() {
+        myGroup = new Group();
+        // create button that has event handler that calls playAnimation
+        Button playButon = makeButton("Press to Play", SPLASH_SIZE_WIDTH / 4, SPLASH_SIZE_HEIGHT / 4, myGroup);
+        playButon.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                playAnimation();
+            }
+        });
+        return new Scene(myGroup, SPLASH_SIZE_WIDTH, SPLASH_SIZE_HEIGHT, SPLASH_BACKGROUND);
     }
 
     private Button makeButton(String text, int x, int y, Group group) {
