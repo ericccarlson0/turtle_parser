@@ -22,7 +22,6 @@ public class Controller {
 
     public Controller () {
         myVisualizer = new Visualizer();
-        myVisualizer.setTurtlePen(true);
         executables = new ArrayList<>();
         myTreeParser = new TreeParser(executables);
         myContext = new VisualContext(myVisualizer,executables);

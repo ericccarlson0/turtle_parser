@@ -1,4 +1,5 @@
 package visualizer;
+import javafx.collections.ObservableList;
 import javafx.scene.shape.Line;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -33,7 +34,10 @@ public class Visualizer {
     private final int FIELD_CENTER_Y = 350;
     private final int FIELD_HEIGHT = 650;
     private final int FIELD_WIDTH = 650;
-
+    private final int FIELD_RIGHT_EDGE = 675;
+    private final int FIELD_LEFT_EDGE = 25;
+    private final int OFFSET = 25;
+    private final int SCROLLPANE_SIZE = 250;
     private Timeline animation;
     private Stage myStage;
     private Scene myScene;
@@ -46,17 +50,15 @@ public class Visualizer {
 
     private Text executedHistory;
     private Text inputHistory;
-    private Text possibleCommands;
     private ScrollPane inputScrollPane;
     private ScrollPane executedScrollPane;
-    private ScrollPane commandScrollPane;
 
     private Text userInputText;
     private ScrollPane userInputScrollPane;
     private TextField userInputTextField;
     private Button inputButton;
+    private ObservableList variableList;
 
-    private int step = 0;
     private String command = "";
 
 
@@ -100,18 +102,22 @@ public class Visualizer {
      * @param xPos turtle's x coordinate.
      */
     public void setTurtleX(double xPos) {
-        if (myTurtles.get(turtleIndex).getXCoordinate() > 675) {
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 650);
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 25);
+        if (myTurtles.get(turtleIndex).getXCoordinate() > FIELD_RIGHT_EDGE) {
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - FIELD_HEIGHT);
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - OFFSET);
 
-        } else if (myTurtles.get(turtleIndex).getXCoordinate() < 25) {
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 650);
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 25);
+        } else if (myTurtles.get(turtleIndex).getXCoordinate() < FIELD_LEFT_EDGE) {
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + FIELD_HEIGHT);
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + OFFSET);
 
         } else {
             myTurtles.get(turtleIndex).setXCoordinate(xPos);
         }
 
+    }
+
+    public void setTurtleGameX(double xPos){
+        myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
     }
 
     public void setTurtleGameX(double xPos){
@@ -128,12 +134,12 @@ public class Visualizer {
      * @param yPos turtle's y coordinate.
      */
     public void setTurtleY(double yPos) {
-        if (myTurtles.get(turtleIndex).getYCoordinate() > 675) {
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 650);
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 25);
-        } else if (myTurtles.get(turtleIndex).getYCoordinate() < 25) {
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate()+ 650);
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 25);
+        if (myTurtles.get(turtleIndex).getYCoordinate() > FIELD_RIGHT_EDGE) {
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - FIELD_HEIGHT);
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - OFFSET);
+        } else if (myTurtles.get(turtleIndex).getYCoordinate() < FIELD_LEFT_EDGE) {
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate()+ FIELD_HEIGHT);
+            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + OFFSET);
         } else {
             myTurtles.get(turtleIndex).setYCoordinate(yPos);
         }
@@ -261,7 +267,7 @@ public class Visualizer {
 
     public void draw() {
         System.out.println("draw");
-        if ((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate())) < 650 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate())) < 650) {
+        if ((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate())) < FIELD_HEIGHT && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate())) < FIELD_HEIGHT) {
             if (myTurtles.get(turtleIndex).getPen()) {
                 Line line = new Line();
                 line.setStartX(myTurtles.get(turtleIndex).getOldXCoordinate());
@@ -307,11 +313,11 @@ public class Visualizer {
         myGroup.getChildren().add(initialTurtle);
 
         // create input scroll pane
-        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
+        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         myGroup.getChildren().add(inputScrollPane);
 
         // create executed scroll pane
-        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
+        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         myGroup.getChildren().add(executedScrollPane);
 
         // create input text field
@@ -328,20 +334,27 @@ public class Visualizer {
                 setCommand(x);
             }
         });
-        userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + 50);
-        userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + 50);
+        userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + OFFSET*2);
+        userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + OFFSET*2);
 
         //VBox c = new VBox();
         //c.getChildren().add(userInputText);
         //c.getChildren().add(userInputTextField);
-        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) * 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
+        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) * 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
         myGroup.getChildren().add(userInputScrollPane);
         myGroup.getChildren().add(userInputTextField);
 
         // create buttons
-        Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + 150, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + 250, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + OFFSET*6, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + OFFSET*10, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button variableButton = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + OFFSET*14, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        variableButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                VariablePage popup = new VariablePage();
+            }
+        });
         helpParser.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {

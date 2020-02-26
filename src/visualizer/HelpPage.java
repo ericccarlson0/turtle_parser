@@ -24,7 +24,6 @@ public class HelpPage {
         myScene = new Scene(myGroup);
         myStage.setScene(myScene);
         myStage.show();
-
     }
 
     private ScrollPane getPane() {

@@ -10,6 +10,12 @@ import javafx.scene.image.ImageView;
 public class Turtle extends ImageView{
     private final static String TURTLE_FILE = "images/ball.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
+    private final static int TURTLE_OFFSET = 20;
+    private final static int CENTER = 350;
+    private final static int SCREEN_SIZE = 700;
+    private final static int FIELD_SIZE = 675;
+
+
     private double x_coordinate;
     private double y_coordinate;
     private double old_x_coordinate;
@@ -19,6 +25,7 @@ public class Turtle extends ImageView{
     private double angle;
     private boolean pen = true;
     private int id;
+
     //private Queue<Double> xValues = new LinkedList<Double>();
     //private Queue<Double> yValues = new LinkedList<Double>();
 
@@ -45,8 +52,8 @@ public class Turtle extends ImageView{
         super(image);
         setXCoordinate(xPos);
         setYCoordinate(yPos);
-        old_x_coordinate = xPos - 16;
-        old_y_coordinate = yPos - 16;
+        old_x_coordinate = xPos - TURTLE_OFFSET;
+        old_y_coordinate = yPos - TURTLE_OFFSET;
         id = turtleIndex;
         setAngle(0);
         setRotate(90);
@@ -58,48 +65,48 @@ public class Turtle extends ImageView{
 
     public void setXCoordinate(double xPos){
         old_x_coordinate = x_coordinate;
-        this.x_coordinate = xPos - 16;
-        setX(xPos - 16);
+        this.x_coordinate = xPos - TURTLE_OFFSET;
+        setX(xPos - TURTLE_OFFSET);
     }
 
     public void setYCoordinate(double yPos){
         old_y_coordinate = y_coordinate;
-        this.y_coordinate = yPos - 16;
-        setY(yPos - 16);
+        this.y_coordinate = yPos - TURTLE_OFFSET;
+        setY(yPos - TURTLE_OFFSET);
     }
 
     public void setXGameCoordinate(double xPos){
-        this.x_coordinate = xPos - 16 + 350;
-        setX(xPos - 16 + 350);
+        this.x_coordinate = xPos - TURTLE_OFFSET + CENTER;
+        setX(xPos - TURTLE_OFFSET + CENTER);
     }
 
     public void setYGameCoordinate(double yPos){
-        this.y_coordinate = 675 - (yPos - 16 + 350);
-        setY(675 - (yPos - 16 + 350));
+        this.y_coordinate = FIELD_SIZE - (yPos - TURTLE_OFFSET + CENTER);
+        setY(FIELD_SIZE - (yPos - TURTLE_OFFSET + CENTER));
     }
 
     public double getXCoordinate(){
-        return x_coordinate + 16;
+        return x_coordinate + TURTLE_OFFSET;
     }
 
     public double getYCoordinate(){
-        return y_coordinate + 16;
+        return y_coordinate + TURTLE_OFFSET;
     }
 
     public double getXGameCoordinate(){
-        return x_coordinate + 16 - 350;
+        return x_coordinate + TURTLE_OFFSET - CENTER;
     }
 
     public double getYGameCoordinate(){
-        return 700 - (y_coordinate + 16 - 350);
+        return SCREEN_SIZE - (y_coordinate + TURTLE_OFFSET - CENTER);
     }
 
     public double getOldXCoordinate(){
-        return old_x_coordinate + 16;
+        return old_x_coordinate + TURTLE_OFFSET;
     }
 
     public double getOldYCoordinate(){
-        return old_y_coordinate + 16;
+        return old_y_coordinate + TURTLE_OFFSET;
     }
 
 
@@ -111,16 +118,5 @@ public class Turtle extends ImageView{
     public boolean getPen() { return this.pen; }
 
     public void setPen(boolean pen) { this.pen = pen; }
-//
-//    public void addxPos(double xPos){
-//        xValues.add(xPos);
-//        xPosTarget = xPos;
-//        System.out.println(xValues.size());
-//    }
-//
-//    public void addyPos(double yPos){
-//        yValues.add(yPos);
-//        yPosTarget = yPos;
-//
-//    }
+
 }
