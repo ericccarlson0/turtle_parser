@@ -28,6 +28,7 @@ public class TreeParser {
     }
 
     public ParserNode parseString(String input){
+        input = input.replaceAll("\n", " ");
         List<String> inputElements = new ArrayList<>(Arrays.asList(input.split(" ")));
         for(int i = 0; i < inputElements.size(); i++) {
             if(inputElements.get(i).equals("")){
@@ -129,8 +130,10 @@ public class TreeParser {
                 // TODO
             case GroupEnd:
                 // TODO
+            case Error:
+            default:
+                throw new UnidentifiableTokenException(nextElement);
         }
-        return null; //FIXME
     }
 
     private ParserNode parseForCommandBody(InputIterator iterator) {
