@@ -22,6 +22,9 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Visualizer {
+
+    private static final String RESOURCE_FOLDER = "/stylesheets";
+    private static final String STYLESHEET = "/default.css";
     private final int SPLASH_SIZE_HEIGHT = 700;
     private final int SPLASH_SIZE_WIDTH = 1300;
     private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
@@ -260,7 +263,7 @@ public class Visualizer {
     }
 
     private void playAnimation() {
-        myScene = setUpEnvironment();
+        setUpEnvironment();
         myStage.setScene(myScene);
         myStage.show();
     }
@@ -296,7 +299,7 @@ public class Visualizer {
         return new Scene(myGroup, SPLASH_SIZE_WIDTH, SPLASH_SIZE_HEIGHT, SPLASH_BACKGROUND);
     }
 
-    private Scene setUpEnvironment() {
+    private void setUpEnvironment() {
         myGroup = new Group();
         myTurtles = new ArrayList<visualizer.Turtle>();
         inputHistory = new Text("user input history");
@@ -367,8 +370,10 @@ public class Visualizer {
                 playAnimation();
             }
         });
-
-        return new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
+        
+        myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
+        String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
+        myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
     }
 
     private Button makeButton(String text, int x, int y, Group group) {
