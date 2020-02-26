@@ -111,6 +111,8 @@ public class Turtle extends ImageView{
     public boolean getPen() { return this.pen; }
 
     public void setPen(boolean pen) { this.pen = pen; }
+
+
 //
 //    public void addxPos(double xPos){
 //        xValues.add(xPos);

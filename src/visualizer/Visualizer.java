@@ -1,4 +1,5 @@
 package visualizer;
+import java.io.File;
 import javafx.scene.shape.Line;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -11,9 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
+import org.w3c.dom.Document;
 
 /**
  * visualizer.java - a class for managing the frontend.
@@ -342,6 +345,7 @@ public class Visualizer {
         Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + 150, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + 250, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button turtleImageFileButton = makeButton("New Turtle Image", ENVIRONMENT_SIZE_HEIGHT+400,(ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         helpParser.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
@@ -354,6 +358,7 @@ public class Visualizer {
                 playAnimation();
             }
         });
+        turtleImageFileButton.setOnAction(event -> turtleImageButtonPressed());
 
         return new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
     }
@@ -377,5 +382,30 @@ public class Visualizer {
         scrollPane.setFitToWidth(fitWidth);
         scrollPane.setPrefSize(width, height);
         return scrollPane;
+    }
+
+    public void setTurtleImage(File imageFile){
+        System.out.println(imageFile.toURI());
+        Image newTurtleImage = new Image(imageFile.toURI().toString());
+        Turtle currentTurtle = myTurtles.get(turtleIndex);
+        double xCoordinate = currentTurtle.getXCoordinate();
+        double yCoordinate = currentTurtle.getYCoordinate();
+        myGroup.getChildren().remove(currentTurtle);
+        myTurtles.remove(turtleIndex);
+        Turtle newTurtle = new Turtle(newTurtleImage,(int) xCoordinate,(int) yCoordinate,turtleIndex);
+        myTurtles.add(turtleIndex,newTurtle);
+        myGroup.getChildren().add(newTurtle);
+    }
+
+    private void turtleImageButtonPressed() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File selectedFile = fileChooser.showOpenDialog(myStage);
+        if (selectedFile == null) {
+            System.out.println("You must select a file");
+            return;
+        }
+        setTurtleImage(selectedFile);
+
     }
 }
