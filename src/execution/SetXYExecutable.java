@@ -18,6 +18,7 @@ public class SetXYExecutable extends Executable {
     //visualizerObject.setTurtleY(ySet);
     visualizerObject.setTurtleGameX(xSet);
     visualizerObject.setTurtleGameY(ySet);
+    visualizerObject.draw();
 
     return distanceTraveled;
   }
