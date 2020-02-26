@@ -8,8 +8,13 @@ public class XCorExecutable extends Executable {
   }
 
   public double run(Visualizer visualizerObject){
-    visualizerObject.addUserInput(Double.toString(visualizerObject.getTurtleX()));
+    visualizerObject.addUserInput(Double.toString(visualizerObject.getTurtleX()));//TODO uncomment the next
     return visualizerObject.getTurtleX();
+    /*
+    visualizerObject.addUserInput(Double.toString(visualizerObject.getTurtleGameX()));//
+    return visualizerObject.getTurtleGameX();
+     */
+
   }
 
 
