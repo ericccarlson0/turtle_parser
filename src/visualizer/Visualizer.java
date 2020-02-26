@@ -63,149 +63,139 @@ public class Visualizer {
     /**
      * Visualizer() - constructor for the visualizer.
      */
-    public Visualizer(){
+    public Visualizer() {
         start();
     }
 
     /**
      * getTurtleX() - getter for turtle's x coordinate.
+     *
      * @return int x for turtle's x coordinate.
      */
-    public double getTurtleX(){
+    public double getTurtleX() {
         return myTurtles.get(turtleIndex).getXCoordinate();
     }
 
     /**
      * getTurtleY() - getter for turtle's y coordinate.
+     *
      * @return int y for turtle's y coordinate.
      */
-    public double getTurtleY(){
+    public double getTurtleY() {
         return myTurtles.get(turtleIndex).getYCoordinate();
     }
 
     /**
      * getTurtleX() - getter for turtle's x coordinate.
+     *
      * @return int x for turtle's x coordinate.
      */
-    public double getTurtleAngle(){
+    public double getTurtleAngle() {
         return myTurtles.get(turtleIndex).getAngle();
     }
 
     /**
      * setTurtleX() - setter for turtle's x coordinate.
+     *
      * @param xPos turtle's x coordinate.
      */
-    public void setTurtleX(double xPos){
-        if(myTurtles.get(turtleIndex).getXCoordinate() > 675){
+    public void setTurtleX(double xPos) {
+        if (myTurtles.get(turtleIndex).getXCoordinate() > 675) {
             myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 650);
             myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 25);
 
-        }
-        else if(myTurtles.get(turtleIndex).getXCoordinate() < 25){
+        } else if (myTurtles.get(turtleIndex).getXCoordinate() < 25) {
             myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 650);
             myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 25);
 
-        }
-        else{
+        } else {
             myTurtles.get(turtleIndex).setXCoordinate(xPos);
         }
 
     }
+
     /**
      * setTurtleY() - setter for turtle's y coordinate.
+     *
      * @param yPos turtle's y coordinate.
      */
-    public void setTurtleY(double yPos){
-        if(myTurtles.get(turtleIndex).getYCoordinate() > 675){
+    public void setTurtleY(double yPos) {
+        if (myTurtles.get(turtleIndex).getYCoordinate() > 675) {
             myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 650);
             myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 25);
-        }
-        else if(myTurtles.get(turtleIndex).getYCoordinate() < 25){
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 650);
+        } else if (myTurtles.get(turtleIndex).getYCoordinate() < 25) {
+            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate()+ 650);
             myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 25);
-        }
-        else{
+        } else {
             myTurtles.get(turtleIndex).setYCoordinate(yPos);
         }
     }
 
-    public void setTurtlePen(boolean x){
+    public void setTurtlePen(boolean x) {
         myTurtles.get(turtleIndex).setPen(x);
     }
 
     /**
      * setTurtleX() - setter for turtle's x coordinate.
+     *
      * @param angle turtle's x coordinate.
      */
-    public void setTurtleAngle(double angle){
+    public void setTurtleAngle(double angle) {
         myTurtles.get(turtleIndex).setAngle(angle);
     }
 
-    public void setCommand(String command){
+    public void setCommand(String command) {
         this.command = command;
     }
 
     /**
      * getCommand() - getter for the string the user inputs.
+     *
      * @return
      */
-    public String getCommand(){
+    public String getCommand() {
         return command;
     }
 
     /**
      * resetCommand() - resets the command to null.
+     *
      * @return
      */
-    public void resetCommand(){
+    public void resetCommand() {
         command = "";
     }
 
-    public void clearScreen(){
+    public void clearScreen() {
         playAnimation();
     }
-    /**
-    public boolean getTurtlePen(){
-        return myTurtles.get(turtleIndex).getPen();
-    }
 
-    public boolean getShowing(){
-        return myTurtles.get(turtleIndex).isVisible();
-    }
-     */
-
-/**
-    public boolean getTurtlePen(){
-        return myTurtles.get(turtleIndex).getPen();
-    }
-
-    public boolean getShowing(){
-        return myTurtles.get(turtleIndex).isVisible();
-*/
-    public double getTurtlePen(){
-        if(myTurtles.get(turtleIndex).getPen()) {
+    public double getTurtlePen() {
+        if (myTurtles.get(turtleIndex).getPen()) {
             return 1;
         }
         return 0;
     }
 
-    public double getShowing(){
-        if(myTurtles.get(turtleIndex).isVisible()) {
+    public double getShowing() {
+        if (myTurtles.get(turtleIndex).isVisible()) {
             return 1;
         }
         return 0;
 
     }
 
-    public void show(){
+    public void show() {
         myTurtles.get(turtleIndex).setVisible(true);
     }
-    public void hide(){
+
+    public void hide() {
         myTurtles.get(turtleIndex).setVisible(false);
     }
 
     /**
      * addInputHistory() - add a string for the history of the input.
+     *
      * @return
      */
     public void addInputHistory(String history) {
@@ -214,58 +204,57 @@ public class Visualizer {
 
     /**
      * addUserInput() - add a string to the actual user input. Acts like a terminal
+     *
      * @return
      */
-    public void addUserInput(String input){
+    public void addUserInput(String input) {
         userInputText.setText(userInputText.getText() + '\n' + input);
     }
 
     /**
      * addExecutedHistory() - add a string to the executed commands.
+     *
      * @return
      */
-    public void addExecutedHistory(String executed){
+    public void addExecutedHistory(String executed) {
         executedHistory.setText(executedHistory.getText() + '\n' + executed);
     }
 
     /**
      * getTurtleIndex() - getter for turtle index.
+     *
      * @return int turtleIndex which indexes which turtle is in control.
      */
-    public int getTurtleIndex(){
+    public int getTurtleIndex() {
         return turtleIndex;
     }
 
     /**
      * setTurtleIndex() - setter for turtle index.
+     *
      * @param index new turtle index.
      */
-    public void setTurtleIndex(int index){
+    public void setTurtleIndex(int index) {
         turtleIndex = index;
     }
 
 
-    private void start(){
+    private void start() {
         myStage = new Stage();
         playAnimation();
-        //myScene = setUpSplash();
-        //myStage.setScene(myScene);
-        //myStage.show();
-        // start stage with splash
-        // initiate stage
-        // Scene = setUpSplash()
+
     }
 
-    private void playAnimation(){
+    private void playAnimation() {
         myScene = setUpEnvironment();
         myStage.setScene(myScene);
         myStage.show();
     }
 
-    public void draw(){
+    public void draw() {
         System.out.println("draw");
-        if((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate()))<650 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate()))<650 ){
-            if(myTurtles.get(turtleIndex).getPen()){
+        if ((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate())) < 650 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate())) < 650) {
+            if (myTurtles.get(turtleIndex).getPen()) {
                 Line line = new Line();
                 line.setStartX(myTurtles.get(turtleIndex).getOldXCoordinate());
                 line.setStartY(myTurtles.get(turtleIndex).getOldYCoordinate());
@@ -275,50 +264,15 @@ public class Visualizer {
             }
         }
     }
-    private void step(){
+
+    private void step() {
 
     }
-/**
-    private void step(){
-        System.out.println(step);
-        step = step + 1;
-        myTurtles.get(turtleIndex).setPen(isOutOfBounds());
-        myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate());
-        myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate());
 
-    }
-    private boolean isOutOfBounds(){
-        if(myTurtles.get(turtleIndex).getXCoordinate() < 25){
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 650);
-            boolean x = myTurtles.get(turtleIndex).getPen();
-            myTurtles.get(turtleIndex).setPen(false);
-            return x;
-        }
-        if(myTurtles.get(turtleIndex).getXCoordinate() > 675){
-            myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() - 650);
-            boolean x = myTurtles.get(turtleIndex).getPen();
-            myTurtles.get(turtleIndex).setPen(false);
-            return x;
-        }
-        if(myTurtles.get(turtleIndex).getYCoordinate() < 25){
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 650);
-            boolean x = myTurtles.get(turtleIndex).getPen();
-            myTurtles.get(turtleIndex).setPen(false);
-            return x;
-        }
-        if(myTurtles.get(turtleIndex).getYCoordinate() > 675){
-            myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() - 650);
-            boolean x = myTurtles.get(turtleIndex).getPen();
-            myTurtles.get(turtleIndex).setPen(false);
-            return x;
-        }
-        return false;
-   }
-*/
-    private Scene setUpSplash(){
+    private Scene setUpSplash() {
         myGroup = new Group();
         // create button that has event handler that calls playAnimation
-        Button playButon = makeButton("Press to Play", SPLASH_SIZE_WIDTH/4, SPLASH_SIZE_HEIGHT /4, myGroup);
+        Button playButon = makeButton("Press to Play", SPLASH_SIZE_WIDTH / 4, SPLASH_SIZE_HEIGHT / 4, myGroup);
         playButon.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
@@ -335,7 +289,7 @@ public class Visualizer {
         executedHistory = new Text("executed command history");
 
         // create field
-        Rectangle field = new Rectangle((ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH)/2, (ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH)/2, FIELD_WIDTH, FIELD_HEIGHT);
+        Rectangle field = new Rectangle((ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, (ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, FIELD_WIDTH, FIELD_HEIGHT);
         field.setFill(Color.WHITE);
         myGroup.getChildren().add(field);
 
@@ -345,17 +299,17 @@ public class Visualizer {
         myGroup.getChildren().add(initialTurtle);
 
         // create input scroll pane
-        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT/7)/4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
+        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
         myGroup.getChildren().add(inputScrollPane);
 
         // create executed scroll pane
-        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + 50, (ENVIRONMENT_SIZE_HEIGHT/7)/4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
+        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
         myGroup.getChildren().add(executedScrollPane);
 
         // create input text field
         userInputText = new Text("Terminal");
         userInputTextField = new TextField("");
-        inputButton = makeButton("Enter", ENVIRONMENT_SIZE_HEIGHT + 300,(ENVIRONMENT_SIZE_HEIGHT/7)*6 + 50, myGroup);
+        inputButton = makeButton("Enter", ENVIRONMENT_SIZE_HEIGHT + 300, (ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + 50, myGroup);
         inputButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
@@ -367,24 +321,30 @@ public class Visualizer {
             }
         });
         userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + 50);
-        userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT/7)*6 + 50);
+        userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + 50);
 
         //VBox c = new VBox();
         //c.getChildren().add(userInputText);
         //c.getChildren().add(userInputTextField);
-        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT/7)*4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
+        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) * 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
         myGroup.getChildren().add(userInputScrollPane);
         myGroup.getChildren().add(userInputTextField);
 
         // create buttons
-        Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT/7)/4 + (ENVIRONMENT_SIZE_HEIGHT/7)*3, myGroup);
-        Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + 150, (ENVIRONMENT_SIZE_HEIGHT/7)/4 + (ENVIRONMENT_SIZE_HEIGHT/7)*3, myGroup);
-        Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + 250, (ENVIRONMENT_SIZE_HEIGHT/7)/4 + (ENVIRONMENT_SIZE_HEIGHT/7)*3, myGroup);
+        Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + 150, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + 250, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        helpParser.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                HelpPage popup = new HelpPage();
+            }
+        });
 
         return new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
     }
 
-    private Button makeButton(String text, int x, int y, Group group){
+    private Button makeButton(String text, int x, int y, Group group) {
         Button myButton = new Button();
         myButton.setText(text);
         myButton.setLayoutX(x);
@@ -404,20 +364,4 @@ public class Visualizer {
         scrollPane.setPrefSize(width, height);
         return scrollPane;
     }
-
-    /**
-     * public void hide() {
-     *     }
-     *
-     *     public void show() {
-     *     }
-     *
-     *     public double getPenDown() {
-     *         return 0;
-     *     }
-     *
-     *     public double getShowing() {
-     *         return 0;
-     *     }
-     */
 }

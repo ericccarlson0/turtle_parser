@@ -15,7 +15,7 @@ public class TowardsExecutable extends Executable {
     double currentXPosition = visualizerObject.getTurtleX();
     double currentYPosition = visualizerObject.getTurtleY();
     double currentAngle = visualizerObject.getTurtleAngle();
-    double newAngle = Math.atan((yHeading-currentYPosition)/(xHeading-currentXPosition));
+    double newAngle = Math.toDegrees(Math.atan((yHeading-currentYPosition)/(xHeading-currentXPosition)));
     if(xHeading-currentXPosition<0){
       newAngle+=180;
     }

@@ -43,65 +43,15 @@ public class Turtle extends ImageView{
      */
     public Turtle(Image image, int xPos, int yPos, int turtleIndex) {
         super(image);
-        setXCoordinate(xPos - 16);
-        setYCoordinate(yPos - 16);
-        old_x_coordinate = getXCoordinate();
-        old_y_coordinate = getYCoordinate();
+        setXCoordinate(xPos);
+        setYCoordinate(yPos);
+        old_x_coordinate = xPos - 16;
+        old_y_coordinate = yPos - 16;
         id = turtleIndex;
         setAngle(0);
         setRotate(90);
     }
-    /**
-    public double getNextX(){
-        if(xValues.size() != 0){
-            return xValues.peek();
-        }
-        return xPos;
-    }
-    public void setxPosTarget(double x){
-        xPosTarget = x;
-    }
-    public void setyPosTarget(double y){
-        yPosTarget = y;
-    }
-    public double getNextY(){
-        if(yValues.size() != 0){
-            return yValues.peek();
-        }
-        return yPos;
-    }
-    public double getCurrentY(){
-        return yPos;
-    }
-    public double getCurrentX(){
-        return xPos;
-    }
 
-    public double getxPosTarget(){
-        return xPosTarget;
-    }
-    public double getyPosTarget(){
-        return yPosTarget;
-    }
-
-    public double getxPos(){
-        if(xValues.size() != 0){
-            double x = xValues.remove();
-            xPos = x;
-            return x;
-        }
-        return xPos;
-    }
-
-    public double getyPos(){
-        if(yValues.size() != 0){
-            double y = yValues.remove();
-            yPos = y;
-            return y;
-        }
-        return yPos;
-    }
-    */
     public double getAngle(){
         return angle;
     }
@@ -118,6 +68,18 @@ public class Turtle extends ImageView{
         setY(yPos - 16);
     }
 
+    public void setXGameCoordinate(double xPos){
+        old_x_coordinate = x_coordinate;
+        this.x_coordinate = xPos - 16 + 350;
+        setX(xPos - 16 + 350);
+    }
+
+    public void setYGameCoordinate(double yPos){
+        old_y_coordinate = y_coordinate;
+        this.y_coordinate = yPos - 16 + 350;
+        setY(yPos - 16 + 350);
+    }
+
     public double getXCoordinate(){
         return x_coordinate + 16;
     }
@@ -125,6 +87,15 @@ public class Turtle extends ImageView{
     public double getYCoordinate(){
         return y_coordinate + 16;
     }
+
+    public double getXGameCoordinate(){
+        return x_coordinate + 16 - 350;
+    }
+
+    public double getYGameCoordinate(){
+        return y_coordinate + 16 - 350;
+    }
+
     public double getOldXCoordinate(){
         return old_x_coordinate + 16;
     }

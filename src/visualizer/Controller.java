@@ -29,7 +29,7 @@ public class Controller {
     }
 
     private void start() {
-        KeyFrame frame = new KeyFrame(Duration.millis(1), e -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(10), e -> {
             step();
         });
         animation = new Timeline();
