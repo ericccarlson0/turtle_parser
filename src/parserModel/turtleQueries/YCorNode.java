@@ -8,10 +8,8 @@ import parserModel.ParserNode;
 import visualizer.VisualContext;
 
 public class YCorNode extends CommandParserNode {
-  private List<Executable> executableQueue;
 
-  public YCorNode(List<Executable> queue){
-    executableQueue = queue;
+  public YCorNode() {
   }
 
   public void addNode(ParserNode node) {
