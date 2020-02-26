@@ -21,9 +21,10 @@ public class Controller {
 
 
     public Controller () {
-        myVisualizer = new Visualizer();
-        executables = new ArrayList<>();
         myTreeParser = new TreeParser(executables);
+        myVisualizer = new Visualizer();
+        myVisualizer.setObservableList(myTreeParser.observableVariables());
+        executables = new ArrayList<>();
         myContext = new VisualContext(myVisualizer,executables);
         start();
     }

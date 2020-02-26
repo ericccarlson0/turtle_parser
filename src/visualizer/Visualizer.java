@@ -123,8 +123,8 @@ public class Visualizer {
         myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
     }
 
-    public void setTurtleGameX(double xPos){
-        myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
+    public void setObservableList(ObservableList variableList){
+        this.variableList = variableList;
     }
 
     public void setTurtleGameY(double yPos){
@@ -351,11 +351,11 @@ public class Visualizer {
         Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + OFFSET*6, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + OFFSET*10, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button variableButton = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + OFFSET*14, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button variableButton = makeButton("Variables", ENVIRONMENT_SIZE_HEIGHT + OFFSET*14, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         variableButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
-                VariablePage popup = new VariablePage();
+                VariablePage popup = new VariablePage(variableList);
             }
         });
         helpParser.setOnAction(new EventHandler<>() {
