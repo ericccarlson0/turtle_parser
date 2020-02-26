@@ -1,12 +1,14 @@
 package execution;
 
+import static execution.SetXYExecutable.getDistanceTraveled;
+
 public class ClearExecutable extends Executable {
   private final String executableType = "ClearScreen";
   public ClearExecutable(){
   }
 
   public double run(visualizer.Visualizer visualizerObject){
-    double distanceTraveled = 0.0; // getDistanceTraveled(visualizerObject, 0, 0);
+    double distanceTraveled =  getDistanceTraveled(visualizerObject, 0, 0);
     visualizerObject.clearScreen();
     return distanceTraveled;
   }
