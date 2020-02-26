@@ -7,8 +7,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+
 import java.io.File;
+
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
 import javafx.scene.control.ComboBox;
 import javafx.scene.shape.Line;
 import javafx.animation.Timeline;
@@ -16,9 +24,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -26,7 +31,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
-import org.w3c.dom.Document;
 
 /**
  * visualizer.java - a class for managing the frontend.
@@ -37,46 +41,37 @@ public class Visualizer {
 
     private static final String RESOURCE_FOLDER = "/stylesheets";
     private static final String STYLESHEET = "/default.css";
-    private final int SPLASH_SIZE_HEIGHT = 700;
-    private final int SPLASH_SIZE_WIDTH = 1300;
-    private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
-
-    private final int ENVIRONMENT_SIZE_HEIGHT = 700;
-    private final int ENVIRONMENT_SIZE_WIDTH = 1300;
+    private final int ENVIRONMENT_SIZE_HEIGHT = 800;
+    private final int ENVIRONMENT_SIZE_WIDTH = 1200;
     private final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
-
-    private final int FIELD_CENTER_X = 350;
-    private final int FIELD_CENTER_Y = 350;
-    private final int FIELD_HEIGHT = 650;
-    private final int FIELD_WIDTH = 650;
-    private final int FIELD_RIGHT_EDGE = 675;
-    private final int FIELD_LEFT_EDGE = 25;
-    private final int OFFSET = 25;
+    private final int FIELD_CENTER_X = 250;
+    private final int FIELD_CENTER_Y = 250;
+    private final int FIELD_HEIGHT = 500;
+    private final int FIELD_WIDTH = 500;
+    private final int FIELD_RIGHT_EDGE = 500; //675
+    private final int FIELD_LEFT_EDGE = 0; //25
+    private final int OFFSET = 25; //25
     private final int SCROLLPANE_SIZE = 250;
+    private final int TEXTINPUT_SIZE = 150;
     private Stage myStage;
     private Scene myScene;
     private Group myGroup;
-
+    private Group parserField;
     private ArrayList<visualizer.Turtle> myTurtles;
     private int turtleIndex = 0;
     private final static String TURTLE_FILE = "images/turtle.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
-
     private Text executedHistory;
     private Text inputHistory;
     private ScrollPane inputScrollPane;
     private ScrollPane executedScrollPane;
-
     private Text userInputText;
     private ScrollPane userInputScrollPane;
-    private TextField userInputTextField;
+    private TextArea userInputTextField;
     private Button inputButton;
     private ObservableList variableList;
     private ObservableList commandList;
-
-
     private String command = "";
-
 
     /**
      * visualizer() - constructor for the visualizer.
@@ -112,6 +107,14 @@ public class Visualizer {
         return myTurtles.get(turtleIndex).getAngle();
     }
 
+    public void setTurtleGameX(double xPos){
+        myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
+    }
+
+    public void setTurtleGameY(double yPos){
+        myTurtles.get(turtleIndex).setYGameCoordinate(yPos);
+    }
+
     /**
      * setTurtleX() - setter for turtle's x coordinate.
      *
@@ -130,22 +133,6 @@ public class Visualizer {
             myTurtles.get(turtleIndex).setXCoordinate(xPos);
         }
 
-    }
-
-    public void setTurtleGameX(double xPos){
-        myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
-    }
-
-    public void setVariableList(ObservableList variableList){
-        this.variableList = variableList;
-    }
-
-    public void setCommandList(ObservableList commandList){
-        this.commandList = commandList;
-    }
-
-    public void setTurtleGameY(double yPos){
-        myTurtles.get(turtleIndex).setYGameCoordinate(yPos);
     }
 
     /**
@@ -180,6 +167,14 @@ public class Visualizer {
 
     public void setCommand(String command) {
         this.command = command;
+    }
+
+    public void setVariableList(ObservableList variableList){
+        this.variableList = variableList;
+    }
+
+    public void setCommandList(ObservableList commandList){
+        this.commandList = commandList;
     }
 
     /**
@@ -294,44 +289,25 @@ public class Visualizer {
                 line.setStartY(myTurtles.get(turtleIndex).getOldYCoordinate());
                 line.setEndX(myTurtles.get(turtleIndex).getXCoordinate());
                 line.setEndY(myTurtles.get(turtleIndex).getYCoordinate());
-                myGroup.getChildren().add(line);
+                parserField.getChildren().add(line);
             }
         }
     }
 
-    private void step() {
-
-    }
-
-    private Scene setUpSplash() {
-        myGroup = new Group();
-        // create button that has event handler that calls playAnimation
-        Button playButon = makeButton("Press to Play", SPLASH_SIZE_WIDTH / 4, SPLASH_SIZE_HEIGHT / 4, myGroup);
-        playButon.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                playAnimation();
-            }
-        });
-        return new Scene(myGroup, SPLASH_SIZE_WIDTH, SPLASH_SIZE_HEIGHT, SPLASH_BACKGROUND);
-    }
-
     private void setUpEnvironment() {
         myGroup = new Group();
+        BorderPane layout = new BorderPane();
+
         myTurtles = new ArrayList<visualizer.Turtle>();
-        createField((ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2,(ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, FIELD_WIDTH, FIELD_HEIGHT, Color.WHITE);
-        createTurtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
-
-
-        inputHistory = new Text("user input history");
-        executedHistory = new Text("executed command history");
-        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        myGroup.getChildren().add(inputScrollPane);
-        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        myGroup.getChildren().add(executedScrollPane);
+        parserField = new Group();
+        parserField.getChildren().add(createField(0,0, FIELD_WIDTH, FIELD_HEIGHT, Color.WHITE));
+        parserField.getChildren().add(createTurtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex));
+        HBox inputBox = new HBox();
         userInputText = new Text("Terminal");
-        userInputTextField = new TextField("");
-        inputButton = makeButton("Enter", ENVIRONMENT_SIZE_HEIGHT + 300, (ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + 50, myGroup);
+        userInputTextField = new TextArea("");
+        userInputScrollPane = makeScrollPane(userInputText, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, TEXTINPUT_SIZE);
+        inputBox.getChildren().add(userInputTextField);
+        inputButton = makeButton("Enter", 0, 0, inputBox);
         inputButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
@@ -342,74 +318,98 @@ public class Visualizer {
                 setCommand(x);
             }
         });
-        userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + OFFSET*2);
-        userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + OFFSET*2);
-        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) * 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
-        myGroup.getChildren().add(userInputScrollPane);
-        myGroup.getChildren().add(userInputTextField);
+        inputBox.getChildren().add(userInputScrollPane);
+        layout.setPrefSize(1200,800);
+        layout.setBottom(inputBox);
+        layout.setAlignment(inputBox,Pos.CENTER);
+        Node environment = createEnvironmentButtons();
+        layout.setTop(environment);
+        layout.setAlignment(environment,Pos.CENTER);
+        Node textEntry = createEnvironmentTextEntry();
+        layout.setLeft(textEntry);
+        layout.setAlignment(textEntry,Pos.CENTER);
+        Node environmentLists = createEnvironmentLists();
+        layout.setRight(environmentLists);
+        layout.setAlignment(environmentLists,Pos.CENTER);
+        layout.setCenter(parserField);
+        layout.setAlignment(parserField,Pos.CENTER);
 
-        Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + OFFSET*6, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + OFFSET*10, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button variableButton = makeButton("Variables", ENVIRONMENT_SIZE_HEIGHT + OFFSET*14, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button commandButton = makeButton("Commands", ENVIRONMENT_SIZE_HEIGHT + OFFSET*18, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        commandButton.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Page popup = new Page(commandList);
-            }
-        });
-        Button turtleImageFileButton = makeButton("New Turtle Image", ENVIRONMENT_SIZE_HEIGHT+400,(ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        variableButton.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Page popup = new Page(variableList);
-            }
-        });
+        myGroup.getChildren().add(layout);
+    }
 
-        helpParser.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                HelpPage popup = new HelpPage();
-            }
-        });
-        resetParser.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                playAnimation();
-            }
-        });
+    private Node createEnvironmentLists() {
+        VBox environmentLists = new VBox();
+        Page commands = new Page(commandList);
+        Page variables = new Page(variableList);
+        environmentLists.getChildren().add(commands.getScrollPane());
+        environmentLists.getChildren().add(variables.getScrollPane());
+        return environmentLists;
+    }
+
+    private Node createEnvironmentTextEntry() {
+        VBox textEntry = new VBox();
+        inputHistory = new Text("user input history");
+        executedHistory = new Text("executed command history");
+        inputScrollPane = makeScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        executedScrollPane = makeScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        textEntry.getChildren().add(inputScrollPane);
+        textEntry.getChildren().add(executedScrollPane);
+        return textEntry;
+    }
+
+    private Node createEnvironmentButtons() {
+        HBox buttons = new HBox();
+        Button resetButton = makeButton("Reset", 0, 0, buttons);
+        Button replayParser = makeButton("Replay", 0, 0, buttons);
+        Button helpButton = makeButton("Help", 0, 0, buttons);
+        //Button variableButton = makeButton("Variables", 0, 0, buttons);
+        //Button commandButton = makeButton("Commands", 0, 0, buttons);
+        Button turtleImageFileButton = makeButton("New Turtle Image", 0, 0,  buttons);
+        //commandButton.setOnAction(event -> popUpButtonPressed(commandList));
+        //variableButton.setOnAction(event -> popUpButtonPressed(variableList));
+        helpButton.setOnAction(event -> helpButtonPressed());
+        resetButton.setOnAction(event -> playAnimation());
+
         //TODO CREATED COMBOBOX HERE
         final ComboBox languageChoiceComboBox = new ComboBox();
         languageChoiceComboBox.getItems().addAll(getFileNamesInFolder("src/parserModel/languages"));
         languageChoiceComboBox.setOnAction(event -> changeLanguage(languageChoiceComboBox.getValue().toString().replaceAll(".properties","")));
-        myGroup.getChildren().add(languageChoiceComboBox);
+        languageChoiceComboBox.setPromptText("Select Language");
+        buttons.getChildren().add(languageChoiceComboBox);
 
         myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
         String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
         myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
         turtleImageFileButton.setOnAction(event -> turtleImageButtonPressed());
-
+        return buttons;
     }
 
-    private void createTurtle(Image turtleImage, int x, int y, int turtleIndex) {
+    private void helpButtonPressed() {
+        HelpPage popup = new HelpPage();
+    }
+
+    private void popUpButtonPressed(ObservableList list) {
+        Page popup = new Page(list);
+    }
+
+    private Node createTurtle(Image turtleImage, int x, int y, int turtleIndex) {
         Turtle initialTurtle = new visualizer.Turtle(turtleImage, x, y, turtleIndex);
         myTurtles.add(initialTurtle);
-        myGroup.getChildren().add(initialTurtle);
+        return initialTurtle;
     }
 
-    private void createField(int x, int y, int width, int height, Color color) {
+    private Node createField(int x, int y, int width, int height, Color color) {
         Rectangle field = new Rectangle(x, y, width, height);
         field.setFill(color);
-        myGroup.getChildren().add(field);
+        return field;
     }
 
-    private Button makeButton(String text, int x, int y, Group group) {
+    private Button makeButton(String text, int x, int y, HBox buttons) {
         Button myButton = new Button();
         myButton.setText(text);
         myButton.setLayoutX(x);
         myButton.setLayoutY(y);
-        group.getChildren().add(myButton);
+        buttons.getChildren().add(myButton);
         return myButton;
     }
 
@@ -425,8 +425,7 @@ public class Visualizer {
         return scrollPane;
     }
 
-    public void setTurtleImage(File imageFile){
-        System.out.println(imageFile.toURI());
+    private void setTurtleImage(File imageFile){
         Image newTurtleImage = new Image(imageFile.toURI().toString());
         Turtle currentTurtle = myTurtles.get(turtleIndex);
         double xCoordinate = currentTurtle.getXCoordinate();
@@ -447,7 +446,6 @@ public class Visualizer {
             return;
         }
         setTurtleImage(selectedFile);
-
     }
 
     private List<String> getFileNamesInFolder(String folderPath){

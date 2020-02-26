@@ -11,9 +11,9 @@ public class Turtle extends ImageView{
     private final static String TURTLE_FILE = "images/ball.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
     private final static int TURTLE_OFFSET = 20;
-    private final static int CENTER = 350;
+    private final static int CENTER = 250;
     private final static int SCREEN_SIZE = 700;
-    private final static int FIELD_SIZE = 675;
+    private final static int FIELD_SIZE = 500;
 
 
     private double x_coordinate;
