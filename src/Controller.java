@@ -1,16 +1,23 @@
-import visualizer.Visualizer;
+
+
+/*
+import Visualizer.Visualizer;
 import executables.Executable;
 import java.util.ArrayList;
-import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.TreeParser;
+import javax.naming.Context;
+import Visualizer.VisualContext;
+
 
 public class Controller {
+  private VisualContext myContext;
   private Visualizer myVisualizer;
   private TreeParser myTreeParser;
-  private List<Executable> myExecutableQueue;
+
 
   public Controller(Visualizer vis) {
+    myContext = new Context(vis, new ArrayList<>());
     myVisualizer = vis;
     myExecutableQueue = new ArrayList<>();
     myTreeParser = new TreeParser(myExecutableQueue);
@@ -32,3 +39,4 @@ public class Controller {
 
   }
 }
+ */

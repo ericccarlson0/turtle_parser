@@ -1,21 +1,21 @@
 package visualizer;
 
-import executables.Executable;
+import execution.Executable;
 import parserModel.ParserNode;
 import parserModel.TreeParser;
+
 //import controller.Executables.Executable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class Controller {
+    private VisualContext myContext;
     private TreeParser myTreeParser;
-    public Visualizer myVisualizer;
+    public visualizer.Visualizer myVisualizer;
     private Timeline animation;
     private List<Executable> executables;
 
@@ -25,6 +25,7 @@ public class Controller {
         myVisualizer.setTurtlePen(true);
         executables = new ArrayList<>();
         myTreeParser = new TreeParser(executables);
+        myContext = new VisualContext(myVisualizer,executables);
         start();
     }
 
@@ -44,7 +45,7 @@ public class Controller {
         if(!myVisualizer.getCommand().equals("")) {
             ParserNode root = myTreeParser.parseString(myVisualizer.getCommand());
             myVisualizer.resetCommand();
-            root.execute();
+            root.execute(myContext);
         }
         if(executables.size() != 0){
             executables.get(0).run(myVisualizer);

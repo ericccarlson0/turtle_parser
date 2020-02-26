@@ -1,16 +1,16 @@
 package parserModel;
 
-import parserModel.BooleanNodes.*;
-import parserModel.Control.RepeatParserNode;
-import parserModel.MathNodes.*;
-import parserModel.TurtleNodes.*;
-import executables.Executable;
+import parserModel.booleanNodes.*;
+import parserModel.control.RepeatParserNode;
+import parserModel.mathNodes.*;
+import parserModel.turtleNodes.*;
+import execution.Executable;
 import java.util.List;
-import parserModel.Control.ForParserNode;
-import parserModel.Control.IfElseNode;
-import parserModel.Control.IfNode;
+import parserModel.control.ForParserNode;
+import parserModel.control.IfElseNode;
+import parserModel.control.IfNode;
 
-import parserModel.TurtleQueries.*;
+import parserModel.turtleQueries.*;
 
 public class TurtleNodeFactory {
 
@@ -26,31 +26,31 @@ public class TurtleNodeFactory {
         switch (identifier) {
             // TURTLE COMMANDS
             case "Forward":
-                return new ForwardNode(queue);
+                return new ForwardNode();
             case "Backward":
-                return new BackwardNode(queue);
+                return new BackwardNode();
             case "Left":
-                return new LTurnNode(queue);
+                return new LTurnNode();
             case "Right":
-                return new RTurnNode(queue);
+                return new RTurnNode();
             case "SetHeading":
                 // return new HeadingNode(); //FIXME
             case "SetTowards":
-                return new TowardsNode(queue);
+                return new TowardsNode();
             case "SetPosition":
-                return new SetXYNode(queue);
+                return new SetXYNode();
             case "PenDown":
-                return new PenDownNode(queue);
+                return new PenDownNode();
             case "PenUp":
-                return new PenUpNode(queue);
+                return new PenUpNode();
             case "ShowTurtle":
-                return new ShowNode(queue);
+                return new ShowNode();
             case "HideTurtle":
-                return new HideNode(queue);
+                return new HideNode();
             case "Home":
-                return new HomeNode(queue);
+                return new HomeNode();
             case "ClearScreen":
-                return new ClearNode(queue);
+                return new ClearNode();
             // MATH COMMANDS
             case "Sum":
                 return new SumNode();
@@ -117,9 +117,9 @@ public class TurtleNodeFactory {
             case "Heading":
                 // return new HeadingNode(); FIXME
             case "PenDownNp":
-                return new PenDownPNode(queue);
+                return new PenDownPNode();
             case "ShowingP":
-                return new ShowingPNode(queue);
+                return new ShowingPNode();
         }
         return null;
     }

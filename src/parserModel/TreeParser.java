@@ -1,12 +1,14 @@
 package parserModel;
 
-import executables.Executable;
+import execution.Executable;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import parserModel.Control.ListEndNode;
-import parserModel.Control.LoopCounterNode;
-import parserModel.Control.VariableNode;
+import parserModel.control.ListEndNode;
+import parserModel.control.LoopCounterNode;
+import parserModel.control.VariableNode;
 import parserModel.TokenAnalyzer.TokenType;
 
 public class TreeParser {
@@ -21,7 +23,7 @@ public class TreeParser {
     }
 
     public CommandParserNode parseString(String input){
-        List<String> inputElements = Arrays.asList(input.split(" "));
+        List<String> inputElements = new ArrayList<>(Arrays.asList(input.split(" ")));
         for(int i = 0; i < inputElements.size(); i++) {
             if(inputElements.get(i).equals("")){
                 inputElements.remove(i);
@@ -76,7 +78,7 @@ public class TreeParser {
         ParserNode adding;
         while((adding = parseIteratorElement(iterator))
                 .typeOfNode()
-                != ParserNode.NodeType.LISTEND){
+                != ParserNode.NodeType.LIST_END){
             loopCounter.addNode(adding);
         }
         return loopCounter;
@@ -104,7 +106,7 @@ public class TreeParser {
             case ListStart:
                 CommandParserNode list = new RootParserNode();
                 ParserNode listElement = parseIteratorElement(iterator);
-                while (listElement.typeOfNode() != ParserNode.NodeType.LISTEND) {
+                while (listElement.typeOfNode() != ParserNode.NodeType.LIST_END) {
                     list.addNode(listElement);
                     listElement = parseIteratorElement(iterator);
                 }
