@@ -34,7 +34,7 @@ public class TurtleNodeFactory {
             case "Right":
                 return new RTurnNode();
             case "SetHeading":
-                // return new HeadingNode(); //FIXME
+                return new SetHeadingNode(); //FIXME
             case "SetTowards":
                 return new TowardsNode();
             case "SetPosition":

@@ -14,8 +14,8 @@ public abstract class Executable {
   public abstract String getString();
 
   protected String getExecutableName(String executableType){
-    String x = ResourceBundle.getBundle(RESOURCES+languageChosen).getString(executableType);
-    return x.substring(0,x.indexOf("|"));
+    return ResourceBundle.getBundle(RESOURCES+languageChosen).getString(executableType).split("\\|")[0];
+
   }
 }
 

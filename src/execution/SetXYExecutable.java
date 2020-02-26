@@ -14,8 +14,11 @@ public class SetXYExecutable extends Executable {
 
   public double run(Visualizer visualizerObject){
     double distanceTraveled = getDistanceTraveled(visualizerObject, xSet, ySet);
-    visualizerObject.setTurtleX(xSet);
-    visualizerObject.setTurtleY(ySet);
+    //visualizerObject.setTurtleX(xSet);
+    //visualizerObject.setTurtleY(ySet);
+    visualizerObject.setTurtleGameX(xSet);
+    visualizerObject.setTurtleGameY(ySet);
+
     return distanceTraveled;
   }
 

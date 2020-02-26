@@ -114,6 +114,14 @@ public class Visualizer {
 
     }
 
+    public void setTurtleGameX(double xPos){
+        myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
+    }
+
+    public void setTurtleGameY(double yPos){
+        myTurtles.get(turtleIndex).setYGameCoordinate(yPos);
+    }
+
     /**
      * setTurtleY() - setter for turtle's y coordinate.
      *

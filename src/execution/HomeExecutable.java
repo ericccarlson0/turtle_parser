@@ -8,8 +8,9 @@ public class HomeExecutable extends Executable {
   public HomeExecutable(){ }
   public double run(Visualizer visualizerObject){
     double distanceTraveled = getDistanceTraveled(visualizerObject,0,0);
-    visualizerObject.setTurtleX(0);
-    visualizerObject.setTurtleY(0);
+    visualizerObject.setTurtleGameX(0);
+    visualizerObject.setTurtleGameY(0);
+    visualizerObject.setTurtleAngle(0);
     return distanceTraveled;
   }
 

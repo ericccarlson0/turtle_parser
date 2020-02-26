@@ -4,7 +4,7 @@ import visualizer.Visualizer;
 
 
 public class ShowExecutable extends Executable {
-  private final String executableType = "ShowTurtles";
+  private final String executableType = "ShowTurtle";
 
   public ShowExecutable(){
   }

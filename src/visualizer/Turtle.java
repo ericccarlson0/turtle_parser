@@ -69,15 +69,13 @@ public class Turtle extends ImageView{
     }
 
     public void setXGameCoordinate(double xPos){
-        old_x_coordinate = x_coordinate;
         this.x_coordinate = xPos - 16 + 350;
         setX(xPos - 16 + 350);
     }
 
     public void setYGameCoordinate(double yPos){
-        old_y_coordinate = y_coordinate;
-        this.y_coordinate = yPos - 16 + 350;
-        setY(yPos - 16 + 350);
+        this.y_coordinate = 675 - (yPos - 16 + 350);
+        setY(675 - (yPos - 16 + 350));
     }
 
     public double getXCoordinate(){
