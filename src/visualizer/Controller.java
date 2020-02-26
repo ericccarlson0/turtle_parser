@@ -23,8 +23,7 @@ public class Controller {
         myTreeParser = new TreeParser(executables);
         myVisualizer = new Visualizer();
         myVisualizer.setVariableList(myTreeParser.observableVariables());
-        myVisualizer.setCommandList(myTreeParser.observableVariables());
-
+        myVisualizer.setCommandList(myTreeParser.observableCommands());
         executables = new ArrayList<>();
         myContext = new VisualContext(myVisualizer,executables);
         start();
