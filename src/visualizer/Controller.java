@@ -19,11 +19,11 @@ public class Controller {
     private Timeline animation;
     private List<Executable> executables;
 
-
     public Controller () {
         myTreeParser = new TreeParser(executables);
         myVisualizer = new Visualizer();
-        myVisualizer.setObservableList(myTreeParser.observableVariables());
+        myVisualizer.setVariableList(myTreeParser.observableVariables());
+        myVisualizer.setCommandList(myTreeParser.observableCommands());
         executables = new ArrayList<>();
         myContext = new VisualContext(myVisualizer,executables);
         start();
@@ -37,11 +37,9 @@ public class Controller {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
-        //testVisualizer();
     }
 
-
-    public void step () {
+    private void step () {
         if(!myVisualizer.getCommand().equals("")) {
             ParserNode root = myTreeParser.parseString(myVisualizer.getCommand());
             myVisualizer.resetCommand();
@@ -51,44 +49,6 @@ public class Controller {
             executables.get(0).run(myVisualizer);
             myVisualizer.addExecutedHistory(executables.get(0).getString());
             executables.remove(0);
-        }
-
-    }
-
-
-
-    private void testVisualizer(){
-        for(int i=0; i<2000; i++){
-            myVisualizer.setTurtleX(myVisualizer.getTurtleX()+ 1 * Math.cos(Math.toRadians(0))); // 1
-            myVisualizer.setTurtleY(myVisualizer.getTurtleY()+ 1 * Math.sin(Math.toRadians(0))); // 0
-            myVisualizer.draw();
-        }
-        for(int i=0; i<100; i++){
-            myVisualizer.setTurtleX(myVisualizer.getTurtleX()+ 1 * Math.cos(Math.toRadians(90))); // 0
-            myVisualizer.setTurtleY(myVisualizer.getTurtleY()+ 1 * Math.sin(Math.toRadians(90))); // 1
-            myVisualizer.draw();
-        }
-        for(int i=0; i<100; i++){
-            myVisualizer.setTurtleX(myVisualizer.getTurtleX()+ 1 * Math.cos(Math.toRadians(180))); // -1
-            myVisualizer.setTurtleY(myVisualizer.getTurtleY()+ 1 * Math.sin(Math.toRadians(180))); // 0
-            myVisualizer.draw();
-        }
-        for(int i=0; i<100; i++){
-            myVisualizer.setTurtleX(myVisualizer.getTurtleX()+ 1 * Math.cos(Math.toRadians(270))); // 0
-            myVisualizer.setTurtleY(myVisualizer.getTurtleY()+ 1 * Math.sin(Math.toRadians(270))); // -1
-            myVisualizer.draw();
-        }
-        myVisualizer.setTurtlePen(false);
-        for(int i=0; i<100; i++){
-            myVisualizer.setTurtleX(myVisualizer.getTurtleX()+ 1 * Math.cos(Math.toRadians(45)));
-            myVisualizer.setTurtleY(myVisualizer.getTurtleY()+ 1 * Math.sin(Math.toRadians(45)));
-            myVisualizer.draw();
-        }
-        myVisualizer.setTurtlePen(true);
-        for(int i=0; i<1000; i++){
-            myVisualizer.setTurtleX(myVisualizer.getTurtleX()+ 1 * Math.cos(Math.toRadians(45)));
-            myVisualizer.setTurtleY(myVisualizer.getTurtleY()+ 1 * Math.sin(Math.toRadians(45)));
-            myVisualizer.draw();
         }
     }
 }

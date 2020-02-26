@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import java.io.File;
 import javafx.scene.control.ComboBox;
 import javafx.scene.shape.Line;
@@ -52,7 +53,6 @@ public class Visualizer {
     private final int FIELD_LEFT_EDGE = 25;
     private final int OFFSET = 25;
     private final int SCROLLPANE_SIZE = 250;
-    private Timeline animation;
     private Stage myStage;
     private Scene myScene;
     private Group myGroup;
@@ -72,6 +72,8 @@ public class Visualizer {
     private TextField userInputTextField;
     private Button inputButton;
     private ObservableList variableList;
+    private ObservableList commandList;
+
 
     private String command = "";
 
@@ -134,8 +136,12 @@ public class Visualizer {
         myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
     }
 
-    public void setObservableList(ObservableList variableList){
+    public void setVariableList(ObservableList variableList){
         this.variableList = variableList;
+    }
+
+    public void setCommandList(ObservableList commandList){
+        this.commandList = commandList;
     }
 
     public void setTurtleGameY(double yPos){
@@ -313,28 +319,16 @@ public class Visualizer {
     private void setUpEnvironment() {
         myGroup = new Group();
         myTurtles = new ArrayList<visualizer.Turtle>();
+        createField((ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2,(ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, FIELD_WIDTH, FIELD_HEIGHT, Color.WHITE);
+        createTurtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
+
+
         inputHistory = new Text("user input history");
         executedHistory = new Text("executed command history");
-
-        // create field
-        Rectangle field = new Rectangle((ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, (ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, FIELD_WIDTH, FIELD_HEIGHT);
-        field.setFill(Color.WHITE);
-        myGroup.getChildren().add(field);
-
-        // create turtle
-        visualizer.Turtle initialTurtle = new visualizer.Turtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
-        myTurtles.add(initialTurtle);
-        myGroup.getChildren().add(initialTurtle);
-
-        // create input scroll pane
         inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         myGroup.getChildren().add(inputScrollPane);
-
-        // create executed scroll pane
         executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         myGroup.getChildren().add(executedScrollPane);
-
-        // create input text field
         userInputText = new Text("Terminal");
         userInputTextField = new TextField("");
         inputButton = makeButton("Enter", ENVIRONMENT_SIZE_HEIGHT + 300, (ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + 50, myGroup);
@@ -350,24 +344,26 @@ public class Visualizer {
         });
         userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + OFFSET*2);
         userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + OFFSET*2);
-
-        //VBox c = new VBox();
-        //c.getChildren().add(userInputText);
-        //c.getChildren().add(userInputTextField);
         userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) * 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
         myGroup.getChildren().add(userInputScrollPane);
         myGroup.getChildren().add(userInputTextField);
 
-        // create buttons
         Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + OFFSET*6, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + OFFSET*10, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button variableButton = makeButton("Variables", ENVIRONMENT_SIZE_HEIGHT + OFFSET*14, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button commandButton = makeButton("Commands", ENVIRONMENT_SIZE_HEIGHT + OFFSET*18, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        commandButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Page popup = new Page(commandList);
+            }
+        });
         Button turtleImageFileButton = makeButton("New Turtle Image", ENVIRONMENT_SIZE_HEIGHT+400,(ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         variableButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
-                VariablePage popup = new VariablePage(variableList);
+                Page popup = new Page(variableList);
             }
         });
 
@@ -394,6 +390,18 @@ public class Visualizer {
         myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
         turtleImageFileButton.setOnAction(event -> turtleImageButtonPressed());
 
+    }
+
+    private void createTurtle(Image turtleImage, int x, int y, int turtleIndex) {
+        Turtle initialTurtle = new visualizer.Turtle(turtleImage, x, y, turtleIndex);
+        myTurtles.add(initialTurtle);
+        myGroup.getChildren().add(initialTurtle);
+    }
+
+    private void createField(int x, int y, int width, int height, Color color) {
+        Rectangle field = new Rectangle(x, y, width, height);
+        field.setFill(color);
+        myGroup.getChildren().add(field);
     }
 
     private Button makeButton(String text, int x, int y, Group group) {
