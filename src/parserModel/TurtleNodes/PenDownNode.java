@@ -5,20 +5,19 @@ import executables.PenDownExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class PenDownNode extends CommandParserNode {
-    private List<Executable> executableQueue;
 
-    public PenDownNode(List<Executable> queue){
-        executableQueue = queue;
+    public PenDownNode(){
     }
 
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-    public double execute() {
-        executableQueue.add(new PenDownExecutable());
+    public double execute(VisualContext context) {
+        context.getExecutableQueue().add(new PenDownExecutable());
         return 0; // FIXME
     }
 

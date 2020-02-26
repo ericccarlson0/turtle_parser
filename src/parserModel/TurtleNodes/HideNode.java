@@ -5,20 +5,19 @@ import executables.HideExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class HideNode extends CommandParserNode {
-    private List<Executable> executableQueue;
 
-    public HideNode(List<Executable> queue){
-        executableQueue = queue;
+    public HideNode() {
     }
 
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-    public double execute() {
-        executableQueue.add(new HideExecutable());
+    public double execute(VisualContext context) {
+        context.getExecutableQueue().add(new HideExecutable());
         return 0; //FIXME
     }
 

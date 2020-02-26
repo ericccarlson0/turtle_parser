@@ -2,6 +2,7 @@ package parserModel.Control;
 
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class IfElseNode extends CommandParserNode {
     private ParserNode myConditional;
@@ -22,11 +23,11 @@ public class IfElseNode extends CommandParserNode {
     }
 
     @Override
-    public double execute() {
-        if(myConditional.execute() != 0.0){
-            return myIfNode.execute();
+    public double execute(VisualContext context) {
+        if(myConditional.execute(context) != 0.0){
+            return myIfNode.execute(context);
         }
-        return myElseNode.execute();
+        return myElseNode.execute(context);
     }
 
     @Override

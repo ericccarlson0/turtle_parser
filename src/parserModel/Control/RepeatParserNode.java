@@ -2,6 +2,7 @@ package parserModel.Control;
 
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class RepeatParserNode extends CommandParserNode {
     private ParserNode myTimesNode;
@@ -18,10 +19,10 @@ public class RepeatParserNode extends CommandParserNode {
     }
 
     @Override
-    public double execute() {
+    public double execute(VisualContext context) {
         double returnValue = 0;
-        for(int i = 0; i < myTimesNode.execute(); i++){
-            returnValue = executeNode.execute();
+        for(int i = 0; i < myTimesNode.execute(context); i++){
+            returnValue = executeNode.execute(context);
         }
         return returnValue;
     }

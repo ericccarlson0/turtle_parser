@@ -5,14 +5,13 @@ import executables.SetXYExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class SetXYNode extends CommandParserNode {
     private ParserNode myXNode;
     private ParserNode myYNode;
-    private List<Executable> executableQueue;
 
-    public SetXYNode(List<Executable> queue) {
-        executableQueue = queue;
+    public SetXYNode() {
     }
 
     public void addNode(ParserNode node) {
@@ -25,10 +24,10 @@ public class SetXYNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
-        double xPos = myXNode.execute();
-        double yPos = myYNode.execute();
-        executableQueue.add(new SetXYExecutable(xPos, yPos));
+    public double execute(VisualContext context) {
+        double xPos = myXNode.execute(context);
+        double yPos = myYNode.execute(context);
+        context.getExecutableQueue().add(new SetXYExecutable(xPos, yPos));
         return xPos; // TODO (is this return correct?)
     }
 

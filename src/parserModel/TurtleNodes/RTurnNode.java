@@ -5,14 +5,12 @@ import executables.RTurnExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class RTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
-    private List<Executable> executableQueue;
 
-    public RTurnNode(List<Executable> queue){
-        executableQueue = queue;
-    }
+    public RTurnNode(){}
 
     public void addNode(ParserNode node) {
         if (myRotationNode == null){
@@ -22,9 +20,9 @@ public class RTurnNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
-        double degrees = myRotationNode.execute();
-        executableQueue.add(new RTurnExecutable(degrees));
+    public double execute(VisualContext context) {
+        double degrees = myRotationNode.execute(context);
+        context.getExecutableQueue().add(new RTurnExecutable(degrees));
         return degrees;
     }
 

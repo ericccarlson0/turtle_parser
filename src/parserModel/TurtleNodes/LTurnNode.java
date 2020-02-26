@@ -5,13 +5,13 @@ import executables.LTurnExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class LTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
-    private List<Executable> executableQueue;
 
-    public LTurnNode(List<Executable> queue) {
-        executableQueue = queue;
+    public LTurnNode() {
+
     }
 
     public void addNode(ParserNode node) {
@@ -22,9 +22,9 @@ public class LTurnNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
-        double degrees = myRotationNode.execute();
-        executableQueue.add(new LTurnExecutable(degrees));
+    public double execute(VisualContext context) {
+        double degrees = myRotationNode.execute(context);
+        context.getExecutableQueue().add(new LTurnExecutable(degrees));
         return degrees;
     }
 

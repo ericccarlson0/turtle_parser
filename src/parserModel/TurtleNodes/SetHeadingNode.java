@@ -7,14 +7,13 @@ import executables.SetHeadingExecutable;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
 import parserModel.TurtleQueries.HeadingNode;
+import visualizer.VisualContext;
 
 
 public class SetHeadingNode extends CommandParserNode {
     public ParserNode myDegrees;
-    private List<Executable> executableQueue;
 
-    public SetHeadingNode(List<Executable> queue) {
-        executableQueue = queue;
+    public SetHeadingNode() {
     }
 
     @Override
@@ -27,9 +26,9 @@ public class SetHeadingNode extends CommandParserNode {
     }
 
     @Override
-    public double execute() {
-        double degrees = myDegrees.execute();
-        executableQueue.add(new SetHeadingExecutable(degrees));
+    public double execute(VisualContext context) {
+        double degrees = myDegrees.execute(context);
+        context.getExecutableQueue().add(new SetHeadingExecutable(degrees));
         return degrees;
     }
 

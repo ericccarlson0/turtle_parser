@@ -5,18 +5,14 @@ import executables.Executable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class ClearNode extends CommandParserNode {
-    private List<Executable> executableQueue;
-
-    public ClearNode(List<Executable> queue) {
-        executableQueue = queue;
-    }
 
     public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
 
-    public double execute() {
-        executableQueue.add(new ClearExecutable());
+    public double execute(VisualContext context) {
+        context.getExecutableQueue().add(new ClearExecutable());
         return 0; //FIXME
     }
 

@@ -5,20 +5,19 @@ import executables.HomeExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class HomeNode extends CommandParserNode {
-    private List<Executable> executableQueue;
 
-    public HomeNode(List<Executable> queue) {
-       executableQueue = queue;
+    public HomeNode() {
     }
 
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-    public double execute() {
-        executableQueue.add(new HomeExecutable());
+    public double execute(VisualContext context) {
+        context.getExecutableQueue().add(new HomeExecutable());
         return 0; //FIXME
     }
 

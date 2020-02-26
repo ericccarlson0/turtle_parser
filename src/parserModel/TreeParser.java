@@ -1,6 +1,8 @@
 package parserModel;
 
 import executables.Executable;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class TreeParser {
     }
 
     public CommandParserNode parseString(String input){
-        List<String> inputElements = Arrays.asList(input.split(" "));
+        List<String> inputElements = new ArrayList<>(Arrays.asList(input.split(" ")));
         for(int i = 0; i < inputElements.size(); i++) {
             if(inputElements.get(i).equals("")){
                 inputElements.remove(i);

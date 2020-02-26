@@ -18,6 +18,5 @@ public class LTurnExecutable extends Executable {
   public String getString(){
     return getExecutableName(executableType)+" "+angle;
   }
-
-
+  
 }
