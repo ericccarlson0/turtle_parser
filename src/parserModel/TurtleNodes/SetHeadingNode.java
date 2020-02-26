@@ -2,10 +2,12 @@ package parserModel.TurtleNodes;
 import executables.Executable;
 import executables.SetHeadingExecutable;
 import java.util.List;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
 import executables.SetHeadingExecutable;
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 import parserModel.TurtleQueries.HeadingNode;
 
 
@@ -17,23 +19,22 @@ public class SetHeadingNode extends CommandParserNode {
         executableQueue = queue;
     }
 
-    @Override
     public void addNode(ParserNode node) {
-        if(myDegrees == null) {
+        if (myDegrees == null) {
             myDegrees = node;
-        } else{
-            // throw exception
+        } else {
+            // TODO throw exception
         }
     }
 
-    @Override
     public double execute() {
+        TurtleData td = GlobalData.getInstance().turtleData();
         double degrees = myDegrees.execute();
+        td.setHeading(degrees);
         executableQueue.add(new SetHeadingExecutable(degrees));
         return degrees;
     }
 
-    @Override
     public boolean isComplete() {
         return myDegrees == null;
     }

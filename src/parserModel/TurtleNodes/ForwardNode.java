@@ -4,7 +4,9 @@ import executables.Executable;
 import executables.ForwardExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class ForwardNode extends CommandParserNode {
     private ParserNode myLength;
@@ -16,11 +18,12 @@ public class ForwardNode extends CommandParserNode {
 
     public double execute() {
         double distance = myLength.execute();
-        System.out.println("forward " + distance);
-        for(int i=0; i<distance; i++){
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.forward(distance);
+        for (int i=0; i<distance; i++){
             executableQueue.add(new ForwardExecutable(1));
         }
-        //executableQueue.add(new ForwardExecutable(distance));
+        // FIXME executableQueue.add(new ForwardExecutable(distance));
         return distance;
     }
 

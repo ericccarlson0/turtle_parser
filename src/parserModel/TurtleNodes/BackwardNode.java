@@ -4,7 +4,9 @@ import executables.BackwardExecutable;
 import executables.Executable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class BackwardNode extends CommandParserNode {
     private ParserNode myLength;
@@ -16,6 +18,8 @@ public class BackwardNode extends CommandParserNode {
 
     public double execute() {
         double distance = myLength.execute();
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.backward(distance);
         executableQueue.add(new BackwardExecutable(distance));
         return distance;
     }

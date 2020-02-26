@@ -4,7 +4,9 @@ import executables.Executable;
 import executables.RTurnExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class RTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
@@ -24,6 +26,8 @@ public class RTurnNode extends CommandParserNode {
 
     public double execute() {
         double degrees = myRotationNode.execute();
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.turnClockwise(degrees);
         executableQueue.add(new RTurnExecutable(degrees));
         return degrees;
     }
