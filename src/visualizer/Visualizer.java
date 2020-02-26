@@ -1,6 +1,5 @@
 package visualizer;
 import javafx.scene.shape.Line;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -26,8 +25,8 @@ public class Visualizer {
     private final int SPLASH_SIZE_WIDTH = 1300;
     private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
 
-    private final int ENVIRONMENT_SIZE_HEIGHT = 700;
-    private final int ENVIRONMENT_SIZE_WIDTH = 1300;
+    private final int ENVIRONMENT_HEIGHT = 700;
+    private final int ENVIRONMENT_WIDTH = 1300;
     private final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
 
     private final int FIELD_CENTER_X = 350;
@@ -239,7 +238,6 @@ public class Visualizer {
         turtleIndex = index;
     }
 
-
     private void start() {
         myStage = new Stage();
         playAnimation();
@@ -269,57 +267,73 @@ public class Visualizer {
     }
 
     private void setUpEnvironment() {
+        initializeComponents();
+
+        Rectangle turtleEnvironment = createTurtleEnvironment();
+        Turtle initialTurtle = createInitialTurtle();
+        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_HEIGHT + 50, ENVIRONMENT_HEIGHT/28,
+            ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS,
+            true, true, 250, 250);
+        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_HEIGHT + 275 + 50, ENVIRONMENT_HEIGHT/28,
+            ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS,
+            true, true, 250, 250);
+        myGroup.getChildren().addAll(turtleEnvironment, initialTurtle, inputScrollPane, executedScrollPane);
+
+        setUpUserInput();
+        myGroup.getChildren().addAll(userInputScrollPane, userInputTextField);
+
+        setUpButtons();
+
+        myScene = new Scene(myGroup, ENVIRONMENT_WIDTH, ENVIRONMENT_HEIGHT, ENVIRONMENT_BACKGROUND);
+        String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
+        myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+    }
+
+    private void initializeComponents() {
         myGroup = new Group();
         myTurtles = new ArrayList<>();
         inputHistory = new Text(INPUT_HISTORY);
         executedHistory = new Text(COMMAND_HISTORY);
+    }
 
-        // create field
-        Rectangle field = new Rectangle((ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, (ENVIRONMENT_SIZE_HEIGHT - FIELD_WIDTH) / 2, FIELD_WIDTH, FIELD_HEIGHT);
-        field.setFill(Color.WHITE);
-        myGroup.getChildren().add(field);
+    private Rectangle createTurtleEnvironment() {
+        Rectangle env = new Rectangle((ENVIRONMENT_HEIGHT - FIELD_WIDTH)/2,
+            (ENVIRONMENT_HEIGHT - FIELD_WIDTH)/2, FIELD_WIDTH, FIELD_HEIGHT);
+        env.setFill(Color.WHITE);
+        return env;
+    }
 
-        // create turtle
-        visualizer.Turtle initialTurtle = new visualizer.Turtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
-        myTurtles.add(initialTurtle);
-        myGroup.getChildren().add(initialTurtle);
+    private Turtle createInitialTurtle() {
+        Turtle turt = new Turtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
+        myTurtles.add(turt);
+        return turt;
+    }
 
-        // create input scroll pane
-        inputScrollPane = makeScrollPane(inputHistory, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
-        myGroup.getChildren().add(inputScrollPane);
-
-        // create executed scroll pane
-        executedScrollPane = makeScrollPane(executedHistory, ENVIRONMENT_SIZE_HEIGHT + 275 + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 250, 250);
-        myGroup.getChildren().add(executedScrollPane);
-
-        // create input text field
-        userInputText = new Text("Terminal");
+    private void setUpUserInput() {
+        userInputText = new Text("TERMINAL: ");
         userInputTextField = new TextField("");
-        inputButton = makeButton("Enter", ENVIRONMENT_SIZE_HEIGHT + 300, (ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + 50, myGroup);
+        inputButton = makeButton("ENTER ", ENVIRONMENT_HEIGHT + 300, (ENVIRONMENT_HEIGHT / 7) * 6 + 50, myGroup);
         inputButton.setOnAction(new EventHandler<>() {
-            @Override
             public void handle(ActionEvent event) {
-                String x = userInputTextField.getText();
-                inputHistory.setText(inputHistory.getText() + '\n' + x);
-                userInputText.setText(userInputText.getText() + '\n' + "Command entered");
+                String newText = userInputTextField.getText();
+                inputHistory.setText(inputHistory.getText() + '\n' + newText);
+                userInputText.setText(userInputText.getText() + '\n' + "(command entered)");
                 userInputTextField.clear();
-                setCommand(x);
+                setCommand(newText);
             }
         });
-        userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + 50);
-        userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + 50);
+        userInputTextField.setLayoutX(ENVIRONMENT_HEIGHT + 50);
+        userInputTextField.setLayoutY((ENVIRONMENT_HEIGHT / 7) * 6 + 50);
 
-        //VBox c = new VBox();
-        //c.getChildren().add(userInputText);
-        //c.getChildren().add(userInputTextField);
-        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) * 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
-        myGroup.getChildren().add(userInputScrollPane);
-        myGroup.getChildren().add(userInputTextField);
+        userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_HEIGHT + 50, ENVIRONMENT_HEIGHT/28,
+            ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS,
+            true, true, 525, 200);
+    }
 
-        // create buttons
-        Button resetParser = makeButton("Reset", ENVIRONMENT_SIZE_HEIGHT + 50, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + 150, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
-        Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + 250, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+    private void setUpButtons() {
+        Button resetParser = makeButton("RESET", ENVIRONMENT_HEIGHT + 50, (ENVIRONMENT_HEIGHT / 7) / 4 + (ENVIRONMENT_HEIGHT / 7) * 3, myGroup);
+        Button replayParser = makeButton("REPLAY", ENVIRONMENT_HEIGHT + 150, (ENVIRONMENT_HEIGHT / 7) / 4 + (ENVIRONMENT_HEIGHT / 7) * 3, myGroup);
+        Button helpParser = makeButton("HELP", ENVIRONMENT_HEIGHT + 250, (ENVIRONMENT_HEIGHT / 7) / 4 + (ENVIRONMENT_HEIGHT / 7) * 3, myGroup);
         helpParser.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
@@ -332,10 +346,6 @@ public class Visualizer {
                 playAnimation();
             }
         });
-
-        myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
-        String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
-        myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
     }
 
     private Scene setUpSplash() {
