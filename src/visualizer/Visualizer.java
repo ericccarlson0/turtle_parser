@@ -41,7 +41,7 @@ public class Visualizer {
 
     private ArrayList<Turtle> myTurtles;
     private int turtleIndex = 0;
-    private final static String TURTLE_FILE = "images/ball.jpg";
+    private final static String TURTLE_FILE = "images/turtle.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
 
     private Text executedHistory;
