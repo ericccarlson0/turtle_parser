@@ -14,9 +14,9 @@ public class SetHeadingExecutable extends Executable {
   public double run(Visualizer visualizerObject) {
     double currentAngle = visualizerObject.getTurtleAngle();
     double newAngle = angle%360;
-    double degreesMoved = newAngle-currentAngle;
+    double radiansMoved = newAngle-currentAngle;
     visualizerObject.setTurtleAngle(-newAngle); //TODO why negative again
-    return Math.toDegrees(degreesMoved);
+    return Math.toDegrees(radiansMoved);
   }
 
 

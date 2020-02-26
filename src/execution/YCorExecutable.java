@@ -9,7 +9,15 @@ public class YCorExecutable extends Executable {
   }
 
   public double run(Visualizer visualizerObject){
+
+    visualizerObject.addUserInput(Double.toString(visualizerObject.getTurtleY()));//TODO uncomment next
     return visualizerObject.getTurtleY();
+
+    /*
+    visualizerObject.addUserInput(Double.toString(visualizerObject.getTurtleGameY()));
+    return visualizerObject.getTurtleGameY();
+
+     */
   }
 
 

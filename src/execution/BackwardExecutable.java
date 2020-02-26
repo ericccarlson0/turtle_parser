@@ -15,7 +15,6 @@ public class BackwardExecutable extends Executable {
     visualizerObject.setTurtleX(newX);
     visualizerObject.setTurtleY(newY);
     visualizerObject.draw();
-
     return distance;
   }
 
