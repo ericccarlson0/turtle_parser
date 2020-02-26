@@ -1,7 +1,7 @@
 package visualizer;
 
 import execution.Executable;
-import parserModel.ParserNode;
+import parserModel.nodes.ParserNode;
 import parserModel.TreeParser;
 
 //import controller.Executables.Executable;

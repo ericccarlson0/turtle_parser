@@ -4,7 +4,7 @@
 import Visualizer.Visualizer;
 import executables.Executable;
 import java.util.ArrayList;
-import parserModel.CommandParserNode;
+import parserModel.nodes.CommandParserNode;
 import parserModel.TreeParser;
 import javax.naming.Context;
 import Visualizer.VisualContext;
