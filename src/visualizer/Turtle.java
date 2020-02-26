@@ -32,6 +32,7 @@ public class Turtle extends ImageView{
         setYCoordinate(0);
         id = 0;
         setAngle(0);
+        setRotate(0);
     }
 
     /**
@@ -42,12 +43,13 @@ public class Turtle extends ImageView{
      */
     public Turtle(Image image, int xPos, int yPos, int turtleIndex) {
         super(image);
-        setXCoordinate(xPos);
-        setYCoordinate(yPos);
+        setXCoordinate(xPos - 16);
+        setYCoordinate(yPos - 16);
         old_x_coordinate = getXCoordinate();
         old_y_coordinate = getYCoordinate();
         id = turtleIndex;
         setAngle(0);
+        setRotate(90);
     }
     /**
     public double getNextX(){
@@ -106,34 +108,35 @@ public class Turtle extends ImageView{
 
     public void setXCoordinate(double xPos){
         old_x_coordinate = x_coordinate;
-        this.x_coordinate = xPos;
-        setX(xPos);
+        this.x_coordinate = xPos - 16;
+        setX(xPos - 16);
     }
 
     public void setYCoordinate(double yPos){
         old_y_coordinate = y_coordinate;
-        this.y_coordinate = yPos;
-        setY(yPos);
+        this.y_coordinate = yPos - 16;
+        setY(yPos - 16);
     }
 
     public double getXCoordinate(){
-        return x_coordinate;
+        return x_coordinate + 16;
     }
 
     public double getYCoordinate(){
-        return y_coordinate;
+        return y_coordinate + 16;
     }
     public double getOldXCoordinate(){
-        return old_x_coordinate;
+        return old_x_coordinate + 16;
     }
 
     public double getOldYCoordinate(){
-        return old_y_coordinate;
+        return old_y_coordinate + 16;
     }
 
 
     public void setAngle(double angle){
         this.angle = angle;
+        setRotate(angle + 90);
     }
 
     public boolean getPen() { return this.pen; }

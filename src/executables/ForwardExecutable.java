@@ -2,23 +2,23 @@ package executables;
 import visualizer.Visualizer;
 
 public class ForwardExecutable extends Executable {
-  private final String executableType = "Backward";
+  private final String executableType = "Forward";
   private double distance;
   public ForwardExecutable(double distanceUnit){
     distance = distanceUnit;
   }
 
   public double run(Visualizer visualizerObject){
-    double currentXPosition = visualizerObject.getTurtleX();
-    double currentYPosition = visualizerObject.getTurtleY();
-    double currentAngle = visualizerObject.getTurtleAngle();
-    double newXPosition = currentXPosition + Math.cos(currentAngle)*distance;
-    double newYPosition = currentYPosition + Math.sin(currentAngle)*distance;
-    visualizerObject.setTurtleX(newXPosition);
-    visualizerObject.setTurtleY(newYPosition);
-    visualizerObject.draw();
-
-    System.out.println("1");
+    for(int i=0; i<distance; i++){
+      double currentXPosition = visualizerObject.getTurtleX();
+      double currentYPosition = visualizerObject.getTurtleY();
+      double currentAngle = visualizerObject.getTurtleAngle();
+      double newXPosition = currentXPosition + Math.cos(Math.toRadians(currentAngle))*1;
+      double newYPosition = currentYPosition + Math.sin(Math.toRadians(currentAngle))*1;
+      visualizerObject.setTurtleX(newXPosition);
+      visualizerObject.setTurtleY(newYPosition);
+      visualizerObject.draw();
+    }
     return distance;
   }
 
