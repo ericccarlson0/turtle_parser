@@ -126,6 +126,14 @@ public class Visualizer {
         myTurtles.get(turtleIndex).setYGameCoordinate(yPos);
     }
 
+    public double getTurtleGameX(){
+        return myTurtles.get(turtleIndex).getXGameCoordinate();
+    }
+
+    public double getTurtleGameY(){
+        return myTurtles.get(turtleIndex).getYGameCoordinate();
+    }
+
     /**
      * setTurtleX() - setter for turtle's x coordinate.
      * @param xPos turtle's x coordinate.
@@ -185,6 +193,7 @@ public class Visualizer {
 
     public void setCommandList(ObservableList commandList){
         this.commandList = commandList;
+
     }
 
     /**

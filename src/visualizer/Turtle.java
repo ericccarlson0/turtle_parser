@@ -52,8 +52,8 @@ public class Turtle extends ImageView{
         super(image);
         setXCoordinate(xPos);
         setYCoordinate(yPos);
-        old_x_coordinate = xPos - TURTLE_OFFSET;
-        old_y_coordinate = yPos - TURTLE_OFFSET;
+        old_x_coordinate = xPos;
+        old_y_coordinate = yPos;
         id = turtleIndex;
         setAngle(0);
         setRotate(90);
@@ -76,13 +76,15 @@ public class Turtle extends ImageView{
     }
 
     public void setXGameCoordinate(double xPos){
+        old_x_coordinate = x_coordinate;
         this.x_coordinate = xPos - TURTLE_OFFSET + CENTER;
         setX(xPos - TURTLE_OFFSET + CENTER);
     }
 
     public void setYGameCoordinate(double yPos){
-        this.y_coordinate = FIELD_SIZE - (yPos - TURTLE_OFFSET + CENTER);
-        setY(FIELD_SIZE - (yPos - TURTLE_OFFSET + CENTER));
+        old_y_coordinate = y_coordinate;
+        this.y_coordinate = FIELD_SIZE - (yPos + TURTLE_OFFSET + CENTER);
+        setY(FIELD_SIZE - (yPos + TURTLE_OFFSET + CENTER));
     }
 
     public double getXCoordinate(){
@@ -98,7 +100,7 @@ public class Turtle extends ImageView{
     }
 
     public double getYGameCoordinate(){
-        return SCREEN_SIZE - (y_coordinate + TURTLE_OFFSET - CENTER);
+        return FIELD_SIZE - (y_coordinate + TURTLE_OFFSET - CENTER);
     }
 
     public double getOldXCoordinate(){

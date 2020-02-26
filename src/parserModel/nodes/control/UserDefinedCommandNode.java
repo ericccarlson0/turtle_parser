@@ -1,9 +1,9 @@
 package parserModel.nodes.control;
 
 import parserModel.GlobalData;
+import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.CallCommandNode;
-import parserModel.nodes.control.VariableNode;
+
 import visualizer.VisualContext;
 
 import java.util.ArrayList;
