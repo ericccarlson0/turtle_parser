@@ -11,10 +11,12 @@ public class GlobalData {
 
     private TurtleData myTurtle;
     private Map<String, Double> myVariables;
+    private Map<String, CallCommandNode> myCommands;
 
     private GlobalData() {
         myTurtle = new TurtleData();
         myVariables = new HashMap<>();
+        myCommands = new HashMap<>();
     }
 
     public static GlobalData getInstance() {
@@ -26,6 +28,12 @@ public class GlobalData {
     }
     public double getVariable(String name){
         return myVariables.getOrDefault(name, 0.0);
+    }
+    public void setCommand(String commandName, CallCommandNode command){
+        myCommands.put(commandName, command);
+    }
+    public CallCommandNode getCommand(String commandName){
+        return myCommands.getOrDefault(commandName, null);
     }
     public TurtleData turtleData() {
         return myTurtle;

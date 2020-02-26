@@ -22,7 +22,7 @@ public class TurtleNodeFactory {
      * @param identifier    A particular string associated with a particular type of ParserNode.
      * @return              Returns subclass of ParserNode.
      */
-    public ParserNode createCommand(String identifier, List<Executable> queue){
+    public ParserNode createCommand(String identifier){
         switch (identifier) {
             // TURTLE COMMANDS
             case "Forward":
@@ -108,12 +108,14 @@ public class TurtleNodeFactory {
                 return new IfNode();
             case "IfElse":
                 return new IfElseNode();
+            case "MakeUserInstruction":
+                return new UserDefinedCommandNode();
 
              // TURTLE QUERIES
             case "Xcor":
-                return new XCorNode(queue);
+                return new XCorNode();
             case "Ycor":
-                return new YCorNode(queue);
+                return new YCorNode();
             case "Heading":
                 // return new HeadingNode(); FIXME
             case "PenDownNp":
@@ -121,6 +123,6 @@ public class TurtleNodeFactory {
             case "ShowingP":
                 return new ShowingPNode();
         }
-        return null;
+        return GlobalData.getInstance().getCommand(identifier);
     }
 }

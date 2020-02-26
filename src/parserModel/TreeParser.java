@@ -83,13 +83,27 @@ public class TreeParser {
         }
         return loopCounter;
     }
+    private UserDefinedCommandNode parseForCommandDefinition(InputIterator iterator){
+        String commandName = iterator.next();
+        UserDefinedCommandNode newCommand = new UserDefinedCommandNode(commandName);
+        if(myTokenAnalyzer.typeOfToken(iterator.next()) != TokenType.ListStart){
+            // TODO: throw an exception
+        }
+        String variableName;
+        while(myTokenAnalyzer.typeOfToken((variableName = iterator.next())) != TokenType.ListEnd){
+            newCommand.addVariable(new VariableNode(variableName));
+        }
+        return newCommand;
+    }
     private ParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {
         switch (tokenType) {
             case Command:
                 String key = myTokenAnalyzer.getTokenKey(nextElement);
-                ParserNode root = myCommandFactory.createCommand(key, myQueue);
+                ParserNode root = myCommandFactory.createCommand(key);
                 if(root.typeOfNode() == ParserNode.NodeType.LOOP){
                     root.addNode(parseForLoopCounter(iterator));
+                } else if(root.typeOfNode() == ParserNode.NodeType.FUNCTION_DEFINITION){
+                    root = parseForCommandDefinition(iterator);
                 }
                 while(! root.isComplete()) {
                     root.addNode(parseIteratorElement(iterator));

@@ -60,7 +60,7 @@ public class TokenAnalyzer {
                 return e.getKey();
             }
         }
-        return "";
+        return text;
     }
 
     private List<Entry<String, Pattern>> createEntryList(ResourceBundle bundle) {

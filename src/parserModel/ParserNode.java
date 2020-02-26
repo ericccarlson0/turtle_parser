@@ -8,8 +8,8 @@ public abstract class ParserNode {
     public enum NodeType {
         COMMAND,
         LOOP,
-        LIST_END
-        //FIXME (change to LIST_END ?)
+        LIST_END,
+        FUNCTION_DEFINITION
     }
     public abstract void addNode(ParserNode node);
     public abstract double execute(VisualContext context);
