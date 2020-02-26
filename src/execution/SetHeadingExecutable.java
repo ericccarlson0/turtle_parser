@@ -16,7 +16,7 @@ public class SetHeadingExecutable extends Executable {
     double newAngle = angle%360;
     double degreesMoved = newAngle-currentAngle;
     visualizerObject.setTurtleAngle(newAngle);
-    return degreesMoved;
+    return Math.toDegrees(degreesMoved);
   }
 
 

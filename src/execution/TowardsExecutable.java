@@ -13,14 +13,18 @@ public class TowardsExecutable extends Executable {
   }
 
   public double run(Visualizer visualizerObject){
-    double currentXPosition = visualizerObject.getTurtleX();
-    double currentYPosition = visualizerObject.getTurtleY();
+    double currentXPosition = visualizerObject.getTurtleX()-350; //TODO change it to getTurtleGameX
+    double currentYPosition = 350-(visualizerObject.getTurtleY()); //TODO change it to getTurtleGameY
+    System.out.println(currentXPosition);
+    System.out.println(currentYPosition);
     double currentAngle = visualizerObject.getTurtleAngle();
     double newAngle = Math.toDegrees(Math.atan((yHeading-currentYPosition)/(xHeading-currentXPosition)));
+    System.out.println(newAngle);
     if(xHeading-currentXPosition<0){
       newAngle+=180;
     }
-    visualizerObject.setTurtleAngle(newAngle);
+    System.out.println(newAngle);
+    visualizerObject.setTurtleAngle(-newAngle);  //TODO why does this need to be negative
     return (newAngle-currentAngle)%360;
   }
 
