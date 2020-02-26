@@ -1,8 +1,8 @@
 package parserModel.Control;
 
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
-import parserModel.Variables;
 
 public class SetVariable extends CommandParserNode {
     private VariableNode myVariableNode;
@@ -22,7 +22,7 @@ public class SetVariable extends CommandParserNode {
     @Override
     public double execute() {
         double executeValue = myAssignmentNode.execute();
-        new Variables().setVariable(myVariableNode.name(),executeValue);
+        GlobalData.getInstance().setVariable(myVariableNode.name(),executeValue);
         return executeValue;
     }
 

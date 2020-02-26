@@ -6,6 +6,7 @@ public class LTurnExecutable extends Executable {
   private double angle;
   public LTurnExecutable(double angleInput){
     angle = angleInput;
+    //run();
   }
 
   public double run(Visualizer visualizerObject){
