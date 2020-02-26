@@ -93,7 +93,7 @@ public class Turtle extends ImageView{
     }
 
     public double getYGameCoordinate(){
-        return y_coordinate + 16 - 350;
+        return 700 - (y_coordinate + 16 - 350);
     }
 
     public double getOldXCoordinate(){

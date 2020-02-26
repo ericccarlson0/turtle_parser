@@ -340,6 +340,12 @@ public class Visualizer {
                 HelpPage popup = new HelpPage();
             }
         });
+        resetParser.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                playAnimation();
+            }
+        });
 
         return new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
     }
