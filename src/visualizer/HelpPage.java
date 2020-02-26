@@ -5,14 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class HelpPage {
     private final String language = ResourceBundle.getBundle("languages."+"LanguageChoice").getString("Language");
     private final ResourceBundle commands = ResourceBundle.getBundle("parserModel.languages."+language);
+    private static final int SCREEN_SIZE = 500;
     private ScrollPane helpPane;
     private Text helpText;
     private Stage myStage;
@@ -36,7 +34,7 @@ public class HelpPage {
         helpPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         helpPane.setFitToHeight(true);
         helpPane.setFitToWidth(true);
-        helpPane.setPrefSize(500, 500);
+        helpPane.setPrefSize(SCREEN_SIZE, SCREEN_SIZE);
         return helpPane;
     }
 

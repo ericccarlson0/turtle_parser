@@ -41,7 +41,6 @@ public class Visualizer {
     private final int FIELD_LEFT_EDGE = 25;
     private final int OFFSET = 25;
     private final int SCROLLPANE_SIZE = 250;
-    private Timeline animation;
     private Stage myStage;
     private Scene myScene;
     private Group myGroup;
@@ -61,6 +60,8 @@ public class Visualizer {
     private TextField userInputTextField;
     private Button inputButton;
     private ObservableList variableList;
+    private ObservableList commandList;
+
 
     private String command = "";
 
@@ -123,8 +124,12 @@ public class Visualizer {
         myTurtles.get(turtleIndex).setXGameCoordinate(xPos);
     }
 
-    public void setObservableList(ObservableList variableList){
+    public void setVariableList(ObservableList variableList){
         this.variableList = variableList;
+    }
+
+    public void setCommandList(ObservableList commandList){
+        this.commandList = commandList;
     }
 
     public void setTurtleGameY(double yPos){
@@ -340,9 +345,6 @@ public class Visualizer {
         userInputTextField.setLayoutX(ENVIRONMENT_SIZE_HEIGHT + OFFSET*2);
         userInputTextField.setLayoutY((ENVIRONMENT_SIZE_HEIGHT / 7) * 6 + OFFSET*2);
 
-        //VBox c = new VBox();
-        //c.getChildren().add(userInputText);
-        //c.getChildren().add(userInputTextField);
         userInputScrollPane = makeScrollPane(userInputText, ENVIRONMENT_SIZE_HEIGHT + OFFSET*2, (ENVIRONMENT_SIZE_HEIGHT / 7) * 4, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, 200);
         myGroup.getChildren().add(userInputScrollPane);
         myGroup.getChildren().add(userInputTextField);
@@ -352,10 +354,17 @@ public class Visualizer {
         Button replayParser = makeButton("Replay", ENVIRONMENT_SIZE_HEIGHT + OFFSET*6, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button helpParser = makeButton("Help", ENVIRONMENT_SIZE_HEIGHT + OFFSET*10, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         Button variableButton = makeButton("Variables", ENVIRONMENT_SIZE_HEIGHT + OFFSET*14, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        Button commandButton = makeButton("Commands", ENVIRONMENT_SIZE_HEIGHT + OFFSET*18, (ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
+        commandButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Page popup = new Page(commandList);
+            }
+        });
         variableButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
-                VariablePage popup = new VariablePage(variableList);
+                Page popup = new Page(variableList);
             }
         });
         helpParser.setOnAction(new EventHandler<>() {
