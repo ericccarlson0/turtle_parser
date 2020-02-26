@@ -328,10 +328,22 @@ public class Visualizer {
         Node textEntry = createEnvironmentTextEntry();
         layout.setLeft(textEntry);
         layout.setAlignment(textEntry,Pos.CENTER);
+        Node environmentLists = createEnvironmentLists();
+        layout.setRight(environmentLists);
+        layout.setAlignment(environmentLists,Pos.CENTER);
         layout.setCenter(parserField);
         layout.setAlignment(parserField,Pos.CENTER);
 
         myGroup.getChildren().add(layout);
+    }
+
+    private Node createEnvironmentLists() {
+        VBox environmentLists = new VBox();
+        Page commands = new Page(commandList);
+        Page variables = new Page(variableList);
+        environmentLists.getChildren().add(commands.getScrollPane());
+        environmentLists.getChildren().add(variables.getScrollPane());
+        return environmentLists;
     }
 
     private Node createEnvironmentTextEntry() {
@@ -350,11 +362,11 @@ public class Visualizer {
         Button resetButton = makeButton("Reset", 0, 0, buttons);
         Button replayParser = makeButton("Replay", 0, 0, buttons);
         Button helpButton = makeButton("Help", 0, 0, buttons);
-        Button variableButton = makeButton("Variables", 0, 0, buttons);
-        Button commandButton = makeButton("Commands", 0, 0, buttons);
+        //Button variableButton = makeButton("Variables", 0, 0, buttons);
+        //Button commandButton = makeButton("Commands", 0, 0, buttons);
         Button turtleImageFileButton = makeButton("New Turtle Image", 0, 0,  buttons);
-        commandButton.setOnAction(event -> popUpButtonPressed(commandList));
-        variableButton.setOnAction(event -> popUpButtonPressed(variableList));
+        //commandButton.setOnAction(event -> popUpButtonPressed(commandList));
+        //variableButton.setOnAction(event -> popUpButtonPressed(variableList));
         helpButton.setOnAction(event -> helpButtonPressed());
         resetButton.setOnAction(event -> playAnimation());
 
@@ -362,7 +374,8 @@ public class Visualizer {
         final ComboBox languageChoiceComboBox = new ComboBox();
         languageChoiceComboBox.getItems().addAll(getFileNamesInFolder("src/parserModel/languages"));
         languageChoiceComboBox.setOnAction(event -> changeLanguage(languageChoiceComboBox.getValue().toString().replaceAll(".properties","")));
-        myGroup.getChildren().add(languageChoiceComboBox);
+        languageChoiceComboBox.setPromptText("Select Language");
+        buttons.getChildren().add(languageChoiceComboBox);
 
         myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
         String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
