@@ -22,9 +22,7 @@ public class HomeNode extends CommandParserNode {
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.home();
-        context.getExecutableQueue().
-
-    add(new HomeExecutable());
+        context.getExecutableQueue().add(new HomeExecutable());
         return 0; //FIXME
     }
 

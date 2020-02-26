@@ -1,14 +1,9 @@
 package parserModel.control;
 
 import parserModel.*;
-<<<<<<< HEAD:src/parserModel/control/LoopCounterNode.java
 import parserModel.booleanNodes.NotEqualNode;
 import parserModel.mathNodes.SumNode;
-=======
-import parserModel.BooleanNodes.NotEqualNode;
-import parserModel.MathNodes.SumNode;
 import visualizer.VisualContext;
->>>>>>> master:src/parserModel/Control/LoopCounterNode.java
 
 //import parserModel.BooleanCommands.NotEqualCommand;
 //import parserModel.MathCommands.SumCommand;

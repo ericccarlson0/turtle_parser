@@ -1,6 +1,6 @@
 package visualizer;
 
-import executables.Executable;
+import execution.Executable;
 
 import java.util.List;
 

@@ -1,9 +1,6 @@
-<<<<<<< HEAD:src/execution/PenDownPExecutable.java
 package execution;
+
 import visualizer.Visualizer;
-=======
-package executables;
->>>>>>> master:src/executables/PenDownPExecutable.java
 
 
 public class PenDownPExecutable extends Executable {

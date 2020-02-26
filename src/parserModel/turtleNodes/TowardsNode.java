@@ -1,12 +1,6 @@
 package parserModel.turtleNodes;
 
-<<<<<<< HEAD
-import execution.Executable;
-=======
-import executables.Executable;
-import executables.HeadingExecutable;
->>>>>>> master
-import java.util.List;
+import execution.SetHeadingExecutable;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
@@ -39,7 +33,7 @@ public class TowardsNode extends CommandParserNode {
         double yTowards = myYNode.execute(context) - td.getY();
         double degrees = Math.atan(xTowards/yTowards);
         td.setHeading(degrees);
-        context.getExecutableQueue().add(new HeadingExecutable(degrees));
+        context.getExecutableQueue().add(new SetHeadingExecutable(degrees));
         return 0.0; // TODO (is this return correct?)
     }
 

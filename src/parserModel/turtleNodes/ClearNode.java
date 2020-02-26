@@ -1,16 +1,10 @@
 package parserModel.turtleNodes;
 
 import execution.ClearExecutable;
-import execution.Executable;
-import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
-<<<<<<< HEAD:src/parserModel/turtleNodes/ClearNode.java
-=======
 import visualizer.VisualContext;
-import parserModel.TurtleData;
->>>>>>> master:src/parserModel/TurtleNodes/ClearNode.java
 
 public class ClearNode extends CommandParserNode {
 

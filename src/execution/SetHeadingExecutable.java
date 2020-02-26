@@ -4,7 +4,7 @@ import visualizer.Visualizer;
 
 
 public class SetHeadingExecutable extends Executable {
-  private final String executableType = "SetHeading";
+  private final String executableType = "Set Heading";
   private double angle;
 
   public SetHeadingExecutable(double angleInput) {
