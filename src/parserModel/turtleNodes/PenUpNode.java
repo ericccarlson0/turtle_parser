@@ -6,24 +6,23 @@ import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 import parserModel.TurtleData;
 
 public class PenUpNode extends CommandParserNode {
-    private List<Executable> executableQueue;
 
-    public PenUpNode(List<Executable> queue){
-        executableQueue = queue;
+    public PenUpNode() {
     }
 
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.penUp();
-        executableQueue.add(new PenUpExecutable());
-        return 0; // FIXME
+        context.getExecutableQueue().add(new PenUpExecutable());
+        return 0; //FIXME?
     }
 
     public boolean isComplete() {

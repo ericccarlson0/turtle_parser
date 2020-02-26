@@ -6,24 +6,24 @@ import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 import parserModel.TurtleData;
 
-public class HideNode extends CommandParserNode {
-    private List<Executable> executableQueue;
 
-    public HideNode(List<Executable> queue){
-        executableQueue = queue;
+public class HideNode extends CommandParserNode {
+
+    public HideNode() {
     }
 
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.hide();
-        executableQueue.add(new HideExecutable());
-        return 0; //FIXME
+        context.getExecutableQueue().add(new HideExecutable());
+        return 0;
     }
 
     public boolean isComplete() {

@@ -6,20 +6,21 @@ import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+<<<<<<< HEAD:src/parserModel/turtleNodes/ClearNode.java
+=======
+import visualizer.VisualContext;
+import parserModel.TurtleData;
+>>>>>>> master:src/parserModel/TurtleNodes/ClearNode.java
 
 public class ClearNode extends CommandParserNode {
-    private List<Executable> executableQueue;
-
-    public ClearNode(List<Executable> queue) {
-        executableQueue = queue;
-    }
 
     public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         GlobalData.getInstance().clear();
-        executableQueue.add(new ClearExecutable());
-        return 0; // FIXME
+        context.getExecutableQueue().add(new ClearExecutable());
+        return 0; //FIXME
+
     }
 
     public boolean isComplete() {

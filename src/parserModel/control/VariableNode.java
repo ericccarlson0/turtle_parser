@@ -3,6 +3,7 @@ package parserModel.control;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class VariableNode extends CommandParserNode {
     private String myVariableName;
@@ -21,7 +22,7 @@ public class VariableNode extends CommandParserNode {
     }
 
     @Override
-    public double execute() {
+    public double execute(VisualContext context) {
         return GlobalData.getInstance().getVariable(myVariableName);
     }
 

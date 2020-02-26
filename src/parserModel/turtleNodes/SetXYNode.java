@@ -6,15 +6,14 @@ import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 import parserModel.TurtleData;
 
 public class SetXYNode extends CommandParserNode {
     private ParserNode myXNode;
     private ParserNode myYNode;
-    private List<Executable> executableQueue;
 
-    public SetXYNode(List<Executable> queue) {
-        executableQueue = queue;
+    public SetXYNode() {
     }
 
     public void addNode(ParserNode node) {
@@ -27,13 +26,13 @@ public class SetXYNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
-        double xPos = myXNode.execute();
-        double yPos = myYNode.execute();
+        double xPos = myXNode.execute(context);
+        double yPos = myYNode.execute(context);
         td.setX(xPos);
         td.setY(yPos);
-        executableQueue.add(new SetXYExecutable(xPos, yPos));
+        context.getExecutableQueue().add(new SetXYExecutable(xPos, yPos));
         return xPos; // TODO (is this return correct?)
     }
 

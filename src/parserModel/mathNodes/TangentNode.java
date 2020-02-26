@@ -1,9 +1,10 @@
 package parserModel.mathNodes;
 
 import parserModel.UnaryOperationNode;
+import visualizer.VisualContext;
 
 public class TangentNode extends UnaryOperationNode {
-    public double execute() {
-        return Math.tan(myArgumentNode.execute() * Math.PI/180.0);
+    public double execute(VisualContext context) {
+        return Math.tan(myArgumentNode.execute(context) * Math.PI/180.0);
     }
 }

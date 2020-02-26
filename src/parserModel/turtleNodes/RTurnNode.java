@@ -6,15 +6,13 @@ import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 import parserModel.TurtleData;
 
 public class RTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
-    private List<Executable> executableQueue;
 
-    public RTurnNode(List<Executable> queue){
-        executableQueue = queue;
-    }
+    public RTurnNode(){}
 
     public void addNode(ParserNode node) {
         if (myRotationNode == null){
@@ -24,11 +22,11 @@ public class RTurnNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
-        double degrees = myRotationNode.execute();
+    public double execute(VisualContext context) {
+        double degrees = myRotationNode.execute(context);
         TurtleData td = GlobalData.getInstance().turtleData();
         td.turnClockwise(degrees);
-        executableQueue.add(new RTurnExecutable(degrees));
+        context.getExecutableQueue().add(new RTurnExecutable(degrees));
         return degrees;
     }
 

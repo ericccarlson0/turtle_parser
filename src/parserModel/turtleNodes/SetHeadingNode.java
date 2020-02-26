@@ -7,14 +7,17 @@ import parserModel.GlobalData;
 import parserModel.ParserNode;
 import parserModel.CommandParserNode;
 import parserModel.TurtleData;
+<<<<<<< HEAD:src/parserModel/turtleNodes/SetHeadingNode.java
+=======
+import parserModel.TurtleQueries.HeadingNode;
+import visualizer.VisualContext;
+>>>>>>> master:src/parserModel/TurtleNodes/SetHeadingNode.java
 
 
 public class SetHeadingNode extends CommandParserNode {
     public ParserNode myDegrees;
-    private List<Executable> executableQueue;
 
-    public SetHeadingNode(List<Executable> queue) {
-        executableQueue = queue;
+    public SetHeadingNode() {
     }
 
     public void addNode(ParserNode node) {
@@ -25,11 +28,12 @@ public class SetHeadingNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
+    @Override
+    public double execute(VisualContext context) {
+        double degrees = myDegrees.execute(context);
         TurtleData td = GlobalData.getInstance().turtleData();
-        double degrees = myDegrees.execute();
         td.setHeading(degrees);
-        executableQueue.add(new SetHeadingExecutable(degrees));
+        context.getExecutableQueue().add(new SetHeadingExecutable(degrees));
         return degrees;
     }
 

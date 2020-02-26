@@ -1,6 +1,7 @@
 package parserModel.control;
 
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class ListEndNode extends ParserNode {
 
@@ -11,7 +12,7 @@ public class ListEndNode extends ParserNode {
     }
 
     @Override
-    public double execute() {
+    public double execute(VisualContext context) {
         return 0;
     }
 
@@ -22,6 +23,6 @@ public class ListEndNode extends ParserNode {
 
     @Override
     public NodeType typeOfNode() {
-        return NodeType.LISTEND;
+        return NodeType.LIST_END;
     }
 }

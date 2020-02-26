@@ -6,14 +6,15 @@ import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 import parserModel.TurtleData;
+
 
 public class LTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
-    private List<Executable> executableQueue;
 
-    public LTurnNode(List<Executable> queue) {
-        executableQueue = queue;
+    public LTurnNode() {
+
     }
 
     public void addNode(ParserNode node) {
@@ -24,11 +25,11 @@ public class LTurnNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
-        double degrees = myRotationNode.execute();
+        double degrees = myRotationNode.execute(context);
         td.turnCounterClockwise(degrees);
-        executableQueue.add(new LTurnExecutable(degrees));
+        context.getExecutableQueue().add(new LTurnExecutable(degrees));
         return degrees;
     }
 

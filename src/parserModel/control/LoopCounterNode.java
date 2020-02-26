@@ -1,8 +1,14 @@
 package parserModel.control;
 
 import parserModel.*;
+<<<<<<< HEAD:src/parserModel/control/LoopCounterNode.java
 import parserModel.booleanNodes.NotEqualNode;
 import parserModel.mathNodes.SumNode;
+=======
+import parserModel.BooleanNodes.NotEqualNode;
+import parserModel.MathNodes.SumNode;
+import visualizer.VisualContext;
+>>>>>>> master:src/parserModel/Control/LoopCounterNode.java
 
 //import parserModel.BooleanCommands.NotEqualCommand;
 //import parserModel.MathCommands.SumCommand;
@@ -31,26 +37,25 @@ public class LoopCounterNode extends CommandParserNode {
     }
 
     @Override
-    public double execute() {
+    public double execute(VisualContext context) {
         if(! validated){
             System.out.println(myIterableParameters);
             switch(myIterableParameters.size()){
                 case 1:
-                    validateLoop(0,1,myIterableParameters.get(0).execute() + 1);
+                    validateLoop(0,1,myIterableParameters.get(0).execute(context) + 1).execute(context);
                     break;
                 case 3:
-                    validateLoop(myIterableParameters.get(0).execute() - 1 ,myIterableParameters.get(2).execute() ,myIterableParameters.get(1).execute() + 1);
+                    validateLoop(myIterableParameters.get(0).execute(context) - 1 ,myIterableParameters.get(2).execute(context) ,myIterableParameters.get(1).execute(context) + 1).execute(context);
                     break;
             }
             validated = true;
         }
-        return myIteratingNode.execute();
+        return myIteratingNode.execute(context);
     }
 
-    private void validateLoop(double initialValue, double incrementValue, double endValue){
+    private ParserNode validateLoop(double initialValue, double incrementValue, double endValue){
         SetVariable initializerNode = new SetVariable(myVariableNode);
         initializerNode.addNode(new ConstantNode(initialValue));
-        initializerNode.execute();
         myIteratingNode = new NotEqualNode();
 
 
@@ -63,6 +68,8 @@ public class LoopCounterNode extends CommandParserNode {
 
         myIteratingNode.addNode(incrementNode);
         myIteratingNode.addNode(new ConstantNode(endValue));
+
+        return initializerNode;
     }
 
     @Override

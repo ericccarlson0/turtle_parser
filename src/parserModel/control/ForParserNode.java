@@ -2,6 +2,7 @@ package parserModel.control;
 
 import parserModel.ControlParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class ForParserNode extends ControlParserNode {
     private ParserNode myForNode;
@@ -15,10 +16,10 @@ public class ForParserNode extends ControlParserNode {
         }
     }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         double lastValue = 0;
-        while(myForNode.execute() != 0){
-            lastValue = myBodyNode.execute();
+        while(myForNode.execute(context) != 0){
+            lastValue = myBodyNode.execute(context);
         }
         return lastValue;
     }

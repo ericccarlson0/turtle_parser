@@ -10,15 +10,17 @@ import java.util.List;
 import parserModel.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.ParserNode;
+
+import visualizer.VisualContext;
+
 import parserModel.TurtleData;
+
 
 public class TowardsNode extends CommandParserNode {
     private ParserNode myXNode;
     private ParserNode myYNode;
-    private List<Executable> executableQueue;
 
-    public TowardsNode(List<Executable> queue) {
-        executableQueue = queue;
+    public TowardsNode() {
     }
 
     public void addNode(ParserNode node) {
@@ -31,13 +33,13 @@ public class TowardsNode extends CommandParserNode {
         }
     }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
-        double xDiff = myXNode.execute() - td.getX();
-        double yDiff = myYNode.execute() - td.getY();
-        double degrees = Math.atan(yDiff/xDiff);
+        double xTowards = myXNode.execute(context) - td.getX();
+        double yTowards = myYNode.execute(context) - td.getY();
+        double degrees = Math.atan(xTowards/yTowards);
         td.setHeading(degrees);
-        executableQueue.add(new HeadingExecutable(degrees));
+        context.getExecutableQueue().add(new HeadingExecutable(degrees));
         return 0.0; // TODO (is this return correct?)
     }
 

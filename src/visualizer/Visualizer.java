@@ -39,7 +39,7 @@ public class Visualizer {
     private Scene myScene;
     private Group myGroup;
 
-    private ArrayList<Turtle> myTurtles;
+    private ArrayList<visualizer.Turtle> myTurtles;
     private int turtleIndex = 0;
     private final static String TURTLE_FILE = "images/turtle.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
@@ -330,7 +330,7 @@ public class Visualizer {
 
     private Scene setUpEnvironment() {
         myGroup = new Group();
-        myTurtles = new ArrayList<Turtle>();
+        myTurtles = new ArrayList<visualizer.Turtle>();
         inputHistory = new Text("user input history");
         executedHistory = new Text("executed command history");
 
@@ -340,7 +340,7 @@ public class Visualizer {
         myGroup.getChildren().add(field);
 
         // create turtle
-        Turtle initialTurtle = new Turtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
+        visualizer.Turtle initialTurtle = new visualizer.Turtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
         myTurtles.add(initialTurtle);
         myGroup.getChildren().add(initialTurtle);
 

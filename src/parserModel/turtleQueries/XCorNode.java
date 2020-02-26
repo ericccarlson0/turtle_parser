@@ -5,6 +5,7 @@ import java.util.List;
 
 import parserModel.CommandParserNode;
 import parserModel.ParserNode;
+import visualizer.VisualContext;
 
 public class XCorNode extends CommandParserNode {
   private List<Executable> executableQueue;
@@ -17,8 +18,8 @@ public class XCorNode extends CommandParserNode {
     throw new UnsupportedOperationException();
   }
 
-  public double execute() {
-    executableQueue.add(new XCorExecutable());
+  public double execute(VisualContext context) {
+    context.getExecutableQueue().add(new XCorExecutable());
     return 0; // FIXME
   }
 

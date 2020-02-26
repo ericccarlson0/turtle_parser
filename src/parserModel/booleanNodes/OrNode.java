@@ -1,9 +1,10 @@
 package parserModel.booleanNodes;
 
 import parserModel.BinaryOperationNode;
+import visualizer.VisualContext;
 
 public class OrNode extends BinaryOperationNode {
-    public double execute() {
-        return (operand1.execute() != 0 || operand2.execute() != 0) ? 1.0 : 0.0;
+    public double execute(VisualContext context) {
+        return (operand1.execute(context) != 0 || operand2.execute(context) != 0) ? 1.0 : 0.0;
     }
 }

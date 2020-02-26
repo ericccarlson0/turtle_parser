@@ -1,5 +1,7 @@
 package parserModel;
 
+import visualizer.VisualContext;
+
 public class ConstantNode extends CommandParserNode {
     private double myValue;
 
@@ -11,7 +13,7 @@ public class ConstantNode extends CommandParserNode {
         throw new UnsupportedOperationException();
     }
 
-    public double execute() {
+    public double execute(VisualContext context) {
         return myValue;
     }
 

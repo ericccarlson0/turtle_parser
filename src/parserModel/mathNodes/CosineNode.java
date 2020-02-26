@@ -1,9 +1,10 @@
 package parserModel.mathNodes;
 
 import parserModel.UnaryOperationNode;
+import visualizer.VisualContext;
 
 public class CosineNode extends UnaryOperationNode {
-    public double execute() {
-        return Math.cos(myArgumentNode.execute() * Math.PI/180.0);
+    public double execute(VisualContext context) {
+        return Math.cos(myArgumentNode.execute(context) * Math.PI/180.0);
     }
 }
