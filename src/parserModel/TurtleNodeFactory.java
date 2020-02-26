@@ -1,16 +1,16 @@
 package parserModel;
 
-import parserModel.BooleanNodes.*;
-import parserModel.Control.RepeatParserNode;
-import parserModel.MathNodes.*;
-import parserModel.TurtleNodes.*;
+import parserModel.booleanNodes.*;
+import parserModel.control.RepeatParserNode;
+import parserModel.mathNodes.*;
+import parserModel.turtleNodes.*;
 import execution.Executable;
 import java.util.List;
-import parserModel.Control.ForParserNode;
-import parserModel.Control.IfElseNode;
-import parserModel.Control.IfNode;
+import parserModel.control.ForParserNode;
+import parserModel.control.IfElseNode;
+import parserModel.control.IfNode;
 
-import parserModel.TurtleQueries.*;
+import parserModel.turtleQueries.*;
 
 public class TurtleNodeFactory {
 

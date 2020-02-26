@@ -4,9 +4,9 @@ import execution.Executable;
 import java.util.Arrays;
 import java.util.List;
 
-import parserModel.Control.ListEndNode;
-import parserModel.Control.LoopCounterNode;
-import parserModel.Control.VariableNode;
+import parserModel.control.ListEndNode;
+import parserModel.control.LoopCounterNode;
+import parserModel.control.VariableNode;
 import parserModel.TokenAnalyzer.TokenType;
 
 public class TreeParser {
