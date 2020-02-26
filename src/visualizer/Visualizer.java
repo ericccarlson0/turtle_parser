@@ -1,4 +1,11 @@
 package visualizer;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
+import javafx.scene.control.ComboBox;
 import javafx.scene.shape.Line;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -349,6 +357,13 @@ public class Visualizer {
         variableButton.setOnAction(event -> popUpButtonPressed(variableList));
         helpButton.setOnAction(event -> helpButtonPressed());
         resetButton.setOnAction(event -> playAnimation());
+
+        //TODO CREATED COMBOBOX HERE
+        final ComboBox languageChoiceComboBox = new ComboBox();
+        languageChoiceComboBox.getItems().addAll(getFileNamesInFolder("src/parserModel/languages"));
+        languageChoiceComboBox.setOnAction(event -> changeLanguage(languageChoiceComboBox.getValue().toString().replaceAll(".properties","")));
+        myGroup.getChildren().add(languageChoiceComboBox);
+
         myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
         String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
         myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
@@ -419,4 +434,29 @@ public class Visualizer {
         }
         setTurtleImage(selectedFile);
     }
+
+    private List<String> getFileNamesInFolder(String folderPath){
+        List<String> filesNames = new ArrayList<String>();
+        File[] files = new File(folderPath).listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                filesNames.add(file.getName());
+            }
+        }
+        return filesNames;
+    }
+
+    private void changeLanguage(String languageChoice){
+        File languageChoiceFile = new File("resources/languages/"+"LanguageChoice.properties");
+        FileWriter writer;
+        try {
+            writer = new FileWriter(languageChoiceFile);
+            writer.write("Language = "+languageChoice);
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
 }
