@@ -1,6 +1,7 @@
 package visualizer;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import java.io.File;
 import javafx.scene.shape.Line;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -13,9 +14,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
+import org.w3c.dom.Document;
 
 /**
  * visualizer.java - a class for managing the frontend.
@@ -348,12 +351,14 @@ public class Visualizer {
                 Page popup = new Page(commandList);
             }
         });
+        Button turtleImageFileButton = makeButton("New Turtle Image", ENVIRONMENT_SIZE_HEIGHT+400,(ENVIRONMENT_SIZE_HEIGHT / 7) / 4 + (ENVIRONMENT_SIZE_HEIGHT / 7) * 3, myGroup);
         variableButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
                 Page popup = new Page(variableList);
             }
         });
+
         helpParser.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
@@ -370,6 +375,8 @@ public class Visualizer {
         myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
         String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
         myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+        turtleImageFileButton.setOnAction(event -> turtleImageButtonPressed());
+
     }
 
     private void createTurtle(Image turtleImage, int x, int y, int turtleIndex) {
@@ -403,5 +410,30 @@ public class Visualizer {
         scrollPane.setFitToWidth(fitWidth);
         scrollPane.setPrefSize(width, height);
         return scrollPane;
+    }
+
+    public void setTurtleImage(File imageFile){
+        System.out.println(imageFile.toURI());
+        Image newTurtleImage = new Image(imageFile.toURI().toString());
+        Turtle currentTurtle = myTurtles.get(turtleIndex);
+        double xCoordinate = currentTurtle.getXCoordinate();
+        double yCoordinate = currentTurtle.getYCoordinate();
+        myGroup.getChildren().remove(currentTurtle);
+        myTurtles.remove(turtleIndex);
+        Turtle newTurtle = new Turtle(newTurtleImage,(int) xCoordinate,(int) yCoordinate,turtleIndex);
+        myTurtles.add(turtleIndex,newTurtle);
+        myGroup.getChildren().add(newTurtle);
+    }
+
+    private void turtleImageButtonPressed() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File selectedFile = fileChooser.showOpenDialog(myStage);
+        if (selectedFile == null) {
+            System.out.println("You must select a file");
+            return;
+        }
+        setTurtleImage(selectedFile);
+
     }
 }
