@@ -2,7 +2,7 @@ package execution;
 
 import visualizer.Visualizer;
 
-public class ErrorReportingExecutable extends Executable{
+public class ErrorReportingExecutable extends ExecutableSuperClass {
     private String myErrorMessage;
 
     public ErrorReportingExecutable(String error){

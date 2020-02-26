@@ -1,6 +1,6 @@
 package parserModel;
 
-import execution.Executable;
+import execution.ExecutableSuperClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,9 +19,9 @@ import parserModel.nodes.mathNodes.ConstantNode;
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
     private CommandFactory myCommandFactory;
-    private List<Executable> myQueue;
+    private List<ExecutableSuperClass> myQueue;
 
-    public TreeParser(List<Executable> queue) {
+    public TreeParser(List<ExecutableSuperClass> queue) {
         myQueue = queue;
         myTokenAnalyzer = new TokenAnalyzer();
         myCommandFactory = new CommandFactory();

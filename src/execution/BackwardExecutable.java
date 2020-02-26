@@ -1,6 +1,6 @@
 package execution;
 
-public class BackwardExecutable extends Executable {
+public class BackwardExecutable extends ExecutableSuperClass {
   private double distance;
   private final String executableType = "Backward";
 

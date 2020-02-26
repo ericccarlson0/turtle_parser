@@ -2,7 +2,7 @@ package execution;
 
 import visualizer.Visualizer;
 
-public class HeadingExecutable extends Executable {
+public class HeadingExecutable extends ExecutableSuperClass {
   private final String executableType = "Heading";
   private double myHeading;
 

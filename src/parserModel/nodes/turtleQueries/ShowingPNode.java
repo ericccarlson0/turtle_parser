@@ -1,5 +1,5 @@
 package parserModel.nodes.turtleQueries;
-import execution.Executable;
+import execution.ExecutableSuperClass;
 import execution.ShowingPExecutable;
 import java.util.List;
 
@@ -8,7 +8,7 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
 public class ShowingPNode extends CommandParserNode {
-  private List<Executable> executableQueue;
+  private List<ExecutableSuperClass> executableSuperClassQueue;
 
   public ShowingPNode() {
   }

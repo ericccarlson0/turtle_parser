@@ -3,7 +3,7 @@ package execution;
 import visualizer.Visualizer;
 
 
-public class ShowExecutable extends Executable {
+public class ShowExecutable extends ExecutableSuperClass {
   private final String executableType = "ShowTurtle";
 
   public ShowExecutable(){

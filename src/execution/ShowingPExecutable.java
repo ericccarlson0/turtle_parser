@@ -2,7 +2,7 @@ package execution;
 
 import visualizer.Visualizer;
 
-public class ShowingPExecutable extends Executable {
+public class ShowingPExecutable extends ExecutableSuperClass {
   private final String executableType = "IsShowing";
   public ShowingPExecutable(){
   }
