@@ -17,6 +17,9 @@ public class ForwardNode extends CommandParserNode {
         double distance = myLength.execute(context);
         System.out.println("forward " + distance);
         TurtleData td = GlobalData.getInstance().turtleData();
+
+
+
         td.forward(distance);
         context.getExecutableQueue().add(new ForwardExecutable(distance));
         return distance;

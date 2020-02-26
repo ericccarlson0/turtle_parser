@@ -1,5 +1,7 @@
 package parserModel;
 
+import parserModel.exceptions.CommandMissingListStartException;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,7 +22,7 @@ public class InputIterator implements Iterator<String> {
     @Override
     public String next() {
         if (! hasNext()){
-            throw new NoSuchElementException();
+            throw new CommandMissingListStartException();
         }
         return myElements.get(index++);
     }
