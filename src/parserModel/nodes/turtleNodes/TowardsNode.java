@@ -1,6 +1,7 @@
 package parserModel.nodes.turtleNodes;
 
 import execution.SetHeadingExecutable;
+import execution.TowardsExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
@@ -29,11 +30,13 @@ public class TowardsNode extends CommandParserNode {
 
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
-        double xTowards = myXNode.execute(context) - td.getX();
-        double yTowards = myYNode.execute(context) - td.getY();
+        double xInput = myXNode.execute(context);
+        double yInput = myYNode.execute(context);
+        double xTowards = xInput - td.getX();
+        double yTowards = yInput - td.getY();
         double degrees = Math.atan(xTowards/yTowards);
-        td.setHeading(degrees);
-        context.getExecutableQueue().add(new SetHeadingExecutable(degrees));
+        td.setHeading(degrees); //TODO check this TOWARDS
+        context.getExecutableQueue().add(new TowardsExecutable(xInput,yInput));
         return 0.0; // TODO (is this return correct?)
     }
 
