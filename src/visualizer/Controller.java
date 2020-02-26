@@ -15,7 +15,7 @@ import java.util.List;
 public class Controller {
     private VisualContext myContext;
     private TreeParser myTreeParser;
-    public visualizer.Visualizer myVisualizer;
+    public Visualizer myVisualizer;
     private Timeline animation;
     private List<Executable> executables;
 

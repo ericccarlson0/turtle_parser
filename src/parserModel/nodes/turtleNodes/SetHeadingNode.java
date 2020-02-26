@@ -32,7 +32,7 @@ public class SetHeadingNode extends CommandParserNode {
     }
 
     public boolean isComplete() {
-        return myDegrees == null;
+        return myDegrees != null;
     }
 
     @Override
