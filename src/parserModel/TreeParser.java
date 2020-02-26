@@ -140,4 +140,7 @@ public class TreeParser {
     public ObservableList<String> observableVariables(){
         return GlobalData.getInstance().observableVariableList();
     }
+    public ObservableList<String> observableCommands(){
+        return GlobalData.getInstance().observableCommandList();
+    }
 }
