@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import parserModel.nodes.CommandFactory;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
@@ -135,5 +136,8 @@ public class TreeParser {
                 // TODO
         }
         return null; //FIXME
+    }
+    public ObservableList<String> observableVariables(){
+        return GlobalData.getInstance().observableVariableList();
     }
 }
