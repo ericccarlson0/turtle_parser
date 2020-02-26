@@ -6,20 +6,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import parserModel.control.ListEndNode;
-import parserModel.control.LoopCounterNode;
-import parserModel.control.VariableNode;
+import parserModel.nodes.CommandFactory;
+import parserModel.nodes.CommandParserNode;
+import parserModel.nodes.ParserNode;
+import parserModel.nodes.control.*;
 import parserModel.TokenAnalyzer.TokenType;
+import parserModel.nodes.mathNodes.ConstantNode;
 
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
-    private TurtleNodeFactory myCommandFactory;
+    private CommandFactory myCommandFactory;
     private List<Executable> myQueue;
 
     public TreeParser(List<Executable> queue) {
         myQueue = queue;
         myTokenAnalyzer = new TokenAnalyzer();
-        myCommandFactory = new TurtleNodeFactory();
+        myCommandFactory = new CommandFactory();
     }
 
     public CommandParserNode parseString(String input){
@@ -36,7 +38,7 @@ public class TreeParser {
 
     private CommandParserNode parseList(List<String> input){
         InputIterator iterator = new InputIterator(input);
-        RootParserNode root = new RootParserNode();
+        ListParserNode root = new ListParserNode();
         while(iterator.hasNext()) {
             root.addNode(parseIteratorElement(iterator));
         }
@@ -118,7 +120,7 @@ public class TreeParser {
             case Variable:
                 return new VariableNode(nextElement);
             case ListStart:
-                CommandParserNode list = new RootParserNode();
+                CommandParserNode list = new ListParserNode();
                 ParserNode listElement = parseIteratorElement(iterator);
                 while (listElement.typeOfNode() != ParserNode.NodeType.LIST_END) {
                     list.addNode(listElement);
