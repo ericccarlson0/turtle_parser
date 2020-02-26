@@ -89,11 +89,7 @@ public class TurtleData {
 
   public double getX() { return xPos; };
   public double getY() { return yPos; };
-  /**
-   * A setter for the turtle's pen width that
-   * @param width
-   * @return
-   */
+
   public double setPenWidth(double width) {
     double newWidth = (int) width; // because pixels can't be fractions
     if (width < minPenWidth) {

@@ -1,15 +1,14 @@
 package parserModel;
 
-import executables.Executable;
-import visualizer.VisualContext;
-
+import execution.Executable;
 import java.util.Queue;
+import visualizer.VisualContext;
 
 public abstract class ParserNode {
     public enum NodeType {
         COMMAND,
         LOOP,
-        LISTEND
+        LIST_END
         //FIXME (change to LIST_END ?)
     }
     public abstract void addNode(ParserNode node);

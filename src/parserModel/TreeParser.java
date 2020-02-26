@@ -1,14 +1,14 @@
 package parserModel;
 
-import executables.Executable;
+import execution.Executable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import parserModel.Control.ListEndNode;
-import parserModel.Control.LoopCounterNode;
-import parserModel.Control.VariableNode;
+import parserModel.control.ListEndNode;
+import parserModel.control.LoopCounterNode;
+import parserModel.control.VariableNode;
 import parserModel.TokenAnalyzer.TokenType;
 
 public class TreeParser {
@@ -78,7 +78,7 @@ public class TreeParser {
         ParserNode adding;
         while((adding = parseIteratorElement(iterator))
                 .typeOfNode()
-                != ParserNode.NodeType.LISTEND){
+                != ParserNode.NodeType.LIST_END){
             loopCounter.addNode(adding);
         }
         return loopCounter;
@@ -106,7 +106,7 @@ public class TreeParser {
             case ListStart:
                 CommandParserNode list = new RootParserNode();
                 ParserNode listElement = parseIteratorElement(iterator);
-                while (listElement.typeOfNode() != ParserNode.NodeType.LISTEND) {
+                while (listElement.typeOfNode() != ParserNode.NodeType.LIST_END) {
                     list.addNode(listElement);
                     listElement = parseIteratorElement(iterator);
                 }

@@ -16,7 +16,7 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 /**
- * Visualizer.java - a class for managing the frontend.
+ * visualizer.java - a class for managing the frontend.
  * @author  Lorne Zhang
  * @version 1.0
  */
@@ -61,7 +61,7 @@ public class Visualizer {
 
 
     /**
-     * Visualizer() - constructor for the visualizer.
+     * visualizer() - constructor for the visualizer.
      */
     public Visualizer(){
         start();

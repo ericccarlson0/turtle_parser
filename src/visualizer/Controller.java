@@ -1,6 +1,6 @@
 package visualizer;
 
-import executables.Executable;
+import execution.Executable;
 import parserModel.ParserNode;
 import parserModel.TreeParser;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class Controller {
     private VisualContext myContext;
     private TreeParser myTreeParser;
-    public Visualizer myVisualizer;
+    public visualizer.Visualizer myVisualizer;
     private Timeline animation;
     private List<Executable> executables;
 
