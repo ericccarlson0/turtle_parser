@@ -15,15 +15,15 @@ public class Controller {
     private TreeParser myTreeParser;
     public Visualizer myVisualizer;
     private Timeline animation;
-    private List<ExecutableSuperClass> executableSuperClasses;
+    private List<ExecutableSuperClass> executables;
 
     public Controller () {
-        myTreeParser = new TreeParser(executableSuperClasses);
+        myTreeParser = new TreeParser(executables);
         myVisualizer = new Visualizer();
         myVisualizer.setVariableList(myTreeParser.observableVariables());
         myVisualizer.setCommandList(myTreeParser.observableCommands());
-        executableSuperClasses = new ArrayList<>();
-        myContext = new VisualContext(myVisualizer, executableSuperClasses);
+        executables = new ArrayList<>();
+        myContext = new VisualContext(myVisualizer, executables);
         start();
     }
 
@@ -43,10 +43,10 @@ public class Controller {
             myVisualizer.resetCommand();
             root.execute(myContext);
         }
-        if(executableSuperClasses.size() != 0){
-            executableSuperClasses.get(0).run(myVisualizer);
-            myVisualizer.addExecutedHistory(executableSuperClasses.get(0).getString());
-            executableSuperClasses.remove(0);
+        if(executables.size() != 0){
+            executables.get(0).run(myVisualizer);
+            myVisualizer.addExecutedHistory(executables.get(0).getString());
+            executables.remove(0);
         }
     }
 }
