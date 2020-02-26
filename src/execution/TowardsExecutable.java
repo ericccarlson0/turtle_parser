@@ -3,7 +3,7 @@ package execution;
 import visualizer.Visualizer;
 
 
-public class TowardsExecutable extends Executable {
+public class TowardsExecutable extends ExecutableSuperClass {
   private final String executableType = "SetTowards";
   private double xHeading;
   private double yHeading;

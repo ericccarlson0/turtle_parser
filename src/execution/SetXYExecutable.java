@@ -3,7 +3,7 @@ package execution;
 import visualizer.Visualizer;
 
 
-public class SetXYExecutable extends Executable {
+public class SetXYExecutable extends ExecutableSuperClass {
   private final String executableType = "SetPosition";
   private double xSet;
   private double ySet;

@@ -2,7 +2,7 @@ package execution;
 
 import static execution.SetXYExecutable.getDistanceTraveled;
 
-public class ClearExecutable extends Executable {
+public class ClearExecutable extends ExecutableSuperClass {
   private final String executableType = "ClearScreen";
   public ClearExecutable(){
   }

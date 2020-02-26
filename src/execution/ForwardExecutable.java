@@ -2,7 +2,7 @@ package execution;
 
 import visualizer.Visualizer;
 
-public class ForwardExecutable extends Executable {
+public class ForwardExecutable extends ExecutableSuperClass {
   private final String executableType = "Forward";
   private double distance;
   public ForwardExecutable(double distanceUnit){

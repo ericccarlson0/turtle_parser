@@ -2,7 +2,7 @@ package execution;
 
 import visualizer.Visualizer;
 
-public class LTurnExecutable extends Executable {
+public class LTurnExecutable extends ExecutableSuperClass {
   private final String executableType = "Left";
   private double angle;
   public LTurnExecutable(double angleInput){

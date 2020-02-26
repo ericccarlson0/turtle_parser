@@ -1,22 +1,22 @@
 package visualizer;
 
-import execution.Executable;
+import execution.ExecutableSuperClass;
 
 import java.util.List;
 
 public class VisualContext {
     private Visualizer myVisualizer;
-    private List<Executable> myExecutableQueue;
+    private List<ExecutableSuperClass> myExecutableSuperClassQueue;
 
-    public VisualContext(Visualizer visualizer, List<Executable> queue){
+    public VisualContext(Visualizer visualizer, List<ExecutableSuperClass> queue){
         myVisualizer = visualizer;
-        myExecutableQueue = queue;
+        myExecutableSuperClassQueue = queue;
     }
 
     public Visualizer getVisualizer(){
         return myVisualizer;
     }
-    public List<Executable> getExecutableQueue(){
-        return myExecutableQueue;
+    public List<ExecutableSuperClass> getExecutableQueue(){
+        return myExecutableSuperClassQueue;
     }
 }

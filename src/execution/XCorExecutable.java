@@ -2,7 +2,7 @@ package execution;
 
 import visualizer.Visualizer;
 
-public class XCorExecutable extends Executable {
+public class XCorExecutable extends ExecutableSuperClass {
   private final String executableType = "XCoordinate";
   public XCorExecutable(){
   }
