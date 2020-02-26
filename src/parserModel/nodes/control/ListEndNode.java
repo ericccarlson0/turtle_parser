@@ -1,5 +1,6 @@
 package parserModel.nodes.control;
 
+import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 

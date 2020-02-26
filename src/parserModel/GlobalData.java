@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
+import parserModel.exceptions.NoSuchCommandException;
 import parserModel.nodes.control.CallCommandNode;
 
 import java.util.HashMap;
@@ -62,7 +63,11 @@ public class GlobalData {
         }
     }
     public CallCommandNode getCommand(String commandName){
-        return myCommands.getOrDefault(commandName, null);
+        CallCommandNode ret =  myCommands.get(commandName);
+        if(ret == null){
+            throw new NoSuchCommandException();
+        }
+        return ret;
     }
     public TurtleData turtleData() {
         return myTurtle;

@@ -71,6 +71,6 @@ public class LoopCounterNode extends CommandParserNode {
 
     @Override
     public boolean isComplete() {
-        return myIterableParameters.size() > 3;
+        return myIterableParameters.size() == 3 || myIterableParameters.size() == 1;
     }
 }
