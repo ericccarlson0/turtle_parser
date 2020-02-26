@@ -1,5 +1,9 @@
+<<<<<<< HEAD:src/execution/PenDownPExecutable.java
 package execution;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
+=======
+package executables;
+>>>>>>> master:src/executables/PenDownPExecutable.java
 
 
 public class PenDownPExecutable extends Executable {
@@ -9,7 +13,7 @@ public class PenDownPExecutable extends Executable {
   }
 
   public double run(Visualizer visualizerObject){
-    return visualizerObject.getPenDown();
+    return visualizerObject.getTurtlePen();
   }
 
   public String getString() {

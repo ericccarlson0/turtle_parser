@@ -1,6 +1,6 @@
 package execution;
 import static execution.SetXYExecutable.getDistanceTraveled;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
 
 
 public class HomeExecutable extends Executable {

@@ -1,5 +1,6 @@
 package execution;
-import Visualizer.Visualizer;
+
+import visualizer.Visualizer;
 
 
 public class SetHeadingExecutable extends Executable {
@@ -21,7 +22,6 @@ public class SetHeadingExecutable extends Executable {
 
   public String getString(){
     return getExecutableName(executableType)+" "+angle;
-
   }
 }
 

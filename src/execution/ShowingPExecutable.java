@@ -1,6 +1,6 @@
 package execution;
-import Visualizer.Visualizer;
 
+import visualizer.Visualizer;
 
 public class ShowingPExecutable extends Executable {
   private final String executableType = "IsShowing";

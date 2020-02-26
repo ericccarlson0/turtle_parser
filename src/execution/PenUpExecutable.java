@@ -1,5 +1,9 @@
+<<<<<<< HEAD:src/execution/PenUpExecutable.java
 package execution;
-import Visualizer.Visualizer;
+import visualizer.Visualizer;
+=======
+package executables;
+>>>>>>> master:src/executables/PenUpExecutable.java
 
 
 public class PenUpExecutable extends Executable {

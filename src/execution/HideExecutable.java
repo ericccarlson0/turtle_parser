@@ -1,5 +1,6 @@
 package execution;
-import Visualizer.Visualizer;
+
+import visualizer.Visualizer;
 
 
 public class HideExecutable extends Executable {

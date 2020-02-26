@@ -4,7 +4,9 @@ import execution.Executable;
 import execution.SetXYExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class SetXYNode extends CommandParserNode {
     private ParserNode myXNode;
@@ -26,8 +28,11 @@ public class SetXYNode extends CommandParserNode {
     }
 
     public double execute() {
+        TurtleData td = GlobalData.getInstance().turtleData();
         double xPos = myXNode.execute();
         double yPos = myYNode.execute();
+        td.setX(xPos);
+        td.setY(yPos);
         executableQueue.add(new SetXYExecutable(xPos, yPos));
         return xPos; // TODO (is this return correct?)
     }

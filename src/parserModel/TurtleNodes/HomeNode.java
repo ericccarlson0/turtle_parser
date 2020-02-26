@@ -4,7 +4,9 @@ import execution.Executable;
 import execution.HomeExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class HomeNode extends CommandParserNode {
     private List<Executable> executableQueue;
@@ -18,8 +20,10 @@ public class HomeNode extends CommandParserNode {
     }
 
     public double execute() {
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.home();
         executableQueue.add(new HomeExecutable());
-        return 0; //FIXME
+        return 0; // FIXME
     }
 
     public boolean isComplete() {

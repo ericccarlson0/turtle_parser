@@ -1,6 +1,6 @@
 package execution;
-import Visualizer.Visualizer;
 
+import visualizer.Visualizer;
 
 public class RTurnExecutable extends Executable {
   private final String executableType = "Right";
@@ -11,7 +11,7 @@ public class RTurnExecutable extends Executable {
 
   public double run(Visualizer visualizerObject){
     double currentAngle = visualizerObject.getTurtleAngle();
-    double newAngle = (currentAngle-angle)%360;
+    double newAngle = (currentAngle+angle)%360;
     visualizerObject.setTurtleAngle(newAngle);
     return angle;
   }

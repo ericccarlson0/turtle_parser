@@ -4,7 +4,9 @@ import execution.Executable;
 import execution.LTurnExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class LTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
@@ -23,7 +25,9 @@ public class LTurnNode extends CommandParserNode {
     }
 
     public double execute() {
+        TurtleData td = GlobalData.getInstance().turtleData();
         double degrees = myRotationNode.execute();
+        td.turnCounterClockwise(degrees);
         executableQueue.add(new LTurnExecutable(degrees));
         return degrees;
     }
@@ -32,6 +36,7 @@ public class LTurnNode extends CommandParserNode {
         return myRotationNode != null;
     }
 
+    @Override
     public String toString(){
         return "LT: " + myRotationNode;
     }

@@ -1,9 +1,5 @@
-package Visualizer;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
+package visualizer;
 import javafx.scene.shape.Line;
-import Visualizer.Turtle;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,13 +12,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 /**
- * Visualizer.java - a class for managing the frontend.
+ * visualizer.java - a class for managing the frontend.
  * @author  Lorne Zhang
  * @version 1.0
  */
@@ -47,7 +41,7 @@ public class Visualizer {
 
     private ArrayList<Turtle> myTurtles;
     private int turtleIndex = 0;
-    private final static String TURTLE_FILE = "images/ball.jpg";
+    private final static String TURTLE_FILE = "images/turtle.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
 
     private Text executedHistory;
@@ -63,10 +57,11 @@ public class Visualizer {
     private Button inputButton;
 
     private int step = 0;
-    private String command;
+    private String command = "";
+
 
     /**
-     * Visualizer() - constructor for the visualizer.
+     * visualizer() - constructor for the visualizer.
      */
     public Visualizer(){
         start();
@@ -128,7 +123,6 @@ public class Visualizer {
         else if(myTurtles.get(turtleIndex).getYCoordinate() < 25){
             myTurtles.get(turtleIndex).setYCoordinate(myTurtles.get(turtleIndex).getYCoordinate() + 650);
             myTurtles.get(turtleIndex).setXCoordinate(myTurtles.get(turtleIndex).getXCoordinate() + 25);
-
         }
         else{
             myTurtles.get(turtleIndex).setYCoordinate(yPos);
@@ -164,7 +158,50 @@ public class Visualizer {
      * @return
      */
     public void resetCommand(){
-        command = null;
+        command = "";
+    }
+
+    public void clearScreen(){
+        playAnimation();
+    }
+    /**
+    public boolean getTurtlePen(){
+        return myTurtles.get(turtleIndex).getPen();
+    }
+
+    public boolean getShowing(){
+        return myTurtles.get(turtleIndex).isVisible();
+    }
+     */
+
+/**
+    public boolean getTurtlePen(){
+        return myTurtles.get(turtleIndex).getPen();
+    }
+
+    public boolean getShowing(){
+        return myTurtles.get(turtleIndex).isVisible();
+*/
+    public double getTurtlePen(){
+        if(myTurtles.get(turtleIndex).getPen()) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public double getShowing(){
+        if(myTurtles.get(turtleIndex).isVisible()) {
+            return 1;
+        }
+        return 0;
+
+    }
+
+    public void show(){
+        myTurtles.get(turtleIndex).setVisible(true);
+    }
+    public void hide(){
+        myTurtles.get(turtleIndex).setVisible(false);
     }
 
     /**
@@ -223,17 +260,11 @@ public class Visualizer {
         myScene = setUpEnvironment();
         myStage.setScene(myScene);
         myStage.show();
-        KeyFrame frame = new KeyFrame(Duration.millis(10), e -> {
-            step();
-        });
-        animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
     }
 
     public void draw(){
-        if((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate()))<20 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate()))<20 ){
+        System.out.println("draw");
+        if((Math.abs(myTurtles.get(turtleIndex).getOldXCoordinate() - myTurtles.get(turtleIndex).getXCoordinate()))<650 && (Math.abs(myTurtles.get(turtleIndex).getOldYCoordinate() - myTurtles.get(turtleIndex).getYCoordinate()))<650 ){
             if(myTurtles.get(turtleIndex).getPen()){
                 Line line = new Line();
                 line.setStartX(myTurtles.get(turtleIndex).getOldXCoordinate());
@@ -374,17 +405,19 @@ public class Visualizer {
         return scrollPane;
     }
 
-    public void hide() {
-    }
-
-    public void show() {
-    }
-
-    public double getPenDown() {
-        return 0;
-    }
-
-    public double getShowing() {
-        return 0;
-    }
+    /**
+     * public void hide() {
+     *     }
+     *
+     *     public void show() {
+     *     }
+     *
+     *     public double getPenDown() {
+     *         return 0;
+     *     }
+     *
+     *     public double getShowing() {
+     *         return 0;
+     *     }
+     */
 }

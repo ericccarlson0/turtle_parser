@@ -4,7 +4,9 @@ import execution.Executable;
 import execution.ShowExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class ShowNode extends CommandParserNode {
     private List<Executable> executableQueue;
@@ -16,8 +18,10 @@ public class ShowNode extends CommandParserNode {
     }
 
     public double execute() {
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.show();
         executableQueue.add(new ShowExecutable());
-        return 0; //FIXME
+        return 0; // FIXME
     }
 
     public boolean isComplete() {

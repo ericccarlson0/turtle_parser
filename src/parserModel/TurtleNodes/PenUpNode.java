@@ -4,7 +4,9 @@ import execution.Executable;
 import execution.PenUpExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 
 public class PenUpNode extends CommandParserNode {
     private List<Executable> executableQueue;
@@ -18,6 +20,8 @@ public class PenUpNode extends CommandParserNode {
     }
 
     public double execute() {
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.penUp();
         executableQueue.add(new PenUpExecutable());
         return 0; // FIXME
     }
