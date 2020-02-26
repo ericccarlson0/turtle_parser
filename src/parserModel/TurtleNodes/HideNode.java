@@ -4,8 +4,11 @@ import executables.Executable;
 import executables.HideExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
 import visualizer.VisualContext;
+import parserModel.TurtleData;
+
 
 public class HideNode extends CommandParserNode {
 
@@ -17,8 +20,10 @@ public class HideNode extends CommandParserNode {
     }
 
     public double execute(VisualContext context) {
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.hide();
         context.getExecutableQueue().add(new HideExecutable());
-        return 0; //FIXME
+        return 0;
     }
 
     public boolean isComplete() {

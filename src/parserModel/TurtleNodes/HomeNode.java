@@ -4,8 +4,10 @@ import executables.Executable;
 import executables.HomeExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
 import visualizer.VisualContext;
+import parserModel.TurtleData;
 
 public class HomeNode extends CommandParserNode {
 
@@ -16,8 +18,13 @@ public class HomeNode extends CommandParserNode {
         throw new UnsupportedOperationException();
     }
 
+
     public double execute(VisualContext context) {
-        context.getExecutableQueue().add(new HomeExecutable());
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.home();
+        context.getExecutableQueue().
+
+    add(new HomeExecutable());
         return 0; //FIXME
     }
 

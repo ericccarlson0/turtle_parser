@@ -4,14 +4,15 @@ import executables.HeadingExecutable;
 import java.util.List;
 
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+import parserModel.TurtleData;
 import visualizer.VisualContext;
 
 public class HeadingNode extends CommandParserNode {
-  private List<Executable> executableQueue;
 
-  public HeadingNode(List<Executable> queue){
-    executableQueue = queue;
+  public HeadingNode(){
+
   }
 
   public void addNode(ParserNode node) {
@@ -19,8 +20,8 @@ public class HeadingNode extends CommandParserNode {
   }
 
   public double execute(VisualContext context) {
-    context.getExecutableQueue().add(new HeadingExecutable());
-    return 0; // FIXME
+    TurtleData td = GlobalData.getInstance().turtleData();
+    return td.getY(); // FIXME
   }
 
   public boolean isComplete() {

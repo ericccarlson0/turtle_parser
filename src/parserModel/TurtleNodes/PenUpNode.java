@@ -4,8 +4,10 @@ import executables.Executable;
 import executables.PenUpExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
 import visualizer.VisualContext;
+import parserModel.TurtleData;
 
 public class PenUpNode extends CommandParserNode {
 
@@ -17,8 +19,10 @@ public class PenUpNode extends CommandParserNode {
     }
 
     public double execute(VisualContext context) {
+        TurtleData td = GlobalData.getInstance().turtleData();
+        td.penUp();
         context.getExecutableQueue().add(new PenUpExecutable());
-        return 0; // FIXME
+        return 0; //FIXME?
     }
 
     public boolean isComplete() {

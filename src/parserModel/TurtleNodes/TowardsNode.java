@@ -1,11 +1,16 @@
 package parserModel.TurtleNodes;
 
 import executables.Executable;
-import executables.TowardsExecutable;
+import executables.HeadingExecutable;
 import java.util.List;
 import parserModel.CommandParserNode;
+import parserModel.GlobalData;
 import parserModel.ParserNode;
+
 import visualizer.VisualContext;
+
+import parserModel.TurtleData;
+
 
 public class TowardsNode extends CommandParserNode {
     private ParserNode myXNode;
@@ -25,10 +30,13 @@ public class TowardsNode extends CommandParserNode {
     }
 
     public double execute(VisualContext context) {
-        double xTowards = myXNode.execute(context);
-        double yTowards = myYNode.execute(context);
-        context.getExecutableQueue().add(new TowardsExecutable(xTowards, yTowards));
-        return xTowards; // TODO (is this return correct?)
+        TurtleData td = GlobalData.getInstance().turtleData();
+        double xTowards = myXNode.execute(context) - td.getX();
+        double yTowards = myYNode.execute(context) - td.getY();
+        double degrees = Math.atan(xTowards/yTowards);
+        td.setHeading(degrees);
+        context.getExecutableQueue().add(new HeadingExecutable(degrees));
+        return 0.0; // TODO (is this return correct?)
     }
 
     public boolean isComplete() {
