@@ -25,8 +25,8 @@ public class SetXYExecutable extends Executable {
 
 
   public static double getDistanceTraveled(Visualizer visualizerObject, double xSet, double ySet) {
-    double currentXPosition = visualizerObject.getTurtleX();
-    double currentYPosition = visualizerObject.getTurtleY();
+    double currentXPosition = visualizerObject.getTurtleGameX();
+    double currentYPosition = visualizerObject.getTurtleGameY();
     double xDistance = xSet - currentXPosition;
     double yDistance = ySet - currentYPosition;
     return Math.sqrt(Math.pow(xDistance,2)+Math.pow(yDistance,2));

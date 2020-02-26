@@ -10,8 +10,6 @@ import javafx.scene.control.ScrollPane;
 public class Page {
     private static final int PANE_SIZE = 250;
     private ScrollPane textPane;
-    //private Stage myStage;
-    //private Scene myScene;
     private ObservableList myListView;
     public Page(ObservableList list){
         myListView = list;
@@ -20,6 +18,10 @@ public class Page {
 
     public ScrollPane getScrollPane(){
         return textPane;
+    }
+
+    public void setList(ObservableList list){
+        myListView = list;
     }
 
     private void initiate(){
