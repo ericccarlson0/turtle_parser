@@ -5,10 +5,18 @@ import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
+/**
+ * A Node that sets a variable equal to the value
+ * returned by the assignment node
+ */
 public class SetVariable extends CommandParserNode {
     private VariableNode myVariableNode;
     private ParserNode myAssignmentNode;
 
+    /**
+     * Construct a SetVariable object
+     * @param node the Variable that is to be set
+     */
     public SetVariable(VariableNode node){
         myVariableNode = node;
     }
@@ -17,13 +25,12 @@ public class SetVariable extends CommandParserNode {
     public void addNode(ParserNode node) {
         if(myAssignmentNode == null){
             myAssignmentNode = node;
-        } //FIXME
+        }
     }
 
     @Override
     public double execute(VisualContext context) {
         double executeValue = myAssignmentNode.execute(context);
-        System.out.println("executing to value" + executeValue);
         GlobalData.getInstance().setVariable(myVariableNode.name(),executeValue);
         return executeValue;
     }
