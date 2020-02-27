@@ -256,7 +256,13 @@ public class Visualizer {
      * @return
      */
     public void addExecutedHistory(String executed) {
-        executedHistory.setText(executedHistory.getText() + '\n' + executed);
+
+        if(executed.isEmpty()) {
+            executedHistory.setText(executedHistory.getText());
+        }
+        else{
+            executedHistory.setText(executedHistory.getText() + '\n' + executed);
+            }
     }
 
     /**
