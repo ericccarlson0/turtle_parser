@@ -2,7 +2,6 @@ package parserModel.nodes.turtleNodes;
 
 import execution.ClearExecutable;
 import parserModel.nodes.CommandParserNode;
-import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
@@ -14,10 +13,6 @@ import visualizer.VisualContext;
  */
 public class ClearNode extends CommandParserNode {
     private static final double SUCCESS = 0.0;
-
-    public ClearNode(){
-        super();
-    }
 
     @Override
     public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }

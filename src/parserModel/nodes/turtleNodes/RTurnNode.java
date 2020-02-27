@@ -19,6 +19,7 @@ public class RTurnNode extends CommandParserNode {
 
     public RTurnNode(){
         super();
+        myRotationNode = null;
     }
 
     @Override

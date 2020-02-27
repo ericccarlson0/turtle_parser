@@ -19,6 +19,7 @@ public class LTurnNode extends CommandParserNode {
 
     public LTurnNode(){
         super();
+        myRotationNode = null;
     }
 
     @Override

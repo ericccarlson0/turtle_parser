@@ -18,6 +18,7 @@ public class ForwardNode extends CommandParserNode {
 
     public ForwardNode(){
         super();
+        myLength = null;
     }
 
     @Override

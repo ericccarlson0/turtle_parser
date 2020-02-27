@@ -19,6 +19,7 @@ public class SetHeadingNode extends CommandParserNode {
 
     public SetHeadingNode(){
         super();
+        myDegrees = null;
     }
 
     @Override
