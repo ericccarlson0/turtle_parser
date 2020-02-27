@@ -7,13 +7,7 @@ import visualizer.Visualizer;
  * object for Hide command.
  */
 public class HideExecutable extends ExecutableSuperClass {
-  private final String executableType = "HideTurtle";
-
-  /**
-   * Constructs the executable.
-   */
-  public HideExecutable(){
-  }
+  private static final String executableType = "HideTurtle";
 
   /**
    * Runs the executable.

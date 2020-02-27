@@ -7,13 +7,8 @@ import visualizer.Visualizer;
  * object for PenDown command.
  */
 public class PenDownExecutable extends ExecutableSuperClass {
-  private final String executableType = "PenDown";
+  private static final String executableType = "PenDown";
 
-  /**
-   * Constructs the executable.
-   */
-  public PenDownExecutable(){
-  }
   /**
    * Runs the executable.
    * @param visualizerObject

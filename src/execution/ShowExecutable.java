@@ -7,13 +7,7 @@ import visualizer.Visualizer;
  * object for Show command.
  */
 public class ShowExecutable extends ExecutableSuperClass {
-  private final String executableType = "ShowTurtle";
-
-  /**
-   * Constructs the executable.s
-   */
-  public ShowExecutable(){
-  }
+  private static final String executableType = "ShowTurtle";
 
   /**
    * Runs the executable.

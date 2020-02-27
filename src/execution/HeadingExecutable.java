@@ -7,14 +7,7 @@ import visualizer.Visualizer;
  * object for HeadingExecutable command.
  */
 public class HeadingExecutable extends ExecutableSuperClass {
-  private final String executableType = "Heading";
-  private double myHeading;
-
-  /**
-   * Constructs the executable.
-   */
-  public HeadingExecutable() {
-  }
+  private static final String executableType = "Heading";
 
   /**
    * Runs the executable.

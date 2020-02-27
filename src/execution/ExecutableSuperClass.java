@@ -1,6 +1,5 @@
 package execution;
 
-import visualizer.Visualizer;
 import java.util.ResourceBundle;
 
 /**
@@ -13,6 +12,8 @@ import java.util.ResourceBundle;
  */
 public abstract class ExecutableSuperClass implements Executable {
   public static final String RESOURCES = "parserModel.languages.";
+  public static final int FULL_CIRCLE = 360;
+
   private final String languageChosen = ResourceBundle.getBundle("languages."+"LanguageChoice").getString("Language");
 
   /**
