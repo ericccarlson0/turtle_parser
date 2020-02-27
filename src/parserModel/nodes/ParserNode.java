@@ -9,30 +9,30 @@ import visualizer.VisualContext;
  *
  * @author Mariusz Derezinski-Choo
  */
-public abstract class ParserNode {
+public interface ParserNode {
 
     /**
      * add a child node to the current Node
      * @param node the child node to be added
      */
-    public abstract void addNode(ParserNode node);
+    void addNode(ParserNode node);
 
     /**
      * execute this Node
      * @param context the context within which this command should be executed
      * @return double the result of the execution
      */
-    public abstract double execute(VisualContext context);
+    double execute(VisualContext context);
 
     /**
      * check if the Node is complete (requires no more children)
      * @return a boolean denoting whether the Node is complete
      */
-    public abstract boolean isComplete();
+    boolean isComplete();
 
     /**
      * return the type of Node
      * @return the type of Node
      */
-    public abstract NodeType typeOfNode();
+    NodeType typeOfNode();
 }

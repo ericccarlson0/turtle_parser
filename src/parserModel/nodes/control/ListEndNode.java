@@ -1,5 +1,4 @@
 package parserModel.nodes.control;
-
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
@@ -10,7 +9,7 @@ import visualizer.VisualContext;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ListEndNode extends ParserNode {
+public class ListEndNode implements ParserNode {
 
     @Override
     public void addNode(ParserNode node) {
