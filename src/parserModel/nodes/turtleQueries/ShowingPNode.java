@@ -8,10 +8,7 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
 public class ShowingPNode extends CommandParserNode {
-  private List<ExecutableSuperClass> executableSuperClassQueue;
 
-  public ShowingPNode() {
-  }
   public void addNode(ParserNode node) {
     throw new UnsupportedOperationException();
   }

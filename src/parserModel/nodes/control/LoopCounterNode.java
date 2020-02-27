@@ -58,7 +58,7 @@ public class LoopCounterNode extends CommandParserNode {
 
     @Override
     public boolean isComplete() {
-        return myIterableParameters.size() == 3 || myIterableParameters.size() == 1;
+        return myIterableParameters.size() == COMPLEX_LOOP || myIterableParameters.size() == SIMPLE_LOOP;
     }
 
     private ParserNode validateLoop(double initialValue, double incrementValue, double endValue){

@@ -1,17 +1,16 @@
 package parserModel.nodes;
 
 import parserModel.GlobalData;
-import parserModel.nodes.ParserNode;
 import parserModel.nodes.booleanNodes.*;
 import parserModel.nodes.control.*;
 import parserModel.nodes.mathNodes.*;
 import parserModel.nodes.turtleNodes.*;
-
-import parserModel.nodes.turtleQueries.*;
+import parserModel.nodes.turtleQueries.PenDownPNode;
+import parserModel.nodes.turtleQueries.ShowingPNode;
+import parserModel.nodes.turtleQueries.XCorNode;
+import parserModel.nodes.turtleQueries.YCorNode;
 
 public class CommandFactory {
-
-    public CommandFactory() { }
 
     /**
      * This is a huge case statement that turns 'identifier' strings into various instances of

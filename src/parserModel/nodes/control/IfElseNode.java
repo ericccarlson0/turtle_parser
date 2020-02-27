@@ -19,6 +19,13 @@ public class IfElseNode extends CommandParserNode {
     private ParserNode myIfNode;
     private ParserNode myElseNode;
 
+    public IfElseNode(){
+        super();
+        myConditional = null;
+        myElseNode = null;
+        myIfNode = null;
+    }
+
     @Override
     public void addNode(ParserNode node) {
         if(myConditional == null){

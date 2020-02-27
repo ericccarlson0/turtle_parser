@@ -7,10 +7,6 @@ import visualizer.VisualContext;
 
 public class XCorNode extends CommandParserNode {
 
-  public XCorNode(){
-
-  }
-
   public void addNode(ParserNode node) {
     throw new UnsupportedOperationException();
   }
