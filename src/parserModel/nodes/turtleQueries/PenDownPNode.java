@@ -1,14 +1,11 @@
 package parserModel.nodes.turtleQueries;
-import execution.PenDownPExecutable;
 
+import execution.PenDownPExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
 public class PenDownPNode extends CommandParserNode {
-
-  public PenDownPNode() {
-  }
 
   public void addNode(ParserNode node) {
     throw new UnsupportedOperationException();

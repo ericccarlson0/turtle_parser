@@ -1,11 +1,10 @@
 package parserModel.nodes.turtleQueries;
 
 import execution.HeadingExecutable;
-import execution.PenDownPExecutable;
-import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
-import parserModel.nodes.ParserNode;
 import parserModel.TurtleData;
+import parserModel.nodes.CommandParserNode;
+import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
 public class HeadingNode extends CommandParserNode {
