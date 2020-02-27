@@ -1,34 +1,32 @@
 package visualizer;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import java.io.File;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.shape.Line;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
+
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * visualizer.java - a class for managing the frontend.
@@ -44,19 +42,20 @@ public class Visualizer {
     private static final String USER_INPUT_HISTORY = "INPUT HISTORY: \n";
     private static final String COMMAND_EXECUTION_HISTORY = "EXECUTION HISTORY: \n";
     private static final String TERMINAL = "TERMINAL: \n";
-    private final int ENVIRONMENT_HEIGHT = 800;
-    private final int ENVIRONMENT_WIDTH = 1350;
-    private final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
-    private final int FIELD_CENTER_X = 250;
-    private final int FIELD_CENTER_Y = 250;
-    private final int FIELD_HEIGHT = 500;
-    private final int FIELD_WIDTH = 500;
-    private final int OFFSET = 25;
-    private final int SCROLLPANE_SIZE = 250;
-    private final int TEXT_INPUT_WIDTH = 400;
-    private final int TEXT_INPUT_SIZE = 150;
-    private final static String TURTLE_FILE = "images/turtle.jpg";
-    private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
+    private static final int ENVIRONMENT_HEIGHT = 800;
+    private static final int ENVIRONMENT_WIDTH = 1350;
+    private static final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
+    private static final int FIELD_CENTER_X = 250;
+    private static final int FIELD_CENTER_Y = 250;
+    private static final int FIELD_HEIGHT = 500;
+    private static final int FIELD_WIDTH = 500;
+    private static final int OFFSET = 25;
+    private static final int SCROLLPANE_SIZE = 250;
+    private static final int TEXT_INPUT_WIDTH = 400;
+    private static final int TEXT_INPUT_SIZE = 150;
+    private static final String TURTLE_FILE = "images/turtle.jpg";
+    private static final Image TURTLE_IMAGE = new Image(TURTLE_FILE);
+    private static final int MAX_RGB = 255;
     private boolean history = false;
     private Stage myStage;
     private Scene myScene;
@@ -68,18 +67,8 @@ public class Visualizer {
     private int turtleIndex = 0;
     private Text executedHistory;
     private Text inputHistory;
-    private ScrollPane inputScrollPane;
-    private ScrollPane executedScrollPane;
-    private Text availableCommands;
-    private Text availableVariables;
-    private ScrollPane commandScrollPane;
-    private ScrollPane variableScrollPane;
     private Text userInputText;
-    private ScrollPane userInputScrollPane;
     private TextArea userInputTextArea;
-    private Button inputButton;
-    private ListView variableList;
-    private ListView commandList;
     private ColorChoice envColorChoice;
     private ColorChoice penColorChoice;
     private String command = "";
@@ -413,9 +402,9 @@ public class Visualizer {
         HBox inputBox = new HBox(NODE_GAP);
         userInputText = new Text(TERMINAL);
         userInputTextArea = new TextArea("");
-        userInputScrollPane = createScrollPane(userInputText, NODE_GAP, NODE_GAP, ScrollPane.ScrollBarPolicy.NEVER,
-            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, TEXT_INPUT_WIDTH, TEXT_INPUT_SIZE);
-        inputButton = createButton("ENTER", 0, 0, inputBox);
+        ScrollPane userInputScrollPane = createScrollPane(userInputText, NODE_GAP, NODE_GAP, ScrollPane.ScrollBarPolicy.NEVER,
+                ScrollPane.ScrollBarPolicy.ALWAYS, true, true, TEXT_INPUT_WIDTH, TEXT_INPUT_SIZE);
+        Button inputButton = createButton("ENTER", 0, 0, inputBox);
         inputButton.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
@@ -434,7 +423,7 @@ public class Visualizer {
         VBox envLists = new VBox(NODE_GAP);
         commandsPage = new Page();
         variablesPage = new Page();
-        envColorChoice = new ColorChoice(BACKGROUND_COLOR, 255, 255, 255);
+        envColorChoice = new ColorChoice(BACKGROUND_COLOR, MAX_RGB, MAX_RGB, MAX_RGB);
         penColorChoice = new ColorChoice(PEN_COLOR, 0, 0, 0);
         HBox colorButtons = createColorButtons();
         envLists.getChildren().addAll(commandsPage.getScrollPane(), variablesPage.getScrollPane(),
@@ -446,10 +435,10 @@ public class Visualizer {
         VBox inputArea = new VBox(NODE_GAP);
         inputHistory = new Text(USER_INPUT_HISTORY);
         executedHistory = new Text(COMMAND_EXECUTION_HISTORY);
-        inputScrollPane = createScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
-            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        executedScrollPane = createScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
-            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        ScrollPane inputScrollPane = createScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
+                ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        ScrollPane executedScrollPane = createScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
+                ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         inputArea.getChildren().addAll(inputScrollPane, executedScrollPane);
         return inputArea;
     }
@@ -550,13 +539,13 @@ public class Visualizer {
         int R = envColorChoice.getR();
         int G = envColorChoice.getG();
         int B = envColorChoice.getB();
-        myField.setFill(Color.color(R/255.0, G/255.0, B/255.0));
+        myField.setFill(Color.color(R/MAX_RGB, G/MAX_RGB, B/MAX_RGB));
     }
 
     private void penColorButton() {
         int R = penColorChoice.getR();
         int G = penColorChoice.getG();
         int B = penColorChoice.getB();
-        penColor = Color.color(R/255.0, G/255.0, B/255.0);
+        penColor = Color.color(R/MAX_RGB, G/MAX_RGB, B/MAX_RGB);
     }
 }
