@@ -17,6 +17,10 @@ import parserModel.TurtleData;
 public class RTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
 
+    public RTurnNode(){
+        super();
+    }
+
     @Override
     public void addNode(ParserNode node) {
         if (myRotationNode == null){

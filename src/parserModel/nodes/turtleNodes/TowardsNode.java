@@ -4,9 +4,7 @@ import execution.TowardsExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-
 import visualizer.VisualContext;
-
 import parserModel.TurtleData;
 
 /**
@@ -21,6 +19,10 @@ public class TowardsNode extends CommandParserNode {
 
     private ParserNode myXNode;
     private ParserNode myYNode;
+
+    public TowardsNode(){
+        super();
+    }
 
     @Override
     public void addNode(ParserNode node) {

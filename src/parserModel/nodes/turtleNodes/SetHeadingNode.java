@@ -17,6 +17,10 @@ import visualizer.VisualContext;
 public class SetHeadingNode extends CommandParserNode {
     private ParserNode myDegrees;
 
+    public SetHeadingNode(){
+        super();
+    }
+
     @Override
     public void addNode(ParserNode node) {
         if (myDegrees == null) {

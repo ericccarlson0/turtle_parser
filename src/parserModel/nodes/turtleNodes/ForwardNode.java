@@ -16,6 +16,10 @@ import parserModel.TurtleData;
 public class ForwardNode extends CommandParserNode {
     private ParserNode myLength;
 
+    public ForwardNode(){
+        super();
+    }
+
     @Override
     public double execute(VisualContext context) {
         double distance = myLength.execute(context);
