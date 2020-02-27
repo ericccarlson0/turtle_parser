@@ -52,6 +52,7 @@ public class Visualizer {
     private final int SCROLLPANE_SIZE = 250;
     private final int TEXTINPUT_SIZE = 150;
 
+    private boolean history = false;
     private final int SPLASH_SIZE_HEIGHT = 700;
     private final int SPLASH_SIZE_WIDTH = 1300;
     private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
@@ -139,13 +140,13 @@ public class Visualizer {
      */
     public void setTurtleX(double xPos) {
         Turtle currTurtle = myTurtles.get(turtleIndex);
-        if (currTurtle.getXCoordinate() > 675) {
-            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 650);
-            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 25);
+        if (currTurtle.getXCoordinate() > 500) {
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 500);
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 0);
 
-        } else if (currTurtle.getXCoordinate() < 25) {
-            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 650);
-            currTurtle.setYCoordinate(currTurtle.getYCoordinate() + 25);
+        } else if (currTurtle.getXCoordinate() < 0) {
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 500);
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() + 0);
         } else {
             currTurtle.setXCoordinate(xPos);
         }
@@ -159,12 +160,12 @@ public class Visualizer {
     public void setTurtleY(double yPos) {
 
         Turtle currTurtle = myTurtles.get(turtleIndex);
-        if (currTurtle.getYCoordinate() > 675) {
-            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 650);
-            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 25);
-        } else if (currTurtle.getYCoordinate() < 25) {
-            currTurtle.setYCoordinate(currTurtle.getYCoordinate()+ 650);
-            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 25);
+        if (currTurtle.getYCoordinate() > 500) {
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate() - 500);
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() - 0);
+        } else if (currTurtle.getYCoordinate() < 0) {
+            currTurtle.setYCoordinate(currTurtle.getYCoordinate()+ 500);
+            currTurtle.setXCoordinate(currTurtle.getXCoordinate() + 0);
         } else {
             currTurtle.setYCoordinate(yPos);
         }
@@ -274,6 +275,14 @@ public class Visualizer {
         turtleIndex = index;
     }
 
+    public boolean playHistory(){
+        return history;
+    }
+
+    public void stopHistory(){
+        history = false;
+    }
+
     private void start() {
         myStage = new Stage();
         playAnimation();
@@ -289,8 +298,8 @@ public class Visualizer {
     public void draw() {
         System.out.println("DRAW");
         Turtle currTurtle = myTurtles.get(turtleIndex);
-        if ((Math.abs(currTurtle.getOldXCoordinate() - currTurtle.getXCoordinate())) < 650
-            && (Math.abs(currTurtle.getOldYCoordinate() - currTurtle.getYCoordinate())) < 650) {
+        if ((Math.abs(currTurtle.getOldXCoordinate() - currTurtle.getXCoordinate())) < 500
+            && (Math.abs(currTurtle.getOldYCoordinate() - currTurtle.getYCoordinate())) < 500) {
             if (currTurtle.getPen()) {
                 Line line = new Line();
                 line.setStartX(currTurtle.getOldXCoordinate());
@@ -373,7 +382,7 @@ public class Visualizer {
     private Node createEnvironmentButtons() {
         HBox buttons = new HBox();
         Button resetButton = makeButton("Reset", 0, 0, buttons);
-        Button replayParser = makeButton("Replay", 0, 0, buttons);
+        Button replayButton = makeButton("Replay", 0, 0, buttons);
         Button helpButton = makeButton("Help", 0, 0, buttons);
         //Button variableButton = makeButton("Variables", 0, 0, buttons);
         //Button commandButton = makeButton("Commands", 0, 0, buttons);
@@ -381,6 +390,7 @@ public class Visualizer {
         //commandButton.setOnAction(event -> popUpButtonPressed(commandList));
         //variableButton.setOnAction(event -> popUpButtonPressed(variableList));
         helpButton.setOnAction(event -> helpButtonPressed());
+        replayButton.setOnAction(event -> replayButtonPressed());
         resetButton.setOnAction(event -> playAnimation());
 
         //TODO CREATED COMBOBOX HERE
@@ -396,6 +406,11 @@ public class Visualizer {
         turtleImageFileButton.setOnAction(event -> turtleImageButtonPressed());
         return buttons;
     }
+
+    private void replayButtonPressed() {
+        history = true;
+    }
+
 
     private void helpButtonPressed() {
         HelpPage popup = new HelpPage();

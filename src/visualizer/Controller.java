@@ -16,6 +16,7 @@ public class Controller {
     public Visualizer myVisualizer;
     private Timeline animation;
     private List<Executable> executables;
+    private List<Executable> history;
 
     public Controller () {
         myTreeParser = new TreeParser(executables);
@@ -23,6 +24,7 @@ public class Controller {
         myVisualizer.setVariableList(myTreeParser.observableVariables());
         myVisualizer.setCommandList(myTreeParser.observableCommands());
         executables = new ArrayList<>();
+        history = new ArrayList<>();
         myContext = new VisualContext(myVisualizer,executables);
         start();
     }
@@ -38,14 +40,25 @@ public class Controller {
     }
 
     private void step () {
+        if(myVisualizer.playHistory()){
+            if(history.size() != 0){
+                history.get(0).run(myVisualizer);
+                history.remove(0);
+            }
+            else{
+                myVisualizer.stopHistory();
+            }
+
+        }
         if(!myVisualizer.getCommand().equals("")) {
             ParserNode root = myTreeParser.parseString(myVisualizer.getCommand());
             myVisualizer.resetCommand();
             root.execute(myContext);
         }
-        if(executables.size() != 0){
+        else if(executables.size() != 0){
             executables.get(0).run(myVisualizer);
             myVisualizer.addExecutedHistory(executables.get(0).getString());
+            history.add(executables.get(0));
             executables.remove(0);
         }
     }
