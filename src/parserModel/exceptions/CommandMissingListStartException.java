@@ -8,7 +8,7 @@ import parserModel.nodes.errorNodes.ErrorNode;
  * followed by a list. all commands definitions must be followed by
  * a list of variables
  *
- * @author Mariusz
+ * @author Mariusz Derezinski-Choo
  */
 public class CommandMissingListStartException extends ParsingException{
     private static final String ERROR_MESSAGE_KEY = "CommandMissingList";
