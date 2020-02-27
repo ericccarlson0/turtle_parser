@@ -2,8 +2,10 @@ package parserModel;
 
 import execution.ExecutableSuperClass;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -26,6 +28,10 @@ public class TreeParser {
         myQueue = queue;
         myTokenAnalyzer = new TokenAnalyzer();
         myCommandFactory = new CommandFactory();
+    }
+
+    public Collection<String> getLanguageOptions(){
+        return getFileNamesInFolder("src/parserModel/languages/");
     }
 
     public double parseString(String input, VisualContext context){
@@ -174,11 +180,25 @@ public class TreeParser {
         }
         return list;
     }
+    private List<String> getFileNamesInFolder(String folderPath){
+        List<String> filesNames = new ArrayList<String>();
+        File[] files = new File(folderPath).listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                filesNames.add(file.getName().replace(".properties",""));
+            }
+        }
+        return filesNames;
+    }
 
     public ObservableList<String> observableVariables(){
         return GlobalData.getInstance().observableVariableList();
     }
     public ObservableList<String> observableCommands(){
         return GlobalData.getInstance().observableCommandList();
+    }
+
+    public void setLanguage(String language) {
+        myTokenAnalyzer.setLanguage(language);
     }
 }

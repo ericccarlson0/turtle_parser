@@ -1,6 +1,8 @@
 package visualizer;
 
 import execution.ExecutableSuperClass;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import parserModel.nodes.ParserNode;
 import parserModel.TreeParser;
 import javafx.animation.KeyFrame;
@@ -23,6 +25,13 @@ public class Controller {
         myVisualizer = new Visualizer();
         myVisualizer.setVariableList(myTreeParser.observableVariables());
         myVisualizer.setCommandList(myTreeParser.observableCommands());
+        myVisualizer.setLanguageOptions(myTreeParser.getLanguageOptions());
+        myVisualizer.getLanguageProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                myTreeParser.setLanguage(newValue);
+            }
+        });
         executables = new ArrayList<>();
         history = new ArrayList<>();
         myContext = new VisualContext(myVisualizer,executables);
