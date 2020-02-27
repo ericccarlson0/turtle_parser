@@ -7,13 +7,7 @@ import visualizer.Visualizer;
  * object for YCor command.
  */
 public class YCorExecutable extends ExecutableSuperClass {
-  private final String executableType = "YCoordinate";
-
-  /**
-   * Constructs the executable.
-   */
-  public YCorExecutable(){
-  }
+  private static final String executableType = "YCoordinate";
 
   /**
    * Runs the executable.

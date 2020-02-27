@@ -7,13 +7,7 @@ import visualizer.Visualizer;
  * object for XCor command.
  */
 public class XCorExecutable extends ExecutableSuperClass {
-  private final String executableType = "XCoordinate";
-
-  /**
-   * Constructs the executable.
-   */
-  public XCorExecutable(){
-  }
+  private static final String executableType = "XCoordinate";
 
   /**
    * Runs the executable.
