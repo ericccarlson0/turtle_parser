@@ -7,29 +7,33 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 import parserModel.TurtleData;
 
+/**
+ * A node that when executed, moves the turtle back to the
+ * center of the screen (0, 0)
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class HomeNode extends CommandParserNode {
+    private static final double SUCCESS = 0.0;
 
     public HomeNode() {
     }
 
+    @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
-
+    @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.home();
         context.getExecutableQueue().add(new HomeExecutable());
-        return 0; //FIXME
-    }
-
-    public boolean isComplete() {
-        return true;
+        return SUCCESS;
     }
 
     @Override
-    public String toString(){
-        return "HOME";
+    public boolean isComplete() {
+        return true;
     }
 }

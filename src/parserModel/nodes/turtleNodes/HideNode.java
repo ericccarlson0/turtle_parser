@@ -18,10 +18,12 @@ public class HideNode extends CommandParserNode {
     public HideNode() {
     }
 
+    @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.hide();
@@ -29,12 +31,9 @@ public class HideNode extends CommandParserNode {
         return 0;
     }
 
+    @Override
     public boolean isComplete() {
         return true;
     }
 
-    @Override
-    public String toString(){
-        return "HIDE";
-    }
 }

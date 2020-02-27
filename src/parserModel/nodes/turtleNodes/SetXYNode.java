@@ -7,6 +7,13 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 import parserModel.TurtleData;
 
+/**
+ * A node that when executed, Sets the X and
+ * Y coordinates of the turtle to the values
+ * returned by the child nodes
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class SetXYNode extends CommandParserNode {
     private ParserNode myXNode;
     private ParserNode myYNode;
@@ -14,6 +21,7 @@ public class SetXYNode extends CommandParserNode {
     public SetXYNode() {
     }
 
+    @Override
     public void addNode(ParserNode node) {
         if (myXNode == null) {
             myXNode = node;
@@ -24,6 +32,7 @@ public class SetXYNode extends CommandParserNode {
         }
     }
 
+    @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         double xPos = myXNode.execute(context);
@@ -31,15 +40,11 @@ public class SetXYNode extends CommandParserNode {
         td.setX(xPos);
         td.setY(yPos);
         context.getExecutableQueue().add(new SetXYExecutable(xPos, yPos));
-        return xPos; // TODO (is this return correct?)
-    }
-
-    public boolean isComplete() {
-        return myYNode != null;
+        return xPos;
     }
 
     @Override
-    public String toString(){
-        return "SETXY: " + myXNode + " " + myYNode;
+    public boolean isComplete() {
+        return myYNode != null;
     }
 }

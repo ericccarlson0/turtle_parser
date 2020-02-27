@@ -7,14 +7,21 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 import parserModel.TurtleData;
 
+/**
+ * A node that when executed, Shows the Turtle on the Screen
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class ShowNode extends CommandParserNode {
 
     public ShowNode() {}
 
+    @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.show();
@@ -23,12 +30,8 @@ public class ShowNode extends CommandParserNode {
 
     }
 
+    @Override
     public boolean isComplete() {
         return true;
-    }
-
-    @Override
-    public String toString(){
-        return "SHOW";
     }
 }

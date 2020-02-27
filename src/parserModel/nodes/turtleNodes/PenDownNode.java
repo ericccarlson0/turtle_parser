@@ -4,10 +4,15 @@ import execution.PenDownExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-
 import visualizer.VisualContext;
-
 import parserModel.TurtleData;
+
+/**
+ * A node that when executed, sets the pen down
+ * in the visualizer so that the turtle will draw if moved
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class PenDownNode extends CommandParserNode {
 
     public PenDownNode(){
@@ -27,10 +32,5 @@ public class PenDownNode extends CommandParserNode {
 
     public boolean isComplete() {
         return true;
-    }
-
-    @Override
-    public String toString(){
-        return "PENDOWN";
     }
 }
