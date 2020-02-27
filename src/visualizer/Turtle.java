@@ -13,13 +13,13 @@ public class Turtle extends ImageView{
     private final static int TURTLE_OFFSET = 20;
     private final static int CENTER = 250;
     private final static int FIELD_SIZE = 500;
+    private static final int RIGHT_ANGLE = 90;
     private double x_coordinate;
     private double y_coordinate;
     private double old_x_coordinate;
     private double old_y_coordinate;
     private double angle;
     private boolean pen = true;
-    private int id;
 
     /**
      * Turtle() - constructor for the turtle.
@@ -28,7 +28,6 @@ public class Turtle extends ImageView{
         super(TURTLE_IMAGE);
         setXCoordinate(0);
         setYCoordinate(0);
-        id = 0;
         setAngle(0);
         setRotate(0);
     }
@@ -45,9 +44,8 @@ public class Turtle extends ImageView{
         setYCoordinate(yPos);
         old_x_coordinate = xPos;
         old_y_coordinate = yPos;
-        id = turtleIndex;
         setAngle(0);
-        setRotate(90);
+        setRotate(RIGHT_ANGLE);
     }
 
     /**
@@ -152,7 +150,7 @@ public class Turtle extends ImageView{
      */
     public void setAngle(double angle){
         this.angle = angle;
-        setRotate(angle + 90);
+        setRotate(angle + RIGHT_ANGLE);
     }
 
     /**

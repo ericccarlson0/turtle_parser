@@ -14,8 +14,7 @@ import java.util.List;
 public class Controller {
     private VisualContext myContext;
     private TreeParser myTreeParser;
-    public Visualizer myVisualizer;
-    private Timeline animation;
+    private Visualizer myVisualizer;
     private List<ExecutableSuperClass> history;
     private List<ExecutableSuperClass> executables;
 
@@ -41,7 +40,7 @@ public class Controller {
         KeyFrame frame = new KeyFrame(Duration.millis(10), e -> {
             step();
         });
-        animation = new Timeline();
+        Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
@@ -62,7 +61,7 @@ public class Controller {
             myVisualizer.resetCommand();
             //root.execute(myContext);
         }
-        else if(executables.size() != 0){
+        else if(executables.isEmpty()){
             executables.get(0).run(myVisualizer);
             myVisualizer.addExecutedHistory(executables.get(0).getString());
             history.add(executables.get(0));
