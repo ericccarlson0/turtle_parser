@@ -3,6 +3,12 @@ package parserModel.nodes.mathNodes;
 import parserModel.nodes.BinaryOperationNode;
 import visualizer.VisualContext;
 
+/**
+ * A Math Node that computes the quotient of its children
+ * special care is taken to ensure division by zero is handled
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class QuotientNode extends BinaryOperationNode {
     public double execute(VisualContext context) {
         double o1 = operand1.execute(context);

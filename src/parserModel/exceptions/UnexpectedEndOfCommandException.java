@@ -3,6 +3,8 @@ package parserModel.exceptions;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.errorNodes.ErrorNode;
 
+import java.util.ResourceBundle;
+
 /**
  * An Exception that represents when parsing completes
  * but the command has not been sufficiently completed

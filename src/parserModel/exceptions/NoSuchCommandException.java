@@ -3,6 +3,8 @@ package parserModel.exceptions;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.errorNodes.ErrorNode;
 
+import java.util.ResourceBundle;
+
 /**
  * An Exception that represents when a Command does not exist
  *
@@ -10,6 +12,8 @@ import parserModel.nodes.errorNodes.ErrorNode;
  */
 public class NoSuchCommandException extends ParsingException {
     private static final String ERROR_MESSAGE_KEY = "NoSuchCommand";
+
+
     private String myCommand;
 
     /**

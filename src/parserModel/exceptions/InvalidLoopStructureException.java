@@ -3,6 +3,8 @@ package parserModel.exceptions;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.errorNodes.ErrorNode;
 
+import java.util.ResourceBundle;
+
 /**
  * An Exception that represents when a Loop structure is Invalid
  * this occurs because the loop does not have a list as a header that
