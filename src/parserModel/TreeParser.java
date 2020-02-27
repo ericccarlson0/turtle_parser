@@ -2,12 +2,23 @@ package parserModel;
 
 import javafx.collections.ObservableList;
 import parserModel.TokenAnalyzer.TokenType;
-import parserModel.exceptions.*;
+import parserModel.exceptions.CommandMissingListStartException;
+import parserModel.exceptions.InvalidLoopHeaderException;
+import parserModel.exceptions.InvalidLoopStructureException;
+import parserModel.exceptions.MissingCommandBodyException;
+import parserModel.exceptions.MissingLoopBodyException;
+import parserModel.exceptions.NonVariableInLoopHeaderException;
+import parserModel.exceptions.ParsingException;
+import parserModel.exceptions.UnidentifiableTokenException;
 import parserModel.nodes.CommandFactory;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.*;
+import parserModel.nodes.control.ListEndNode;
+import parserModel.nodes.control.ListParserNode;
+import parserModel.nodes.control.LoopCounterNode;
+import parserModel.nodes.control.UserDefinedCommandNode;
+import parserModel.nodes.control.VariableNode;
 import parserModel.nodes.mathNodes.ConstantNode;
 import visualizer.VisualContext;
 
