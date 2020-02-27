@@ -422,6 +422,7 @@ public class Visualizer {
         resetButton.setOnAction(event -> playAnimation());
 
         Button replayParser = createButton("REPLAY", 0, 0, buttons);
+        replayParser.setOnAction(event -> replayButtonPressed());
 
         Button helpButton = createButton("HELP", 0, 0, buttons);
         helpButton.setOnAction(event -> helpButton());
