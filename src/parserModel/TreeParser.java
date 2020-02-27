@@ -28,8 +28,15 @@ public class TreeParser {
     }
 
     public ParserNode parseString(String input){
-        input = input.replaceAll("\n", " ");
-        List<String> inputElements = new ArrayList<>(Arrays.asList(input.split(" ")));
+        String[] inputLines = input.split("\n");
+        List<String> inputElements = new ArrayList<>();
+        for(String line : inputLines){
+            int poundIndex;
+            if((poundIndex = line.indexOf('#')) != -1) {
+                line = line.substring(0, poundIndex);
+            }
+            inputElements.addAll(Arrays.asList(line.split(" ")));
+        }
         for(int i = 0; i < inputElements.size(); i++) {
             if(inputElements.get(i).equals("")){
                 inputElements.remove(i);
