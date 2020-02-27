@@ -96,9 +96,10 @@ public class CommandFactory {
 
             // COMPOUND COMMANDS
             case "DoTimes":
-                return new ForParserNode();
             case "For":
                 return new ForParserNode();
+            case "MakeVariable":
+
             case "Repeat":
                 return new RepeatParserNode();
             case "If":

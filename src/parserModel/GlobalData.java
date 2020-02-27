@@ -59,13 +59,14 @@ public class GlobalData {
     public void setCommand(String commandName, CallCommandNode command){
         myCommands.put(commandName, command);
         if(! myObservableCommands.contains(commandName)){
+            System.out.println("storing command " + commandName);
             myObservableCommands.add(commandName);
         }
     }
     public CallCommandNode getCommand(String commandName){
         CallCommandNode ret =  myCommands.get(commandName);
         if(ret == null){
-            throw new NoSuchCommandException();
+            throw new NoSuchCommandException(commandName);
         }
         return ret;
     }

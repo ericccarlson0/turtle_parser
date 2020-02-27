@@ -15,6 +15,7 @@ import parserModel.nodes.ParserNode;
 import parserModel.nodes.control.*;
 import parserModel.TokenAnalyzer.TokenType;
 import parserModel.nodes.mathNodes.ConstantNode;
+import visualizer.VisualContext;
 
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
@@ -27,7 +28,7 @@ public class TreeParser {
         myCommandFactory = new CommandFactory();
     }
 
-    public ParserNode parseString(String input){
+    public double parseString(String input, VisualContext context){
         String[] inputLines = input.split("\n");
         List<String> inputElements = new ArrayList<>();
         for (String line : inputLines){
@@ -43,19 +44,22 @@ public class TreeParser {
                 i--;
             }
         }
-        return parseList(inputElements);
+        return parseList(inputElements, context);
     }
 
-    private ParserNode parseList(List<String> input){
+    private double parseList(List<String> input, VisualContext context){
         InputIterator iterator = new InputIterator(input);
-        ListParserNode root = new ListParserNode();
-        try {
-            while (iterator.hasNext()) {
-                root.addNode(parseIteratorElement(iterator));
-            }
-            return root;
+        try{
+            double returning = 0;
+        while(iterator.hasNext()) {
+            ParserNode returner  = parseIteratorElement(iterator);
+            System.out.println(returner);
+                    returning = returner.execute(context);
+            System.out.println("" + returning);
+        }
+        return returning;
         } catch (ParsingException e){
-            return e.toNode();
+            return e.toNode().execute(context);
         }
     }
 

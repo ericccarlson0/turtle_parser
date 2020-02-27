@@ -11,7 +11,6 @@ public class ClearNode extends CommandParserNode {
     public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
 
     public double execute(VisualContext context) {
-        GlobalData.getInstance().clear();
         context.getExecutableQueue().add(new ClearExecutable());
         return 0; //FIXME
 

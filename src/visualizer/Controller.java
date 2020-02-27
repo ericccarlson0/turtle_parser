@@ -39,9 +39,9 @@ public class Controller {
 
     private void step () {
         if(!myVisualizer.getCommand().equals("")) {
-            ParserNode root = myTreeParser.parseString(myVisualizer.getCommand());
+            double result = myTreeParser.parseString(myVisualizer.getCommand(), myContext);
             myVisualizer.resetCommand();
-            root.execute(myContext);
+            //root.execute(myContext);
         }
         if(executables.size() != 0){
             executables.get(0).run(myVisualizer);
