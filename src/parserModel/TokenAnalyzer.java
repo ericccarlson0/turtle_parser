@@ -6,6 +6,9 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 public class TokenAnalyzer {
+    private static final String DEFAULT_LANGUAGE = "English";
+    private static final String LANGUAGE_FOLDER = "parserModel.languages.";
+
     private static final String COMMENT = "Comment";
     private static final String CONSTANT = "Constant";
     private static final String VARIABLE = "Variable";
@@ -35,11 +38,17 @@ public class TokenAnalyzer {
     }
 
     public TokenAnalyzer() {
-        LANGUAGE = ResourceBundle.getBundle("parserModel.languages.English");
+        LANGUAGE = ResourceBundle.getBundle(LANGUAGE_FOLDER + DEFAULT_LANGUAGE);
         SYNTAX = ResourceBundle.getBundle("parserModel.parsing.syntax");
         initializeCommands();
         initializePatterns();
         initializeTokenMap();
+    }
+
+    public void setLanguage(String language){
+        LANGUAGE = ResourceBundle.getBundle(LANGUAGE_FOLDER  + language);
+        initializeCommands();
+        System.out.println("language set to " + language);
     }
 
     public TokenType typeOfToken(String token) {

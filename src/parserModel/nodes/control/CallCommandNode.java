@@ -20,9 +20,10 @@ public class CallCommandNode extends CommandParserNode {
 
     @Override
     public void addNode(ParserNode node) {
-        SetVariable nextSettingNode = new SetVariable(myVariables.get(myVariableInitializers.size()));
-        nextSettingNode.addNode(node);
-        myVariableInitializers.add(nextSettingNode);
+            System.out.println("command node: " + this + " adding node " + node);
+            SetVariable nextSettingNode = new SetVariable(myVariables.get(myVariableInitializers.size()));
+            nextSettingNode.addNode(node);
+            myVariableInitializers.add(nextSettingNode);
     }
 
     @Override
@@ -30,8 +31,11 @@ public class CallCommandNode extends CommandParserNode {
         for(SetVariable variableSetter : myVariableInitializers){
             variableSetter.execute(context);
         }
-        myVariableInitializers = new ArrayList<>();
+        //myVariableInitializers = new ArrayList<>();
         return myExecuteNode.execute(context);
+    }
+    public CallCommandNode copy(){
+        return new CallCommandNode(myVariables, myExecuteNode);
     }
 
     @Override

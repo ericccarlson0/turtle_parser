@@ -1,4 +1,4 @@
-package parserModel;
+package parserModel.exceptions;
 
 import parserModel.exceptions.ParsingException;
 import parserModel.nodes.ParserNode;

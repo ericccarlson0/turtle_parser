@@ -2,7 +2,11 @@ package visualizer;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -81,6 +85,7 @@ public class Visualizer {
     private String command = "";
     private Page variablesPage;
     private Page commandsPage;
+    private ComboBox<String> languageBox;
 
     /**
      * visualizer() - constructor for the visualizer.
@@ -328,7 +333,6 @@ public class Visualizer {
      * draw() - method to draw a line.
      */
     public void draw() {
-        System.out.println("DRAW");
         Turtle currTurtle = myTurtles.get(turtleIndex);
         if ((Math.abs(currTurtle.getOldXCoordinate() - currTurtle.getXCoordinate())) < 500
             && (Math.abs(currTurtle.getOldYCoordinate() - currTurtle.getYCoordinate())) < 500) {
@@ -357,6 +361,14 @@ public class Visualizer {
 
     private void setCommand(String command) {
         this.command = command;
+    }
+
+    public void setLanguageOptions(Collection<String> options){
+        languageBox.getItems().clear();
+        languageBox.getItems().addAll(options);
+    }
+    public ObjectProperty<String> getLanguageProperty(){
+        return languageBox.valueProperty();
     }
 
     private void setUpEnvironment() {
@@ -451,7 +463,7 @@ public class Visualizer {
         Button helpButton = createButton("HELP", 0, 0, buttons);
         helpButton.setOnAction(event -> helpButton());
         Button turtleImageFileButton = createButton("NEW TURTLE IMAGE", 0, 0,  buttons);
-        ComboBox languageBox = createLanguageBox();
+        languageBox = createLanguageBox();
         buttons.getChildren().add(languageBox);
         myScene = new Scene(myGroup, ENVIRONMENT_WIDTH, ENVIRONMENT_HEIGHT, ENVIRONMENT_BACKGROUND);
         String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
@@ -485,8 +497,6 @@ public class Visualizer {
 
     private ComboBox createLanguageBox() {
         ComboBox lb = new ComboBox();
-        lb.getItems().addAll(getFileNamesInFolder("src/parserModel/languages"));
-        lb.setOnAction(event -> changeLanguage(lb.getValue().toString().replaceAll(".properties","")));
         lb.setPromptText("Select Language");
         return lb;
     }
@@ -548,28 +558,5 @@ public class Visualizer {
         int G = penColorChoice.getG();
         int B = penColorChoice.getB();
         penColor = Color.color(R/255.0, G/255.0, B/255.0);
-    }
-
-    private List<String> getFileNamesInFolder(String folderPath){
-        List<String> filesNames = new ArrayList<String>();
-        File[] files = new File(folderPath).listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                filesNames.add(file.getName());
-            }
-        }
-        return filesNames;
-    }
-
-    private void changeLanguage(String languageChoice){
-        File languageChoiceFile = new File("resources/languages/"+"LanguageChoice.properties");
-        FileWriter writer;
-        try {
-            writer = new FileWriter(languageChoiceFile);
-            writer.write("Language = "+languageChoice);
-            writer.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 }

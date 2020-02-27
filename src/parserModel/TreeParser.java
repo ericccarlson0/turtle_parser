@@ -2,8 +2,10 @@ package parserModel;
 
 import execution.ExecutableSuperClass;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -15,6 +17,7 @@ import parserModel.nodes.ParserNode;
 import parserModel.nodes.control.*;
 import parserModel.TokenAnalyzer.TokenType;
 import parserModel.nodes.mathNodes.ConstantNode;
+import visualizer.VisualContext;
 
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
@@ -27,7 +30,11 @@ public class TreeParser {
         myCommandFactory = new CommandFactory();
     }
 
-    public ParserNode parseString(String input){
+    public Collection<String> getLanguageOptions(){
+        return getFileNamesInFolder("src/parserModel/languages/");
+    }
+
+    public double parseString(String input, VisualContext context){
         String[] inputLines = input.split("\n");
         List<String> inputElements = new ArrayList<>();
         for (String line : inputLines){
@@ -43,19 +50,22 @@ public class TreeParser {
                 i--;
             }
         }
-        return parseList(inputElements);
+        return parseList(inputElements, context);
     }
 
-    private ParserNode parseList(List<String> input){
+    private double parseList(List<String> input, VisualContext context){
         InputIterator iterator = new InputIterator(input);
-        ListParserNode root = new ListParserNode();
-        try {
-            while (iterator.hasNext()) {
-                root.addNode(parseIteratorElement(iterator));
-            }
-            return root;
+        try{
+            double returning = 0;
+        while(iterator.hasNext()) {
+            ParserNode returner  = parseIteratorElement(iterator);
+            System.out.println(returner);
+                    returning = returner.execute(context);
+            System.out.println("" + returning);
+        }
+        return returning;
         } catch (ParsingException e){
-            return e.toNode();
+            return e.toNode().execute(context);
         }
     }
 
@@ -170,11 +180,25 @@ public class TreeParser {
         }
         return list;
     }
+    private List<String> getFileNamesInFolder(String folderPath){
+        List<String> filesNames = new ArrayList<String>();
+        File[] files = new File(folderPath).listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                filesNames.add(file.getName().replace(".properties",""));
+            }
+        }
+        return filesNames;
+    }
 
     public ObservableList<String> observableVariables(){
         return GlobalData.getInstance().observableVariableList();
     }
     public ObservableList<String> observableCommands(){
         return GlobalData.getInstance().observableCommandList();
+    }
+
+    public void setLanguage(String language) {
+        myTokenAnalyzer.setLanguage(language);
     }
 }

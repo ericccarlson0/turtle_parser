@@ -31,7 +31,7 @@ public class CommandFactory {
             case "Right":
                 return new RTurnNode();
             case "SetHeading":
-                return new SetHeadingNode(); //FIXME
+                return new SetHeadingNode();
             case "SetTowards":
                 return new TowardsNode();
             case "SetPosition":
@@ -96,9 +96,10 @@ public class CommandFactory {
 
             // COMPOUND COMMANDS
             case "DoTimes":
-                return new ForParserNode();
             case "For":
                 return new ForParserNode();
+            case "MakeVariable":
+
             case "Repeat":
                 return new RepeatParserNode();
             case "If":

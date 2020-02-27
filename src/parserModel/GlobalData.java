@@ -46,10 +46,10 @@ public class GlobalData {
     }
 
     public void setVariable(String name, double value) {
-        System.out.println(name);
+        //System.out.println("variable " + name + " set to value " + value);
         myVariables.put(name, value);
         if(! myObservableVariables.contains(name)){
-            System.out.println("adding " + name + "to the variable list");
+            //System.out.println("adding " + name + "to the variable list");
             myObservableVariables.add(name);
         }
     }
@@ -59,15 +59,16 @@ public class GlobalData {
     public void setCommand(String commandName, CallCommandNode command){
         myCommands.put(commandName, command);
         if(! myObservableCommands.contains(commandName)){
+            System.out.println("storing command " + commandName);
             myObservableCommands.add(commandName);
         }
     }
     public CallCommandNode getCommand(String commandName){
         CallCommandNode ret =  myCommands.get(commandName);
         if(ret == null){
-            throw new NoSuchCommandException();
+            throw new NoSuchCommandException(commandName);
         }
-        return ret;
+        return ret.copy();
     }
     public TurtleData turtleData() {
         return myTurtle;
