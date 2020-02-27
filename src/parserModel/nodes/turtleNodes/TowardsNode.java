@@ -22,9 +22,6 @@ public class TowardsNode extends CommandParserNode {
     private ParserNode myXNode;
     private ParserNode myYNode;
 
-    public TowardsNode() {
-    }
-
     @Override
     public void addNode(ParserNode node) {
         if (myXNode == null) {

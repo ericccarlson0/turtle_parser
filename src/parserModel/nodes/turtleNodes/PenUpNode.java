@@ -16,9 +16,6 @@ import parserModel.TurtleData;
 public class PenUpNode extends CommandParserNode {
     private static final double SUCCESS = 0.0;
 
-    public PenUpNode() {
-    }
-
     @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
