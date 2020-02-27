@@ -1,4 +1,5 @@
 package visualizer;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +27,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
-import javax.swing.text.GapContent;
 
 /**
  * visualizer.java - a class for managing the frontend.
@@ -37,6 +37,12 @@ public class Visualizer {
     private static final String RESOURCE_FOLDER = "/stylesheets";
     private static final String STYLESHEET = "/default.css";
     private static final int NODE_GAP = 8;
+    private static final String BACKGROUND_COLOR = "BG Color:";
+    private static final String PEN_COLOR = "Pen Color:";
+    private static final String USER_INPUT_HISTORY = "INPUT HISTORY: \n";
+    private static final String COMMAND_EXECUTION_HISTORY = "EXECUTION HISTORY: \n";
+    private static final String TERMINAL = "TERMINAL: \n";
+
     private final int ENVIRONMENT_HEIGHT = 800;
     private final int ENVIRONMENT_WIDTH = 1200;
     private final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
@@ -48,7 +54,7 @@ public class Visualizer {
     private final int FIELD_LEFT_EDGE = 0; //25
     private final int OFFSET = 25; //25
     private final int SCROLLPANE_SIZE = 250;
-    private final int TEXT_INPUT_WIDTH = 525;
+    private final int TEXT_INPUT_WIDTH = 400;
     private final int TEXT_INPUT_SIZE = 150;
 
     private final int SPLASH_SIZE_HEIGHT = 700;
@@ -69,9 +75,6 @@ public class Visualizer {
     private ScrollPane inputScrollPane;
     private ScrollPane executedScrollPane;
 
-    private static final String COMMAND_HISTORY = "EXECUTED COMMAND HISTORY: " ;
-    private static final String INPUT_HISTORY = "USER INPUT HISTORY: ";
-
     private Text availableCommands;
     private Text availableVariables;
     private ScrollPane commandScrollPane;
@@ -79,12 +82,12 @@ public class Visualizer {
 
     private Text userInputText;
     private ScrollPane userInputScrollPane;
-    private TextArea userInputTextField;
+    private TextArea userInputTextArea;
     private Button inputButton;
     private ObservableList variableList;
     private ObservableList commandList;
-    private ColorChoice environmentColor;
-    private ColorChoice turtleColor;
+    private ColorChoice envColorChoice;
+    private ColorChoice penColorChoice;
     private String command = "";
 
     /**
@@ -325,12 +328,12 @@ public class Visualizer {
         layout.setAlignment(envButtons, Pos.CENTER);
         BorderPane.setMargin(envButtons, insets);
 
-        Node textArea = createEnvironmentTextArea();
+        Node textArea = createEnvTextArea();
         layout.setLeft(textArea);
         layout.setAlignment(textArea, Pos.CENTER);
         BorderPane.setMargin(textArea, insets);
 
-        Node envLists = createEnvironmentLists();
+        Node envLists = createEnvLists();
         layout.setRight(envLists);
         layout.setAlignment(envLists, Pos.CENTER);
         BorderPane.setMargin(envLists, insets);
@@ -350,42 +353,46 @@ public class Visualizer {
 
     private HBox setUpInputBox() {
         HBox inputBox = new HBox(NODE_GAP);
-        userInputText = new Text("TERMINAL");
-        userInputTextField = new TextArea("");
+        userInputText = new Text(TERMINAL);
+        userInputTextArea = new TextArea("");
         userInputScrollPane = createScrollPane(userInputText, NODE_GAP, NODE_GAP, ScrollPane.ScrollBarPolicy.NEVER,
             ScrollPane.ScrollBarPolicy.ALWAYS, true, true, TEXT_INPUT_WIDTH, TEXT_INPUT_SIZE);
 
         inputButton = createButton("ENTER", 0, 0, inputBox);
         inputButton.setOnAction(new EventHandler<>() {
             public void handle(ActionEvent event) {
-                String newText = userInputTextField.getText();
+                String newText = userInputTextArea.getText();
                 inputHistory.setText(inputHistory.getText() + '\n' + newText);
                 userInputText.setText(userInputText.getText() + '\n' + "(command entered)");
-                userInputTextField.clear();
+                userInputTextArea.clear();
                 setCommand(newText);
             }
         });
-        inputBox.getChildren().addAll(userInputTextField, userInputScrollPane);
+        inputBox.getChildren().addAll(userInputTextArea, userInputScrollPane);
         return inputBox;
     }
 
-    private Node createEnvironmentLists() {
-        VBox environmentLists = new VBox(NODE_GAP);
+    private Node createEnvLists() {
+        VBox envLists = new VBox(NODE_GAP);
         Page commands = new Page(commandList);
         Page variables = new Page(variableList);
-        environmentLists.getChildren().addAll(commands.getScrollPane(), variables.getScrollPane());
-        return environmentLists;
+        envColorChoice = new ColorChoice(BACKGROUND_COLOR, 255, 255, 255);
+        penColorChoice = new ColorChoice(PEN_COLOR, 0, 0, 0);
+        envLists.getChildren().addAll(commands.getScrollPane(), variables.getScrollPane(),
+            envColorChoice.getVisual(), penColorChoice.getVisual());
+        return envLists;
     }
 
-    private Node createEnvironmentTextArea() {
-        VBox textEntry = new VBox(NODE_GAP);
-        inputHistory = new Text("user input history");
-        executedHistory = new Text("executed command history");
-        inputScrollPane = createScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        executedScrollPane = createScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        textEntry.getChildren().add(inputScrollPane);
-        textEntry.getChildren().add(executedScrollPane);
-        return textEntry;
+    private Node createEnvTextArea() {
+        VBox inputArea = new VBox(NODE_GAP);
+        inputHistory = new Text(USER_INPUT_HISTORY);
+        executedHistory = new Text(COMMAND_EXECUTION_HISTORY);
+        inputScrollPane = createScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
+            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        executedScrollPane = createScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
+            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        inputArea.getChildren().addAll(inputScrollPane, executedScrollPane);
+        return inputArea;
     }
 
     private Node createEnvironmentButtons() {
