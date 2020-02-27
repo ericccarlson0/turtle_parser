@@ -7,12 +7,22 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 import parserModel.TurtleData;
 
+/**
+ * A node that when executed, moves the turtle forward
+ * the value of its child node
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class ForwardNode extends CommandParserNode {
     private ParserNode myLength;
 
+    /**
+     * Construct a ForwardNode object
+     */
     public ForwardNode(){
     }
 
+    @Override
     public double execute(VisualContext context) {
         double distance = myLength.execute(context);
         TurtleData td = GlobalData.getInstance().turtleData();
@@ -24,14 +34,11 @@ public class ForwardNode extends CommandParserNode {
         return distance;
     }
 
+    @Override
     public boolean isComplete(){
         return myLength != null;
     }
 
-    public void addNode(ParserNode node) { myLength = node; }
-
     @Override
-    public String toString(){
-        return "FD " + myLength;
-    }
+    public void addNode(ParserNode node) { myLength = node; }
 }

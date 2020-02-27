@@ -7,7 +7,12 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 import parserModel.TurtleData;
 
-
+/**
+ * A node that when executed, Hides the turtle from
+ * the screen
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class HideNode extends CommandParserNode {
 
     public HideNode() {
