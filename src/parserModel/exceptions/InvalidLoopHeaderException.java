@@ -3,8 +3,9 @@ package parserModel.exceptions;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.errorNodes.ErrorNode;
 
-import java.text.ParseException;
-
+/**
+ * An Exception that rep
+ */
 public class InvalidLoopHeaderException extends ParsingException {
 
 

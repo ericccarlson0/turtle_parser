@@ -1,6 +1,7 @@
 package parserModel.exceptions;
 
 import parserModel.nodes.ParserNode;
+import java.util.ResourceBundle;
 
 /**
  * An abstract superclass that defines the behavior of an Exception that occurs during parsing.
@@ -13,5 +14,7 @@ public abstract class ParsingException extends RuntimeException{
      *
      * @return a ParserNode that is to be executed in response to the Exception
      */
+    protected static final ResourceBundle ERROR_MESSAGE_RESOURCES = ResourceBundle.getBundle("exceptions.resources.English.properties");
+
     public abstract ParserNode toNode();
 }
