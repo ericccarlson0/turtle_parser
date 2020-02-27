@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class UserDefinedCommandNode extends ParserNode {
+public class UserDefinedCommandNode implements ParserNode {
     private static final double SUCCESS = 1.0;
 
     private List<VariableNode> myVariables;
