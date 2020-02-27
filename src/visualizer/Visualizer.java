@@ -55,7 +55,7 @@ public class Visualizer {
     private static final int TEXT_INPUT_SIZE = 150;
     private static final String TURTLE_FILE = "images/turtle.jpg";
     private static final Image TURTLE_IMAGE = new Image(TURTLE_FILE);
-    private static final int MAX_RGB = 255;
+    public static final int MAX_RGB = 255;
     private boolean history = false;
     private Stage myStage;
     private Scene myScene;
