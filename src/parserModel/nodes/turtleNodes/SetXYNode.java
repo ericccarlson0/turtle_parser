@@ -20,6 +20,8 @@ public class SetXYNode extends CommandParserNode {
 
     public SetXYNode(){
         super();
+        myXNode = null;
+        myYNode = null;
     }
 
     @Override
