@@ -14,13 +14,11 @@ public class ColorChoice {
   private TextField RField;
   private TextField GField;
   private TextField BField;
-  private int myR;
-  private int myG;
-  private int myB;
+//  private int myR;
+//  private int myG;
+//  private int myB;
 
   public ColorChoice (String title, int R, int G, int B) {
-    myR = R; myG = G; myB = B;
-
     myHBox = new HBox(DEFAULT_SPACING);
 
     Label titleLabel = new Label(title);
@@ -48,6 +46,7 @@ public class ColorChoice {
   }
 
   public Region getVisual() { return myHBox; }
+
   public int getR() {
     return textToRGB(RField);
   }
@@ -59,7 +58,7 @@ public class ColorChoice {
   }
 
   private int textToRGB(TextField colorField) {
-    String colorStr = colorField.getText(0, 3);
+    String colorStr = colorField.getText();
     int colorInt = Integer.parseInt(colorStr);
     if (colorInt > 255) {
       colorInt = 255;
