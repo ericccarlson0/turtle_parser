@@ -31,7 +31,7 @@ public class CommandFactory {
             case "Right":
                 return new RTurnNode();
             case "SetHeading":
-                return new SetHeadingNode(); //FIXME
+                return new SetHeadingNode();
             case "SetTowards":
                 return new TowardsNode();
             case "SetPosition":

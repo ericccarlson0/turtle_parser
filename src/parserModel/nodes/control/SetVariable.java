@@ -23,6 +23,7 @@ public class SetVariable extends CommandParserNode {
     @Override
     public double execute(VisualContext context) {
         double executeValue = myAssignmentNode.execute(context);
+        System.out.println("executing to value" + executeValue);
         GlobalData.getInstance().setVariable(myVariableNode.name(),executeValue);
         return executeValue;
     }

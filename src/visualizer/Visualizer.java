@@ -328,7 +328,6 @@ public class Visualizer {
      * draw() - method to draw a line.
      */
     public void draw() {
-        System.out.println("DRAW");
         Turtle currTurtle = myTurtles.get(turtleIndex);
         if ((Math.abs(currTurtle.getOldXCoordinate() - currTurtle.getXCoordinate())) < 500
             && (Math.abs(currTurtle.getOldYCoordinate() - currTurtle.getYCoordinate())) < 500) {

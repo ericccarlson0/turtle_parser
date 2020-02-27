@@ -7,6 +7,7 @@ public class CommandMissingListStartException extends ParsingException{
 
     @Override
     public ParserNode toNode() {
+        printStackTrace();
         return new ErrorNode("ERROR: Missing Header at beginning of command definition");
     }
 }

@@ -46,10 +46,10 @@ public class GlobalData {
     }
 
     public void setVariable(String name, double value) {
-        System.out.println(name);
+        //System.out.println("variable " + name + " set to value " + value);
         myVariables.put(name, value);
         if(! myObservableVariables.contains(name)){
-            System.out.println("adding " + name + "to the variable list");
+            //System.out.println("adding " + name + "to the variable list");
             myObservableVariables.add(name);
         }
     }
@@ -68,7 +68,7 @@ public class GlobalData {
         if(ret == null){
             throw new NoSuchCommandException(commandName);
         }
-        return ret;
+        return ret.copy();
     }
     public TurtleData turtleData() {
         return myTurtle;
