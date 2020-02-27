@@ -1,5 +1,7 @@
 package parserModel.nodes.turtleQueries;
 
+import execution.HeadingExecutable;
+import execution.PenDownPExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
@@ -18,6 +20,7 @@ public class HeadingNode extends CommandParserNode {
 
   public double execute(VisualContext context) {
     TurtleData td = GlobalData.getInstance().turtleData();
+    context.getExecutableQueue().add(new HeadingExecutable());
     return td.getY(); // FIXME
   }
 
