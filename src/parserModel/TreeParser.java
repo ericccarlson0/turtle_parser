@@ -1,14 +1,16 @@
 package parserModel;
 
-import execution.Executable;
+import execution.ExecutableSuperClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import parserModel.exceptions.*;
 import parserModel.nodes.CommandFactory;
 import parserModel.nodes.CommandParserNode;
+import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.control.*;
 import parserModel.TokenAnalyzer.TokenType;
@@ -17,33 +19,44 @@ import parserModel.nodes.mathNodes.ConstantNode;
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
     private CommandFactory myCommandFactory;
-    private List<Executable> myQueue;
+    private List<ExecutableSuperClass> myQueue;
 
-    public TreeParser(List<Executable> queue) {
+    public TreeParser(List<ExecutableSuperClass> queue) {
         myQueue = queue;
         myTokenAnalyzer = new TokenAnalyzer();
         myCommandFactory = new CommandFactory();
     }
 
-    public CommandParserNode parseString(String input){
-        List<String> inputElements = new ArrayList<>(Arrays.asList(input.split(" ")));
-        for(int i = 0; i < inputElements.size(); i++) {
-            if(inputElements.get(i).equals("")){
+    public ParserNode parseString(String input){
+        String[] inputLines = input.split("\n");
+        List<String> inputElements = new ArrayList<>();
+        for (String line : inputLines){
+            int poundIndex;
+            if ((poundIndex = line.indexOf('#')) != -1) {
+                line = line.substring(0, poundIndex);
+            }
+            inputElements.addAll(Arrays.asList(line.split(" ")));
+        }
+        for (int i = 0; i < inputElements.size(); i++) {
+            if (inputElements.get(i).equals("")){
                 inputElements.remove(i);
                 i--;
             }
         }
-        System.out.println(inputElements); // *** testing...
         return parseList(inputElements);
     }
 
-    private CommandParserNode parseList(List<String> input){
+    private ParserNode parseList(List<String> input){
         InputIterator iterator = new InputIterator(input);
         ListParserNode root = new ListParserNode();
-        while(iterator.hasNext()) {
-            root.addNode(parseIteratorElement(iterator));
+        try {
+            while (iterator.hasNext()) {
+                root.addNode(parseIteratorElement(iterator));
+            }
+            return root;
+        } catch (ParsingException e){
+            return e.toNode();
         }
-        return root;
     }
 
     /**
@@ -53,45 +66,38 @@ public class TreeParser {
     private ParserNode parseIteratorElement(InputIterator iterator) {
         String nextElement = iterator.next();
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
-        System.out.println(tokenType);
-
         return getParserNode(iterator, nextElement, tokenType);
     }
 
-    private ParserNode parseForSpecificNode(InputIterator iterator, TokenType nodeType){
-        String nextElement = iterator.next();
-        TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
-        if(tokenType != nodeType){
-            System.out.println("Exception!");
-        } else {
-            return getParserNode(iterator, nextElement, tokenType); //TODO
-        }
-        return null;
-    }
-    private LoopCounterNode parseForLoopCounter(InputIterator iterator){
+    private LoopCounterNode parseForLoopHeader(InputIterator iterator){
         if(myTokenAnalyzer.typeOfToken(iterator.next()) != TokenType.ListStart){
-            // TODO: throw an exception
+            throw new InvalidLoopStructureException();
         }
         String variableName = iterator.next();
         if(myTokenAnalyzer.typeOfToken(variableName) != TokenType.Variable){
-            //throw an exception
+            throw new NonVariableInLoopHeaderException();
         }
         VariableNode variableNode = new VariableNode(variableName);
         LoopCounterNode loopCounter = new LoopCounterNode(variableNode);
         ParserNode adding;
-        while((adding = parseIteratorElement(iterator))
-                .typeOfNode()
-                != ParserNode.NodeType.LIST_END){
+
+        while((adding = parseIteratorElement(iterator)).typeOfNode() != NodeType.LIST_END){
             loopCounter.addNode(adding);
         }
-        return loopCounter;
+        if(loopCounter.isComplete()) {
+            return loopCounter;
+        } else{
+            throw new InvalidLoopHeaderException();
+        }
     }
     private UserDefinedCommandNode parseForCommandDefinition(InputIterator iterator){
         String commandName = iterator.next();
-        UserDefinedCommandNode newCommand = new UserDefinedCommandNode(commandName);
-        if(myTokenAnalyzer.typeOfToken(iterator.next()) != TokenType.ListStart){
-            // TODO: throw an exception
+        UserDefinedCommandNode newCommand = new UserDefinedCommandNode(commandName); //FIXME
+
+        if (! validateOpenBracket(iterator)){
+            throw new CommandMissingListStartException();
         }
+
         String variableName;
         while(myTokenAnalyzer.typeOfToken((variableName = iterator.next())) != TokenType.ListEnd){
             newCommand.addVariable(new VariableNode(variableName));
@@ -103,10 +109,12 @@ public class TreeParser {
             case Command:
                 String key = myTokenAnalyzer.getTokenKey(nextElement);
                 ParserNode root = myCommandFactory.createCommand(key);
-                if(root.typeOfNode() == ParserNode.NodeType.LOOP){
-                    root.addNode(parseForLoopCounter(iterator));
-                } else if(root.typeOfNode() == ParserNode.NodeType.FUNCTION_DEFINITION){
+                if(root.typeOfNode() == NodeType.LOOP){
+                    root.addNode(parseForLoopHeader(iterator));
+                    root.addNode(parseForLoopBody(iterator));
+                } else if(root.typeOfNode() == NodeType.FUNCTION_DEFINITION){
                     root = parseForCommandDefinition(iterator);
+                    root.addNode(parseForCommandBody(iterator));
                 }
                 while(! root.isComplete()) {
                     root.addNode(parseIteratorElement(iterator));
@@ -121,22 +129,48 @@ public class TreeParser {
             case Variable:
                 return new VariableNode(nextElement);
             case ListStart:
-                CommandParserNode list = new ListParserNode();
-                ParserNode listElement = parseIteratorElement(iterator);
-                while (listElement.typeOfNode() != ParserNode.NodeType.LIST_END) {
-                    list.addNode(listElement);
-                    listElement = parseIteratorElement(iterator);
-                }
-                return list;
+                return parseForList(iterator);
             case ListEnd:
                 return new ListEndNode();
             case GroupStart:
                 // TODO
             case GroupEnd:
                 // TODO
+            case Error:
+            default:
+                throw new UnidentifiableTokenException(nextElement);
         }
-        return null; //FIXME
     }
+
+    private ParserNode parseForCommandBody(InputIterator iterator) {
+        return parseForList(iterator, true, new MissingCommandBodyException());
+    }
+
+    private ParserNode parseForLoopBody(InputIterator iterator){
+        return parseForList(iterator, true, new MissingLoopBodyException());
+    }
+    private boolean validateOpenBracket(InputIterator iterator){
+        return myTokenAnalyzer.typeOfToken(iterator.next()) == TokenType.ListStart;
+    }
+
+    private ParserNode parseForList(InputIterator iterator){
+        return parseForList(iterator, false, new CommandMissingListStartException());
+    }
+
+    private ParserNode parseForList(InputIterator iterator, boolean beginWithBracket, ParsingException missingListException) {
+        if(beginWithBracket && !validateOpenBracket(iterator)){
+            throw missingListException;
+        }
+
+        CommandParserNode list = new ListParserNode();
+        ParserNode listElement = parseIteratorElement(iterator);
+        while (listElement.typeOfNode() != NodeType.LIST_END) {
+            list.addNode(listElement);
+            listElement = parseIteratorElement(iterator);
+        }
+        return list;
+    }
+
     public ObservableList<String> observableVariables(){
         return GlobalData.getInstance().observableVariableList();
     }

@@ -3,7 +3,7 @@ package execution;
 import visualizer.Visualizer;
 
 
-public class SetHeadingExecutable extends Executable {
+public class SetHeadingExecutable extends ExecutableSuperClass {
   private final String executableType = "SetHeading";
   private double angle;
 

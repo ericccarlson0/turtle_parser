@@ -1,12 +1,10 @@
 package visualizer;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -16,7 +14,6 @@ import java.io.File;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
 import javafx.scene.control.ComboBox;
 import javafx.scene.shape.Line;
 import javafx.event.ActionEvent;
@@ -39,28 +36,38 @@ import java.util.ArrayList;
 public class Visualizer {
     private static final String RESOURCE_FOLDER = "/stylesheets";
     private static final String STYLESHEET = "/default.css";
-    private final int ENVIRONMENT_SIZE_HEIGHT = 800;
-    private final int ENVIRONMENT_SIZE_WIDTH = 1200;
+    private static final int NODE_GAP = 8;
+    private static final String BACKGROUND_COLOR = "BG:";
+    private static final String PEN_COLOR = "PEN:";
+    private static final String USER_INPUT_HISTORY = "INPUT HISTORY: \n";
+    private static final String COMMAND_EXECUTION_HISTORY = "EXECUTION HISTORY: \n";
+    private static final String TERMINAL = "TERMINAL: \n";
+
+    private final int ENVIRONMENT_HEIGHT = 800;
+    private final int ENVIRONMENT_WIDTH = 1350;
     private final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
     private final int FIELD_CENTER_X = 250;
     private final int FIELD_CENTER_Y = 250;
     private final int FIELD_HEIGHT = 500;
     private final int FIELD_WIDTH = 500;
-    private final int FIELD_RIGHT_EDGE = 500; //675
-    private final int FIELD_LEFT_EDGE = 0; //25
+    private final int FIELD_RIGHT_EDGE = 500;   // 675
+    private final int FIELD_LEFT_EDGE = 0;      // 25
     private final int OFFSET = 25; //25
     private final int SCROLLPANE_SIZE = 250;
-    private final int TEXTINPUT_SIZE = 150;
+    private final int TEXT_INPUT_WIDTH = 400;
+    private final int TEXT_INPUT_SIZE = 150;
 
     private boolean history = false;
-    private final int SPLASH_SIZE_HEIGHT = 700;
-    private final int SPLASH_SIZE_WIDTH = 1300;
+    private final int SPLASH_SIZE_HEIGHT = 800;
+    private final int SPLASH_SIZE_WIDTH = 1350;
     private final Color SPLASH_BACKGROUND = Color.LIGHTGRAY;
 
     private Stage myStage;
     private Scene myScene;
     private Group myGroup;
     private Group parserField;
+    private Rectangle myField;
+    private Color penColor = Color.color(0.0, 0.0, 0.0);
     private ArrayList<visualizer.Turtle> myTurtles;
     private int turtleIndex = 0;
 
@@ -71,9 +78,6 @@ public class Visualizer {
     private ScrollPane inputScrollPane;
     private ScrollPane executedScrollPane;
 
-    private static final String COMMAND_HISTORY = "EXECUTED COMMAND HISTORY: " ;
-    private static final String INPUT_HISTORY = "USER INPUT HISTORY: ";
-
     private Text availableCommands;
     private Text availableVariables;
     private ScrollPane commandScrollPane;
@@ -81,10 +85,12 @@ public class Visualizer {
 
     private Text userInputText;
     private ScrollPane userInputScrollPane;
-    private TextArea userInputTextField;
+    private TextArea userInputTextArea;
     private Button inputButton;
     private ObservableList variableList;
     private ObservableList commandList;
+    private ColorChoice envColorChoice;
+    private ColorChoice penColorChoice;
     private String command = "";
 
     /**
@@ -256,7 +262,13 @@ public class Visualizer {
      * @return
      */
     public void addExecutedHistory(String executed) {
-        executedHistory.setText(executedHistory.getText() + '\n' + executed);
+
+        if(executed.isEmpty()) {
+            executedHistory.setText(executedHistory.getText());
+        }
+        else{
+            executedHistory.setText(executedHistory.getText() + '\n' + executed);
+            }
     }
 
     /**
@@ -286,7 +298,6 @@ public class Visualizer {
     private void start() {
         myStage = new Stage();
         playAnimation();
-
     }
 
     private void playAnimation() {
@@ -306,6 +317,7 @@ public class Visualizer {
                 line.setStartY(currTurtle.getOldYCoordinate());
                 line.setEndX(currTurtle.getXCoordinate());
                 line.setEndY(currTurtle.getYCoordinate());
+                line.setFill(penColor); // ***
                 parserField.getChildren().add(line);
             }
         }
@@ -314,41 +326,39 @@ public class Visualizer {
     private void setUpEnvironment() {
         myGroup = new Group();
         BorderPane layout = new BorderPane();
+        Insets insets = new Insets(NODE_GAP/2);
 
-        myTurtles = new ArrayList<visualizer.Turtle>();
+        myTurtles = new ArrayList<>();
         parserField = new Group();
-        parserField.getChildren().add(createField(0,0, FIELD_WIDTH, FIELD_HEIGHT, Color.WHITE));
-        parserField.getChildren().add(createTurtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex));
-        HBox inputBox = new HBox();
-        userInputText = new Text("Terminal");
-        userInputTextField = new TextArea("");
-        userInputScrollPane = makeScrollPane(userInputText, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, 525, TEXTINPUT_SIZE);
-        inputBox.getChildren().add(userInputTextField);
-        inputButton = makeButton("Enter", 0, 0, inputBox);
-        inputButton.setOnAction(new EventHandler<>() {
-            public void handle(ActionEvent event) {
-                String newText = userInputTextField.getText();
-                inputHistory.setText(inputHistory.getText() + '\n' + newText);
-                userInputText.setText(userInputText.getText() + '\n' + "(command entered)");
-                userInputTextField.clear();
-                setCommand(newText);
-            }
-        });
-        inputBox.getChildren().add(userInputScrollPane);
-        layout.setPrefSize(1200,800);
+        myField = createField(0,0, FIELD_WIDTH, FIELD_HEIGHT);
+        Node initialTurtle = createTurtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
+        parserField.getChildren().addAll(myField, initialTurtle);
+
+        HBox inputBox = setUpInputBox();
+
+        layout.setPrefSize(ENVIRONMENT_WIDTH - NODE_GAP, ENVIRONMENT_HEIGHT - NODE_GAP);
         layout.setBottom(inputBox);
-        layout.setAlignment(inputBox,Pos.CENTER);
-        Node environment = createEnvironmentButtons();
-        layout.setTop(environment);
-        layout.setAlignment(environment,Pos.CENTER);
-        Node textEntry = createEnvironmentTextEntry();
-        layout.setLeft(textEntry);
-        layout.setAlignment(textEntry,Pos.CENTER);
-        Node environmentLists = createEnvironmentLists();
-        layout.setRight(environmentLists);
-        layout.setAlignment(environmentLists,Pos.CENTER);
+        layout.setAlignment(inputBox, Pos.CENTER);
+        BorderPane.setMargin(inputBox, insets);
+
+        Node envButtons = createEnvButtons();
+        layout.setTop(envButtons);
+        layout.setAlignment(envButtons, Pos.CENTER);
+        BorderPane.setMargin(envButtons, insets);
+
+        Node textArea = createEnvTextArea();
+        layout.setLeft(textArea);
+        layout.setAlignment(textArea, Pos.CENTER);
+        BorderPane.setMargin(textArea, insets);
+
+        Node envLists = createEnvLists();
+        layout.setRight(envLists);
+        layout.setAlignment(envLists, Pos.CENTER);
+        BorderPane.setMargin(envLists, insets);
+
         layout.setCenter(parserField);
-        layout.setAlignment(parserField,Pos.CENTER);
+        layout.setAlignment(parserField, Pos.CENTER);
+        BorderPane.setMargin(parserField, insets);
 
         myGroup.getChildren().add(layout);
     }
@@ -359,51 +369,72 @@ public class Visualizer {
         return initialTurtle;
     }
 
-    private Node createEnvironmentLists() {
-        VBox environmentLists = new VBox();
+    private HBox setUpInputBox() {
+        HBox inputBox = new HBox(NODE_GAP);
+        userInputText = new Text(TERMINAL);
+        userInputTextArea = new TextArea("");
+        userInputScrollPane = createScrollPane(userInputText, NODE_GAP, NODE_GAP, ScrollPane.ScrollBarPolicy.NEVER,
+            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, TEXT_INPUT_WIDTH, TEXT_INPUT_SIZE);
+
+        inputButton = createButton("ENTER", 0, 0, inputBox);
+        inputButton.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String newText = userInputTextArea.getText();
+                inputHistory.setText(inputHistory.getText() + '\n' + newText);
+                userInputText.setText(userInputText.getText() + '\n' + "(command entered)");
+                userInputTextArea.clear();
+                setCommand(newText);
+            }
+        });
+        inputBox.getChildren().addAll(userInputTextArea, userInputScrollPane);
+        return inputBox;
+    }
+
+    private Node createEnvLists() {
+        VBox envLists = new VBox(NODE_GAP);
         Page commands = new Page(commandList);
         Page variables = new Page(variableList);
-        environmentLists.getChildren().add(commands.getScrollPane());
-        environmentLists.getChildren().add(variables.getScrollPane());
-        return environmentLists;
+        envColorChoice = new ColorChoice(BACKGROUND_COLOR, 255, 255, 255);
+        penColorChoice = new ColorChoice(PEN_COLOR, 0, 0, 0);
+        HBox colorButtons = createColorButtons();
+        envLists.getChildren().addAll(commands.getScrollPane(), variables.getScrollPane(),
+                envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons);
+        return envLists;
     }
 
-    private Node createEnvironmentTextEntry() {
-        VBox textEntry = new VBox();
-        inputHistory = new Text("user input history");
-        executedHistory = new Text("executed command history");
-        inputScrollPane = makeScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        executedScrollPane = makeScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER, ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        textEntry.getChildren().add(inputScrollPane);
-        textEntry.getChildren().add(executedScrollPane);
-        return textEntry;
+    private Node createEnvTextArea() {
+        VBox inputArea = new VBox(NODE_GAP);
+        inputHistory = new Text(USER_INPUT_HISTORY);
+        executedHistory = new Text(COMMAND_EXECUTION_HISTORY);
+        inputScrollPane = createScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
+            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        executedScrollPane = createScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.NEVER,
+            ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
+        inputArea.getChildren().addAll(inputScrollPane, executedScrollPane);
+        return inputArea;
     }
 
-    private Node createEnvironmentButtons() {
-        HBox buttons = new HBox();
-        Button resetButton = makeButton("Reset", 0, 0, buttons);
-        Button replayButton = makeButton("Replay", 0, 0, buttons);
-        Button helpButton = makeButton("Help", 0, 0, buttons);
-        //Button variableButton = makeButton("Variables", 0, 0, buttons);
-        //Button commandButton = makeButton("Commands", 0, 0, buttons);
-        Button turtleImageFileButton = makeButton("New Turtle Image", 0, 0,  buttons);
-        //commandButton.setOnAction(event -> popUpButtonPressed(commandList));
-        //variableButton.setOnAction(event -> popUpButtonPressed(variableList));
-        helpButton.setOnAction(event -> helpButtonPressed());
-        replayButton.setOnAction(event -> replayButtonPressed());
+    private Node createEnvButtons() {
+        HBox buttons = new HBox(NODE_GAP);
+
+        Button resetButton = createButton("RESET", 0, 0, buttons);
         resetButton.setOnAction(event -> playAnimation());
 
-        //TODO CREATED COMBOBOX HERE
-        final ComboBox languageChoiceComboBox = new ComboBox();
-        languageChoiceComboBox.getItems().addAll(getFileNamesInFolder("src/parserModel/languages"));
-        languageChoiceComboBox.setOnAction(event -> changeLanguage(languageChoiceComboBox.getValue().toString().replaceAll(".properties","")));
-        languageChoiceComboBox.setPromptText("Select Language");
-        buttons.getChildren().add(languageChoiceComboBox);
+        Button replayParser = createButton("REPLAY", 0, 0, buttons);
 
-        myScene = new Scene(myGroup, ENVIRONMENT_SIZE_WIDTH, ENVIRONMENT_SIZE_HEIGHT, ENVIRONMENT_BACKGROUND);
+        Button helpButton = createButton("HELP", 0, 0, buttons);
+        helpButton.setOnAction(event -> helpButton());
+
+        Button turtleImageFileButton = createButton("NEW TURTLE IMAGE", 0, 0,  buttons);
+
+        ComboBox languageBox = createLanguageBox();
+        buttons.getChildren().add(languageBox);
+
+        myScene = new Scene(myGroup, ENVIRONMENT_WIDTH, ENVIRONMENT_HEIGHT, ENVIRONMENT_BACKGROUND);
         String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
         myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
-        turtleImageFileButton.setOnAction(event -> turtleImageButtonPressed());
+        turtleImageFileButton.setOnAction(event -> turtleImageButton());
         return buttons;
     }
 
@@ -411,22 +442,39 @@ public class Visualizer {
         history = true;
     }
 
+    private HBox createColorButtons() {
+        HBox cb = new HBox(NODE_GAP);
+        Button envColor = new Button("BG COLOR");
+        envColor.setOnAction(event -> envColorButton());
+        Button penColor = new Button("PEN COLOR");
+        penColor.setOnAction(event -> penColorButton());
+        cb.getChildren().addAll(envColor, penColor);
+        return cb;
+    }
+    private void helpButton() {
 
-    private void helpButtonPressed() {
         HelpPage popup = new HelpPage();
     }
 
-    private void popUpButtonPressed(ObservableList list) {
+    private void popUpButton(ObservableList list) {
         Page popup = new Page(list);
     }
 
-    private Node createField(int x, int y, int width, int height, Color color) {
-        Rectangle field = new Rectangle(x, y, width, height);
-        field.setFill(color);
-        return field;
+    private Rectangle createField(int x, int y, int width, int height) {
+        Rectangle fld = new Rectangle(x, y, width, height);
+        fld.setFill(Color.color(1.0, 1.0, 1.0));
+        return fld;
     }
 
-    private Button makeButton(String text, int x, int y, HBox buttons) {
+    private ComboBox createLanguageBox() {
+        ComboBox lb = new ComboBox();
+        lb.getItems().addAll(getFileNamesInFolder("src/parserModel/languages"));
+        lb.setOnAction(event -> changeLanguage(lb.getValue().toString().replaceAll(".properties","")));
+        lb.setPromptText("Select Language");
+        return lb;
+    }
+
+    private Button createButton(String text, int x, int y, HBox buttons) {
         Button myButton = new Button();
         myButton.setText(text);
         myButton.setLayoutX(x);
@@ -435,7 +483,7 @@ public class Visualizer {
         return myButton;
     }
 
-    private ScrollPane makeScrollPane(Node text, int x, int y, ScrollPane.ScrollBarPolicy hbar,
+    private ScrollPane createScrollPane(Node text, int x, int y, ScrollPane.ScrollBarPolicy hbar,
         ScrollPane.ScrollBarPolicy vbar, boolean fitHeight, boolean fitWidth, int width, int height) {
         ScrollPane scrollPane = new ScrollPane(text);
         scrollPane.setLayoutX(x);
@@ -460,7 +508,7 @@ public class Visualizer {
         myGroup.getChildren().add(newTurtle);
     }
 
-    private void turtleImageButtonPressed() {
+    private void turtleImageButton() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File selectedFile = fileChooser.showOpenDialog(myStage);
@@ -469,6 +517,20 @@ public class Visualizer {
             return;
         }
         setTurtleImage(selectedFile);
+    }
+
+    private void envColorButton() {
+        int R = envColorChoice.getR();
+        int G = envColorChoice.getG();
+        int B = envColorChoice.getB();
+        myField.setFill(Color.color(R/255.0, G/255.0, B/255.0));
+    }
+
+    private void penColorButton() {
+        int R = penColorChoice.getR();
+        int G = penColorChoice.getG();
+        int B = penColorChoice.getB();
+        penColor = Color.color(R/255.0, G/255.0, B/255.0);
     }
 
     private List<String> getFileNamesInFolder(String folderPath){

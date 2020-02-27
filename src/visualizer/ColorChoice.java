@@ -2,42 +2,50 @@ package visualizer;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
-public class ColorChoice extends VBox {
+public class ColorChoice {
   public static final int DEFAULT_SPACING = 6;
   private static final int FIELD_LENGTH = 36;
   private static final String ZERO = "0";
 
-  private VBox myVBox;
+  private HBox myHBox;
   private TextField RField;
   private TextField GField;
   private TextField BField;
+//  private int myR;
+//  private int myG;
+//  private int myB;
 
-  public ColorChoice () {
-    myVBox = new VBox(DEFAULT_SPACING);
+  public ColorChoice (String title, int R, int G, int B) {
+    myHBox = new HBox(DEFAULT_SPACING);
+
+    Label titleLabel = new Label(title);
 
     Label RLabel = new Label("R");
     RLabel.setId("R-label");
-    RField = createField();
+    RField = createField(R);
 
     Label GLabel = new Label("G");
     GLabel.setId("G-label");
-    GField = createField();
+    GField = createField(G);
 
     Label BLabel = new Label("B");
     BLabel.setId("B-label");
-    BField = createField();
+    BField = createField(B);
 
-    myVBox.getChildren().addAll(RLabel, RField, GLabel, GField, BLabel, BField);
+    myHBox.getChildren().addAll(titleLabel, RLabel, RField, GLabel, GField, BLabel, BField);
   }
 
-  private TextField createField() {
+  private TextField createField(int val) {
     TextField field = new TextField();
-    field.setText(ZERO);
+    field.setText(Integer.toString(val));
     field.setId("color-field");
     return field;
   }
+
+  public Region getVisual() { return myHBox; }
 
   public int getR() {
     return textToRGB(RField);
@@ -50,7 +58,7 @@ public class ColorChoice extends VBox {
   }
 
   private int textToRGB(TextField colorField) {
-    String colorStr = colorField.getText(0, 3);
+    String colorStr = colorField.getText();
     int colorInt = Integer.parseInt(colorStr);
     if (colorInt > 255) {
       colorInt = 255;

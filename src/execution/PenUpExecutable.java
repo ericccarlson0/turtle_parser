@@ -3,7 +3,7 @@ package execution;
 import visualizer.Visualizer;
 
 
-public class PenUpExecutable extends Executable {
+public class PenUpExecutable extends ExecutableSuperClass {
   private final String executableType = "PenUp";
   public PenUpExecutable(){
   }

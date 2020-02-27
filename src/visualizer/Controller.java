@@ -1,6 +1,6 @@
 package visualizer;
 
-import execution.Executable;
+import execution.ExecutableSuperClass;
 import parserModel.nodes.ParserNode;
 import parserModel.TreeParser;
 import javafx.animation.KeyFrame;
@@ -15,8 +15,8 @@ public class Controller {
     private TreeParser myTreeParser;
     public Visualizer myVisualizer;
     private Timeline animation;
-    private List<Executable> executables;
-    private List<Executable> history;
+    private List<ExecutableSuperClass> history;
+    private List<ExecutableSuperClass> executables;
 
     public Controller () {
         myTreeParser = new TreeParser(executables);

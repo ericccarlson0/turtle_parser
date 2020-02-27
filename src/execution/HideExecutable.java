@@ -3,7 +3,7 @@ package execution;
 import visualizer.Visualizer;
 
 
-public class HideExecutable extends Executable {
+public class HideExecutable extends ExecutableSuperClass {
   private final String executableType = "HideTurtle";
 
   public HideExecutable(){

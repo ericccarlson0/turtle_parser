@@ -3,7 +3,7 @@ import static execution.SetXYExecutable.getDistanceTraveled;
 import visualizer.Visualizer;
 
 
-public class HomeExecutable extends Executable {
+public class HomeExecutable extends ExecutableSuperClass {
   private final String executableType = "Home";
   public HomeExecutable(){ }
   public double run(Visualizer visualizerObject){

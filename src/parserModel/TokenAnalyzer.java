@@ -14,6 +14,7 @@ public class TokenAnalyzer {
     private static final String LIST_END = "ListEnd";
     private static final String GROUP_START = "GroupStart";
     private static final String GROUP_END = "GroupEnd";
+    private static final String ERROR = "ERROR";
 
     private List<Entry<String, Pattern>> mySymbols;
     private List<Entry<String, Pattern>> myCommands;
@@ -29,7 +30,8 @@ public class TokenAnalyzer {
         ListStart,
         ListEnd,
         GroupStart,
-        GroupEnd
+        GroupEnd,
+        Error
     }
 
     public TokenAnalyzer() {
@@ -41,7 +43,7 @@ public class TokenAnalyzer {
     }
 
     public TokenType typeOfToken(String token) {
-        return myTokens.get(getTokenType(token));
+        return myTokens.getOrDefault(getTokenType(token), TokenType.Error);
     }
 
     private String getTokenType(String text) {
@@ -51,7 +53,7 @@ public class TokenAnalyzer {
                 return e.getKey();
             }
         }
-        return "MESSED UP";
+        return ERROR;
     }
 
     public String getTokenKey(String text) {

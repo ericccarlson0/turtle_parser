@@ -3,7 +3,7 @@ package execution;
 import visualizer.Visualizer;
 
 
-public class YCorExecutable extends Executable {
+public class YCorExecutable extends ExecutableSuperClass {
   private final String executableType = "YCoordinate";
   public YCorExecutable(){
   }
