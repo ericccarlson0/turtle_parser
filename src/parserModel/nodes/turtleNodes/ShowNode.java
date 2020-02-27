@@ -14,8 +14,6 @@ import parserModel.TurtleData;
  */
 public class ShowNode extends CommandParserNode {
 
-    public ShowNode() {}
-
     @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();

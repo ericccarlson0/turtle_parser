@@ -15,9 +15,6 @@ import parserModel.TurtleData;
  */
 public class HideNode extends CommandParserNode {
 
-    public HideNode() {
-    }
-
     @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
