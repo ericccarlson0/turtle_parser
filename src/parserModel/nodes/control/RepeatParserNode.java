@@ -14,6 +14,12 @@ public class RepeatParserNode extends CommandParserNode {
     private ParserNode myTimesNode;
     private ParserNode executeNode;
 
+    public RepeatParserNode(){
+        super();
+        myTimesNode = null;
+        executeNode = null;
+    }
+
     @Override
     public void addNode(ParserNode node) {
         if(myTimesNode == null){

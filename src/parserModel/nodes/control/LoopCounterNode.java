@@ -17,6 +17,9 @@ import java.util.List;
  * @author Mariusz Derezinski-Choo
  */
 public class LoopCounterNode extends CommandParserNode {
+    private static final int SIMPLE_LOOP = 1;
+    private static final int COMPLEX_LOOP = 3;
+
     private List<ParserNode> myIterableParameters;
     private VariableNode myVariableNode;
     private ParserNode myIteratingNode;
@@ -41,10 +44,10 @@ public class LoopCounterNode extends CommandParserNode {
     public double execute(VisualContext context) {
         if(! validated){
             switch(myIterableParameters.size()){
-                case 1:
+                case SIMPLE_LOOP:
                     validateLoop(0,1,myIterableParameters.get(0).execute(context) + 1).execute(context);
                     break;
-                case 3:
+                case COMPLEX_LOOP:
                     validateLoop(myIterableParameters.get(0).execute(context) - 1 ,myIterableParameters.get(2).execute(context) ,myIterableParameters.get(1).execute(context) + 1).execute(context);
                     break;
             }
