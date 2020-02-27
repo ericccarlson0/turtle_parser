@@ -1,6 +1,15 @@
 package parserModel;
 
-import execution.ExecutableSuperClass;
+import javafx.collections.ObservableList;
+import parserModel.TokenAnalyzer.TokenType;
+import parserModel.exceptions.*;
+import parserModel.nodes.CommandFactory;
+import parserModel.nodes.CommandParserNode;
+import parserModel.nodes.NodeType;
+import parserModel.nodes.ParserNode;
+import parserModel.nodes.control.*;
+import parserModel.nodes.mathNodes.ConstantNode;
+import visualizer.VisualContext;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,24 +17,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import javafx.collections.ObservableList;
-import parserModel.exceptions.*;
-import parserModel.nodes.CommandFactory;
-import parserModel.nodes.CommandParserNode;
-import parserModel.nodes.NodeType;
-import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.*;
-import parserModel.TokenAnalyzer.TokenType;
-import parserModel.nodes.mathNodes.ConstantNode;
-import visualizer.VisualContext;
-
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
     private CommandFactory myCommandFactory;
-    private List<ExecutableSuperClass> myQueue;
 
-    public TreeParser(List<ExecutableSuperClass> queue) {
-        myQueue = queue;
+    public TreeParser() {
         myTokenAnalyzer = new TokenAnalyzer();
         myCommandFactory = new CommandFactory();
     }
@@ -181,7 +177,7 @@ public class TreeParser {
         return list;
     }
     private List<String> getFileNamesInFolder(String folderPath){
-        List<String> filesNames = new ArrayList<String>();
+        List<String> filesNames = new ArrayList<>();
         File[] files = new File(folderPath).listFiles();
         for (File file : files) {
             if (file.isFile()) {

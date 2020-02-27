@@ -25,7 +25,7 @@ public class CallCommandNode extends CommandParserNode {
      */
     public CallCommandNode(List<VariableNode> variables, ParserNode execute){
         myExecuteNode = execute;
-        myVariables = variables;
+        myVariables = new ArrayList<>(variables);
         myVariableInitializers = new ArrayList<>();
     }
 

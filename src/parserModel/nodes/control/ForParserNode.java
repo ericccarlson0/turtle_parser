@@ -16,6 +16,12 @@ public class ForParserNode extends ControlParserNode {
     private ParserNode myForNode;
     private ParserNode myBodyNode;
 
+    public ForParserNode(){
+        super();
+        myBodyNode = null;
+        myForNode = null;
+    }
+
     @Override
     public void addNode(ParserNode node) {
         if (myForNode == null){

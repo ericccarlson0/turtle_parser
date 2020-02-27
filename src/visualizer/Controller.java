@@ -3,7 +3,6 @@ package visualizer;
 import execution.ExecutableSuperClass;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import parserModel.nodes.ParserNode;
 import parserModel.TreeParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,7 +20,7 @@ public class Controller {
     private List<ExecutableSuperClass> executables;
 
     public Controller () {
-        myTreeParser = new TreeParser(executables);
+        myTreeParser = new TreeParser();
         myVisualizer = new Visualizer();
         myVisualizer.setVariableList(myTreeParser.observableVariables());
         myVisualizer.setCommandList(myTreeParser.observableCommands());

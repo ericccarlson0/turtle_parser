@@ -3,8 +3,6 @@ package parserModel.exceptions;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.errorNodes.ErrorNode;
 
-import java.util.ResourceBundle;
-
 /**
  * An Exception that represents when a command does not have
  * a body, i.e a list of commands to execute after the header

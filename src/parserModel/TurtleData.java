@@ -89,6 +89,7 @@ public class TurtleData {
 
   public double getX() { return xPos; };
   public double getY() { return yPos; };
+  public boolean getPenDown(){ return penDown;}
 
   public double setPenWidth(double width) {
     double newWidth = (int) width; // because pixels can't be fractions
