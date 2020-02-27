@@ -48,7 +48,6 @@ public class Controller {
             else{
                 myVisualizer.stopHistory();
             }
-
         }
         if(!myVisualizer.getCommand().equals("")) {
             ParserNode root = myTreeParser.parseString(myVisualizer.getCommand());

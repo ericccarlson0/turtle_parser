@@ -74,11 +74,13 @@ public class Visualizer {
     private ScrollPane userInputScrollPane;
     private TextArea userInputTextArea;
     private Button inputButton;
-    private ObservableList variableList;
-    private ObservableList commandList;
+    private ListView variableList;
+    private ListView commandList;
     private ColorChoice envColorChoice;
     private ColorChoice penColorChoice;
     private String command = "";
+    private Page variablesPage;
+    private Page commandsPage;
 
     /**
      * visualizer() - constructor for the visualizer.
@@ -207,7 +209,7 @@ public class Visualizer {
      * @param variableList list of variables.
      */
     public void setVariableList(ObservableList variableList){
-        this.variableList = variableList;
+        variablesPage.setList(variableList);
     }
 
     /**
@@ -215,7 +217,7 @@ public class Visualizer {
      * @param commandList list of possible commands.
      */
     public void setCommandList(ObservableList commandList){
-        this.commandList = commandList;
+        commandsPage.setList(commandList);
     }
 
     /**
@@ -418,12 +420,12 @@ public class Visualizer {
 
     private Node createEnvLists() {
         VBox envLists = new VBox(NODE_GAP);
-        Page commands = new Page(commandList);
-        Page variables = new Page(variableList);
+        commandsPage = new Page();
+        variablesPage = new Page();
         envColorChoice = new ColorChoice(BACKGROUND_COLOR, 255, 255, 255);
         penColorChoice = new ColorChoice(PEN_COLOR, 0, 0, 0);
         HBox colorButtons = createColorButtons();
-        envLists.getChildren().addAll(commands.getScrollPane(), variables.getScrollPane(),
+        envLists.getChildren().addAll(commandsPage.getScrollPane(), variablesPage.getScrollPane(),
                 envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons);
         return envLists;
     }
@@ -473,10 +475,6 @@ public class Visualizer {
     }
     private void helpButton() {
         HelpPage popup = new HelpPage();
-    }
-
-    private void popUpButton(ObservableList list) {
-        Page popup = new Page(list);
     }
 
     private Rectangle createField(int x, int y, int width, int height) {
