@@ -7,13 +7,7 @@ import static execution.SetXYExecutable.getDistanceTraveled;
  * object for Clear command.
  */
 public class ClearExecutable extends ExecutableSuperClass {
-  private final String executableType = "ClearScreen";
-
-  /**
-   * Constructs the executable.
-   */
-  public ClearExecutable(){
-  }
+  private static final String executableType = "ClearScreen";
 
   /**
    * Runs the executable.

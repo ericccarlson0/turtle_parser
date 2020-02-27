@@ -7,7 +7,8 @@ import visualizer.Visualizer;
  * object for RightTurn command.
  */
 public class RTurnExecutable extends ExecutableSuperClass {
-  private final String executableType = "Right";
+  private static final String executableType = "Right";
+
   private double angle;
 
   /**
@@ -25,7 +26,7 @@ public class RTurnExecutable extends ExecutableSuperClass {
    */
   public double run(Visualizer visualizerObject){
     double currentAngle = visualizerObject.getTurtleAngle();
-    double newAngle = (currentAngle+angle)%360;
+    double newAngle = (currentAngle+angle)%ExecutableSuperClass.FULL_CIRCLE;
     visualizerObject.setTurtleAngle(newAngle);
     return angle;
   }

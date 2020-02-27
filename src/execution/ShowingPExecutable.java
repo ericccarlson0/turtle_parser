@@ -7,13 +7,7 @@ import visualizer.Visualizer;
  * object for ShowP command.
  */
 public class ShowingPExecutable extends ExecutableSuperClass {
-  private final String executableType = "IsShowing";
-
-  /**
-   * Constructs the executable.
-   */
-  public ShowingPExecutable(){
-  }
+  private static final String executableType = "IsShowing";
 
   /**
    * Runs the executable.

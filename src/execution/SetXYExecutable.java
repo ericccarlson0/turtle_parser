@@ -8,7 +8,7 @@ import visualizer.Visualizer;
  * object for Setxy command.
  */
 public class SetXYExecutable extends ExecutableSuperClass {
-  private final String executableType = "SetPosition";
+  private static final String executableType = "SetPosition";
   private double xSet;
   private double ySet;
 

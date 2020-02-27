@@ -7,13 +7,7 @@ import visualizer.Visualizer;
  * object for PenUp command.
  */
 public class PenUpExecutable extends ExecutableSuperClass {
-  private final String executableType = "PenUp";
-
-  /**
-   * Constructs the executable.
-   */
-  public PenUpExecutable(){
-  }
+  private static final String executableType = "PenUp";
 
   /**
    * Runs the executable.

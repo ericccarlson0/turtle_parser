@@ -8,12 +8,7 @@ import visualizer.Visualizer;
  * object for Home command.
  */
 public class HomeExecutable extends ExecutableSuperClass {
-  private final String executableType = "Home";
-
-  /**
-   * Constructs the executable.
-   */
-  public HomeExecutable(){ }
+  private static final String executableType = "Home";
 
   /**
    * Runs the executable.

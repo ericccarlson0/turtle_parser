@@ -7,7 +7,7 @@ import visualizer.Visualizer;
  * object for Towards command.
  */
 public class TowardsExecutable extends ExecutableSuperClass {
-  private final String executableType = "SetTowards";
+  private static final String executableType = "SetTowards";
   private double xHeading;
   private double yHeading;
 

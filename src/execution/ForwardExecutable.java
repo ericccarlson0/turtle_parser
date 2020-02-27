@@ -7,7 +7,7 @@ import visualizer.Visualizer;
  * object for Forward command.
  */
 public class ForwardExecutable extends ExecutableSuperClass {
-  private final String executableType = "Forward";
+  private static final String executableType = "Forward";
   private double distance;
   /**
    * Constructs the executable.
