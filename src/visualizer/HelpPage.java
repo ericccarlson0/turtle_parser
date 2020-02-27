@@ -15,6 +15,7 @@ public class HelpPage {
     private Text helpText;
     private Stage myStage;
     private Scene myScene;
+
     public HelpPage(){
         myStage = new Stage();
         Group myGroup = new Group();
@@ -37,6 +38,4 @@ public class HelpPage {
         helpPane.setPrefSize(SCREEN_SIZE, SCREEN_SIZE);
         return helpPane;
     }
-
-
 }
