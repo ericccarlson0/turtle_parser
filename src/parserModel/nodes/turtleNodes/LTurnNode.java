@@ -7,7 +7,13 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 import parserModel.TurtleData;
 
-
+/**
+ * A node that when executed, rotates the turtle
+ * left the number of degrees returned
+ * by its child node
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class LTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
 
@@ -15,6 +21,7 @@ public class LTurnNode extends CommandParserNode {
 
     }
 
+    @Override
     public void addNode(ParserNode node) {
         if (myRotationNode == null){
             myRotationNode = node;
@@ -23,6 +30,7 @@ public class LTurnNode extends CommandParserNode {
         }
     }
 
+    @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         double degrees = myRotationNode.execute(context);
@@ -33,10 +41,5 @@ public class LTurnNode extends CommandParserNode {
 
     public boolean isComplete() {
         return myRotationNode != null;
-    }
-
-    @Override
-    public String toString(){
-        return "LT: " + myRotationNode;
     }
 }

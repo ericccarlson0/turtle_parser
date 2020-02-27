@@ -7,26 +7,33 @@ import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 import parserModel.TurtleData;
 
+/**
+ * A node that when executed, sets the pen up
+ * in the visualizer so that the turtle will not draw if moved
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class PenUpNode extends CommandParserNode {
+    private static final double SUCCESS = 0.0;
 
     public PenUpNode() {
     }
 
+    @Override
     public void addNode(ParserNode node) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.penUp();
         context.getExecutableQueue().add(new PenUpExecutable());
-        return 0; //FIXME?
-    }
-
-    public boolean isComplete() {
-        return true;
+        return SUCCESS;
     }
 
     @Override
-    public String toString(){ return "PENUP"; }
+    public boolean isComplete() {
+        return true;
+    }
 }

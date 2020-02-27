@@ -6,22 +6,28 @@ import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
+/**
+ * A node that when executed, clears the
+ * turtle screen
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class ClearNode extends CommandParserNode {
+    private static final double SUCCESS = 0.0;
 
+    @Override
     public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
 
+    @Override
     public double execute(VisualContext context) {
         context.getExecutableQueue().add(new ClearExecutable());
-        return 0; //FIXME
+        return SUCCESS;
 
     }
 
+    @Override
     public boolean isComplete() {
         return true;
     }
 
-    @Override
-    public String toString(){
-        return "CLEAR";
-    }
 }

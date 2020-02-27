@@ -5,9 +5,20 @@ import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
+/**
+ * A Node that represents an error. upon execution, the
+ * error message is passed to the View to be displayed to the
+ * user
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class ErrorNode extends CommandParserNode {
     private String myError;
 
+    /**
+     * construct an ErrorNode
+     * @param error the error message represented as a String
+     */
     public ErrorNode(String error){
         myError = error;
     }

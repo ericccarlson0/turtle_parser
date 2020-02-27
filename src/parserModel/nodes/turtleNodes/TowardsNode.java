@@ -1,6 +1,5 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.SetHeadingExecutable;
 import execution.TowardsExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
@@ -10,14 +9,23 @@ import visualizer.VisualContext;
 
 import parserModel.TurtleData;
 
-
+/**
+ * A node that when executed, rotates the turtle
+ * to face the direction of the coordinate specified
+ * by the return values of the two child nodes
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class TowardsNode extends CommandParserNode {
+    private static final double SUCCESS = 0.0;
+
     private ParserNode myXNode;
     private ParserNode myYNode;
 
     public TowardsNode() {
     }
 
+    @Override
     public void addNode(ParserNode node) {
         if (myXNode == null) {
             myXNode = node;
@@ -28,6 +36,7 @@ public class TowardsNode extends CommandParserNode {
         }
     }
 
+    @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         double xInput = myXNode.execute(context);
@@ -37,15 +46,11 @@ public class TowardsNode extends CommandParserNode {
         double degrees = Math.atan(xTowards/yTowards);
         td.setHeading(degrees); //TODO check this TOWARDS
         context.getExecutableQueue().add(new TowardsExecutable(xInput,yInput));
-        return 0.0; // TODO (is this return correct?)
-    }
-
-    public boolean isComplete() {
-        return myYNode != null;
+        return SUCCESS;
     }
 
     @Override
-    public String toString(){
-        return "TOWARDS: " + myXNode + " " + myYNode;
+    public boolean isComplete() {
+        return myYNode != null;
     }
 }

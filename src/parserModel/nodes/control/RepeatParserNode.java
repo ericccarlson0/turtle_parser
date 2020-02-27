@@ -4,6 +4,12 @@ import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
+/**
+ * A Node that represents repeating the
+ * same statement repeatedly
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class RepeatParserNode extends CommandParserNode {
     private ParserNode myTimesNode;
     private ParserNode executeNode;
@@ -15,7 +21,6 @@ public class RepeatParserNode extends CommandParserNode {
         } else if(executeNode == null){
             executeNode = node;
         }
-        //FIXME: throw exception
     }
 
     @Override

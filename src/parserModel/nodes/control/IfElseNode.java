@@ -4,7 +4,17 @@ import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
 
+/**
+ * A CommandParserNode that implements the behavior of an
+ * if/else tree. the if node is executed
+ * if the conditional evaluates to true (nonzero)
+ * otherwise the else node is executed
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class IfElseNode extends CommandParserNode {
+    private static final double FALSE = 0.0;
+
     private ParserNode myConditional;
     private ParserNode myIfNode;
     private ParserNode myElseNode;
@@ -24,7 +34,7 @@ public class IfElseNode extends CommandParserNode {
 
     @Override
     public double execute(VisualContext context) {
-        if(myConditional.execute(context) != 0.0){
+        if(myConditional.execute(context) != FALSE){
             return myIfNode.execute(context);
         }
         return myElseNode.execute(context);
