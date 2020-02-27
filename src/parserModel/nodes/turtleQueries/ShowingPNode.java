@@ -1,7 +1,5 @@
 package parserModel.nodes.turtleQueries;
-import execution.ExecutableSuperClass;
 import execution.ShowingPExecutable;
-import java.util.List;
 
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;

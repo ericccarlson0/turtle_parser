@@ -1,11 +1,8 @@
 package parserModel;
 
-import parserModel.exceptions.CommandMissingListStartException;
 import parserModel.exceptions.UnexpectedEndOfCommandException;
-
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class InputIterator implements Iterator<String> {
     private List<String> myElements;
@@ -25,6 +22,8 @@ public class InputIterator implements Iterator<String> {
         if (! hasNext()){
             throw new UnexpectedEndOfCommandException();
         }
-        return myElements.get(index++);
+        String ret = myElements.get(index);
+        index++;
+        return ret;
     }
 }
