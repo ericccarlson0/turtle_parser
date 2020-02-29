@@ -1,6 +1,6 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.TowardsExecutable;
+import execution.RotateExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
@@ -43,8 +43,11 @@ public class TowardsNode extends CommandParserNode {
         double xTowards = xInput - td.getX();
         double yTowards = yInput - td.getY();
         double degrees = Math.atan(xTowards/yTowards);
-        td.setHeading(degrees); //TODO check this TOWARDS
-        context.getExecutableQueue().add(new TowardsExecutable(xInput,yInput));
+
+        double startHeading = td.getHeading();
+        td.setHeading(degrees);
+        double endHeading = td.getHeading();
+        context.getExecutableQueue().add(new RotateExecutable(startHeading, endHeading));
         return SUCCESS;
     }
 

@@ -1,8 +1,11 @@
 package parserModel.nodes.turtleNodes;
 
 import execution.ClearExecutable;
+import parserModel.GlobalData;
+import parserModel.TurtleData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
+import visualizer.Turtle;
 import visualizer.VisualContext;
 
 /**
@@ -19,7 +22,11 @@ public class ClearNode extends CommandParserNode {
 
     @Override
     public double execute(VisualContext context) {
-        context.getExecutableQueue().add(new ClearExecutable());
+        TurtleData td = GlobalData.getInstance().turtleData();
+        double startX = td.getX();
+        double startY = td.getY();
+        td.clear();
+        context.getExecutableQueue().add(new ClearExecutable(startX, startY));
         return SUCCESS;
 
     }

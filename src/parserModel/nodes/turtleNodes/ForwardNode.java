@@ -1,6 +1,6 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.ForwardExecutable;
+import execution.MoveExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
@@ -25,11 +25,13 @@ public class ForwardNode extends CommandParserNode {
     public double execute(VisualContext context) {
         double distance = myLength.execute(context);
         TurtleData td = GlobalData.getInstance().turtleData();
-
-
-
+        double startX = td.getX();
+        double startY = td.getY();
         td.forward(distance);
-        context.getExecutableQueue().add(new ForwardExecutable(distance));
+        double endX = td.getX();
+        double endY = td.getY();
+
+        context.getExecutableQueue().add(new MoveExecutable(startX, startY, endX, endY));
         return distance;
     }
 
