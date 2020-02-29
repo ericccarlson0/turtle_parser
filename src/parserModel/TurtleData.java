@@ -89,6 +89,9 @@ public class TurtleData {
 
   public double getX() { return xPos; };
   public double getY() { return yPos; };
+  public double getHeading() {
+    return heading * 180.0 / Math.PI;
+  }
   public boolean getPenDown(){ return penDown;}
 
   public double setPenWidth(double width) {

@@ -1,5 +1,4 @@
 package execution;
-import static execution.SetXYExecutable.getDistanceTraveled;
 import visualizer.Visualizer;
 
 /**
@@ -16,11 +15,10 @@ public class HomeExecutable extends ExecutableSuperClass {
    * @return Distance traveled.
    */
   public double run(Visualizer visualizerObject){
-    double distanceTraveled = getDistanceTraveled(visualizerObject,0,0);
-    visualizerObject.setTurtleGameX(0);
-    visualizerObject.setTurtleGameY(0);
-    visualizerObject.setTurtleAngle(0);
-    return distanceTraveled;
+    //visualizerObject.set
+    //visualizerObject.setTurtleAngle(0);
+    //return distanceTraveled;
+    return 0.0; //FIXME
   }
 
   /**

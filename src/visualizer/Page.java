@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 public class Page {
     private static final int PANE_SIZE = 250;
@@ -34,6 +36,7 @@ public class Page {
         textPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         textPane.setFitToHeight(true);
         textPane.setFitToWidth(true);
-        textPane.setPrefSize(PANE_SIZE, PANE_SIZE);
+        VBox.setVgrow(textPane, Priority.ALWAYS);
+        textPane.setMinHeight(0);
     }
 }

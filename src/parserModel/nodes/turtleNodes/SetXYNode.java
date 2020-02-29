@@ -1,6 +1,6 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.SetXYExecutable;
+import execution.MoveExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
@@ -38,12 +38,14 @@ public class SetXYNode extends CommandParserNode {
     @Override
     public double execute(VisualContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
-        double xPos = myXNode.execute(context);
-        double yPos = myYNode.execute(context);
-        td.setX(xPos);
-        td.setY(yPos);
-        context.getExecutableQueue().add(new SetXYExecutable(xPos, yPos));
-        return xPos;
+        double startX = td.getX();
+        double startY = td.getY();
+        double endX = myXNode.execute(context);
+        double endY = myYNode.execute(context);
+        td.setX(endX);
+        td.setY(endY);
+        context.getExecutableQueue().add(new MoveExecutable(startX, startY, endX, endY));
+        return endX; //?
     }
 
     @Override

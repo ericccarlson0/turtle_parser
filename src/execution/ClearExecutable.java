@@ -1,5 +1,5 @@
 package execution;
-import static execution.SetXYExecutable.getDistanceTraveled;
+import visualizer.Visualizer;
 
 /**
  * @Author: Cemal Yagcioglu
@@ -9,13 +9,20 @@ import static execution.SetXYExecutable.getDistanceTraveled;
 public class ClearExecutable extends ExecutableSuperClass {
   private static final String executableType = "ClearScreen";
 
+  private double myStartX;
+  private double myStartY;
+
+  public ClearExecutable(double startX, double startY){
+    myStartX = startX;
+    myStartY = startY;
+  }
   /**
    * Runs the executable.
    * @param visualizerObject
    * @return Distance traveled.
    */
-  public double run(visualizer.Visualizer visualizerObject){
-    double distanceTraveled =  getDistanceTraveled(visualizerObject, 0, 0);
+  public double run(Visualizer visualizerObject){
+    double distanceTraveled = Math.sqrt(Math.pow(myStartX,2) + Math.pow(myStartY,2));
     visualizerObject.clearScreen();
     return distanceTraveled;
   }
