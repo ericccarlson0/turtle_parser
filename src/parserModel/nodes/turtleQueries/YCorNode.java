@@ -1,6 +1,6 @@
 package parserModel.nodes.turtleQueries;
-import execution.YCorExecutable;
 
+import parserModel.GlobalData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
@@ -12,8 +12,7 @@ public class YCorNode extends CommandParserNode {
   }
 
   public double execute(VisualContext context) {
-    context.getExecutableQueue().add(new YCorExecutable());
-    return 0; // FIXME
+    return GlobalData.getInstance().turtleData().getY();
   }
 
   public boolean isComplete() {

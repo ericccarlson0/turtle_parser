@@ -1,6 +1,6 @@
 package parserModel.nodes.turtleQueries;
-import execution.ShowingPExecutable;
 
+import parserModel.GlobalData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import visualizer.VisualContext;
@@ -12,8 +12,7 @@ public class ShowingPNode extends CommandParserNode {
   }
 
   public double execute(VisualContext context) {
-    context.getExecutableQueue().add(new ShowingPExecutable());
-    return 0; // FIXME
+    return 0.0; //GlobalData.getInstance().g FIXME
   }
 
   public boolean isComplete() {
