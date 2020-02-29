@@ -61,7 +61,7 @@ public class Controller {
             myVisualizer.resetCommand();
             //root.execute(myContext);
         }
-        else if(executables.isEmpty()){
+        else if(! executables.isEmpty()){
             executables.get(0).run(myVisualizer);
             myVisualizer.addExecutedHistory(executables.get(0).getString());
             history.add(executables.get(0));
