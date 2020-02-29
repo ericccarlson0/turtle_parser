@@ -6,17 +6,18 @@ import visualizer.Visualizer;
  * This subclass creates the executable command
  * object for RightTurn command.
  */
-public class RTurnExecutable extends ExecutableSuperClass {
+public class RotateExecutable extends ExecutableSuperClass {
   private static final String executableType = "Right";
 
-  private double angle;
+  private double myStartHeading;
+  private double myEndHeading;
 
   /**
    * Constructs the executable.
-   * @param angleInput
    */
-  public RTurnExecutable(double angleInput){
-    angle = angleInput;
+  public RotateExecutable(double startHeading, double endHeading){
+    myStartHeading = startHeading;
+    myEndHeading = endHeading;
   }
 
   /**
@@ -25,10 +26,8 @@ public class RTurnExecutable extends ExecutableSuperClass {
    * @return The angle input.
    */
   public double run(Visualizer visualizerObject){
-    double currentAngle = visualizerObject.getTurtleAngle();
-    double newAngle = (currentAngle+angle)%ExecutableSuperClass.FULL_CIRCLE;
-    visualizerObject.setTurtleAngle(newAngle);
-    return angle;
+    visualizerObject.setTurtleAngle(myEndHeading);
+    return myEndHeading - myStartHeading;
   }
 
   /**
@@ -36,7 +35,7 @@ public class RTurnExecutable extends ExecutableSuperClass {
    * @return Executable Name.
    */
   public String getString(){
-    return getExecutableName(executableType)+" "+angle;
+    return getExecutableName(executableType)+" "+(myEndHeading-myStartHeading);
   }
 
 
