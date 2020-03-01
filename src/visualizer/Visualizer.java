@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -20,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -42,6 +44,7 @@ public class Visualizer {
     private static final String USER_INPUT_HISTORY = "INPUT HISTORY: \n";
     private static final String COMMAND_EXECUTION_HISTORY = "EXECUTION HISTORY: \n";
     private static final String TERMINAL = "TERMINAL: \n";
+    private static final String TITLE_TEXT = " SLOGO ";
     private static final int ENVIRONMENT_HEIGHT = 800;
     private static final int ENVIRONMENT_WIDTH = 1350;
     private static final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
@@ -49,6 +52,7 @@ public class Visualizer {
     private static final int FIELD_CENTER_Y = 250;
     private static final int FIELD_HEIGHT = 500;
     private static final int FIELD_WIDTH = 500;
+    private static final int FIELD_BORDER = 50;
     private static final int OFFSET = 25;
     private static final int SCROLLPANE_SIZE = 250;
     private static final int TEXT_INPUT_WIDTH = 400;
@@ -366,9 +370,11 @@ public class Visualizer {
         Insets insets = new Insets(NODE_GAP/2);
         myTurtles = new ArrayList<>();
         parserField = new Group();
+        Shape myBackground = createBackground(0, 0, FIELD_WIDTH, FIELD_HEIGHT, FIELD_BORDER);
         myField = createField(0,0, FIELD_WIDTH, FIELD_HEIGHT);
         Node initialTurtle = createTurtle(TURTLE_IMAGE, FIELD_CENTER_X, FIELD_CENTER_Y, turtleIndex);
-        parserField.getChildren().addAll(myField, initialTurtle);
+        parserField.getChildren().addAll(myBackground, myField, initialTurtle);
+
         HBox inputBox = setUpInputBox();
         layout.setPrefSize(ENVIRONMENT_WIDTH - NODE_GAP, ENVIRONMENT_HEIGHT - NODE_GAP);
         layout.setBottom(inputBox);
@@ -444,21 +450,25 @@ public class Visualizer {
     }
 
     private Node createEnvButtons() {
-        HBox buttons = new HBox(NODE_GAP);
-        Button resetButton = createButton("RESET", 0, 0, buttons);
-        resetButton.setOnAction(event -> playAnimation());
-        Button replayParser = createButton("REPLAY", 0, 0, buttons);
-        replayParser.setOnAction(event -> replayButtonPressed());
-        Button helpButton = createButton("HELP", 0, 0, buttons);
-        helpButton.setOnAction(event -> helpButton());
-        Button turtleImageFileButton = createButton("NEW TURTLE IMAGE", 0, 0,  buttons);
-        languageBox = createLanguageBox();
-        buttons.getChildren().add(languageBox);
-        myScene = new Scene(myGroup, ENVIRONMENT_WIDTH, ENVIRONMENT_HEIGHT, ENVIRONMENT_BACKGROUND);
-        String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
-        myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
-        turtleImageFileButton.setOnAction(event -> turtleImageButton());
-        return buttons;
+      HBox buttons = new HBox(NODE_GAP);
+      languageBox = createLanguageBox();
+      Text title = new Text(TITLE_TEXT);
+      title.setId("title-text");
+      buttons.getChildren().addAll(title, languageBox);
+
+      Button resetButton = createButton("RESET", 0, 0, buttons);
+      resetButton.setOnAction(event -> playAnimation());
+      Button replayParser = createButton("REPLAY", 0, 0, buttons);
+      replayParser.setOnAction(event -> replayButtonPressed());
+      Button helpButton = createButton("HELP", 0, 0, buttons);
+      helpButton.setOnAction(event -> helpButton());
+      Button turtleImageFileButton = createButton("NEW TURTLE IMAGE", 0, 0,  buttons);
+
+      myScene = new Scene(myGroup, ENVIRONMENT_WIDTH, ENVIRONMENT_HEIGHT, ENVIRONMENT_BACKGROUND);
+      String stylesheet = String.format("%s%s", RESOURCE_FOLDER, STYLESHEET);
+      myScene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+      turtleImageFileButton.setOnAction(event -> turtleImageButton());
+      return buttons;
     }
 
     private void replayButtonPressed() {
@@ -482,6 +492,12 @@ public class Visualizer {
         Rectangle fld = new Rectangle(x, y, width, height);
         fld.setFill(Color.color(1.0, 1.0, 1.0));
         return fld;
+    }
+
+    private Shape createBackground(int x, int y, int width, int height, int border) {
+      Shape bg = new Rectangle(x - border/2, y - border/2, width + border, height + border);
+      bg.setId("turtle-UI");
+      return bg;
     }
 
     private ComboBox createLanguageBox() {
