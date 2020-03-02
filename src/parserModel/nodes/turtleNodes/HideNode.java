@@ -4,7 +4,7 @@ import execution.HideExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -21,10 +21,10 @@ public class HideNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.hide();
-        context.getExecutableQueue().add(new HideExecutable());
+        context.getExecutableQueue().add(new HideExecutable(true));
         return 0;
     }
 

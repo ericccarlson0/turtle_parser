@@ -1,5 +1,6 @@
 package visualizer;
 
+import execution.Executable;
 import execution.ExecutableSuperClass;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -7,16 +8,25 @@ import parserModel.TreeParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import parserModel.TurtleContext;
+import parserModel.exceptions.ParsingException;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Controller {
-    private VisualContext myContext;
     private TreeParser myTreeParser;
     private Visualizer myVisualizer;
-    private List<ExecutableSuperClass> history;
-    private List<ExecutableSuperClass> executables;
+    private List<Executable> history;
+    private List<Executable> executables;
+    private static final Map<String, Class<?>[]> positionParams = Map.of(
+            "setPosition", new Class<?>[]{double.class,double.class,double.class,double.class,double.class},
+            "setTurtleAngle", new Class<?>[]{double.class, double.class, double.class},
+            "hide", new Class<?>[]{double.class, double.class},
+            "clearScreen", new Class<?>[]{double.class});
+
 
     public Controller () {
         myTreeParser = new TreeParser();
@@ -32,7 +42,6 @@ public class Controller {
         });
         executables = new ArrayList<>();
         history = new ArrayList<>();
-        myContext = new VisualContext(myVisualizer,executables);
         start();
     }
 
@@ -47,25 +56,27 @@ public class Controller {
     }
 
     private void step () {
-        if(myVisualizer.playHistory()){
-            if(history.size() != 0){
-                history.get(0).run(myVisualizer);
-                history.remove(0);
-            }
-            else{
-                myVisualizer.stopHistory();
-            }
-        }
         if(!myVisualizer.getCommand().equals("")) {
-            double result = myTreeParser.parseString(myVisualizer.getCommand(), myContext);
+            try{
+            List<Executable> newCommands = myTreeParser.parseString(myVisualizer.getCommand());
+            for(Executable toExecute : newCommands) {
+                try {
+                    Method animationMethod = myVisualizer.getClass().getDeclaredMethod(toExecute.getCommand(), positionParams.get(toExecute.getCommand()));
+                    List<Double> params = new ArrayList<>(List.of(toExecute.getArgs()));
+                    params.add(1.0);
+                    animationMethod.invoke(myVisualizer, params.toArray());
+                    myVisualizer.addExecutedHistory(toExecute.toString());
+                } catch (Exception e) {
+                    System.out.println(toExecute.getCommand());
+                    e.printStackTrace();
+                }
+            }
+            } catch (ParsingException e){
+
+            }
+            myVisualizer.run();
             myVisualizer.resetCommand();
             //root.execute(myContext);
-        }
-        else if(executables.isEmpty()){
-            executables.get(0).run(myVisualizer);
-            myVisualizer.addExecutedHistory(executables.get(0).getString());
-            history.add(executables.get(0));
-            executables.remove(0);
         }
     }
 }

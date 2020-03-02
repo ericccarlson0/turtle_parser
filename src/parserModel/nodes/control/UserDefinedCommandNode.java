@@ -4,7 +4,7 @@ import parserModel.GlobalData;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class UserDefinedCommandNode implements ParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         CallCommandNode newCommand = new CallCommandNode(myVariables, myExecutionNode);
         GlobalData.getInstance().setCommand(myCommandName, newCommand);
         return SUCCESS;

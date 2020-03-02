@@ -4,7 +4,7 @@ import execution.PenDownExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -20,7 +20,7 @@ public class PenDownNode extends CommandParserNode {
     }
 
 
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.penDown();
         context.getExecutableQueue().add(new PenDownExecutable());

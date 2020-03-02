@@ -1,7 +1,7 @@
 package parserModel.nodes.control;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A ParserNode that represents the end of a list. this should
@@ -17,7 +17,7 @@ public class ListEndNode implements ParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         throw new UnsupportedOperationException();
     }
 

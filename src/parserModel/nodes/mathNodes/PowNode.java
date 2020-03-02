@@ -1,7 +1,7 @@
 package parserModel.nodes.mathNodes;
 
 import parserModel.nodes.BinaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Math Node that computes the first operand raised to the power of the second operand
@@ -9,5 +9,5 @@ import visualizer.VisualContext;
  * @author Mariusz Derezinski-Choo
  */
 public class PowNode extends BinaryOperationNode {
-    public double execute(VisualContext context) { return Math.pow(operand1.execute(context), operand2.execute(context)); }
+    public double execute(TurtleContext context) { return Math.pow(operand1.execute(context), operand2.execute(context)); }
 }

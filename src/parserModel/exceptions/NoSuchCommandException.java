@@ -23,12 +23,8 @@ public class NoSuchCommandException extends ParsingException {
         myCommand = command;
     }
 
-    /**
-     * fetch a ParserNode that can be executed in response to the exception
-     * @return a ParserNode that can be executed in response to the exception
-     */
     @Override
-    public ParserNode toNode() {
-        return new ErrorNode(String.format(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY),myCommand));
+    public String errorMessage() {
+        return String.format(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY),myCommand);
     }
 }

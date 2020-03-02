@@ -1,5 +1,6 @@
 package parserModel;
 
+import execution.Executable;
 import javafx.collections.ObservableList;
 import parserModel.TokenAnalyzer.TokenType;
 import parserModel.exceptions.CommandMissingListStartException;
@@ -20,8 +21,9 @@ import parserModel.nodes.control.LoopCounterNode;
 import parserModel.nodes.control.UserDefinedCommandNode;
 import parserModel.nodes.control.VariableNode;
 import parserModel.nodes.mathNodes.ConstantNode;
-import visualizer.VisualContext;
+import visualizer.Turtle;
 
+import javax.naming.Context;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +43,8 @@ public class TreeParser {
         return getFileNamesInFolder("src/parserModel/languages/");
     }
 
-    public double parseString(String input, VisualContext context){
+    public List<Executable> parseString(String input) throws ParsingException{
+
         String[] inputLines = input.split("\n");
         List<String> inputElements = new ArrayList<>();
         for (String line : inputLines){
@@ -57,12 +60,12 @@ public class TreeParser {
                 i--;
             }
         }
-        return parseList(inputElements, context);
+        return parseList(inputElements);
     }
 
-    private double parseList(List<String> input, VisualContext context){
+    private List<Executable> parseList(List<String> input){
+        TurtleContext context = new TurtleContext();
         InputIterator iterator = new InputIterator(input);
-        try{
             double returning = 0;
         while(iterator.hasNext()) {
             ParserNode returner  = parseIteratorElement(iterator);
@@ -70,10 +73,7 @@ public class TreeParser {
                     returning = returner.execute(context);
             System.out.println("" + returning);
         }
-        return returning;
-        } catch (ParsingException e){
-            return e.toNode().execute(context);
-        }
+        return context.getExecutableQueue();
     }
 
     /**

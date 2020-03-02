@@ -3,7 +3,7 @@ package parserModel.nodes.control;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Node that sets a variable equal to the value
@@ -29,7 +29,7 @@ public class SetVariable extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double executeValue = myAssignmentNode.execute(context);
         GlobalData.getInstance().setVariable(myVariableNode.name(),executeValue);
         return executeValue;

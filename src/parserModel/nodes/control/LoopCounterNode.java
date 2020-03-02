@@ -5,7 +5,7 @@ import parserModel.nodes.ParserNode;
 import parserModel.nodes.booleanNodes.NotEqualNode;
 import parserModel.nodes.mathNodes.ConstantNode;
 import parserModel.nodes.mathNodes.SumNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class LoopCounterNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         if(! validated){
             switch(myIterableParameters.size()){
                 case SIMPLE_LOOP:

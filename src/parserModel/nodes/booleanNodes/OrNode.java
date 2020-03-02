@@ -1,7 +1,7 @@
 package parserModel.nodes.booleanNodes;
 
 import parserModel.nodes.BinaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Binary Operation Node that returns 1 if
@@ -16,7 +16,7 @@ public class OrNode extends BinaryOperationNode {
     private static final double FALSE = 0.0;
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         return (operand1.execute(context) != FALSE || operand2.execute(context) != FALSE) ? RETURN_TRUE : RETURN_FALSE;
     }
 }
