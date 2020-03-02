@@ -2,7 +2,7 @@ package parserModel.nodes.mathNodes;
 
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Math Node that represents a constant numerical value
@@ -26,7 +26,7 @@ public class ConstantNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         return myValue;
     }
 

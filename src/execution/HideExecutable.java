@@ -9,14 +9,20 @@ import visualizer.Visualizer;
 public class HideExecutable extends ExecutableSuperClass {
   private static final String executableType = "HideTurtle";
 
-  /**
-   * Runs the executable.
-   * @param visualizerObject
-   * @return 0.
-   */
-  public double run(Visualizer visualizerObject){
-    visualizerObject.hide();
-    return 0;
+  private boolean myHide;
+
+  public HideExecutable(boolean hide){
+    myHide = hide;
+  }
+
+  @Override
+  public String getCommand() {
+    return "hide";
+  }
+
+  @Override
+  public Double[] getArgs() {
+    return new Double[]{myHide ? 0.0 : 1.0};
   }
 
   /**

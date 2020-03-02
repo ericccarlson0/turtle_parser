@@ -3,7 +3,7 @@ package parserModel.nodes.errorNodes;
 import execution.ErrorReportingExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Node that represents an error. upon execution, the
@@ -29,7 +29,7 @@ public class ErrorNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         context.getExecutableQueue().add(new ErrorReportingExecutable(myError));
         return 0;
     }

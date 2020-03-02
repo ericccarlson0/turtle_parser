@@ -1,11 +1,10 @@
 package parserModel.nodes.turtleQueries;
 
-import execution.HeadingExecutable;
 import parserModel.GlobalData;
 import parserModel.TurtleData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 public class HeadingNode extends CommandParserNode {
 
@@ -13,10 +12,9 @@ public class HeadingNode extends CommandParserNode {
     throw new UnsupportedOperationException();
   }
 
-  public double execute(VisualContext context) {
+  public double execute(TurtleContext context) {
     TurtleData td = GlobalData.getInstance().turtleData();
-    context.getExecutableQueue().add(new HeadingExecutable());
-    return td.getY(); // FIXME
+    return td.getHeading();
   }
 
   public boolean isComplete() {

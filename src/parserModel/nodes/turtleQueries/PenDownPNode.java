@@ -1,9 +1,9 @@
 package parserModel.nodes.turtleQueries;
 
-import execution.PenDownPExecutable;
+import parserModel.GlobalData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 public class PenDownPNode extends CommandParserNode {
 
@@ -11,9 +11,8 @@ public class PenDownPNode extends CommandParserNode {
     throw new UnsupportedOperationException();
   }
 
-  public double execute(VisualContext context) {
-    context.getExecutableQueue().add(new PenDownPExecutable());
-    return 0; // FIXME
+  public double execute(TurtleContext context) {
+    return GlobalData.getInstance().turtleData().getPenDown()? 1 : 0;
   }
 
   public boolean isComplete() {

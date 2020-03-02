@@ -14,12 +14,8 @@ import parserModel.nodes.errorNodes.ErrorNode;
 public class MissingCommandBodyException extends ParsingException {
     private static final String ERROR_MESSAGE_KEY = "MissingCommandBody";
 
-    /**
-     * fetch a ParserNode that can be executed in response to the exception
-     * @return a ParserNode that can be executed in response to the exception
-     */
     @Override
-    public ParserNode toNode() {
-        return new ErrorNode(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY));
+    public String errorMessage() {
+        return ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY);
     }
 }

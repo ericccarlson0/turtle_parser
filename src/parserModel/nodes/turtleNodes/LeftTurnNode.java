@@ -1,10 +1,10 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.LTurnExecutable;
+import execution.RotateExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -14,10 +14,10 @@ import parserModel.TurtleData;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class LTurnNode extends CommandParserNode {
+public class LeftTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
 
-    public LTurnNode(){
+    public LeftTurnNode(){
         super();
         myRotationNode = null;
     }
@@ -32,11 +32,13 @@ public class LTurnNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         double degrees = myRotationNode.execute(context);
+        double startHeading = td.getHeading();
         td.turnCounterClockwise(degrees);
-        context.getExecutableQueue().add(new LTurnExecutable(degrees));
+        double endHeding = td.getHeading();
+        context.getExecutableQueue().add(new RotateExecutable(startHeading, endHeding));
         return degrees;
     }
 

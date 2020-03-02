@@ -13,6 +13,8 @@ public class TurtleData {
   private boolean penDown;
   private boolean isShowing;
   private double[] color; // NOTE: will not be used if the turtle is an imported image.
+  private double myPenColorIndex;
+  private double myShapeIndex;
 
   /**
    * There are three constructors for the tree most common use cases.
@@ -86,10 +88,26 @@ public class TurtleData {
   public void setHeading(double degrees) { heading = 360 % degrees; }
   public void penDown() { penDown = true; }
   public void penUp() { penDown = true; }
+  public void setShapeIndex(double index){
+    myShapeIndex = index;
+  }
+  public void setPenColor(double index){
+    myPenColorIndex = index;
+  }
+
 
   public double getX() { return xPos; };
   public double getY() { return yPos; };
+  public double getHeading() {
+    return heading * 180.0 / Math.PI;
+  }
   public boolean getPenDown(){ return penDown;}
+  public double getPenColor(){
+    return myPenColorIndex;
+  }
+  public double getShapeIndex(){
+    return myShapeIndex;
+  }
 
   public double setPenWidth(double width) {
     double newWidth = (int) width; // because pixels can't be fractions

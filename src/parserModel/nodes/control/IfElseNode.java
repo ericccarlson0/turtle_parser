@@ -2,7 +2,7 @@ package parserModel.nodes.control;
 
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A CommandParserNode that implements the behavior of an
@@ -40,7 +40,7 @@ public class IfElseNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         if(myConditional.execute(context) != FALSE){
             return myIfNode.execute(context);
         }

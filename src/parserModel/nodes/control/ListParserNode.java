@@ -2,7 +2,7 @@ package parserModel.nodes.control;
 
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class ListParserNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double returning = DEFAULT_RETURN;
         for (ParserNode node : myChildren){
             returning = node.execute(context);

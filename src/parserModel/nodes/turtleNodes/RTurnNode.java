@@ -1,10 +1,10 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.RTurnExecutable;
+import execution.RotateExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -32,11 +32,13 @@ public class RTurnNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double degrees = myRotationNode.execute(context);
         TurtleData td = GlobalData.getInstance().turtleData();
+        double startHeading = td.getHeading();
         td.turnClockwise(degrees);
-        context.getExecutableQueue().add(new RTurnExecutable(degrees));
+        double endHeading = td.getHeading();
+        context.getExecutableQueue().add(new RotateExecutable(startHeading, endHeading));
         return degrees;
     }
 

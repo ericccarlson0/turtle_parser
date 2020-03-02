@@ -1,7 +1,7 @@
 package parserModel.nodes.mathNodes;
 
 import parserModel.nodes.BinaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Math Node that computes the quotient of its children
@@ -10,7 +10,7 @@ import visualizer.VisualContext;
  * @author Mariusz Derezinski-Choo
  */
 public class QuotientNode extends BinaryOperationNode {
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double o1 = operand1.execute(context);
         double o2 = operand2.execute(context);
         if (o1 == 0.0) {
