@@ -40,16 +40,12 @@ public class Turtle extends ImageView{
         setRotate(RIGHT_ANGLE);
     }
 
+
+
     public void setAngle(double angle){
         this.angle = angle;
         setRotate(angle + RIGHT_ANGLE);
     }
-
-    /**
-     * getPen() - getter for the turtle's pen status.
-     * @return turtle's pen status.
-     */
-    public boolean getPen() { return this.pen; }
 
     /**
      * setPen() - setter for the turtle's pen status.
