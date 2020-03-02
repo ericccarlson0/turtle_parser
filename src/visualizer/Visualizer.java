@@ -350,6 +350,7 @@ public class Visualizer {
         languageBox.getItems().clear();
         languageBox.getItems().addAll(options);
     }
+
     public ObjectProperty<String> getLanguageProperty(){
         return languageBox.valueProperty();
     }

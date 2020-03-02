@@ -7,11 +7,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class Main extends Application {
-
-     public static void main (String[] args) {
+  public static void main (String[] args) {
         launch(args);
     }
-
     public void start(Stage stage) throws IOException {
         Controller test = new Controller();
     }
