@@ -18,6 +18,17 @@ public class PenUpExecutable extends ExecutableSuperClass {
     visualizerObject.setTurtlePen(false);
     return 0;
   }
+
+  @Override
+  public String getCommand() {
+    return null;
+  }
+
+  @Override
+  public Double[] getArgs() {
+    return new Double[0];
+  }
+
   /**
    * Returns the string value to be shown on the executable history.
    * @return Executable Name.

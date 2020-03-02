@@ -20,14 +20,14 @@ public class RotateExecutable extends ExecutableSuperClass {
     myEndHeading = endHeading;
   }
 
-  /**
-   * Runs the executable.
-   * @param visualizerObject
-   * @return The angle input.
-   */
-  public double run(Visualizer visualizerObject){
-    visualizerObject.setTurtleAngle(myEndHeading);
-    return myEndHeading - myStartHeading;
+  @Override
+  public String getCommand() {
+    return "setTurtleAngle";
+  }
+
+  @Override
+  public Double[] getArgs() {
+    return new Double[]{myStartHeading, myEndHeading};
   }
 
   /**

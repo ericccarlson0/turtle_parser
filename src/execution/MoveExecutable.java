@@ -2,6 +2,8 @@ package execution;
 
 import visualizer.Visualizer;
 
+import java.util.List;
+
 /**
  * @Author: Cemal Yagcioglu
  * This subclass creates the executable command
@@ -25,15 +27,14 @@ public class MoveExecutable extends ExecutableSuperClass {
     myEndY = endY;
   }
 
-  /**
-   * Runs the executable.
-   * @param visualizerObject
-   * @return Distance input.
-   */
-  public double run(Visualizer visualizerObject){
-    double distance = Math.sqrt(Math.pow(myEndX  - myStartX, 2) + Math.pow(myStartY - myEndY, 2));
-    visualizerObject.setPosition(myStartX, myStartY, myEndX, myEndY);
-    return distance;
+  @Override
+  public String getCommand() {
+    return "setPosition";
+  }
+
+  @Override
+  public Double[] getArgs() {
+    return new Double[]{myStartX, myStartY, myEndX, myEndY};
   }
 
   /**

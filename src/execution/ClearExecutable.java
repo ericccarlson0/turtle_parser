@@ -16,16 +16,17 @@ public class ClearExecutable extends ExecutableSuperClass {
     myStartX = startX;
     myStartY = startY;
   }
-  /**
-   * Runs the executable.
-   * @param visualizerObject
-   * @return Distance traveled.
-   */
-  public double run(Visualizer visualizerObject){
-    double distanceTraveled = Math.sqrt(Math.pow(myStartX,2) + Math.pow(myStartY,2));
-    visualizerObject.clearScreen();
-    return distanceTraveled;
+
+  @Override
+  public String getCommand() {
+    return "clearScreen"; //TODO
   }
+
+  @Override
+  public Double[] getArgs() {
+    return new Double[0];
+  }
+
   /**
    * Returns the string value to be shown on the executable history.
    * @return Executable Name.

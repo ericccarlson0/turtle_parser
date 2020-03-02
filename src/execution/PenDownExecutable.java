@@ -9,15 +9,17 @@ import visualizer.Visualizer;
 public class PenDownExecutable extends ExecutableSuperClass {
   private static final String executableType = "PenDown";
 
-  /**
-   * Runs the executable.
-   * @param visualizerObject
-   * @return 1.
-   */
-  public double run(Visualizer visualizerObject){
-    visualizerObject.setTurtlePen(true);
-    return 1;
+
+  @Override
+  public String getCommand() {
+    return null;
   }
+
+  @Override
+  public Double[] getArgs() {
+    return new Double[0];
+  }
+
   /**
    * Returns the string value to be shown on the executable history.
    * @return Executable Name.

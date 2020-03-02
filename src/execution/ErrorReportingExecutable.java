@@ -16,16 +16,16 @@ public class ErrorReportingExecutable extends ExecutableSuperClass {
         myErrorMessage = error;
     }
 
-    /**
-     * Runs the executable.
-     * @param visualizerObject
-     * @return 0.
-     */
     @Override
-    public double run(Visualizer visualizerObject) {
-        visualizerObject.addUserInput(myErrorMessage);
-        return 0;
+    public String getCommand() {
+        return null;
     }
+
+    @Override
+    public Double[] getArgs() {
+        return new Double[0];
+    }
+
     /**
      * Returns the string value to be shown on the executable history.
      * @return Executable Name.

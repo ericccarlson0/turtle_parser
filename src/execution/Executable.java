@@ -1,6 +1,8 @@
 package execution;
 import visualizer.Visualizer;
 
+import java.util.List;
+
 /**
  * @Author: Cemal Yagcioglu
  * This Interface offers implementation of
@@ -11,14 +13,9 @@ import visualizer.Visualizer;
  */
 public interface Executable {
 
-  /**
-   * This method is called when the priorly defined executable
-   * command is to be runned. The method can interact with
-   * visualizerObject passed to it.
-   * @param visualizerObject
-   * @return The return value chosen by the executable type definer. Ex: Angle, distance, 0, 1.
-   */
-  double run(Visualizer visualizerObject);
+  String getCommand();
+
+  Double[] getArgs();
 
   /**
    * Returns the preset string value for the executable for
