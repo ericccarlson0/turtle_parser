@@ -1,7 +1,7 @@
 package parserModel.nodes.mathNodes;
 
 import parserModel.nodes.UnaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Math Node that computes the additive inverse of its child
@@ -9,5 +9,5 @@ import visualizer.VisualContext;
  * @author Mariusz Derezinski-Choo
  */
 public class MinusNode extends UnaryOperationNode {
-    public double execute(VisualContext context) { return -1 * myArgumentNode.execute(context); }
+    public double execute(TurtleContext context) { return -1 * myArgumentNode.execute(context); }
 }

@@ -1,7 +1,7 @@
 package parserModel.nodes.mathNodes;
 
 import parserModel.nodes.UnaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Math Node that computes the natural logarithm of its child
@@ -9,7 +9,7 @@ import visualizer.VisualContext;
  * @author Mariusz Derezinski-Choo
  */
 public class LogNode extends UnaryOperationNode {
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         return Math.log(myArgumentNode.execute(context));
     }
 }
