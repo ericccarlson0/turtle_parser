@@ -3,7 +3,7 @@ package parserModel.nodes.turtleQueries;
 import parserModel.GlobalData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 public class YCorNode extends CommandParserNode {
 
@@ -11,7 +11,7 @@ public class YCorNode extends CommandParserNode {
     throw new UnsupportedOperationException();
   }
 
-  public double execute(VisualContext context) {
+  public double execute(TurtleContext context) {
     return GlobalData.getInstance().turtleData().getY();
   }
 
