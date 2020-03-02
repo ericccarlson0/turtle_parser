@@ -21,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
@@ -35,6 +36,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -63,6 +66,16 @@ public class Visualizer {
     private static final String TERMINAL = "TERMINAL: \n";
     private static final Insets MARGINS = new Insets(10,10,10,10);
     private static final double FIELD_SIZE = 500;
+    private static final String TITLE_TEXT = " SLOGO ";
+    private static final int ENVIRONMENT_HEIGHT = 800;
+    private static final int ENVIRONMENT_WIDTH = 1350;
+    private static final Color ENVIRONMENT_BACKGROUND = Color.LIGHTGRAY;
+    private static final int FIELD_CENTER_X = 250;
+    private static final int FIELD_CENTER_Y = 250;
+    private static final int FIELD_HEIGHT = 500;
+    private static final int FIELD_WIDTH = 500;
+    private static final int FIELD_BORDER = 50;
+    private static final int OFFSET = 25;
     private static final int SCROLLPANE_SIZE = 250;
     private static final int TEXT_INPUT_WIDTH = 400;
     private static final int TEXT_INPUT_SIZE = 150;
@@ -346,6 +359,7 @@ public class Visualizer {
         myTurtles = new ArrayList<>();
 
         myParserPane = new Pane();
+        myParserPane.setId("turtle-UI");
         myParserPane.setPadding(new Insets(50, 50, 50, 50));
         myParserPane.setMinSize(FIELD_SIZE, FIELD_SIZE);
         myParserPane.setPrefSize(FIELD_SIZE, FIELD_SIZE);
@@ -457,6 +471,10 @@ public class Visualizer {
 
     private Node createEnvButtons() {
         HBox buttons = new HBox(NODE_GAP);
+        languageBox = createLanguageBox();
+        Text title = new Text(TITLE_TEXT);
+        title.setId("title-text");
+
         Pane buttonPane = new Pane(buttons);
         buttons.prefWidthProperty().bind(buttonPane.widthProperty());
 
@@ -475,7 +493,7 @@ public class Visualizer {
         languageBox = createLanguageBox();
         HBox.setHgrow(languageBox, Priority.ALWAYS);
 
-        buttons.getChildren().addAll(resetButton, replayParser, helpButton, turtleImageFileButton, languageBox);
+        buttons.getChildren().addAll(title, resetButton, replayParser, helpButton, turtleImageFileButton, languageBox);
         return buttonPane;
     }
 
@@ -494,6 +512,19 @@ public class Visualizer {
 
     private void helpButton() {
         HelpPage popup = new HelpPage();
+    }
+
+
+    private Rectangle createField(int x, int y, int width, int height) {
+        Rectangle fld = new Rectangle(x, y, width, height);
+        fld.setFill(Color.color(1.0, 1.0, 1.0));
+        return fld;
+    }
+
+    private Shape createBackground(int x, int y, int width, int height, int border) {
+      Shape bg = new Rectangle(x - border/2, y - border/2, width + border, height + border);
+      bg.setId("turtle-UI");
+      return bg;
     }
 
     private ComboBox createLanguageBox() {
