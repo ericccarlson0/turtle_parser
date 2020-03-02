@@ -5,7 +5,7 @@ import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.CommandParserNode;
 import parserModel.TurtleData;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A node that when executed, rotates the turtle
@@ -30,7 +30,7 @@ public class SetHeadingNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double degrees = myDegrees.execute(context);
         TurtleData td = GlobalData.getInstance().turtleData();
         double startHeading = td.getHeading();

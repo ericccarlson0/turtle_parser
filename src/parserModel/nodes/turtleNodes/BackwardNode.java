@@ -4,7 +4,7 @@ import execution.MoveExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -24,7 +24,7 @@ public class BackwardNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double distance = myLength.execute(context);
         TurtleData td = GlobalData.getInstance().turtleData();
         double startX = td.getX();

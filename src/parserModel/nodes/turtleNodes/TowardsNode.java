@@ -4,7 +4,7 @@ import execution.RotateExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -36,7 +36,7 @@ public class TowardsNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         double xInput = myXNode.execute(context);
         double yInput = myYNode.execute(context);

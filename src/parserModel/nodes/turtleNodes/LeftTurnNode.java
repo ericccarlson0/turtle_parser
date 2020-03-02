@@ -14,10 +14,10 @@ import parserModel.TurtleData;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class LTurnNode extends CommandParserNode {
+public class LeftTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
 
-    public LTurnNode(){
+    public LeftTurnNode(){
         super();
         myRotationNode = null;
     }

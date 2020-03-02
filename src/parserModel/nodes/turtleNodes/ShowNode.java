@@ -1,10 +1,10 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.ShowExecutable;
+import execution.HideExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -20,10 +20,10 @@ public class ShowNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         TurtleData td = GlobalData.getInstance().turtleData();
         td.show();
-        context.getExecutableQueue().add(new ShowExecutable());
+        context.getExecutableQueue().add(new HideExecutable(false));
         return 0;
 
     }
