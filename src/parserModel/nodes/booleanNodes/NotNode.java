@@ -1,7 +1,7 @@
 package parserModel.nodes.booleanNodes;
 
 import parserModel.nodes.UnaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Unary Operation Node that returns 1 only if the
@@ -14,5 +14,5 @@ public class NotNode extends UnaryOperationNode {
     private static final double RETURN_FALSE = 0.0;
     private static final double FALSE = 0.0;
 
-    public double execute(VisualContext context) { return (myArgumentNode.execute(context) == FALSE) ? RETURN_TRUE : RETURN_FALSE; }
+    public double execute(TurtleContext context) { return (myArgumentNode.execute(context) == FALSE) ? RETURN_TRUE : RETURN_FALSE; }
 }

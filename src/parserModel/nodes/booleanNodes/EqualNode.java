@@ -1,7 +1,7 @@
 package parserModel.nodes.booleanNodes;
 
 import parserModel.nodes.BinaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Binary Operation Node that checks for
@@ -15,7 +15,7 @@ public class EqualNode extends BinaryOperationNode {
     private static final double RETURN_TRUE = 1.0;
     private static final double RETURN_FALSE = 0.0;
 
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         return (operand1.execute(context) == operand2.execute(context)) ? RETURN_TRUE : RETURN_FALSE;
     }
 }
