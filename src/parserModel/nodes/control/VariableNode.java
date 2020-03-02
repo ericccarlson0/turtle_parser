@@ -3,7 +3,7 @@ package parserModel.nodes.control;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A node that represents a variable. upon execution, the variable value
@@ -36,7 +36,7 @@ public class VariableNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         return GlobalData.getInstance().getVariable(myVariableName);
     }
 

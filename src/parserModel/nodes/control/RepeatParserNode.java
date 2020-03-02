@@ -2,7 +2,7 @@ package parserModel.nodes.control;
 
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A Node that represents repeating the
@@ -30,7 +30,7 @@ public class RepeatParserNode extends CommandParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double returnValue = 0;
         for(int i = 0; i < myTimesNode.execute(context); i++){
             returnValue = executeNode.execute(context);

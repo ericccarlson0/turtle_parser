@@ -1,7 +1,7 @@
 package parserModel.nodes.control;
 
 import parserModel.nodes.BinaryOperationNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A CommandParserNode that implements the behavior of an
@@ -16,7 +16,7 @@ public class IfNode extends BinaryOperationNode {
     private static final double RETURN_FALSE = 0.0;
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         if(operand1.execute(context) != FALSE){
             return operand2.execute(context);
         }

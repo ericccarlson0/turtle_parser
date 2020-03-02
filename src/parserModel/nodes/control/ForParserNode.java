@@ -2,7 +2,7 @@ package parserModel.nodes.control;
 
 import parserModel.nodes.ControlParserNode;
 import parserModel.nodes.ParserNode;
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * A CommandParserNode that implements the behavior of a
@@ -32,7 +32,7 @@ public class ForParserNode extends ControlParserNode {
     }
 
     @Override
-    public double execute(VisualContext context) {
+    public double execute(TurtleContext context) {
         double lastValue = 0;
         while(myForNode.execute(context) != 0){
             lastValue = myBodyNode.execute(context);
