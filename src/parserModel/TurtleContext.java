@@ -1,22 +1,19 @@
-package visualizer;
+package parserModel;
 
+import execution.Executable;
 import execution.ExecutableSuperClass;
+import visualizer.Visualizer;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class VisualContext {
-    private Visualizer myVisualizer;
-    private List<ExecutableSuperClass> myExecutableSuperClassQueue;
+public class TurtleContext {
+    private List<Executable> myExecutableSuperClassQueue;
 
-    public VisualContext(Visualizer visualizer, List<ExecutableSuperClass> queue){
-        myVisualizer = visualizer;
-        myExecutableSuperClassQueue = queue;
+    public TurtleContext(){
+        myExecutableSuperClassQueue = new ArrayList<>();
     }
-
-    public Visualizer getVisualizer(){
-        return myVisualizer;
-    }
-    public List<ExecutableSuperClass> getExecutableQueue(){
+    public List<Executable> getExecutableQueue(){
         return myExecutableSuperClassQueue;
     }
 }
