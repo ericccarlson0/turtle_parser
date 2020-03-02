@@ -32,7 +32,7 @@ import parserModel.nodes.turtleNodes.ClearNode;
 import parserModel.nodes.turtleNodes.ForwardNode;
 import parserModel.nodes.turtleNodes.HideNode;
 import parserModel.nodes.turtleNodes.HomeNode;
-import parserModel.nodes.turtleNodes.LTurnNode;
+import parserModel.nodes.turtleNodes.LeftTurnNode;
 import parserModel.nodes.turtleNodes.PenDownNode;
 import parserModel.nodes.turtleNodes.PenUpNode;
 import parserModel.nodes.turtleNodes.RTurnNode;
@@ -61,7 +61,7 @@ public class CommandFactory {
             case "Backward":
                 return new BackwardNode();
             case "Left":
-                return new LTurnNode();
+                return new LeftTurnNode();
             case "Right":
                 return new RTurnNode();
             case "SetHeading":

@@ -1,6 +1,6 @@
 package parserModel.nodes;
 
-import visualizer.VisualContext;
+import parserModel.TurtleContext;
 
 /**
  * Defines core functionality of a ParserNode, a Node that the parser can create and
@@ -22,7 +22,7 @@ public interface ParserNode {
      * @param context the context within which this command should be executed
      * @return double the result of the execution
      */
-    double execute(VisualContext context);
+    double execute(TurtleContext context);
 
     /**
      * check if the Node is complete (requires no more children)
