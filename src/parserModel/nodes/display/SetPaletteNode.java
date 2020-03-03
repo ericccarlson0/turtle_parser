@@ -29,7 +29,7 @@ public class SetPaletteNode extends CommandParserNode {
         double red = myRed.execute(context);
         double green = myGreen.execute(context);
         double blue = myBlue.execute(context);
-        context.getExecutableQueue().add(new SetPaletteExecutable(colorIndex,red, green, blue));
+        context.addToQueue(new SetPaletteExecutable(colorIndex,red, green, blue));
         return colorIndex;
     }
 

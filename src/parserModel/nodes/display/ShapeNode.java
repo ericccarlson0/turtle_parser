@@ -13,7 +13,8 @@ public class ShapeNode extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        return GlobalData.getInstance().turtleData().getShapeIndex();
+        //return GlobalData.getInstance().turtleData().getShapeIndex();
+        return 0.0; //FIXME!
     }
 
     @Override
