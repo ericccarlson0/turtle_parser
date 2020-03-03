@@ -98,7 +98,10 @@ public class GlobalData {
         return myTurtles.getOrDefault(id, null);
     }
     public void createTurtle(double id){
-        myTurtles.putIfAbsent(id, new TurtleData()); //FIXME?
+        System.out.println("creating turtles of id: " + id);
+        for(int i = 0; i <= id; i++) {
+            myTurtles.putIfAbsent(id, new TurtleData());
+        }
     }
 
     /**

@@ -137,6 +137,8 @@ public class TreeParser {
                 } else if(root.typeOfNode() == NodeType.FUNCTION_DEFINITION){
                     root = parseForCommandDefinition(iterator);
                     root.addNode(parseForCommandBody(iterator));
+                } else if(root.typeOfNode() == NodeType.TELL){
+                    validateOpenBracket(iterator); //TODO: Throw exception
                 }
                 while(! root.isComplete()) {
                     root.addNode(parseIteratorElement(iterator));
@@ -151,6 +153,7 @@ public class TreeParser {
             case Variable:
                 return new VariableNode(nextElement);
             case ListStart:
+                System.out.println("PARSING LIST!");
                 return parseForList(iterator);
             case ListEnd:
                 return new ListEndNode();
