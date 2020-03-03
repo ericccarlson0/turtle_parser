@@ -1,50 +1,60 @@
 package parserModel.nodes.control;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.BinaryOperationNode;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.UnaryOperationNode;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class TellNode implements ParserNode {
+public class AskNode implements ParserNode {
     private List<ParserNode> myNodes;
-    private boolean isComplete;
+    private ParserNode myExecute;
+    private boolean myNodesFull;
 
-    public TellNode(){
+    public AskNode(){
         myNodes = new ArrayList<>();
     }
-
     @Override
     public void addNode(ParserNode node) {
-        if(node.typeOfNode() == NodeType.LIST_END){
-            isComplete = true;
+        System.out.println("ADDING THIS MF NODE " + node);
+        if(myNodesFull){
+            myExecute = node;
+            return;
+        }
+        if(node.typeOfNode().equals(NodeType.LIST_END)){
+            myNodesFull = true;
             return;
         }
         myNodes.add(node);
+
     }
 
     @Override
     public double execute(TurtleContext context) {
+        System.out.println("VICTORY " + context.getActiveTurtles());
         List<Double> activeTurtles = new ArrayList<>();
         for(ParserNode pn : myNodes){
             activeTurtles.add(pn.execute(context));
         }
         Collections.sort(activeTurtles);
         context.getData().createTurtle(activeTurtles.get(activeTurtles.size()-1));
+        List<Double> previousActives = context.getActiveTurtles();
         context.clearActiveTurtles();
         context.addActiveTurtles(activeTurtles);
-        return 1;
+        System.out.println("VICTORY " + context.getActiveTurtles());
+        double ret = myExecute.execute(context);
+        context.clearActiveTurtles();
+        context.addActiveTurtles(previousActives);
+        System.out.println("VICORY " + context.getActiveTurtles());
+        return ret;
     }
 
     @Override
     public boolean isComplete() {
-        return isComplete;
+        return myExecute != null;
     }
 
     @Override

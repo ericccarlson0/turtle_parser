@@ -1,7 +1,9 @@
 package parserModel.nodes;
+
+import parserModel.TurtleContext;
+
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
-import parserModel.TurtleContext;
 
 
 public class CommandFactory {

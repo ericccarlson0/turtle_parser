@@ -36,7 +36,7 @@ public class TurtleContext{
         myExecutableSuperClassQueue.add(ex);
     }
     public List<Double> getActiveTurtles(){
-        return myActiveTurtles;
+        return new ArrayList<>(myActiveTurtles);
     }
     public void addActiveTurtles(Collection<Double> ids){
         myActiveTurtles.addAll(ids);

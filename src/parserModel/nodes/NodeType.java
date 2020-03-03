@@ -4,5 +4,6 @@ public enum NodeType {
     SIMPLE,
     LOOP,
     LIST_END,
-    FUNCTION_DEFINITION
+    FUNCTION_DEFINITION,
+    TELL
 }
