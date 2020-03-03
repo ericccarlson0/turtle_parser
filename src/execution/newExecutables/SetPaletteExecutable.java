@@ -1,8 +1,9 @@
 package execution.newExecutables;
 
 import execution.Executable;
+import execution.ExecutableSuperClass;
 
-public class SetPaletteExecutable implements Executable {
+public class SetPaletteExecutable extends ExecutableSuperClass {
     private double myColorIndex;
     private double myRed;
     private double myGreen;
@@ -20,10 +21,6 @@ public class SetPaletteExecutable implements Executable {
         return null;
     }
 
-    @Override
-    public Double[] getArgs() {
-        return new Double[]{myColorIndex, myRed, myGreen, myBlue};
-    }
 
     @Override
     public String getString() {
