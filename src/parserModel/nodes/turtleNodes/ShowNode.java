@@ -7,6 +7,8 @@ import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
+import java.util.List;
+
 /**
  * A node that when executed, Shows the Turtle on the Screen
  *
@@ -21,11 +23,14 @@ public class ShowNode extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        TurtleData td = GlobalData.getInstance().turtleData();
-        td.show();
-        context.getExecutableQueue().add(new HideExecutable(false));
+        HideExecutable hideExecutable = new HideExecutable();
+        for(double id : context.getActiveTurtles()){
+            TurtleData td = context.getData().turtleData(id);
+            td.hide();
+            hideExecutable.addArg(List.of(id, 0.0)); // 0.0 for don't hide?
+        }
+        context.addToQueue(hideExecutable);
         return 0;
-
     }
 
     @Override

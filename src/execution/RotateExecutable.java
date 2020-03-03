@@ -8,16 +8,11 @@ import visualizer.Visualizer;
  */
 public class RotateExecutable extends ExecutableSuperClass {
   private static final String executableType = "Right";
+  private static final int ARGUMENT_SIZE = 3; //id, startheading, endHeading
 
-  private double myStartHeading;
-  private double myEndHeading;
-
-  /**
-   * Constructs the executable.
-   */
-  public RotateExecutable(double startHeading, double endHeading){
-    myStartHeading = startHeading;
-    myEndHeading = endHeading;
+  public RotateExecutable(){
+    super();
+    argSize = ARGUMENT_SIZE;
   }
 
   @Override
@@ -25,17 +20,12 @@ public class RotateExecutable extends ExecutableSuperClass {
     return "setTurtleAngle";
   }
 
-  @Override
-  public Double[] getArgs() {
-    return new Double[]{myStartHeading, myEndHeading};
-  }
-
   /**
    * Returns the string value to be shown on the executable history.
    * @return Executable Name.
    */
   public String getString(){
-    return getExecutableName(executableType)+" "+(myEndHeading-myStartHeading);
+    return getExecutableName(executableType);
   }
 
 

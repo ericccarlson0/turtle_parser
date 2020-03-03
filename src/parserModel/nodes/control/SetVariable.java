@@ -31,7 +31,7 @@ public class SetVariable extends CommandParserNode {
     @Override
     public double execute(TurtleContext context) {
         double executeValue = myAssignmentNode.execute(context);
-        GlobalData.getInstance().setVariable(myVariableNode.name(),executeValue);
+        context.getData().setVariable(myVariableNode.name(),executeValue);
         return executeValue;
     }
 

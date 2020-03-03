@@ -1,8 +1,9 @@
 package execution.newExecutables;
 
 import execution.Executable;
+import execution.ExecutableSuperClass;
 
-public class SetPenColorExecutable implements Executable {
+public class SetPenColorExecutable extends ExecutableSuperClass {
     private double myPenColor;
 
     public SetPenColorExecutable(double newPenColor) {
@@ -14,10 +15,6 @@ public class SetPenColorExecutable implements Executable {
         return null;
     }
 
-    @Override
-    public Double[] getArgs() {
-        return new Double[]{myPenColor};
-    }
 
     @Override
     public String getString() {

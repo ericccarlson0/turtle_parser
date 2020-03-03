@@ -7,6 +7,8 @@ import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
+import java.util.List;
+
 /**
  * A node that when executed, rotates the turtle
  * right the number of degrees returned
@@ -34,11 +36,15 @@ public class RTurnNode extends CommandParserNode {
     @Override
     public double execute(TurtleContext context) {
         double degrees = myRotationNode.execute(context);
-        TurtleData td = GlobalData.getInstance().turtleData();
-        double startHeading = td.getHeading();
-        td.turnClockwise(degrees);
-        double endHeading = td.getHeading();
-        context.getExecutableQueue().add(new RotateExecutable(startHeading, endHeading));
+        RotateExecutable rotateExecutable = new RotateExecutable();
+        for(double id : context.getData().getAllTurtles()) {
+            TurtleData td = context.getData().turtleData(id);
+            double startHeading = td.getHeading();
+            td.turnClockwise(degrees);
+            double endHeading = td.getHeading();
+            rotateExecutable.addArg(List.of(id, startHeading, endHeading));
+        }
+        context.addToQueue(rotateExecutable);
         return degrees;
     }
 

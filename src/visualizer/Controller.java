@@ -12,6 +12,7 @@ import parserModel.exceptions.ParsingException;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +21,7 @@ public class Controller {
     private Visualizer myVisualizer;
     private List<Executable> history;
     private List<Executable> executables;
-    private static final Map<String, Class<?>[]> positionParams = Map.of(
-            "setPosition", new Class<?>[]{double.class,double.class,double.class,double.class,double.class},
-            "setTurtleAngle", new Class<?>[]{double.class, double.class, double.class},
-            "hide", new Class<?>[]{double.class, double.class},
-            "clearScreen", new Class<?>[]{double.class});
+
 
 
     public Controller () {
@@ -55,23 +52,20 @@ public class Controller {
     private void step () {
         if (!myVisualizer.getCommand().equals("")) {
             try {
-                List<Executable> newCommands = myTreeParser.parseString(myVisualizer.getCommand());
-                for (Executable toExecute : newCommands) {
+                Iterator<Executable> newCommands = myTreeParser.parseString(myVisualizer.getCommand());
+                while(newCommands.hasNext()){
                     try {
-                        Method animationMethod = myVisualizer.getClass().getDeclaredMethod(toExecute.getCommand(), positionParams.get(toExecute.getCommand()));
-                        List<Double> params = new ArrayList<>(List.of(toExecute.getArgs()));
-                        params.add(1.0);
-                        animationMethod.invoke(myVisualizer, params.toArray());
-                        myVisualizer.addExecutedHistory(toExecute.toString());
+                        Executable nextExecutable = newCommands.next();
+                        Method animationMethod = myVisualizer.getClass().getDeclaredMethod(nextExecutable.getCommand(), new Class<?>[]{List.class});
+                        animationMethod.invoke(myVisualizer, nextExecutable.getArgs());
+                        myVisualizer.addExecutedHistory(nextExecutable.toString());
                     } catch (Exception e) {
-                        System.out.println(toExecute.getCommand());
                         e.printStackTrace();
                     }
                 }
             } catch (ParsingException e) { }
             myVisualizer.run();
             myVisualizer.resetCommand();
-
         }
     }
 }

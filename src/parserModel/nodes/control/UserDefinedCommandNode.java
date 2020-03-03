@@ -48,7 +48,7 @@ public class UserDefinedCommandNode implements ParserNode {
     @Override
     public double execute(TurtleContext context) {
         CallCommandNode newCommand = new CallCommandNode(myVariables, myExecutionNode);
-        GlobalData.getInstance().setCommand(myCommandName, newCommand);
+        context.getData().setCommand(myCommandName, newCommand);
         return SUCCESS;
     }
 

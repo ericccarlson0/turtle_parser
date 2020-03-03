@@ -1,6 +1,9 @@
 package execution;
 import visualizer.Visualizer;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @Author: Cemal Yagcioglu
  * This subclass creates the executable command
@@ -8,21 +11,16 @@ import visualizer.Visualizer;
  */
 public class HideExecutable extends ExecutableSuperClass {
   private static final String executableType = "HideTurtle";
+  private static final int ARGUMENT_SIZE = 2; //id, hide?
 
-  private boolean myHide;
-
-  public HideExecutable(boolean hide){
-    myHide = hide;
+  public HideExecutable(){
+    super();
+    argSize = ARGUMENT_SIZE;
   }
 
   @Override
   public String getCommand() {
     return "hide";
-  }
-
-  @Override
-  public Double[] getArgs() {
-    return new Double[]{myHide ? 0.0 : 1.0};
   }
 
   /**

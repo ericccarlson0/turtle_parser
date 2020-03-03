@@ -1,8 +1,5 @@
 package parserModel.exceptions;
 
-import parserModel.nodes.ParserNode;
-import parserModel.nodes.errorNodes.ErrorNode;
-
 /**
  * An Exception that represents when a token is unidentifiable
  * i.e it does not match any of the regexes

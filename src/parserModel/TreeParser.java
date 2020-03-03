@@ -28,13 +28,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
     private CommandFactory myCommandFactory;
+    private TurtleContext myContext;
 
     public TreeParser() {
+        myContext = new TurtleContext();
+        myContext.addActiveTurtles(List.of(0.0));
         myTokenAnalyzer = new TokenAnalyzer();
         myCommandFactory = new CommandFactory();
     }
@@ -43,7 +47,7 @@ public class TreeParser {
         return getFileNamesInFolder("src/parserModel/languages/");
     }
 
-    public List<Executable> parseString(String input) throws ParsingException{
+    public Iterator<Executable> parseString(String input) throws ParsingException{
 
         String[] inputLines = input.split("\n");
         List<String> inputElements = new ArrayList<>();
@@ -60,20 +64,21 @@ public class TreeParser {
                 i--;
             }
         }
-        return parseList(inputElements);
+        parseList(inputElements);
+        Iterator<Executable> result = myContext.getExecutables();
+        myContext.resetQueue();
+        return result;
     }
 
-    private List<Executable> parseList(List<String> input){
-        TurtleContext context = new TurtleContext();
+    private void parseList(List<String> input){
         InputIterator iterator = new InputIterator(input);
             double returning = 0;
         while(iterator.hasNext()) {
             ParserNode returner  = parseIteratorElement(iterator);
             System.out.println(returner);
-                    returning = returner.execute(context);
+                    returning = returner.execute(myContext);
             System.out.println("" + returning);
         }
-        return context.getExecutableQueue();
     }
 
     /**
@@ -125,7 +130,7 @@ public class TreeParser {
         switch (tokenType) {
             case Command:
                 String key = myTokenAnalyzer.getTokenKey(nextElement);
-                ParserNode root = myCommandFactory.createCommand(key);
+                ParserNode root = myCommandFactory.createCommand(key, myContext);
                 if(root.typeOfNode() == NodeType.LOOP){
                     root.addNode(parseForLoopHeader(iterator));
                     root.addNode(parseForLoopBody(iterator));
@@ -174,12 +179,12 @@ public class TreeParser {
         return parseForList(iterator, false, new CommandMissingListStartException());
     }
 
-    private ParserNode parseForList(InputIterator iterator, boolean beginWithBracket, ParsingException missingListException) {
+    private ListParserNode parseForList(InputIterator iterator, boolean beginWithBracket, ParsingException missingListException) {
         if(beginWithBracket && !validateOpenBracket(iterator)){
             throw missingListException;
         }
 
-        CommandParserNode list = new ListParserNode();
+        ListParserNode list = new ListParserNode();
         ParserNode listElement = parseIteratorElement(iterator);
         while (listElement.typeOfNode() != NodeType.LIST_END) {
             list.addNode(listElement);
@@ -199,10 +204,10 @@ public class TreeParser {
     }
 
     public ObservableList<String> observableVariables(){
-        return GlobalData.getInstance().observableVariableList();
+        return myContext.getData().observableVariableList();
     }
     public ObservableList<String> observableCommands(){
-        return GlobalData.getInstance().observableCommandList();
+        return myContext.getData().observableCommandList();
     }
 
     public void setLanguage(String language) {

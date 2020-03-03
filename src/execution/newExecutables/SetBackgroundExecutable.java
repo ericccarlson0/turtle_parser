@@ -14,10 +14,6 @@ public class SetBackgroundExecutable extends ExecutableSuperClass {
         return null;
     }
 
-    @Override
-    public Double[] getArgs() {
-        return new Double[]{myIndex};
-    }
 
     @Override
     public String getString() {

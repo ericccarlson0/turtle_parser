@@ -1,8 +1,9 @@
 package execution.newExecutables;
 
 import execution.Executable;
+import execution.ExecutableSuperClass;
 
-public class PenSizeExecutable implements Executable {
+public class PenSizeExecutable extends ExecutableSuperClass {
     private double myPenSize;
 
     public PenSizeExecutable(double penSize) {
@@ -12,11 +13,6 @@ public class PenSizeExecutable implements Executable {
     @Override
     public String getCommand() {
         return null;
-    }
-
-    @Override
-    public Double[] getArgs() {
-        return new Double[]{myPenSize};
     }
 
     @Override

@@ -2,6 +2,8 @@ package execution;
 
 import visualizer.Visualizer;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -11,30 +13,16 @@ import java.util.List;
  */
 public class MoveExecutable extends ExecutableSuperClass {
   private static final String executableType = "Backward";
+  private static final int ARGUMENT_SIZE = 5; //id, startX, startY, endX, endY
 
-  private double myStartX;
-  private double myStartY;
-  private double myEndX;
-  private double myEndY;
-
-  /**
-   * Constructs the executable.
-   */
-  public MoveExecutable(double startX, double startY, double endX, double endY){
-    myStartX = startX;
-    myStartY = startY;
-    myEndX = endX;
-    myEndY = endY;
+  public MoveExecutable(){
+    super();
+    argSize = ARGUMENT_SIZE;
   }
 
   @Override
   public String getCommand() {
     return "setPosition";
-  }
-
-  @Override
-  public Double[] getArgs() {
-    return new Double[]{myStartX, myStartY, myEndX, myEndY};
   }
 
   /**

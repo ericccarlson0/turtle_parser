@@ -7,6 +7,8 @@ import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
+import java.util.List;
+
 /**
  * A node that when executed, moves the turtle forward
  * the value of its child node
@@ -24,14 +26,18 @@ public class ForwardNode extends CommandParserNode {
     @Override
     public double execute(TurtleContext context) {
         double distance = myLength.execute(context);
-        TurtleData td = GlobalData.getInstance().turtleData();
-        double startX = td.getX();
-        double startY = td.getY();
-        td.forward(distance);
-        double endX = td.getX();
-        double endY = td.getY();
-
-        context.getExecutableQueue().add(new MoveExecutable(startX, startY, endX, endY));
+        MoveExecutable executable = new MoveExecutable();
+        for(double id : context.getActiveTurtles()) {
+            System.out.println("an id was found with id: " + id);
+            TurtleData td = context.getData().turtleData(id);
+            double startX = td.getX();
+            double startY = td.getY();
+            td.forward(distance);
+            double endX = td.getX();
+            double endY = td.getY();
+            executable.addArg(List.of(id, startX, startY, endX, endY));
+        }
+        context.addToQueue(executable);
         return distance;
     }
 

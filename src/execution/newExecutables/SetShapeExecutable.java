@@ -1,8 +1,9 @@
 package execution.newExecutables;
 
 import execution.Executable;
+import execution.ExecutableSuperClass;
 
-public class SetShapeExecutable implements Executable {
+public class SetShapeExecutable extends ExecutableSuperClass {
     private double myShapeIndex;
 
     public SetShapeExecutable(double shapeIndex) {
@@ -14,10 +15,6 @@ public class SetShapeExecutable implements Executable {
         return null;
     }
 
-    @Override
-    public Double[] getArgs() {
-        return new Double[]{myShapeIndex};
-    }
 
     @Override
     public String getString() {

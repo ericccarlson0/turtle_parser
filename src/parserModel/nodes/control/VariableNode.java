@@ -37,7 +37,7 @@ public class VariableNode extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        return GlobalData.getInstance().getVariable(myVariableName);
+        return context.getData().getVariable(myVariableName);
     }
 
     @Override

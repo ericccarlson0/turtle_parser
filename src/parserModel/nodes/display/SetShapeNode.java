@@ -11,7 +11,7 @@ public class SetShapeNode extends UnaryOperationNode {
     @Override
     public double execute(TurtleContext context) {
         double shapeIndex = myArgumentNode.execute(context);
-        context.getExecutableQueue().add(new SetShapeExecutable(shapeIndex));
+        //context.getExecutableQueue().add(new SetShapeExecutable(shapeIndex)); FIXME!
         return shapeIndex;
     }
 }

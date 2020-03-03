@@ -1,6 +1,7 @@
 package parserModel.nodes;
 
 import parserModel.GlobalData;
+import parserModel.TurtleContext;
 import parserModel.nodes.booleanNodes.AndNode;
 import parserModel.nodes.booleanNodes.EqualNode;
 import parserModel.nodes.booleanNodes.GreaterNode;
@@ -12,6 +13,7 @@ import parserModel.nodes.control.ForParserNode;
 import parserModel.nodes.control.IfElseNode;
 import parserModel.nodes.control.IfNode;
 import parserModel.nodes.control.RepeatParserNode;
+import parserModel.nodes.control.TellNode;
 import parserModel.nodes.control.UserDefinedCommandNode;
 import parserModel.nodes.mathNodes.ArctanNode;
 import parserModel.nodes.mathNodes.CosineNode;
@@ -53,7 +55,7 @@ public class CommandFactory {
      * @param identifier    A particular string associated with a particular type of ParserNode.
      * @return              Returns subclass of ParserNode.
      */
-    public ParserNode createCommand(String identifier){
+    public ParserNode createCommand(String identifier, TurtleContext context){
         switch (identifier) {
             // TURTLE COMMANDS
             case "Forward":
@@ -154,7 +156,9 @@ public class CommandFactory {
                 return new PenDownPNode();
             case "ShowingP":
                 return new ShowingPNode();
+            case "Tell":
+                return new TellNode();
         }
-        return GlobalData.getInstance().getCommand(identifier);
+        return context.getData().getCommand(identifier);
     }
 }

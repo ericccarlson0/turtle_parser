@@ -5,7 +5,10 @@ import javafx.collections.ObservableList;
 import parserModel.exceptions.NoSuchCommandException;
 import parserModel.nodes.control.CallCommandNode;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,10 +17,9 @@ import java.util.Map;
  * @author Mariusz Derezinski-Choo
  */
 public class GlobalData {
-    private static final GlobalData INSTANCE = new GlobalData();
     public static final double DEFAULT_VARIABLE_VALUE = 0.0;
 
-    private TurtleData myTurtle;
+    private Map<Double, TurtleData> myTurtles;
     private Map<String, Double> myVariables;
     private Map<String, CallCommandNode> myCommands;
     private ObservableList<String> myObservableCommands;
@@ -26,20 +28,13 @@ public class GlobalData {
     /**
      * Construct a GlobalData object, private to ensure the class is Singleton
      */
-    private GlobalData() {
-        myTurtle = new TurtleData();
+    public GlobalData() {
+        myTurtles = new HashMap<>();
+        myTurtles.put(0.0, new TurtleData()); //FIXME?
         myVariables = new HashMap<>();
         myCommands = new HashMap<>();
         myObservableVariables = FXCollections.observableArrayList();
         myObservableCommands = FXCollections.observableArrayList();
-    }
-
-    /**
-     * retrieve the instance of this class
-     * @return the Singleton instance of the class
-     */
-    public static GlobalData getInstance() {
-        return INSTANCE;
     }
 
     /**
@@ -91,13 +86,19 @@ public class GlobalData {
         }
         return ret.copy();
     }
+    public List<Double> getAllTurtles(){
+        return new ArrayList<>(myTurtles.keySet());
+    }
 
     /**
      * get the turtle data model
      * @return an object that encapsulates the turtle data
      */
-    public TurtleData turtleData() {
-        return myTurtle;
+    public TurtleData turtleData(double id) {
+        return myTurtles.getOrDefault(id, null);
+    }
+    public void createTurtle(double id){
+        myTurtles.putIfAbsent(id, new TurtleData()); //FIXME?
     }
 
     /**
@@ -118,7 +119,9 @@ public class GlobalData {
      * clear all the data in the namespace;
      */
     public void clear() {
-        myTurtle.clear();
+        for(TurtleData t : myTurtles.values()){
+            t.clear();
+        }
         myVariables.clear();
         myCommands.clear();
         myObservableVariables.clear();
