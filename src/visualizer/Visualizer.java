@@ -13,6 +13,7 @@ import javafx.animation.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -82,6 +83,7 @@ public class Visualizer {
     private static final Image TURTLE_IMAGE = new Image(TURTLE_FILE);
     public static final int MAX_RGB = 255;
     private static final double TURTLE_SPEED_FPS = 100;
+    private static final double lineStrokeWidthIncrementSize = 0.3;
 
     private Stage myStage;
     private Scene myScene;
@@ -106,6 +108,8 @@ public class Visualizer {
     private Queue<Transition> myTransitionQueue;
     private Queue<Transition> mylastExecuted;
     private DoubleProperty speedProperty;
+    private DoubleProperty strokeWidthChosen = new SimpleDoubleProperty(1);
+
     /**
      * visualizer() - constructor for the visualizer.
      */
@@ -180,6 +184,7 @@ public class Visualizer {
                 line.setEndX(adjustEndX);
                 line.setEndY(adjustEndY);
                 Line displayLine = new Line();
+                displayLine.strokeWidthProperty().bind(strokeWidthChosen);
                 trailsGroup.getChildren().add(displayLine);
                 displayLine.setOpacity(0.0);
                 displayLine.setEndX(adjustEndX);
@@ -191,6 +196,7 @@ public class Visualizer {
                 PathTransition emptyTransition = new PathTransition();
                 emptyTransition.setDuration(Duration.seconds(time));
                 emptyTransition.setOnFinished(event -> {
+                    displayLine.strokeWidthProperty().unbind();
                     displayLine.setOpacity(1.0);
                 });
                 emptyTransition.setNode(currentTurlte);
@@ -461,8 +467,21 @@ public class Visualizer {
         HBox colorButtons = createColorButtons();
         Slider speedSlider = new Slider(0, 4, 2);
         speedProperty = speedSlider.valueProperty();
+
+        Button increaseLineStrokeWidthButton = createButton("+", event -> changeLineStrokeWidth(lineStrokeWidthIncrementSize));
+        Button decreaseLineStrokeWidthButton = createButton("-", event -> changeLineStrokeWidth(-lineStrokeWidthIncrementSize));
+        Line strokeWidthVisualLine = new Line();
+        Text strokeWidthText = new Text("Trail Width");
+        strokeWidthVisualLine.strokeWidthProperty().bind(strokeWidthChosen);
+        strokeWidthVisualLine.setEndX(20);
+        strokeWidthVisualLine.setStartX(0);
+
+        HBox strokeWidthHbox = new HBox(30);
+        strokeWidthHbox.getChildren().addAll(strokeWidthText,decreaseLineStrokeWidthButton,increaseLineStrokeWidthButton,strokeWidthVisualLine);
+        strokeWidthHbox.setAlignment(Pos.CENTER);
+
         envLists.getChildren().addAll(commandsPage.getScrollPane(), variablesPage.getScrollPane(),
-                envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons, speedSlider);
+                envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons, speedSlider,strokeWidthHbox);
 
         return envLists;
     }
@@ -551,7 +570,8 @@ public class Visualizer {
         languageBox = createLanguageBox();
         HBox.setHgrow(languageBox, Priority.ALWAYS);
 
-        buttons.getChildren().addAll(title, resetButton, replayParser, helpButton, turtleImageFileButton, languageBox);
+        buttons.getChildren().addAll(title, resetButton, replayParser, helpButton,
+            turtleImageFileButton, languageBox);
         return buttonPane;
     }
 
@@ -623,6 +643,10 @@ public class Visualizer {
             return;
         }
         setTurtleImage(selectedFile);
+    }
+
+    private void changeLineStrokeWidth(double incrementSize){
+        strokeWidthChosen.set(strokeWidthChosen.doubleValue() + incrementSize);
     }
 
     private void envColorButton() {
