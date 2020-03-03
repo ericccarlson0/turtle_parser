@@ -27,7 +27,7 @@ public class Turtle extends ImageView{
     public Turtle() {
         super(TURTLE_IMAGE);
         setAngle(0);
-        setRotate(0);
+        setRotate(RIGHT_ANGLE);
     }
 
     /**

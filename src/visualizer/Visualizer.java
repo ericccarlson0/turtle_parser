@@ -7,6 +7,9 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
+
+import javafx.animation.*;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -18,12 +21,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
+
+import javafx.scene.control.*;
+
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -84,7 +92,8 @@ public class Visualizer {
     private Map<Double, Turtle> myTurtles;
     private int turtleIndex = 0;
     private Text executedHistory;
-    private Text inputHistory;
+    private ScrollPane inputPane;
+    private VBox inputHistory;
     private Text userInputText;
     private TextArea userInputTextArea;
     private ColorChoice envColorChoice;
@@ -303,7 +312,8 @@ public class Visualizer {
      * addInputHistory() - add a String for the history of the input.
      */
     public void addInputHistory(String history) {
-        inputHistory.setText(inputHistory.getText() + '\n' + history);
+
+
     }
 
     /**
@@ -433,7 +443,9 @@ public class Visualizer {
 
         Button inputButton = createButton("ENTER", event -> {
             String newText = userInputTextArea.getText();
-            inputHistory.setText(inputHistory.getText() + '\n' + newText);
+            Button newCommand = new Button(newText);
+            newCommand.setOnAction(e->setCommand(newCommand.getText()));
+            inputHistory.getChildren().add(newCommand);
             userInputText.setText(userInputText.getText() + '\n' + "(command entered)");
             userInputTextArea.clear();
             setCommand(newText);
@@ -469,19 +481,56 @@ public class Visualizer {
         Pane textArea = new Pane(inputArea);
         inputArea.prefHeightProperty().bind(textArea.heightProperty());
 
-        inputHistory = new Text(USER_INPUT_HISTORY);
+        inputHistory = new VBox();
+        inputHistory.getChildren().add(new Text(USER_INPUT_HISTORY));
         executedHistory = new Text(COMMAND_EXECUTION_HISTORY);
-        ScrollPane inputScrollPane = createScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.ALWAYS,
+        inputPane = createScrollPane(inputHistory, 0, 0, ScrollPane.ScrollBarPolicy.ALWAYS,
                 ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
-        inputScrollPane.prefViewportWidthProperty().bind(inputArea.widthProperty());
-        VBox.setVgrow(inputScrollPane, Priority.ALWAYS);
+        inputPane.prefViewportWidthProperty().bind(inputArea.widthProperty());
+        VBox.setVgrow(inputPane, Priority.ALWAYS);
         ScrollPane executedScrollPane = createScrollPane(executedHistory, 0, 0, ScrollPane.ScrollBarPolicy.ALWAYS,
                 ScrollPane.ScrollBarPolicy.ALWAYS, true, true, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         executedScrollPane.prefViewportWidthProperty().bind(inputArea.widthProperty());
         VBox.setVgrow(executedScrollPane, Priority.ALWAYS);
-        inputScrollPane.prefViewportHeightProperty().bindBidirectional(executedScrollPane.prefViewportHeightProperty());
-        inputArea.getChildren().addAll(inputScrollPane, executedScrollPane);
+        inputPane.prefViewportHeightProperty().bindBidirectional(executedScrollPane.prefViewportHeightProperty());
+        inputArea.getChildren().addAll(inputPane, executedScrollPane);
+
+        Button fdButton = new Button("FD");
+        fdButton.setOnAction(e -> setCommand("fd 1"));
+        addTimer(fdButton, "fd 1");
+        Button bkButton = new Button("BK");
+        addTimer(bkButton, "bk 1");
+        Button rtButton = new Button("RT");
+        addTimer(rtButton, "rt 1");
+        Button ltButton = new Button("LT");
+        addTimer(ltButton, "lt 1");
+        inputArea.getChildren().addAll(fdButton,bkButton,rtButton,ltButton);
+
         return inputArea;
+    }
+
+    private void addTimer(Button button, String command) {
+
+        final AnimationTimer timer = new AnimationTimer() {
+            long lastUpdate = 0;
+            @Override
+            public void handle(long time) {
+                if (this.lastUpdate > 100) {
+                    setCommand(command);
+                }
+                this.lastUpdate = time;
+            }
+        };
+        button.addEventFilter(MouseEvent.ANY, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+                    timer.start();
+                } else {
+                    timer.stop();
+                }
+            }
+        });
     }
 
     private Node createEnvButtons() {
