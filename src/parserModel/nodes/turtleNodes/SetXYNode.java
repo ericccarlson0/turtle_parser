@@ -7,6 +7,8 @@ import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
+import java.util.List;
+
 /**
  * A node that when executed, Sets the X and
  * Y coordinates of the turtle to the values
@@ -34,17 +36,20 @@ public class SetXYNode extends CommandParserNode {
             throw new UnsupportedOperationException();
         }
     }
-
     @Override
     public double execute(TurtleContext context) {
-        TurtleData td = GlobalData.getInstance().turtleData();
-        double startX = td.getX();
-        double startY = td.getY();
         double endX = myXNode.execute(context);
         double endY = myYNode.execute(context);
-        td.setX(endX);
-        td.setY(endY);
-        context.getExecutableQueue().add(new MoveExecutable(startX, startY, endX, endY));
+        MoveExecutable executable = new MoveExecutable();
+        for(double id : context.getActiveTurtles()) {
+            TurtleData td = context.getData().turtleData(id);
+            double startX = td.getX();
+            double startY = td.getY();
+            td.setX(endX);
+            td.setY(endY);
+            executable.addArg(List.of(id, startX, startY, endX, endY));
+        }
+        context.addToQueue(executable);
         return endX; //?
     }
 

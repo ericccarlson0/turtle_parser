@@ -7,6 +7,8 @@ import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
+import java.util.List;
+
 /**
  * A node that when executed, Hides the turtle from
  * the screen
@@ -22,9 +24,13 @@ public class HideNode extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        TurtleData td = GlobalData.getInstance().turtleData();
-        td.hide();
-        context.getExecutableQueue().add(new HideExecutable(true));
+        HideExecutable hideExecutable = new HideExecutable();
+        for(double id : context.getActiveTurtles()){
+            TurtleData td = context.getData().turtleData(id);
+            td.hide();
+            hideExecutable.addArg(List.of(id, 1.0));
+        }
+        context.addToQueue(hideExecutable);
         return 0;
     }
 

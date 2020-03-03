@@ -7,6 +7,9 @@ import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A node that when executed, sets the pen down
  * in the visualizer so that the turtle will draw if moved
@@ -19,12 +22,16 @@ public class PenDownNode extends CommandParserNode {
         throw new UnsupportedOperationException();
     }
 
-
+    @Override
     public double execute(TurtleContext context) {
-        TurtleData td = GlobalData.getInstance().turtleData();
-        td.penDown();
-        context.getExecutableQueue().add(new PenDownExecutable());
-        return 0;
+        PenDownExecutable penDownExecutable = new PenDownExecutable();
+        for(double id : context.getData().getAllTurtles()) {
+            TurtleData td = context.getData().turtleData(id);
+            td.penUp();
+            penDownExecutable.addArg(new ArrayList<>(List.of(id, 0.0)));
+        }
+        context.addToQueue(penDownExecutable);
+        return 0.0;
     }
 
     public boolean isComplete() {

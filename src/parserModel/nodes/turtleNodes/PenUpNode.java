@@ -1,11 +1,15 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.PenUpExecutable;
+import execution.PenDownExecutable;
+import execution.RotateExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A node that when executed, sets the pen up
@@ -23,9 +27,13 @@ public class PenUpNode extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        TurtleData td = GlobalData.getInstance().turtleData();
-        td.penUp();
-        context.getExecutableQueue().add(new PenUpExecutable());
+        PenDownExecutable penDownExecutable = new PenDownExecutable();
+        for(double id : context.getData().getAllTurtles()) {
+            TurtleData td = context.getData().turtleData(id);
+            td.penUp();
+            penDownExecutable.addArg(new ArrayList<>(List.of(id, 1.0)));
+        }
+        context.addToQueue(penDownExecutable);
         return SUCCESS;
     }
 

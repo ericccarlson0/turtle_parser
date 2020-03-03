@@ -7,6 +7,8 @@ import parserModel.nodes.CommandParserNode;
 import parserModel.TurtleData;
 import parserModel.TurtleContext;
 
+import java.util.List;
+
 /**
  * A node that when executed, rotates the turtle
  * so that it faces the direction of the heading,
@@ -28,15 +30,18 @@ public class SetHeadingNode extends CommandParserNode {
             myDegrees = node;
         }
     }
-
     @Override
     public double execute(TurtleContext context) {
         double degrees = myDegrees.execute(context);
-        TurtleData td = GlobalData.getInstance().turtleData();
-        double startHeading = td.getHeading();
-        td.setHeading(degrees);
-        double endHeading = td.getHeading();
-        context.getExecutableQueue().add(new RotateExecutable(startHeading, endHeading));
+        RotateExecutable rotateExecutable = new RotateExecutable();
+        for(double id : context.getData().getAllTurtles()) {
+            TurtleData td = context.getData().turtleData(id);
+            double startHeading = td.getHeading();
+            td.setHeading(degrees);
+            double endHeading = td.getHeading();
+            rotateExecutable.addArg(List.of(id, startHeading, endHeading));
+        }
+        context.addToQueue(rotateExecutable);
         return degrees;
     }
 

@@ -8,6 +8,8 @@ import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 
+import java.util.List;
+
 /**
  * A node that when executed, clears the
  * turtle screen
@@ -22,14 +24,19 @@ public class ClearNode extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        TurtleData td = GlobalData.getInstance().turtleData();
-        double startX = td.getX();
-        double startY = td.getY();
-        td.clear();
-        context.getExecutableQueue().add(new MoveExecutable(startX, startY, 0, 0)); //FIXME: clear screen doesnt work on
-        context.getExecutableQueue().add(new ClearExecutable(startX, startY));
+        MoveExecutable moveExecutable = new MoveExecutable();
+        ClearExecutable clearExecutable = new ClearExecutable();
+        for(double id : context.getData().getAllTurtles()) {
+            TurtleData td = context.getData().turtleData(id);
+            double startX = td.getX();
+            double startY = td.getY();
+            td.clear();
+            moveExecutable.addArg(List.of(id, startX, startY, 0.0, 0.0));
+            clearExecutable.addArg(List.of(id));
+        }
+        context.addToQueue(moveExecutable);
+        context.addToQueue(clearExecutable);
         return SUCCESS;
-
     }
 
     @Override

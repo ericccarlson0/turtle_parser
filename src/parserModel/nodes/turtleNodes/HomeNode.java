@@ -1,11 +1,14 @@
 package parserModel.nodes.turtleNodes;
 
+import execution.ClearExecutable;
 import execution.MoveExecutable;
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
+
+import java.util.List;
 
 /**
  * A node that when executed, moves the turtle back to the
@@ -23,11 +26,15 @@ public class HomeNode extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        TurtleData td = GlobalData.getInstance().turtleData();
-        double startX = td.getX();
-        double startY = td.getY();
-        td.home();
-        context.getExecutableQueue().add(new MoveExecutable(startX, startY, 0, 0));
+        MoveExecutable moveExecutable = new MoveExecutable();
+        for(double id : context.getData().getAllTurtles()) {
+            TurtleData td = context.getData().turtleData(id);
+            double startX = td.getX();
+            double startY = td.getY();
+            td.clear();
+            moveExecutable.addArg(List.of(id, startX, startY, 0.0, 0.0));
+        }
+        context.addToQueue(moveExecutable);
         return SUCCESS;
     }
 
