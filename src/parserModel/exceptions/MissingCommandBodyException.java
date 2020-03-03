@@ -1,7 +1,5 @@
 package parserModel.exceptions;
 
-import parserModel.nodes.ParserNode;
-import parserModel.nodes.errorNodes.ErrorNode;
 
 /**
  * An Exception that represents when a command does not have
