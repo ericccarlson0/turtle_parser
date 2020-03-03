@@ -38,7 +38,7 @@ public class LeftTurnNode extends CommandParserNode {
     public double execute(TurtleContext context) {
         double degrees = myRotationNode.execute(context);
         RotateExecutable rotateExecutable = new RotateExecutable();
-        for(double id : context.getData().getAllTurtles()) {
+        for(double id : context.getActiveTurtles()) {
             TurtleData td = context.getData().turtleData(id);
 
             double startHeading = td.getHeading();

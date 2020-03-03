@@ -41,7 +41,7 @@ public class TowardsNode extends CommandParserNode {
         double xInput = myXNode.execute(context);
         double yInput = myYNode.execute(context);
         RotateExecutable rotateExecutable = new RotateExecutable();
-        for(double id : context.getData().getAllTurtles()) {
+        for(double id : context.getActiveTurtles()) {
             TurtleData td = context.getData().turtleData(id);
             double xTowards = xInput - td.getX();
             double yTowards = yInput - td.getY();

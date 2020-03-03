@@ -28,7 +28,7 @@ public class PenUpNode extends CommandParserNode {
     @Override
     public double execute(TurtleContext context) {
         PenDownExecutable penDownExecutable = new PenDownExecutable();
-        for(double id : context.getData().getAllTurtles()) {
+        for(double id : context.getActiveTurtles()) {
             TurtleData td = context.getData().turtleData(id);
             td.penUp();
             penDownExecutable.addArg(new ArrayList<>(List.of(id, 1.0)));
