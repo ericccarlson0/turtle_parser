@@ -9,10 +9,12 @@ import parserModel.nodes.booleanNodes.LessNode;
 import parserModel.nodes.booleanNodes.NotEqualNode;
 import parserModel.nodes.booleanNodes.NotNode;
 import parserModel.nodes.booleanNodes.OrNode;
+import parserModel.nodes.control.AskNode;
 import parserModel.nodes.control.ForParserNode;
 import parserModel.nodes.control.IfElseNode;
 import parserModel.nodes.control.IfNode;
 import parserModel.nodes.control.RepeatParserNode;
+import parserModel.nodes.control.SetVariable;
 import parserModel.nodes.control.TellNode;
 import parserModel.nodes.control.UserDefinedCommandNode;
 import parserModel.nodes.mathNodes.ArctanNode;
@@ -134,8 +136,6 @@ public class CommandFactory {
             case "DoTimes":
             case "For":
                 return new ForParserNode();
-            case "MakeVariable":
-
             case "Repeat":
                 return new RepeatParserNode();
             case "If":
@@ -158,6 +158,8 @@ public class CommandFactory {
                 return new ShowingPNode();
             case "Tell":
                 return new TellNode();
+            case "Ask":
+                return new AskNode();
         }
         return context.getData().getCommand(identifier);
     }
