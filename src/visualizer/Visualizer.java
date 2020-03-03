@@ -465,7 +465,7 @@ public class Visualizer {
         envColorChoice = new ColorChoice(BACKGROUND_COLOR, MAX_RGB, MAX_RGB, MAX_RGB);
         penColorChoice = new ColorChoice(PEN_COLOR, 0, 0, 0);
         HBox colorButtons = createColorButtons();
-        Slider speedSlider = new Slider(0, 2, 1);
+        Slider speedSlider = new Slider(0, 4, 2);
         speedProperty = speedSlider.valueProperty();
         envLists.getChildren().addAll(commandsPage.getScrollPane(), variablesPage.getScrollPane(),
                 envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons, speedSlider);
@@ -542,7 +542,7 @@ public class Visualizer {
         Pane buttonPane = new Pane(buttons);
         buttons.prefWidthProperty().bind(buttonPane.widthProperty());
 
-        Button resetButton = createButton("RESET", event -> { playAnimation(); });
+        Button resetButton = createButton("RESET", event -> { myStage.close(); start(); });
         HBox.setHgrow(resetButton, Priority.ALWAYS);
 
         Button replayParser = createButton("REPLAY", event -> replayButtonPressed());
