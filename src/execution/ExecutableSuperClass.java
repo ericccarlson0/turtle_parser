@@ -1,5 +1,8 @@
 package execution;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -16,11 +19,27 @@ public abstract class ExecutableSuperClass implements Executable {
 
   private final String languageChosen = ResourceBundle.getBundle("languages."+"LanguageChoice").getString("Language");
 
-  /**
-   * A structure for initiating the Executable subclasses.
-   * @param args
-   */
-  public ExecutableSuperClass(String... args){ }
+  protected Collection<List<Double>> myArgs;
+  protected int argSize;
+
+  public ExecutableSuperClass(){
+    myArgs = new ArrayList<>();
+  }
+
+  @Override
+  public Collection<List<Double>> getArgs() {
+    return new ArrayList<>(myArgs);
+  }
+
+  @Override
+  public void addArg(List<Double> arg) {
+    myArgs.add(arg);
+  }
+
+  @Override
+  public int argSize() {
+    return argSize;
+  }
 
   /**
    * This is an helper method for subclasses' toString method,

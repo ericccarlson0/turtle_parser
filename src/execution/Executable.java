@@ -1,6 +1,7 @@
 package execution;
 import visualizer.Visualizer;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,7 +16,11 @@ public interface Executable {
 
   String getCommand();
 
-  Double[] getArgs();
+  Collection<List<Double>> getArgs();
+
+  void addArg(List<Double> arg);
+
+  int argSize();
 
   /**
    * Returns the preset string value for the executable for

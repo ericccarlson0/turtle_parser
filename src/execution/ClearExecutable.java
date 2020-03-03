@@ -8,23 +8,16 @@ import visualizer.Visualizer;
  */
 public class ClearExecutable extends ExecutableSuperClass {
   private static final String executableType = "ClearScreen";
+  private static final int ARGUMENT_SIZE = 1;
 
-  private double myStartX;
-  private double myStartY;
-
-  public ClearExecutable(double startX, double startY){
-    myStartX = startX;
-    myStartY = startY;
+  public ClearExecutable(){
+    super();
+    argSize = ARGUMENT_SIZE;
   }
 
   @Override
   public String getCommand() {
     return "clearScreen"; //TODO
-  }
-
-  @Override
-  public Double[] getArgs() {
-    return new Double[0];
   }
 
   /**

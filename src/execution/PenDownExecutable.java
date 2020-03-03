@@ -8,17 +8,17 @@ import visualizer.Visualizer;
  */
 public class PenDownExecutable extends ExecutableSuperClass {
   private static final String executableType = "PenDown";
+  private static final int ARGUMENT_SIZE = 2; //id, penDown?
 
+  public PenDownExecutable(){
+    super();
+    argSize = ARGUMENT_SIZE;
+  }
 
   @Override
   public String getCommand() {
     return null;
-  }
-
-  @Override
-  public Double[] getArgs() {
-    return new Double[0];
-  }
+  } //TODO
 
   /**
    * Returns the string value to be shown on the executable history.
