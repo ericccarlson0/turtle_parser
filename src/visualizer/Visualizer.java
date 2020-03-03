@@ -128,7 +128,6 @@ public class Visualizer {
             });
         }
         if(transitionIterator.hasNext()) {
-            System.out.println("playing!");
             transitionIterator.next().play();
         }
     }
@@ -136,7 +135,6 @@ public class Visualizer {
     public void setPosition(List<List<Double>> args){
         ParallelTransition root = new ParallelTransition();
         for(List<Double> arg : args) {
-            System.out.println("an arg!");
             Turtle currentTurlte = currentTurlte = myTurtles.get(arg.get(0).doubleValue());
             if(currentTurlte == null){
                 //e.printStackTrace();
@@ -146,13 +144,11 @@ public class Visualizer {
                 initialTurtle.setTranslateY(-20);
                 myTurtles.put(arg.get(0), initialTurtle);
                 currentTurlte = initialTurtle;
-                System.out.println("initial turtle: " + initialTurtle);
             }
             double startX = arg.get(1);
             double startY = arg.get(2);
             double endX = arg.get(3);
             double endY = arg.get(4);
-            System.out.println("" + startX + " "+ startY + " "+ endX + " "+ endY);
             SequentialTransition seq = new SequentialTransition();
             double length = Math.sqrt(Math.pow(startX - endX, 2) + Math.pow(startY - endY, 2));
             int segments = length >= 10 ? (int) (length / 10) : 1;
@@ -197,7 +193,6 @@ public class Visualizer {
                 emptyTransition.setOnFinished(event -> {
                     displayLine.setOpacity(1.0);
                 });
-                System.out.println(currentTurlte);
                 emptyTransition.setNode(currentTurlte);
                 emptyTransition.setPath(line);
 
@@ -208,7 +203,6 @@ public class Visualizer {
             root.rateProperty().bind(speedProperty);
             myTransitionQueue.add(root); //pathTransition);//allTogether);
 
-        System.out.println("WORKED!");
     }
     /**
      * setTurtlePen() - setter for the turtle's pen status.
