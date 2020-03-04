@@ -8,14 +8,11 @@ public class TurtleData {
   private double xPos;
   private double yPos;
   private double heading;
-  private double penWidth;
   private double minPenWidth;
   private boolean penDown;
   private boolean isShowing;
-  private double[] color; // NOTE: will not be used if the turtle is an imported image.
   private double myPenColorIndex;
   private double myShapeIndex;
-
   /**
    * There are three constructors for the tree most common use cases.
    */
@@ -24,30 +21,24 @@ public class TurtleData {
     this.yPos = 0;
     this.heading = 0;
     this.minPenWidth = DEFAULT_MIN_WIDTH;
-    this.penWidth = DEFAULT_PEN_WIDTH;
     this.penDown = true;
     this.isShowing = true;
-    this.color = new double[]{0, 0, 0};
   }
   public TurtleData(double x, double y) {
     this.xPos = x;
     this.yPos = y;
     this.heading = 0;
     this.minPenWidth = DEFAULT_MIN_WIDTH;
-    this.penWidth = DEFAULT_PEN_WIDTH;
     this.penDown = true;
     this.isShowing = true;
-    this.color = new double[]{0, 0, 0};
   }
   public TurtleData(double x, double y, double heading) {
     this.xPos = x;
     this.yPos = y;
     this.heading = heading;
     this.minPenWidth = DEFAULT_MIN_WIDTH;
-    this.penWidth = DEFAULT_PEN_WIDTH;
     this.penDown = true;
     this.isShowing = true;
-    this.color = new double[]{0, 0, 0};
   }
 
   public void clear() {
@@ -55,10 +46,8 @@ public class TurtleData {
     yPos = 0;
     heading = 0;
     minPenWidth = DEFAULT_PEN_WIDTH;
-    penWidth = DEFAULT_PEN_WIDTH;
     penDown = true;
     isShowing = true;
-    color = new double[]{0, 0, 0};
   }
   public void home() {
     xPos = 0;
@@ -114,7 +103,6 @@ public class TurtleData {
     if (width < minPenWidth) {
       newWidth = minPenWidth;
     }
-    this.penWidth = newWidth;
     return newWidth;
   }
 }

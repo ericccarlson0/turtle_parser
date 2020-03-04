@@ -1,8 +1,6 @@
 package execution;
-import visualizer.Visualizer;
-
-import java.util.Collection;
-import java.util.List;
+import javafx.beans.property.StringProperty;
+import parserModel.TurtleContext;
 
 /**
  * @Author: Cemal Yagcioglu
@@ -14,29 +12,8 @@ import java.util.List;
  */
 public interface Executable {
 
-  String getCommand();
+  void execute(TurtleContext context);
 
-  Collection<List<Double>> getArgs();
-
-  void addArg(List<Double> arg);
-
-  int argSize();
-
-  /**
-   * Returns the preset string value for the executable for
-   * the executable history pane.
-   * @return Defined String Value for the executable.
-   */
-  String getString();
-
-  /**
-   * Defines relationship between executable type and the string value
-   * for the executable history pane.
-   * At this stage of the development, this method supports
-   * the multi-language implementation by returning
-   * executable's name in the chosen language.
-   * @param executableType
-   * @return Executable name in the chosen language.
-   */
-  String getExecutableName(String executableType);
+  void updateLanguage(String language);
+  StringProperty command();
 }

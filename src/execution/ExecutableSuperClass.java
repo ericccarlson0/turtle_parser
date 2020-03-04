@@ -14,8 +14,8 @@ import java.util.ResourceBundle;
  * for subclasses that wants to implement a similar structure.
  */
 public abstract class ExecutableSuperClass implements Executable {
-  public static final String RESOURCES = "parserModel.languages.";
-  public static final int FULL_CIRCLE = 360;
+  private static final String RESOURCES = "parserModel.languages.";
+  private static final int FULL_CIRCLE = 360;
 
   private final String languageChosen = ResourceBundle.getBundle("languages."+"LanguageChoice").getString("Language");
 
@@ -39,18 +39,6 @@ public abstract class ExecutableSuperClass implements Executable {
   @Override
   public int argSize() {
     return argSize;
-  }
-
-  /**
-   * This is an helper method for subclasses' toString method,
-   * and returns the command's name in the user's language.
-   * @param executableType
-   * @return The command's name in the user's language
-   */
-  @Override
-  public String getExecutableName(String executableType){
-    return ResourceBundle.getBundle(RESOURCES+languageChosen).getString(executableType).split("\\|")[0];
-
   }
 }
 
