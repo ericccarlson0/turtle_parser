@@ -12,7 +12,6 @@ import parserModel.exceptions.NonVariableInLoopHeaderException;
 import parserModel.exceptions.ParsingException;
 import parserModel.exceptions.UnidentifiableTokenException;
 import parserModel.nodes.CommandFactory;
-import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.control.ListEndNode;
@@ -21,9 +20,7 @@ import parserModel.nodes.control.LoopCounterNode;
 import parserModel.nodes.control.UserDefinedCommandNode;
 import parserModel.nodes.control.VariableNode;
 import parserModel.nodes.mathNodes.ConstantNode;
-import visualizer.Turtle;
 
-import javax.naming.Context;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +41,7 @@ public class TreeParser {
     }
 
     public Collection<String> getLanguageOptions(){
-        return getFileNamesInFolder("src/parserModel/languages/");
+        return getFileNamesInFolder("src/parserModel/languages/commands");
     }
 
     public Iterator<Executable> parseString(String input) throws ParsingException{

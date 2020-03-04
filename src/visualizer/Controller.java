@@ -7,22 +7,17 @@ import parserModel.TreeParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import parserModel.TurtleContext;
 import parserModel.exceptions.ParsingException;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class Controller {
     private TreeParser myTreeParser;
     private Visualizer myVisualizer;
     private List<Executable> history;
     private List<Executable> executables;
-
-
 
     public Controller () {
         myTreeParser = new TreeParser();

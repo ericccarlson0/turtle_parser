@@ -10,7 +10,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +19,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import visualizer.languageSensitive.TextElement;
+import visualizer.languageSensitive.TextElementText;
 
 public class TextElementTester {
 
@@ -87,7 +88,7 @@ public class TextElementTester {
     myTextElements = new ArrayList<>();
     for (String text: textList) {
       Text node = new Text(text);
-      TextElement element = new TextElement(node, text);
+      TextElement element = new TextElementText(node, text);
       myTextElements.add(element);
       holder.getChildren().add(node);
     }
@@ -120,9 +121,9 @@ public class TextElementTester {
   }
 
   private void languageBox() {
-    String lang = (String) myLanguageBox.getValue();
+    String language = (String) myLanguageBox.getValue();
     for (TextElement element: myTextElements) {
-      element.changeLanguage(lang);
+      element.changeLanguage(language);
     }
   }
 

@@ -8,23 +8,16 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class Page {
-    private static final int PANE_SIZE = 250;
+    private static final int PANE_SIZE = 500;
     private ScrollPane textPane;
     private ListView myListView;
-    public Page(){
+
+    public Page() {
         myListView = new ListView();
         initiate();
     }
 
-    public ScrollPane getScrollPane(){
-        return textPane;
-    }
-
-    public void setList(ObservableList list){
-        myListView.setItems(list);
-    }
-
-    private void initiate(){
+    private void initiate() {
         Group myGroup = new Group();
         setScrollPane();
         myGroup.getChildren().add(textPane);
@@ -37,6 +30,13 @@ public class Page {
         textPane.setFitToHeight(true);
         textPane.setFitToWidth(true);
         VBox.setVgrow(textPane, Priority.ALWAYS);
-        textPane.setMinHeight(0);
+    }
+
+    public ScrollPane getScrollPane(){
+        return textPane;
+    }
+
+    public void setList(ObservableList list){
+        myListView.setItems(list);
     }
 }

@@ -1,15 +1,12 @@
 package execution;
-import visualizer.Visualizer;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
  * @Author: Cemal Yagcioglu
- * This Interface offers implementation of
- * Executable command objects. The executable
- * commands are the 'actionable' commands that consist
- * both the Turtle movement and Turtle queries. A new
+ * This Interface offers implementation ofExecutable command objects. The executable commands are
+ * the 'actionable' commands that consist both the Turtle movement and Turtle queries. A new
  * executable can be added using this interface.
  */
 public interface Executable {
@@ -23,8 +20,7 @@ public interface Executable {
   int argSize();
 
   /**
-   * Returns the preset string value for the executable for
-   * the executable history pane.
+   * Returns the preset string value for the executable for the executable history pane.
    * @return Defined String Value for the executable.
    */
   String getString();

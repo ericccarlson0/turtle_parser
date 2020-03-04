@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 // turtle / pen status
 // undo commands (previous state?)
 // animation and speed (*** DONE)
-// separate 'workspaces' (essentially what Visualizer is now)
+// separate 'workspaces' (essentially what Visualizer is now) *** SPLASH SCREEN
 // clickable text to:
 //  (1) execute commands from history
 //  (2) execute user-defined commands, with parameters
