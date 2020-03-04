@@ -36,6 +36,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -77,6 +78,7 @@ public class Visualizer {
     private static final String USER_INPUT_HEADING = "INPUT_HISTORY";
     private static final String COMMAND_EXECUTION_HEADING = "EXECUTION_HISTORY";
     public static final String COMMAND_ENTERED = "COMMAND_ENTERED";
+    public static final String PEN_STROKE = "PEN_STROKE";
     private static final String TERMINAL = "TERMINAL";
     private static final String TITLE_TEXT = " SLOGO ";
     private static final Insets MARGINS = new Insets(10,10,10,10);
@@ -537,7 +539,8 @@ public class Visualizer {
         Button decreaseStrokeButton = createButton(" - ", event -> changeLineStrokeWidth(
             -STROKE_INCREMENT_SIZE));
         Line strokeWidthVisual = new Line();
-        Text strokeWidthText = new Text("PEN WIDTH");
+        Text strokeWidthText = new Text(PEN_STROKE);
+        myTextElements.add(new TextElementText(strokeWidthText, PEN_STROKE));
         strokeWidthVisual.strokeWidthProperty().bind(strokeWidth);
         strokeWidthVisual.setStartX(0);
         strokeWidthVisual.setEndX(NODE_GAP*3);
@@ -548,19 +551,22 @@ public class Visualizer {
     }
 
     private void createMovementButtons (VBox holder) {
+        GridPane buttonGrid = new GridPane();
+
         Button fd = new Button("FD");
         addTimer(fd, "fd 1");
-
+        buttonGrid.add(fd, 0, 0);
         Button bk = new Button("BK");
         addTimer(bk, "bk 1");
-
+        buttonGrid.add(bk, 1, 0);
         Button rt = new Button("RT");
         addTimer(rt, "rt 1");
-
+        buttonGrid.add(rt, 0, 1);
         Button lt = new Button("LT");
         addTimer(lt, "lt 1");
+        buttonGrid.add(lt, 1, 1);
 
-        holder.getChildren().addAll(fd, bk, rt, lt);
+        holder.getChildren().add(buttonGrid);
     }
 
     private void addTimer(Button button, String command) {
