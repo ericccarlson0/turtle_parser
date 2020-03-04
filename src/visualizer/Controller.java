@@ -48,14 +48,15 @@ public class Controller {
         if (!myVisualizer.getCommand().equals("")) {
             try {
                 Iterator<Executable> newCommands = myTreeParser.parseString(myVisualizer.getCommand());
-                while(newCommands.hasNext()){
+                while (newCommands.hasNext()) {
                     try {
                         Executable nextExecutable = newCommands.next();
-                        Method animationMethod = myVisualizer.getClass().getDeclaredMethod(nextExecutable.getCommand(), new Class<?>[]{List.class});
+                        Method animationMethod = myVisualizer.getClass().getDeclaredMethod(nextExecutable.getCommand(),
+                            new Class<?>[]{List.class});
                         animationMethod.invoke(myVisualizer, nextExecutable.getArgs());
                         myVisualizer.addExecutedHistory(nextExecutable.toString());
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        // e.printStackTrace();
                     }
                 }
             } catch (ParsingException e) { }

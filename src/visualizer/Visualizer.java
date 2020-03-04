@@ -451,6 +451,7 @@ public class Visualizer {
         HBox.setHgrow(userInputTextArea, Priority.ALWAYS);
 
         Button inputButton = createButton("ENTER", event -> inputButton());
+        myTextElements.add(new TextElementButton(inputButton, "ENTER"));
         holder.getChildren().addAll(inputButton, userInputTextArea, userInputScrollPane);
         return holder;
     }
@@ -554,15 +555,22 @@ public class Visualizer {
         GridPane buttonGrid = new GridPane();
 
         Button fd = new Button("FD");
+        myTextElements.add(new TextElementButton(fd, "FD"));
         addTimer(fd, "fd 1");
         buttonGrid.add(fd, 0, 0);
+
         Button bk = new Button("BK");
+        myTextElements.add(new TextElementButton(bk, "BK"));
         addTimer(bk, "bk 1");
         buttonGrid.add(bk, 1, 0);
+
         Button rt = new Button("RT");
+        myTextElements.add(new TextElementButton(rt, "RT"));
         addTimer(rt, "rt 1");
         buttonGrid.add(rt, 0, 1);
+
         Button lt = new Button("LT");
+        myTextElements.add(new TextElementButton(lt, "LT"));
         addTimer(lt, "lt 1");
         buttonGrid.add(lt, 1, 1);
 
