@@ -103,7 +103,7 @@ public class Visualizer {
     private VBox executedHistory;
     private VBox inputHistory;
     private ScrollPane inputPane;
-    private HBox userInputBox;
+    private VBox userInputBox;
     private TextArea userInputTextArea;
     private ColorChoice envColorChoice;
     private ColorChoice penColorChoice;
@@ -441,7 +441,7 @@ public class Visualizer {
 
         Text userInputText = new Text(TERMINAL);
         myTextElements.add(new TextElementText(userInputText, TERMINAL));
-        userInputBox = new HBox();
+        userInputBox = new VBox();
         userInputBox.getChildren().add(userInputText);
 
         userInputTextArea = new TextArea("");
@@ -460,7 +460,7 @@ public class Visualizer {
         Button commandButton = new Button(text);
         commandButton.setOnAction(e -> setCommand(commandButton.getText()));
 
-        myTextElements.add(new TextElementButton(commandButton, text));
+        // TODO: myTextElements.add(new TextElementButton(commandButton, text));
         inputHistory.getChildren().add(commandButton);
 
         userInputBox.getChildren().add(new Text(COMMAND_ENTERED));
