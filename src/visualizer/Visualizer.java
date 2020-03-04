@@ -147,15 +147,15 @@ public class Visualizer {
     public void setPosition(List<List<Double>> args){
         ParallelTransition root = new ParallelTransition();
         for (List<Double> arg : args) {
-            Turtle currentTurlte = currentTurlte = myTurtles.get(arg.get(0).doubleValue());
-            if (currentTurlte == null) {
-                //e.printStackTrace();
+            Turtle currentTurtle = myTurtles.get(arg.get(0).doubleValue());
+            if (currentTurtle == null) {
                 Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
                 parserField.getChildren().add(initialTurtle);
                 initialTurtle.setTranslateX(-20); //FIXME
                 initialTurtle.setTranslateY(-20);
                 myTurtles.put(arg.get(0), initialTurtle);
-                currentTurlte = initialTurtle;
+                currentTurtle = initialTurtle;
+                System.out.println("initial turtle: " + initialTurtle);
             }
             double startX = arg.get(1);
             double startY = arg.get(2);
@@ -207,7 +207,8 @@ public class Visualizer {
                     displayLine.strokeWidthProperty().unbind();
                     displayLine.setOpacity(1.0);
                 });
-                emptyTransition.setNode(currentTurlte);
+                System.out.println(currentTurtle);
+                emptyTransition.setNode(currentTurtle);
                 emptyTransition.setPath(line);
 
                 seq.getChildren().add(emptyTransition);
@@ -218,6 +219,7 @@ public class Visualizer {
             myTransitionQueue.add(root); //pathTransition);//allTogether);
 
     }
+
     /**
      * setTurtlePen() - setter for the turtle's pen status.
      * @param pen boolean turtle's pen status.
@@ -671,7 +673,7 @@ public class Visualizer {
     }
 
     private void setTurtleImage(File imageFile){
-        myTurtles.get(turtleIndex).setImage(new Image(imageFile.toURI().toString()));
+        myTurtles.get((double) turtleIndex).setImage(new Image(imageFile.toURI().toString()));
     }
 
     private void turtleImageButton() {
