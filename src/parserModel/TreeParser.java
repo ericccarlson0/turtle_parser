@@ -35,6 +35,9 @@ public class TreeParser {
     public Collection<String> getLanguageOptions() {
         return getPropertiesFilenames("src/parserModel/languages/commands");
     }
+    public ObservableList<Double> getActiveTurtles(){
+        return  myContext.myActiveTurtles();
+    }
     public Iterator<Executable> saveFile(String input, String filePath){
         try {
             FileWriter out = new FileWriter(filePath);

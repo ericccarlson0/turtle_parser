@@ -148,6 +148,15 @@ public class Visualizer {
             transitionIterator.next().play();
         }
     }
+    public void setPenSize(double size){
+        ScaleTransition dummyTransition = new ScaleTransition();
+        dummyTransition.setDuration(Duration.millis(1));
+        dummyTransition.setCycleCount(1);
+        dummyTransition.setOnFinished(event -> {
+            strokeWidth.setValue(size);
+        });
+        myTransitionQueue.add(dummyTransition);
+    }
 
     public void setPosition(List<Integer> ids, List<Double> startXs, List<Double> startYs, List<Double> endXs, List<Double> endYs) {
         ParallelTransition root = new ParallelTransition();
