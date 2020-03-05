@@ -1,5 +1,7 @@
 package visualizer;
 
+import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 import javafx.animation.ParallelTransition;
@@ -481,6 +483,8 @@ public class Visualizer {
         VBox holder = new VBox(NODE_GAP);
         holder.setPrefWidth(HISTORY_AREA_WIDTH);
         holder.setMaxWidth(HISTORY_AREA_WIDTH);
+        holder.setPrefHeight(HISTORY_AREA_WIDTH);
+        holder.setMaxHeight(HISTORY_AREA_WIDTH);
 
         Pane holderPane = new Pane(holder);
         holder.prefHeightProperty().bind(holderPane.heightProperty());
@@ -506,11 +510,14 @@ public class Visualizer {
             ScrollPane.ScrollBarPolicy.ALWAYS, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         inputPane.prefViewportWidthProperty().bind(holder.widthProperty());
         VBox.setVgrow(inputPane, Priority.ALWAYS);
+        inputPane.setMaxHeight(SCROLLPANE_SIZE);
 
         ScrollPane executedPane = createScrollPane(executedHistory, ScrollPane.ScrollBarPolicy.NEVER,
             ScrollPane.ScrollBarPolicy.ALWAYS, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         executedPane.prefViewportWidthProperty().bind(holder.widthProperty());
         VBox.setVgrow(executedPane, Priority.ALWAYS);
+        executedPane.setMaxHeight(SCROLLPANE_SIZE);
+
 
         inputPane.prefViewportHeightProperty().bindBidirectional(executedPane.prefViewportHeightProperty());
         holder.getChildren().addAll(inputPane, executedPane);
@@ -718,18 +725,20 @@ public class Visualizer {
         double time = lengthPerSegment / TURTLE_SPEED_FPS;
 
         for (int i = 0; i < segments; i++) {
-            PathTransition emptyTransition = getLocalTransition(startX, startY, endX, endY, currentTurtle, segments, time, i);
+            Point2D.Double start = new Point2D.Double(startX, startY);
+            Point2D.Double end = new Point2D.Double(endX, endY);
+            PathTransition emptyTransition = getLocalTransition(start, end, currentTurtle, segments, time, i);
             ret.getChildren().add(emptyTransition);
         }
         return ret;
     }
 
-    private PathTransition getLocalTransition(double startX, double startY, double endX, double endY, Turtle currentTurlte, int segments, double time, int i) {
-        double dX = endX - startX;
-        double dY = endY - startY;
+    private PathTransition getLocalTransition(Point2D.Double startPoint, Point2D.Double endPoint, Turtle currentTurlte, int segments, double time, int i) {
+        double dX = endPoint.x - startPoint.x;
+        double dY = endPoint.y - startPoint.y;
         double adjustStartX, adjustStartY;
-        double tempStartX = startX + (i / ((double) (segments))) * dX;
-        double tempStartY = startY + (i / ((double) (segments))) * dY;
+        double tempStartX = startPoint.x + (i / ((double) (segments))) * dX;
+        double tempStartY = startPoint.y + (i / ((double) (segments))) * dY;
         if (tempStartX >= 0) {
             adjustStartX = (FIELD_SIZE / 2.0 + tempStartX) % FIELD_SIZE - FIELD_SIZE / 2.0;
 

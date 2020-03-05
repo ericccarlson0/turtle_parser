@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 public class HelpPage {
     private final String language = ResourceBundle.getBundle("languages.LanguageChoice").getString("Language");
-    private final ResourceBundle commands = ResourceBundle.getBundle("parserModel.languages."+language);
+    private final ResourceBundle commands = ResourceBundle.getBundle("parserModel.languages.commands."+language);
     private static final int SCREEN_SIZE = 500;
 
     public HelpPage() {
@@ -26,7 +26,7 @@ public class HelpPage {
         String currText = "POSSIBLE COMMANDS: ";
         for (String key : commands.keySet()){
             String command = commands.getString(key);
-            currText = String.format("%s%s%s%s", "\n", key, " : ", command);
+            currText = currText + String.format("%s%s%s%n", key, " : ", command);
         }
         helpText.setText(currText);
         ScrollPane helpPane = new ScrollPane(helpText);
