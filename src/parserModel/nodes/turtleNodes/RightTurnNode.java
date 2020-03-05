@@ -16,10 +16,10 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class RTurnNode extends CommandParserNode {
+public class RightTurnNode extends CommandParserNode {
     private ParserNode myRotationNode;
 
-    public RTurnNode(){
+    public RightTurnNode(){
         super();
         myRotationNode = null;
     }

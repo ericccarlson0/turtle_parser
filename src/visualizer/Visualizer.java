@@ -100,14 +100,16 @@ public class Visualizer {
     private Group trailsGroup;
     private Map<Double, Turtle> myTurtles;
     private int turtleIndex = 0;
+    private double leadTurtleIndex = 0;
     private VBox executedHistory;
     private VBox inputHistory;
     private ScrollPane inputPane;
     private VBox userInputBox;
+    private VBox summaryBox;
     private TextArea userInputTextArea;
     private ColorChoice envColorChoice;
     private ColorChoice penColorChoice;
-    private String command = "";
+    private String currentInput = "";
     private Page variablesPage;
     private Page commandsPage;
     private ComboBox<String> myLanguageBox;
@@ -146,18 +148,18 @@ public class Visualizer {
         }
     }
 
-    public void setPosition(List<List<Double>> args){
+    public void setPosition(List<List<Double>> args) {
         ParallelTransition root = new ParallelTransition();
         for (List<Double> arg : args) {
             Turtle currentTurtle = myTurtles.get(arg.get(0).doubleValue());
             if (currentTurtle == null) {
-                Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
-                parserField.getChildren().add(initialTurtle);
-                initialTurtle.setTranslateX(-20); //FIXME
-                initialTurtle.setTranslateY(-20);
-                myTurtles.put(arg.get(0), initialTurtle);
-                currentTurtle = initialTurtle;
-                System.out.println("initial turtle: " + initialTurtle);
+                Turtle turt = createTurtle(TURTLE_IMAGE, turtleIndex);
+                parserField.getChildren().add(turt);
+                turt.setTranslateX(-20); // FIXME
+                turt.setTranslateY(-20); // FIXME
+                myTurtles.put(arg.get(0), turt);
+                currentTurtle = turt;
+                // System.out.println("NEW TURTLE: " + turt);
             }
             double startX = arg.get(1);
             double startY = arg.get(2);
@@ -265,36 +267,36 @@ public class Visualizer {
     }
 
     /**
-     * getCommand() - getter for the String the user inputs.
+     * getUserInput() - getter for the String the user inputs.
      * @return String user's input.
      */
-    public String getCommand() {
-        return command;
+    public String getUserInput() {
+        return currentInput;
     }
 
     /**
-     * resetCommand() - resets the command to null.
+     * resetUserInput() - resets theuser input to null.
      */
-    public void resetCommand() {
-        command = "";
+    public void resetUserInput() {
+        currentInput = "";
     }
 
     /**
      * clearScreen() - clears the screen and resets the animation.
      */
     public void clearScreen(List<List<Double>> args) {
-        ParallelTransition transition = new ParallelTransition();
-        for(List<Double> arg : args) {
-            ScaleTransition pathTransition = new ScaleTransition();
-            pathTransition.setDuration(Duration.millis(1));
-            pathTransition.setCycleCount(1);
-            pathTransition.setOnFinished(event -> {
+        ParallelTransition parallelTransition = new ParallelTransition();
+        for (List<Double> arg : args) {
+            ScaleTransition transition = new ScaleTransition();
+            transition.setDuration(Duration.millis(1));
+            transition.setCycleCount(1);
+            transition.setOnFinished(event -> {
                 trailsGroup.getChildren().clear();
-                System.out.println("DONE");
+                System.out.println("DONE"); // ***
             });
-            transition.getChildren().add(pathTransition);
+            parallelTransition.getChildren().add(transition);
         }
-        myTransitionQueue.add(transition);
+        myTransitionQueue.add(parallelTransition);
     }
 
     /**
@@ -309,7 +311,7 @@ public class Visualizer {
      */
     public void hide(List<List<Double>> args) {
         ParallelTransition pt = new ParallelTransition();
-        for(List<Double> arg : args) {
+        for (List<Double> arg : args) {
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setOnFinished(event -> {
@@ -327,6 +329,12 @@ public class Visualizer {
         if (! executed.isEmpty()) {
             executedHistory.getChildren().add(new Text(executed));
             // TODO: make this language sensitive by creating a TextElement
+        }
+    }
+
+    public void setLeadTurtle(List<List<Double>> args) {
+        for (List<Double> arg : args) {
+            fillSummaryBox(arg.get(0), arg.get(1), arg.get(2), arg.get(3), arg.get(4));
         }
     }
 
@@ -358,7 +366,7 @@ public class Visualizer {
 
     private void setCommand(String input) {
         // TODO: can we do more in this method?
-        command = input;
+        currentInput = input;
     }
 
     public void setLanguageOptions(Collection<String> options) {
@@ -477,6 +485,7 @@ public class Visualizer {
         holder.setPadding(MARGINS);
         commandsPage = new Page();
         variablesPage = new Page();
+        initializeSummaryBox();
 
         envColorChoice = new ColorChoice("□", MAX_RGB, MAX_RGB, MAX_RGB);
         penColorChoice = new ColorChoice("✎", 0, 0, 0);
@@ -488,9 +497,26 @@ public class Visualizer {
         HBox strokeWidthBox = createStrokeWidthBox();
 
         holder.getChildren().addAll(commandsPage.getScrollPane(), variablesPage.getScrollPane(),
-            envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons, speedSlider,
-            strokeWidthBox);
+            summaryBox, envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons,
+            speedSlider, strokeWidthBox);
         return holder;
+    }
+
+    private void initializeSummaryBox() {
+        summaryBox = new VBox();
+        fillSummaryBox(0.0, 0.0, 0.0, 0.0, 0.0);
+    }
+
+    private void fillSummaryBox(double id, double x, double y, double heading, double penDown) {
+        leadTurtleIndex = (int) id;
+        summaryBox.getChildren().clear();
+        Text leadText = new Text("LEAD TURTLE STATISTICS: ");
+        Text idText = new Text(String.format("%s %.0f", "ID:\t\t", id));
+        Text xText = new Text(String.format("%s %.2f", "X:\t\t", x));
+        Text yText = new Text(String.format("%s %.2f", "Y:\t\t", y));
+        Text headingText = new Text(String.format("%s %.2f", "HEADING:\t", heading));
+        Text penDownText = new Text(String.format("%s %.1f", "PEN DOWN:\t", penDown));
+        summaryBox.getChildren().addAll(leadText, idText, xText, yText, headingText, penDownText);
     }
 
     private Node createHistoryArea() {
@@ -717,5 +743,9 @@ public class Visualizer {
         int G = penColorChoice.getG();
         int B = penColorChoice.getB();
         Color penColor = Color.color(R / MAX_RGB, G / MAX_RGB, B / MAX_RGB);
+    }
+
+    public double getLeadTurtleIndex () {
+        return leadTurtleIndex;
     }
 }

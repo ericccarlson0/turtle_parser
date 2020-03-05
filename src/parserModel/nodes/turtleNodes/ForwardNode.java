@@ -10,8 +10,7 @@ import parserModel.TurtleData;
 import java.util.List;
 
 /**
- * A node that when executed, moves the turtle forward
- * the value of its child node
+ * A node that, when executed, moves the turtle forward.
  *
  * @author Mariusz Derezinski-Choo
  */

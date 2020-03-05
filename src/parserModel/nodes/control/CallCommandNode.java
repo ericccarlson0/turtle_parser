@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class CallCommandNode extends CommandParserNode {
     private List<VariableNode> myVariables;
-    private List<SetVariable> myVariableInitializers;
+    private List<SetVariableNode> myVariableInitializers;
     private ParserNode myExecuteNode;
 
     /**
@@ -42,14 +42,14 @@ public class CallCommandNode extends CommandParserNode {
     @Override
     public void addNode(ParserNode node) {
             System.out.println("command node: " + this + " adding node " + node);
-            SetVariable nextSettingNode = new SetVariable(myVariables.get(myVariableInitializers.size()));
+            SetVariableNode nextSettingNode = new SetVariableNode(myVariables.get(myVariableInitializers.size()));
             nextSettingNode.addNode(node);
             myVariableInitializers.add(nextSettingNode);
     }
 
     @Override
     public double execute(TurtleContext context) {
-        for(SetVariable variableSetter : myVariableInitializers){
+        for(SetVariableNode variableSetter : myVariableInitializers){
             variableSetter.execute(context);
         }
         return myExecuteNode.execute(context);

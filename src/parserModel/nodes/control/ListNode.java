@@ -13,15 +13,15 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ListParserNode extends CommandParserNode {
+public class ListNode extends CommandParserNode {
     private static final double DEFAULT_RETURN = 0.0;
 
     protected List<ParserNode> myChildren;
 
     /**
-     * Construct a new ListParserNode
+     * Construct a new ListNode
      */
-    public ListParserNode() {
+    public ListNode() {
         myChildren = new ArrayList<>();
     }
 
