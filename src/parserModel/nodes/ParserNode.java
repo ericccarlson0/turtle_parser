@@ -1,6 +1,7 @@
 package parserModel.nodes;
 
 import parserModel.TurtleContext;
+import parserModel.nodes.control.VariableNode;
 
 /**
  * Defines core functionality of a ParserNode, a Node that the parser can create and
@@ -16,6 +17,8 @@ public interface ParserNode {
      * @param node the child node to be added
      */
     void addNode(ParserNode node);
+
+    void addVariable(VariableNode node);
 
     /**
      * execute this Node

@@ -5,5 +5,6 @@ public enum NodeType {
     LOOP,
     LIST_END,
     FUNCTION_DEFINITION,
-    TELL
+    TELL,
+    VARIABLE
 }

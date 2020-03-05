@@ -1,6 +1,7 @@
 package parserModel.nodes;
 
 import parserModel.TurtleContext;
+import parserModel.exceptions.NoSuchCommandException;
 
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
@@ -25,6 +26,10 @@ public class CommandFactory {
                 e.printStackTrace(); //TODO: catch the exception
             }
         }
-        return context.getData().getCommand(identifier);
+        try {
+            return context.getData().getCommand(identifier);
+        } catch (NoSuchCommandException e){
+            return new WildCardToken(identifier);
+        }
     }
 }
