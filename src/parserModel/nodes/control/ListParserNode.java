@@ -30,6 +30,7 @@ public class ListParserNode extends CommandParserNode {
 
     @Override
     public void addNode(ParserNode node) {
+        System.out.println("adding node: " + node);
         if(node.equals(SpecialCharacters.CLOSE_BRACKET)){
             complete = true;
         } else {
