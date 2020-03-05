@@ -11,6 +11,10 @@ public class AskWithNode extends CommandParserNode {
     private ParserNode myConditionNode;
     private ParserNode myExecuteNode;
 
+    public AskWithNode(){
+        myConditionNode=null;
+        myExecuteNode=null;
+    }
     @Override
     public void addNode(ParserNode node) {
         if(myConditionNode == null){
