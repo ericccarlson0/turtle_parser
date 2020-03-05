@@ -1,11 +1,9 @@
 package slogo;
 
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,19 +12,19 @@ import visualizer.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.*;
 
 public class Main extends Application {
     private static final int SPLASH_WIDTH = 500;
     private static final int SPLASH_HEIGHT = 500;
     private static final String RESOURCE_FOLDER = "/stylesheets";
     private static final String STYLESHEET = "/default.css";
+
     public static void main (String[] args) {
         launch(args);
     }
+
     public void start(Stage stage) throws IOException {
         initiate();
-        //Controller test = new Controller();
     }
 
     private void initiate() {
@@ -40,51 +38,46 @@ public class Main extends Application {
 
     private Scene createSplashScene() {
         Group splashGroup = new Group();
-        BorderPane splashBorderPane = new BorderPane();
+        GridPane topLevelGrid = new GridPane();
 
-        Node splashButtons = createWorkSpaceButtons();
-        splashBorderPane.setCenter(splashButtons);
-        BorderPane.setAlignment(splashButtons, Pos.CENTER);
+        Node welcome = createWelcomeText();
+        topLevelGrid.add(welcome, 0, 0);
+        Node information = createInformationText();
+        topLevelGrid.add(information, 0, 1);
 
-        Node splashWelcome = createWelcomeText();
-        splashBorderPane.setTop(splashWelcome);
-        BorderPane.setAlignment(splashWelcome, Pos.CENTER);
+        Node workspaceButtons = createWorkspaceButtons();
+        topLevelGrid.add(workspaceButtons, 0, 2);
 
-        Node splashInformation = createInformationText();
-        splashBorderPane.setBottom(splashInformation);
-        BorderPane.setAlignment(splashInformation, Pos.CENTER);
-
-        splashGroup.getChildren().add(splashBorderPane);
-        Scene splash = new Scene(splashGroup, SPLASH_WIDTH, SPLASH_HEIGHT);
-        return splash;
+        splashGroup.getChildren().add(topLevelGrid);
+        Scene scene = new Scene(splashGroup, SPLASH_WIDTH, SPLASH_HEIGHT);
+        return scene;
     }
 
     private Node createInformationText() {
         VBox information = new VBox();
-        Text title = new Text("Welcome To SLOGO by Mariusz, Eric, Cemal and Lorne");
-        Text instructions = new Text("Press the Work Space button to start!");
-        information.getChildren().add(title);
-        information.getChildren().add(instructions);
+        Text title = new Text(String.format("%s\n%s", "Welcome To SLOGO", "by MARIUSZ, ERIC, CEMAL and LORNE"));
+        Text instructions = new Text("Press the button to create a new workspace: ");
+        information.getChildren().addAll(title, instructions);
         return information;
     }
 
-    private Node createWorkSpaceButtons() {
+    private Node createWorkspaceButtons() {
         VBox buttons = new VBox();
-        Button workSpace = new Button ("Work Space");
-        workSpace.setOnAction(e -> createController());
-        buttons.getChildren().add(workSpace);
+        Button workspace = new Button ("WORKSPACE");
+        workspace.setOnAction(e -> createWorkspace());
+        buttons.getChildren().add(workspace);
         return buttons;
     }
 
-    private void createController() {
-        Controller newController = new Controller();
+    private void createWorkspace() {
+        Controller newWorkspace = new Controller();
     }
 
     private Node createWelcomeText() {
         HBox welcome = new HBox();
         Text title = new Text("SLOGO");
+        title.setId("title-text");
         welcome.getChildren().add(title);
         return welcome;
     }
-
 }

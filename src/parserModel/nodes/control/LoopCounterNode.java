@@ -62,7 +62,7 @@ public class LoopCounterNode extends CommandParserNode {
     }
 
     private ParserNode validateLoop(double initialValue, double incrementValue, double endValue){
-        SetVariable initializerNode = new SetVariable(myVariableNode);
+        SetVariableNode initializerNode = new SetVariableNode(myVariableNode);
         initializerNode.addNode(new ConstantNode(initialValue));
         myIteratingNode = new NotEqualNode();
 
@@ -71,7 +71,7 @@ public class LoopCounterNode extends CommandParserNode {
         adder.addNode(myVariableNode);
         adder.addNode(new ConstantNode(incrementValue));
 
-        ParserNode incrementNode = new SetVariable(myVariableNode);
+        ParserNode incrementNode = new SetVariableNode(myVariableNode);
         incrementNode.addNode(adder);
 
         myIteratingNode.addNode(incrementNode);

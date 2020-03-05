@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class CommandFactory {
     private static final String RESOURCE_PATH = "parserModel.nodes.CommandNodeReflection";
-    private static final ResourceBundle commandNodeNameResource = ResourceBundle.getBundle(RESOURCE_PATH);
+    private static final ResourceBundle commandNameResource = ResourceBundle.getBundle(RESOURCE_PATH);
     /**
      * This is a huge case statement that turns 'identifier' strings into various instances of
      * ParserNode sub-classes
@@ -16,9 +16,9 @@ public class CommandFactory {
      * @return              Returns subclass of ParserNode.
      */
     public ParserNode createCommand(String identifier, TurtleContext context) {
-        if (commandNodeNameResource.containsKey(identifier)) {
+        if (commandNameResource.containsKey(identifier)) {
             try {
-                String NodeClassPath = "parserModel.nodes."+ commandNodeNameResource.getString(identifier);
+                String NodeClassPath = "parserModel.nodes."+ commandNameResource.getString(identifier);
                 System.out.println(NodeClassPath);
                 Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor();
                 return (ParserNode) constructor.newInstance();

@@ -1,21 +1,16 @@
 package execution;
 
-import visualizer.Visualizer;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * @Author: Cemal Yagcioglu
  * This subclass creates the executable command
  * object for Backward command.
  */
 public class MoveExecutable extends ExecutableSuperClass {
-  private static final String executableType = "Backward";
-  private static final int ARGUMENT_SIZE = 5; //id, startX, startY, endX, endY
+  private static final String EXECUTABLE_TYPE = "Move";
+  private static final int ARGUMENT_SIZE = 5;
+  // id, startX, startY, endX, endY
 
-  public MoveExecutable(){
+  public MoveExecutable() {
     super();
     argSize = ARGUMENT_SIZE;
   }
@@ -26,11 +21,10 @@ public class MoveExecutable extends ExecutableSuperClass {
   }
 
   /**
-   * Returns the string value to be shown on the executable history.
+   * Returns the string value to be shown in the executable history.
    * @return Executable Name.
    */
-  public String getString(){
-    return getExecutableName(executableType)+" ";
-
+  public String getString() {
+    return getExecutableName(EXECUTABLE_TYPE);
   }
 }

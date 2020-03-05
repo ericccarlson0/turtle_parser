@@ -12,11 +12,11 @@ import parserModel.TurtleContext;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ForParserNode extends ControlParserNode {
+public class ForNode extends ControlParserNode {
     private ParserNode myForNode;
     private ParserNode myBodyNode;
 
-    public ForParserNode(){
+    public ForNode(){
         super();
         myBodyNode = null;
         myForNode = null;

@@ -1,5 +1,7 @@
 package parserModel;
 
+import java.util.List;
+
 public class TurtleData {
   public static final double DEFAULT_MIN_WIDTH = 2;
   public static final double DEFAULT_PEN_WIDTH = 4;
@@ -14,7 +16,6 @@ public class TurtleData {
   private boolean isShowing;
   private double[] color; // NOTE: will not be used if the turtle is an imported image.
   private double myPenColorIndex;
-  private double myShapeIndex;
 
   /**
    * There are three constructors for the tree most common use cases.
@@ -88,13 +89,9 @@ public class TurtleData {
   public void setHeading(double degrees) { heading = 360 % degrees; }
   public void penDown() { penDown = true; }
   public void penUp() { penDown = true; }
-  public void setShapeIndex(double index){
-    myShapeIndex = index;
-  }
   public void setPenColor(double index){
     myPenColorIndex = index;
   }
-
 
   public double getX() { return xPos; };
   public double getY() { return yPos; };
@@ -105,8 +102,17 @@ public class TurtleData {
   public double getPenColor(){
     return myPenColorIndex;
   }
-  public double getShapeIndex(){
-    return myShapeIndex;
+
+  private double penDownDouble() {
+    if (penDown) {
+      return 1.0;
+    } else {
+      return 0.0;
+    }
+  }
+
+  public List<Double> getSummaryList() {
+    return List.of(xPos, yPos, heading, penDownDouble());
   }
 
   public double setPenWidth(double width) {
