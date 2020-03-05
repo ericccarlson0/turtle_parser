@@ -1,13 +1,10 @@
 package parserModel.nodes.turtleNodes;
 
 import execution.RotateExecutable;
-import parserModel.GlobalData;
-import parserModel.nodes.ParserNode;
-import parserModel.nodes.CommandParserNode;
-import parserModel.TurtleData;
 import parserModel.TurtleContext;
-
-import java.util.List;
+import parserModel.TurtleData;
+import parserModel.nodes.CommandParserNode;
+import parserModel.nodes.ParserNode;
 
 /**
  * A node that when executed, rotates the turtle
