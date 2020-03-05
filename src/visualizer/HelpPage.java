@@ -25,7 +25,8 @@ public class HelpPage {
         Text helpText = new Text();
         String currText = "POSSIBLE COMMANDS: ";
         for (String key : commands.keySet()){
-            currText = String.format("%s%s%s%s", "\n", key, " : ", commands.getString(key));
+            String command = commands.getString(key)
+            currText = String.format("%s%s%s%s", "\n", key, " : ", command);
         }
         helpText.setText(currText);
         ScrollPane helpPane = new ScrollPane(helpText);
