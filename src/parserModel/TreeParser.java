@@ -3,16 +3,12 @@ package parserModel;
 import execution.Executable;
 import javafx.collections.ObservableList;
 import parserModel.TokenAnalyzer.TokenType;
-import parserModel.exceptions.CommandMissingListStartException;
 import parserModel.exceptions.ParsingException;
 import parserModel.exceptions.UnidentifiableTokenException;
 import parserModel.nodes.CommandFactory;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.SpecialCharacters;
-import parserModel.nodes.control.ListParserNode;
-import parserModel.nodes.control.LoopCounterNode;
-import parserModel.nodes.control.UserDefinedCommandNode;
 import parserModel.nodes.control.VariableNode;
 import parserModel.nodes.mathNodes.ConstantNode;
 
