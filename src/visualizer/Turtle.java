@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
  * @author  Lorne Zhang
  * @version 1.0
  */
-public class Turtle extends ImageView{
+public class Turtle extends ImageView {
     private final static String TURTLE_FILE = "images/ball.jpg";
     private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
     private final static int TURTLE_OFFSET = 20;
