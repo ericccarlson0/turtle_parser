@@ -75,9 +75,7 @@ public class TreeParser {
             double returning = 0;
         while(iterator.hasNext()) {
             ParserNode returner  = parseIteratorElement(iterator);
-            System.out.println(returner);
                     returning = returner.execute(myContext);
-            System.out.println("" + returning);
         }
     }
 
@@ -153,7 +151,6 @@ public class TreeParser {
             case Variable:
                 return new VariableNode(nextElement);
             case ListStart:
-                System.out.println("PARSING LIST!");
                 return parseForList(iterator);
             case ListEnd:
                 return new ListEndNode();

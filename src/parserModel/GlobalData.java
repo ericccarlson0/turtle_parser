@@ -95,7 +95,8 @@ public class GlobalData {
      * @return an object that encapsulates the turtle data
      */
     public TurtleData turtleData(double id) {
-        return myTurtles.getOrDefault(id, null);
+        myTurtles.putIfAbsent(id, new TurtleData());
+        return myTurtles.get(id);
     }
     public void createTurtle(double id){
         System.out.println("creating turtles of id: " + id);
