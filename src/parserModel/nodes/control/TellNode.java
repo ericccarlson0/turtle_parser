@@ -30,6 +30,11 @@ public class TellNode implements ParserNode {
     }
 
     @Override
+    public void addVariable(VariableNode node) {
+        addNode(node);
+    }
+
+    @Override
     public double execute(TurtleContext context) {
         List<Double> activeTurtles = new ArrayList<>();
         for(ParserNode pn : myNodes){

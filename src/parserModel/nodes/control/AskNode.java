@@ -33,6 +33,11 @@ public class AskNode implements ParserNode {
     }
 
     @Override
+    public void addVariable(VariableNode node) {
+        addNode(node);
+    }
+
+    @Override
     public double execute(TurtleContext context) {
         System.out.println("VICTORY " + context.getActiveTurtles());
         List<Double> activeTurtles = new ArrayList<>();

@@ -1,10 +1,13 @@
 package parserModel.nodes.control;
 
 import parserModel.GlobalData;
+import parserModel.exceptions.CommandMissingListStartException;
+import parserModel.exceptions.InvalidLoopStructureException;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 
 import parserModel.TurtleContext;
+import parserModel.nodes.SpecialCharacters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +21,16 @@ public class UserDefinedCommandNode implements ParserNode {
     private static final double SUCCESS = 1.0;
 
     private List<VariableNode> myVariables;
-    private ParserNode myExecutionNode;
+    private ListParserNode myExecutionNode;
     private String myCommandName;
+    private int stage;
+
 
     public UserDefinedCommandNode(){
-        this(null);
-    }
-
-    public UserDefinedCommandNode(String name){
+        System.out.println("we made it!");
         myVariables = new ArrayList<>();
-        myCommandName = name;
+        myExecutionNode = new ListParserNode();
+        stage = 0;
     }
 
     /**
@@ -35,13 +38,45 @@ public class UserDefinedCommandNode implements ParserNode {
      * must be set before each time this command is called
      * @param node the variable that will be added to the parameter list
      */
+    @Override
     public void addVariable(VariableNode node){
-        myVariables.add(node);
+        if(stage == 2) {
+            myVariables.add(node);
+        } else{
+            addNode(node);
+        }
     }
 
     @Override
     public void addNode(ParserNode node) {
-        myExecutionNode = node;
+        System.out.println("" + stage);
+        switch(stage){
+            case 0:
+                myCommandName = node.toString();
+                stage++;
+                break;
+            case 1:
+                if(!node.equals(SpecialCharacters.OPEN_BRACKET)){
+                    throw new CommandMissingListStartException();
+                }
+                stage++;
+                break;
+            case 2:
+                if(node.equals(SpecialCharacters.CLOSE_BRACKET)){
+                    stage++;
+                }
+                break;
+            case 3:
+                if(!node.equals(SpecialCharacters.OPEN_BRACKET)){
+                    throw new CommandMissingListStartException();
+                }
+                stage++;
+                break;
+            case 4:
+                System.out.println("adding node " + node + "to definition body");
+                myExecutionNode.addNode(node);
+        }
+
 
     }
 
@@ -54,7 +89,7 @@ public class UserDefinedCommandNode implements ParserNode {
 
     @Override
     public boolean isComplete() {
-        return myExecutionNode != null;
+        return myExecutionNode.isComplete();
     }
 
     @Override

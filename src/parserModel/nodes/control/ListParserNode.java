@@ -3,6 +3,8 @@ package parserModel.nodes.control;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
+import parserModel.nodes.SpecialCharacters;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class ListParserNode extends CommandParserNode {
     private static final double DEFAULT_RETURN = 0.0;
 
+    private boolean complete;
     protected List<ParserNode> myChildren;
 
     /**
@@ -27,7 +30,11 @@ public class ListParserNode extends CommandParserNode {
 
     @Override
     public void addNode(ParserNode node) {
-        myChildren.add(node);
+        if(node.equals(SpecialCharacters.CLOSE_BRACKET)){
+            complete = true;
+        } else {
+            myChildren.add(node);
+        }
     }
 
     @Override
@@ -41,7 +48,7 @@ public class ListParserNode extends CommandParserNode {
 
     @Override
     public boolean isComplete() {
-        return true;
+        return complete;
     }
 
     @Override

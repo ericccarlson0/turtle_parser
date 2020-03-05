@@ -2,6 +2,7 @@ package parserModel.nodes.control;
 
 import parserModel.nodes.CommandParserNode;
 import parserModel.GlobalData;
+import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 
@@ -11,7 +12,7 @@ import parserModel.TurtleContext;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class VariableNode extends CommandParserNode {
+public class VariableNode implements ParserNode {
     private String myVariableName;
 
     /**
@@ -36,6 +37,11 @@ public class VariableNode extends CommandParserNode {
     }
 
     @Override
+    public void addVariable(VariableNode node) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public double execute(TurtleContext context) {
         return context.getData().getVariable(myVariableName);
     }
@@ -43,5 +49,10 @@ public class VariableNode extends CommandParserNode {
     @Override
     public boolean isComplete() {
         return true;
+    }
+
+    @Override
+    public NodeType typeOfNode() {
+        return NodeType.VARIABLE;
     }
 }
