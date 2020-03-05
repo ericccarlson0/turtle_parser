@@ -8,7 +8,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class Page {
-    private static final int PANE_SIZE = 500;
     private ScrollPane textPane;
     private ListView myListView;
 

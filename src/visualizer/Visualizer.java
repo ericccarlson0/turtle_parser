@@ -112,6 +112,7 @@ public class Visualizer {
     private String currentInput = "";
     private Page variablesPage;
     private Page commandsPage;
+    private double TURTLE_IMAGE_CENTER = 20;
     private ComboBox<String> myLanguageBox;
     private Timeline myAnimation;
     private Queue<Transition> myTransitionQueue;
@@ -772,8 +773,8 @@ public class Visualizer {
         }
         Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
         parserField.getChildren().add(initialTurtle);
-        initialTurtle.setTranslateX(-20); //FIXME
-        initialTurtle.setTranslateY(-20);
+        initialTurtle.setTranslateX(-TURTLE_IMAGE_CENTER); //FIXME
+        initialTurtle.setTranslateY(-TURTLE_IMAGE_CENTER);
         myTurtles.put(id, initialTurtle);
         return initialTurtle;
     }
