@@ -1,11 +1,7 @@
 package execution;
 
-import javafx.beans.property.StringProperty;
-import parserModel.TurtleContext;
 import visualizer.Visualizer;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
