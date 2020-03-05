@@ -19,7 +19,6 @@ public class CommandFactory {
         if (commandNodeNameResource.containsKey(identifier)) {
             try {
                 String NodeClassPath = "parserModel.nodes."+ commandNodeNameResource.getString(identifier);
-                System.out.println(NodeClassPath);
                 Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor();
                 return (ParserNode) constructor.newInstance();
             } catch (Exception e) {

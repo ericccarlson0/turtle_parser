@@ -12,9 +12,11 @@ public class SetPenColorNode extends UnaryOperationNode {
     public double execute(TurtleContext context) {
         List<Double> previousActives = context.getActiveTurtles();
         context.clearActiveTurtles();
+        SetPenColorExecutable executable = new SetPenColorExecutable();
+        double newPenColor = 0;
         for(double id : context.getData().getAllTurtles()) {
-            double newPenColor = myArgumentNode.execute(context);
-            context.addToQueue(new SetPenColorExecutable(newPenColor));
+            newPenColor = myArgumentNode.execute(context);
+            executable.addMove((int)(id), (int)newPenColor);
         }
         return newPenColor;
     }
