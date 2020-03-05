@@ -10,8 +10,7 @@ import parserModel.TurtleData;
 import java.util.List;
 
 /**
- * A node that when executed, moves the turtle backward
- * the value of its child node
+ * A node that, when executed, moves the turtle backward.
  *
  * @author Mariusz Derezinski-Choo
  */
@@ -29,7 +28,7 @@ public class BackwardNode extends CommandParserNode {
     public double execute(TurtleContext context) {
         double distance = myLength.execute(context);
         MoveExecutable executable = new MoveExecutable();
-        for(double id : context.getActiveTurtles()) {
+        for (double id : context.getActiveTurtles()) {
             TurtleData td = context.getData().turtleData(id);
             double startX = td.getX();
             double startY = td.getY();

@@ -8,7 +8,7 @@ import parserModel.nodes.booleanNodes.LessNode;
 import parserModel.nodes.booleanNodes.NotEqualNode;
 import parserModel.nodes.booleanNodes.NotNode;
 import parserModel.nodes.booleanNodes.OrNode;
-import parserModel.nodes.control.ForParserNode;
+import parserModel.nodes.control.ForNode;
 import parserModel.nodes.control.IfElseNode;
 import parserModel.nodes.control.IfNode;
 import parserModel.nodes.control.RepeatParserNode;
@@ -36,7 +36,7 @@ import parserModel.nodes.turtleNodes.HomeNode;
 import parserModel.nodes.turtleNodes.LeftTurnNode;
 import parserModel.nodes.turtleNodes.PenDownNode;
 import parserModel.nodes.turtleNodes.PenUpNode;
-import parserModel.nodes.turtleNodes.RTurnNode;
+import parserModel.nodes.turtleNodes.RightTurnNode;
 import parserModel.nodes.turtleNodes.SetHeadingNode;
 import parserModel.nodes.turtleNodes.SetXYNode;
 import parserModel.nodes.turtleNodes.ShowNode;
@@ -64,7 +64,7 @@ public class CommandFactoryDelete {
             case "Left":
                 return new LeftTurnNode();
             case "Right":
-                return new RTurnNode();
+                return new RightTurnNode();
             case "SetHeading":
                 return new SetHeadingNode();
             case "SetTowards":
@@ -132,7 +132,7 @@ public class CommandFactoryDelete {
             // COMPOUND COMMANDS
             case "DoTimes":
             case "For":
-                return new ForParserNode();
+                return new ForNode();
             case "MakeVariable":
 
             case "Repeat":

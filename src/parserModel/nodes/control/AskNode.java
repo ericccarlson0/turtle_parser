@@ -1,7 +1,6 @@
 package parserModel.nodes.control;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 
@@ -29,7 +28,6 @@ public class AskNode implements ParserNode {
             return;
         }
         myNodes.add(node);
-
     }
 
     @Override
@@ -45,7 +43,7 @@ public class AskNode implements ParserNode {
             activeTurtles.add(pn.execute(context));
         }
         Collections.sort(activeTurtles);
-        context.getData().createTurtle(activeTurtles.get(activeTurtles.size()-1));
+        context.getData().createTurtles(activeTurtles.get(activeTurtles.size()-1));
         List<Double> previousActives = context.getActiveTurtles();
         context.clearActiveTurtles();
         context.addActiveTurtles(activeTurtles);

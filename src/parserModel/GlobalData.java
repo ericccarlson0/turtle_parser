@@ -26,7 +26,7 @@ public class GlobalData {
     private ObservableList<String> myObservableVariables;
 
     /**
-     * Construct a GlobalData object, private to ensure the class is Singleton
+     * Construct a GlobalData object, private to ensure the class is Singleton.
      */
     public GlobalData() {
         myTurtles = new HashMap<>();
@@ -38,9 +38,9 @@ public class GlobalData {
     }
 
     /**
-     * Store a variable to the specified value
-     * @param name the name of the variable
-     * @param value the value of the variable to be stored
+     * Store a variable as a specified value.
+     * @param name the name of the variable.
+     * @param value the value of the variable to be stored.
      */
     public void setVariable(String name, double value) {
         myVariables.put(name, value);
@@ -50,20 +50,20 @@ public class GlobalData {
     }
 
     /**
-     * retrieve the value of the variable
-     * @param name the name of the variable
-     * @return the value of the variable, or DEFAULT_VARIABLE_VALUE if the variable does not exist
+     * Retrieve the value of a variable.
+     * @param name the name of the variable.
+     * @return the value of the variable, or DEFAULT_VARIABLE_VALUE if the variable does not exist.
      */
     public double getVariable(String name){
         return myVariables.getOrDefault(name, DEFAULT_VARIABLE_VALUE);
     }
 
     /**
-     * Set store a CallCommandNode as being associated with the provided command name.
-     * adds the command name to the namespace if it does not already exist
+     * Store a CallCommandNode as associated with the provided command name; adds the command name
+     * to the namespace if it does not exist yet.
      *
-     * @param commandName the name of the command
-     * @param command the command that will be associated with this name
+     * @param commandName the name of the command.
+     * @param command the command that will be associated with this name.
      */
     public void setCommand(String commandName, CallCommandNode command){
         myCommands.put(commandName, command);
@@ -73,11 +73,11 @@ public class GlobalData {
     }
 
     /**
-     * returns a copy of the call command associated with the command name
-     * a copy is generated so that unique parameter values can be passed before execution
-     * @param commandName the name of the variable
-     * @return a copy of the call command
-     * @throws  NoSuchCommandException if the command does not exist in the namespace
+     * Returns a copy of the 'call command' associated with the command name.
+     * A copy is generated so that unique parameter values can be passed before execution.
+     * @param commandName the name of the variable.
+     * @return a copy of the call command.
+     * @throws NoSuchCommandException if the command does not exist in the namespace.
      */
     public CallCommandNode getCommand(String commandName){
         CallCommandNode ret =  myCommands.get(commandName);
@@ -91,39 +91,40 @@ public class GlobalData {
     }
 
     /**
-     * get the turtle data model
-     * @return an object that encapsulates the turtle data
+     * Get the turtle data associated with the turtle's ID.
+     * @return an object that encapsulates the turtle data.
      */
     public TurtleData turtleData(double id) {
         myTurtles.putIfAbsent(id, new TurtleData());
         return myTurtles.get(id);
     }
-    public void createTurtle(double id){
-        System.out.println("creating turtles of id: " + id);
-        for(int i = 0; i <= id; i++) {
-            myTurtles.putIfAbsent(id, new TurtleData());
-        }
+
+    public void createTurtles(double id){
+            System.out.println("creating turtle(s) of ID: " + id);
+            for (int i = 0; i <= id; i++) {
+                myTurtles.putIfAbsent(id, new TurtleData());
+            }
     }
 
     /**
-     * @return An observable list of the available variables in the namespace
+     * @return An observable list of the available variables in the namespace.
      */
     public ObservableList<String> observableVariableList(){
         return myObservableVariables;
     }
 
     /**
-     * @return an observable list of the available commands in the namespace
+     * @return an observable list of the available commands in the namespace.
      */
     public ObservableList<String> observableCommandList(){
         return myObservableCommands;
     }
 
     /**
-     * clear all the data in the namespace;
+     * Wipe all of the data in the namespace.
      */
     public void clear() {
-        for(TurtleData t : myTurtles.values()){
+        for (TurtleData t : myTurtles.values()) {
             t.clear();
         }
         myVariables.clear();

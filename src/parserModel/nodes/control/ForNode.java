@@ -21,13 +21,13 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ForParserNode extends ControlParserNode {
+public class ForNode extends ControlParserNode {
     private VariableNode myVariableNode;
     private List<ParserNode> myLoop;
     private ListParserNode myBodyNode;
     private int stage;
 
-    public ForParserNode(){
+    public ForNode(){
         super();
         myBodyNode = null;
         myLoop = new ArrayList<>();
@@ -81,12 +81,12 @@ public class ForParserNode extends ControlParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        SetVariable initializerNode = new SetVariable(myVariableNode);
+        SetVariableNode initializerNode = new SetVariableNode(myVariableNode);
         initializerNode.addNode(new ConstantNode(myLoop.get(0).execute(context)));
         initializerNode.execute(context);
 
         ParserNode myIteratingNode = new NotEqualNode();
-        ParserNode incrementNode = new SetVariable(myVariableNode);
+        ParserNode incrementNode = new SetVariableNode(myVariableNode);
 
 
         myIteratingNode.addNode(incrementNode);

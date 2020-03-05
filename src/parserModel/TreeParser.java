@@ -11,6 +11,8 @@ import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.SpecialCharacters;
 import parserModel.nodes.control.ListParserNode;
+import parserModel.nodes.control.LoopCounterNode;
+import parserModel.nodes.control.UserDefinedCommandNode;
 import parserModel.nodes.control.VariableNode;
 import parserModel.nodes.mathNodes.ConstantNode;
 
@@ -35,8 +37,8 @@ public class TreeParser {
         myCommandFactory = new CommandFactory();
     }
 
-    public Collection<String> getLanguageOptions(){
-        return getFileNamesInFolder("src/parserModel/languages/commands");
+    public Collection<String> getLanguageOptions() {
+        return getPropertiesFilenames("src/parserModel/languages/commands");
     }
     public Iterator<Executable> saveFile(String input, String filePath){
         try {
@@ -46,10 +48,10 @@ public class TreeParser {
         } catch (IOException e) {
             //TODO
         }
+        return null;
     }
 
-    public Iterator<Executable> parseString(String input) throws ParsingException{
-
+    public Iterator<Executable> parseString(String input) throws ParsingException {
         String[] inputLines = input.split("\n");
         List<String> inputElements = new ArrayList<>();
         for (String line : inputLines){
@@ -60,7 +62,7 @@ public class TreeParser {
             inputElements.addAll(Arrays.asList(line.split(" ")));
         }
         for (int i = 0; i < inputElements.size(); i++) {
-            if (inputElements.get(i).equals("")){
+            if (inputElements.get(i).equals("")) {
                 inputElements.remove(i);
                 i--;
             }
@@ -71,17 +73,19 @@ public class TreeParser {
         return result;
     }
 
-    private void parseList(List<String> input){
+    private void parseList(List<String> input) {
         InputIterator iterator = new InputIterator(input);
-            double returning = 0;
-        while(iterator.hasNext()) {
-            ParserNode returner  = parseIteratorElement(iterator);
-                    returning = returner.execute(myContext);
+        double returning;
+        while (iterator.hasNext()) {
+            ParserNode returner = parseIteratorElement(iterator);
+            System.out.println(returner); // ***
+            returning = returner.execute(myContext);
+            System.out.println(""+returning); // ***
         }
     }
 
     /**
-     * This is a recursive method that leverages a tree-like data structure to correctly order the
+     * A recursive method that leverages a tree-like data structure to correctly order and generate
      * various commands.
      */
     private ParserNode parseIteratorElement(InputIterator iterator) {
@@ -89,6 +93,7 @@ public class TreeParser {
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
         return getParserNode(iterator, nextElement, tokenType);
     }
+
     private ParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {
         switch (tokenType) {
             case Command:
@@ -124,51 +129,38 @@ public class TreeParser {
             case GroupEnd:
                 return SpecialCharacters.GROUP_END;
             case Error:
+                // TODO
             default:
                 throw new UnidentifiableTokenException(nextElement);
         }
     }
-
     private boolean validateOpenBracket(InputIterator iterator){
         return myTokenAnalyzer.typeOfToken(iterator.next()) == TokenType.ListStart;
     }
 
-    private ParserNode parseForList(InputIterator iterator){
-        return parseForList(iterator, false, new CommandMissingListStartException());
-    }
-
-    private ListParserNode parseForList(InputIterator iterator, boolean beginWithBracket, ParsingException missingListException) {
-        if(beginWithBracket && !validateOpenBracket(iterator)){
-            throw missingListException;
-        }
-
-        ListParserNode list = new ListParserNode();
-        ParserNode listElement = parseIteratorElement(iterator);
-        while (listElement.typeOfNode() != NodeType.LIST_END) {
-            list.addNode(listElement);
-            listElement = parseIteratorElement(iterator);
-        }
-        return list;
-    }
-    private List<String> getFileNamesInFolder(String folderPath){
-        List<String> filesNames = new ArrayList<>();
+    private List<String> getPropertiesFilenames(String folderPath) {
+        List<String> filenames = new ArrayList<>();
         File[] files = new File(folderPath).listFiles();
         for (File file : files) {
             if (file.isFile()) {
-                filesNames.add(file.getName().replace(".properties",""));
+                filenames.add(file.getName().replace(".properties",""));
             }
         }
-        return filesNames;
+        return filenames;
     }
 
     public ObservableList<String> observableVariables(){
         return myContext.getData().observableVariableList();
     }
-    public ObservableList<String> observableCommands(){
+    public ObservableList<String> observableCommands() {
         return myContext.getData().observableCommandList();
     }
 
     public void setLanguage(String language) {
         myTokenAnalyzer.setLanguage(language);
+    }
+
+    public List<Double> getTurtleSummary (double id) {
+        return myContext.getData().turtleData(id).getSummaryList();
     }
 }

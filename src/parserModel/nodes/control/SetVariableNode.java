@@ -9,15 +9,15 @@ import parserModel.TurtleContext;
  * A Node that sets a variable equal to the value
  * returned by the assignment node
  */
-public class SetVariable extends CommandParserNode {
+public class SetVariableNode extends CommandParserNode {
     private VariableNode myVariableNode;
     private ParserNode myAssignmentNode;
 
     /**
-     * Construct a SetVariable object
+     * Construct a SetVariableNode object
      * @param node the Variable that is to be set
      */
-    public SetVariable(VariableNode node){
+    public SetVariableNode(VariableNode node){
         myVariableNode = node;
     }
 
@@ -30,9 +30,9 @@ public class SetVariable extends CommandParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        double executeValue = myAssignmentNode.execute(context);
-        context.getData().setVariable(myVariableNode.name(),executeValue);
-        return executeValue;
+        double value = myAssignmentNode.execute(context);
+        context.getData().setVariable(myVariableNode.name(), value);
+        return value;
     }
 
     @Override

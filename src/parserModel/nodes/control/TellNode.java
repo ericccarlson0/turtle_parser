@@ -1,14 +1,12 @@
 package parserModel.nodes.control;
 
+import execution.newExecutables.LeadTurtleExecutable;
 import parserModel.TurtleContext;
-import parserModel.nodes.BinaryOperationNode;
-import parserModel.nodes.CommandParserNode;
+import parserModel.TurtleData;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.UnaryOperationNode;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class TellNode implements ParserNode {
 
     @Override
     public void addNode(ParserNode node) {
-        if(node.typeOfNode() == NodeType.LIST_END){
+        if (node.typeOfNode() == NodeType.LIST_END){
             isComplete = true;
             return;
         }
@@ -36,14 +34,27 @@ public class TellNode implements ParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        List<Double> activeTurtles = new ArrayList<>();
-        for(ParserNode pn : myNodes){
-            activeTurtles.add(pn.execute(context));
+        List<Double> activeTurtleIds = new ArrayList<>();
+        for(ParserNode node : myNodes) {
+            activeTurtleIds.add(node.execute(context));
         }
-        Collections.sort(activeTurtles);
-        context.getData().createTurtle(activeTurtles.get(activeTurtles.size()-1));
+        /*
+        double leadId = activeTurtleIds.get(0);
+        TurtleData leadData = context.getData().turtleData(leadId);
+
+        LeadTurtleExecutable executable = new LeadTurtleExecutable();
+        List summaryList = new ArrayList<Double>();
+        summaryList.add(leadId);
+        summaryList.addAll(leadData.getSummaryList());
+        executable.addArg(summaryList);
+        context.addToQueue(executable);
+*/
+        Collections.sort(activeTurtleIds);
+        double currId = activeTurtleIds.get(activeTurtleIds.size()-1);
+        context.getData().createTurtles(currId);
+
         context.clearActiveTurtles();
-        context.addActiveTurtles(activeTurtles);
+        context.addActiveTurtles(activeTurtleIds);
         return 1;
     }
 

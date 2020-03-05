@@ -22,7 +22,7 @@ public class ListParserNode extends CommandParserNode {
     protected List<ParserNode> myChildren;
 
     /**
-     * Construct a new ListParserNode
+     * Construct a new ListNode
      */
     public ListParserNode() {
         myChildren = new ArrayList<>();

@@ -45,23 +45,27 @@ public class Controller {
     }
 
     private void step () {
-        if (!myVisualizer.getCommand().equals("")) {
+        if (! myVisualizer.getUserInput().equals("")) {
             try {
-                Iterator<Executable> newCommands = myTreeParser.parseString(myVisualizer.getCommand());
-                while(newCommands.hasNext()){
+                Iterator<Executable> newCommands = myTreeParser.parseString(myVisualizer.getUserInput());
+                while (newCommands.hasNext()) {
                     try {
                         Executable nextExecutable = newCommands.next();
                         nextExecutable.execute(myVisualizer);
                         myVisualizer.addExecutedHistory(nextExecutable.toString());
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        // e.printStackTrace();
                     }
                 }
-            } catch (ParsingException e) {
-                e.printStackTrace();
-            }
+            } catch (ParsingException e) { }
+            // TODO: make sure that this updates the summary statistics well on each run
+            double turtleIndex = myVisualizer.getLeadTurtleIndex();
+            List<Double> turtleSummary = new ArrayList<>();
+            turtleSummary.add(turtleIndex);
+            turtleSummary.addAll(myTreeParser.getTurtleSummary(turtleIndex));
+            myVisualizer.setLeadTurtle(List.of(turtleSummary));
             myVisualizer.run();
-            myVisualizer.resetCommand();
+            myVisualizer.resetUserInput();
         }
     }
 }
