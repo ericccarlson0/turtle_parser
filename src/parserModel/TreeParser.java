@@ -3,20 +3,14 @@ package parserModel;
 import execution.Executable;
 import javafx.collections.ObservableList;
 import parserModel.exceptions.ParsingException;
-import parserModel.exceptions.UnidentifiableTokenException;
 import parserModel.nodes.CommandFactory;
-import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.SpecialCharacters;
 import parserModel.nodes.control.VariableNode;
-import parserModel.nodes.mathNodes.ConstantNode;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,12 +26,10 @@ public class TreeParser {
         myCommandFactory = new CommandFactory();
     }
 
-    public Collection<String> getLanguageOptions() {
-        return getPropertiesFilenames("src/parserModel/languages/commands");
-    }
     public ObservableList<Double> getActiveTurtles(){
         return  myContext.myActiveTurtles();
     }
+
     public Iterator<Executable> saveFile(String input, String filePath){
         try {
             FileWriter out = new FileWriter(filePath);
@@ -96,18 +88,6 @@ public class TreeParser {
             //throw new UnidentifiableTokenException(nextElement);
         }
         return root;
-    }
-
-
-    private List<String> getPropertiesFilenames(String folderPath) {
-        List<String> filenames = new ArrayList<>();
-        File[] files = new File(folderPath).listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                filenames.add(file.getName().replace(".properties",""));
-            }
-        }
-        return filenames;
     }
 
     public ObservableList<String> observableVariables(){

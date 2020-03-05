@@ -1,9 +1,9 @@
 package visualizer;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
+import java.util.ResourceBundle;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
@@ -119,7 +119,10 @@ public class Visualizer {
     private Timeline myAnimation;
     private Queue<Transition> myTransitionQueue;
     private Queue<Transition> myLastExecuted;
+
     private List<TextElement> myTextElements;
+    private Map<String, String> languageTagMap;
+
     private DoubleProperty speedProperty;
     private DoubleProperty strokeWidth = new SimpleDoubleProperty(1);
 
@@ -329,11 +332,6 @@ public class Visualizer {
         currentInput = input;
     }
 
-    public void setLanguageOptions(Collection<String> options) {
-        myLanguageBox.getItems().clear();
-        myLanguageBox.getItems().addAll(options);
-    }
-
     public ObjectProperty<String> getLanguageProperty() {
         return myLanguageBox.valueProperty();
     }
@@ -341,7 +339,8 @@ public class Visualizer {
     private void languageBox() {
         String language = myLanguageBox.getValue();
         for (TextElement element: myTextElements) {
-            element.changeLanguage(language);
+            String tag = languageTagMap.get(language);
+            element.changeLanguage(tag);
         }
     }
 
@@ -470,11 +469,12 @@ public class Visualizer {
     private void fillSummaryBox(double id, double x, double y, double heading, double penDown) {
         leadTurtleIndex = (int) id;
         summaryBox.getChildren().clear();
+        String defaultTemplate = "%s %.2f";
         Text leadText = new Text("LEAD TURTLE STATISTICS: ");
         Text idText = new Text(String.format("%s %.0f", "ID:\t\t", id));
-        Text xText = new Text(String.format("%s %.2f", "X:\t\t", x));
-        Text yText = new Text(String.format("%s %.2f", "Y:\t\t", y));
-        Text headingText = new Text(String.format("%s %.2f", "HEADING:\t", heading));
+        Text xText = new Text(String.format(defaultTemplate, "X:\t\t", x));
+        Text yText = new Text(String.format(defaultTemplate, "Y:\t\t", y));
+        Text headingText = new Text(String.format(defaultTemplate, "HEADING:\t", heading));
         Text penDownText = new Text(String.format("%s %.1f", "PEN DOWN:\t", penDown));
         summaryBox.getChildren().addAll(leadText, idText, xText, yText, headingText, penDownText);
     }
@@ -615,7 +615,7 @@ public class Visualizer {
         myTextElements.add(new TextElementButton(turtleImageButton, "NEW_TURTLE_IMAGE"));
         HBox.setHgrow(turtleImageButton, Priority.ALWAYS);
 
-        myLanguageBox = createLanguageBox();
+        initializeLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
 
@@ -652,11 +652,37 @@ public class Visualizer {
       return bg;
     }
 
-    private ComboBox createLanguageBox() {
-        ComboBox lb = new ComboBox();
-        lb.setPromptText("SELECT LANGUAGE: ");
-        lb.setOnAction(e -> languageBox());
-        return lb;
+    private void initializeLanguageBox() {
+        myLanguageBox = new ComboBox();
+        myLanguageBox.setPromptText("SELECT LANGUAGE: ");
+        myLanguageBox.setOnAction(e -> languageBox());
+
+        List<String> languages = generateLanguages();
+        setLanguageOptions(languages);
+    }
+
+    private List<String> generateLanguages() {
+        languageTagMap = new HashMap<>();
+        List<String> languages = new ArrayList<>();
+        String rootDirectory = "src/parserModel/languages/commands"; // ***
+        File[] files = new File(rootDirectory).listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                String filename = file.getName();
+                String language = filename.replace(".properties", "");
+                languages.add(language);
+                ResourceBundle rb = ResourceBundle.getBundle
+                    (String.format("%s%s", "parserModel.languages.commands.", language)); // ***
+                String tag = rb.getString("languageTag");
+                languageTagMap.put(language, tag);
+            }
+        }
+        return languages;
+    }
+
+    public void setLanguageOptions(Collection<String> options) {
+        myLanguageBox.getItems().clear();
+        myLanguageBox.getItems().addAll(options);
     }
 
     private Button createButton(String text, EventHandler<ActionEvent> onClicked) {
