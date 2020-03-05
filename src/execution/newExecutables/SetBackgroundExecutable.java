@@ -1,22 +1,20 @@
 package execution.newExecutables;
 
 import execution.ExecutableSuperClass;
+import visualizer.Visualizer;
 
 public class SetBackgroundExecutable extends ExecutableSuperClass {
-    private double myIndex;
 
-    public SetBackgroundExecutable(double index){
-        myIndex = index;
+    public SetBackgroundExecutable(int id){
+
+    }
+    @Override
+    public void execute(Visualizer visualizer) {
+
     }
 
     @Override
-    public String getCommand() {
-        return null;
-    }
-
-
-    @Override
-    public String getString() {
+    public String getCommandName(String language) {
         return null;
     }
 }

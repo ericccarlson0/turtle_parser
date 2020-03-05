@@ -1,6 +1,7 @@
 package execution;
 import javafx.beans.property.StringProperty;
 import parserModel.TurtleContext;
+import visualizer.Visualizer;
 
 /**
  * @Author: Cemal Yagcioglu
@@ -12,8 +13,7 @@ import parserModel.TurtleContext;
  */
 public interface Executable {
 
-  void execute(TurtleContext context);
+  void execute(Visualizer visualizer);
 
-  void updateLanguage(String language);
-  StringProperty command();
+  String getCommandName(String language);
 }

@@ -2,26 +2,17 @@ package execution.newExecutables;
 
 import execution.Executable;
 import execution.ExecutableSuperClass;
+import visualizer.Visualizer;
 
 public class PenSizeExecutable extends ExecutableSuperClass {
-    private double myPenSize;
 
-    public PenSizeExecutable(double penSize) {
-        myPenSize = penSize;
+    @Override
+    public void execute(Visualizer visualizer) {
+
     }
 
     @Override
-    public String getCommand() {
-        return null;
-    }
-
-    @Override
-    public String getString() {
-        return null;
-    }
-
-    @Override
-    public String getExecutableName(String executableType) {
+    public String getCommandName(String language) {
         return null;
     }
 }

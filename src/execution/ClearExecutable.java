@@ -1,30 +1,35 @@
 package execution;
 import visualizer.Visualizer;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+
 /**
  * @Author: Cemal Yagcioglu
  * This subclass creates the executable command
  * object for Clear command.
  */
-public class ClearExecutable extends ExecutableSuperClass {
-  private static final String executableType = "ClearScreen";
-  private static final int ARGUMENT_SIZE = 1;
+public class ClearExecutable implements Executable {
+
+  private Collection<Integer> myIDs;
 
   public ClearExecutable(){
-    super();
-    argSize = ARGUMENT_SIZE;
+    myIDs = new HashSet<>();
+  }
+
+  public void addMove(int id){
+    myIDs.add(id);
   }
 
   @Override
-  public String getCommand() {
-    return "clearScreen"; //TODO
+  public void execute(Visualizer visualizer) {
+    visualizer.clearScreen(new HashSet<>(myIDs));
   }
 
-  /**
-   * Returns the string value to be shown on the executable history.
-   * @return Executable Name.
-   */
-  public String getString(){
-    return getExecutableName(executableType);
+  @Override
+  public String getCommandName(String language) {
+    return null;
   }
 }

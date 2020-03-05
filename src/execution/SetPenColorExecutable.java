@@ -3,31 +3,20 @@ package execution;
 import execution.Executable;
 import execution.ExecutableSuperClass;
 import parserModel.TurtleContext;
+import visualizer.Visualizer;
 
 public class SetPenColorExecutable extends ExecutableSuperClass {
-    private double myPenColor;
+    @Override
+    public void execute(Visualizer visualizer) {
 
-    public SetPenColorExecutable(double newPenColor) {
-        myPenColor = newPenColor;
     }
 
-    @Override
-    public String getCommand() {
-        return null;
-    }
-
-    @Override
-    public void execute(TurtleContext context) {
+    public void addMove(int id, int tag){
 
     }
 
     @Override
-    public String getString() {
-        return null;
-    }
-
-    @Override
-    public String getExecutableName(String executableType) {
+    public String getCommandName(String language) {
         return null;
     }
 }

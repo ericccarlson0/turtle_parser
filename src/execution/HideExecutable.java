@@ -1,6 +1,7 @@
 package execution;
 import visualizer.Visualizer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,26 +10,28 @@ import java.util.List;
  * This subclass creates the executable command
  * object for Hide command.
  */
-public class HideExecutable extends ExecutableSuperClass {
-  private static final String executableType = "HideTurtle";
-  private static final int ARGUMENT_SIZE = 2; //id, hide?
+public class HideExecutable implements Executable {
+
+  private List<Integer> myIDs;
+  private List<Boolean> myHides;
 
   public HideExecutable(){
-    super();
-    argSize = ARGUMENT_SIZE;
+    myIDs = new ArrayList<>();
+    myHides = new ArrayList<>();
+  }
+
+  public void addMove(int id, boolean hide){
+    myIDs.add(id);
+    myHides.add(hide);
   }
 
   @Override
-  public String getCommand() {
-    return "hide";
+  public void execute(Visualizer visualizer) {
+    visualizer.hide(new ArrayList<>(myIDs), new ArrayList<>(myHides));
   }
 
-  /**
-   * Returns the string value to be shown on the executable history.
-   * @return Executable Name.
-   */
-  public String getString(){
-    return getExecutableName(executableType);
+  @Override
+  public String getCommandName(String language) {
+    return null;
   }
-
 }

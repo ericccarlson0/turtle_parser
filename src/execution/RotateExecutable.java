@@ -1,32 +1,39 @@
 package execution;
 import visualizer.Visualizer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: Cemal Yagcioglu
  * This subclass creates the executable command
  * object for RightTurn command.
  */
-public class RotateExecutable extends ExecutableSuperClass {
-  private static final String executableType = "Right";
-  private static final int ARGUMENT_SIZE = 3; //id, startheading, endHeading
+public class RotateExecutable implements Executable{
+
+  private List<Integer> myIDs;
+  private List<Double> myStartAngles;
+  private List<Double> myEndAngles;
 
   public RotateExecutable(){
-    super();
-    argSize = ARGUMENT_SIZE;
+    myIDs = new ArrayList<>();
+    myStartAngles = new ArrayList<>();
+    myEndAngles = new ArrayList<>();
+  }
+
+  public void addMove(int id, double startAngle, double endAngle){
+    myIDs.add(id);
+    myStartAngles.add(startAngle);
+    myEndAngles.add(endAngle);
   }
 
   @Override
-  public String getCommand() {
-    return "setTurtleAngle";
+  public void execute(Visualizer visualizer) {
+    visualizer.setTurtleAngle(new ArrayList<>(myIDs), new ArrayList<>(myStartAngles), new ArrayList<>(myEndAngles));
   }
 
-  /**
-   * Returns the string value to be shown on the executable history.
-   * @return Executable Name.
-   */
-  public String getString(){
-    return getExecutableName(executableType);
+  @Override
+  public String getCommandName(String language) {
+    return null;
   }
-
-
 }

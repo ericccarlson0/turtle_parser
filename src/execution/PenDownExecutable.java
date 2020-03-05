@@ -7,26 +7,18 @@ import visualizer.Visualizer;
  * object for PenDown command.
  */
 public class PenDownExecutable extends ExecutableSuperClass {
-  private static final String executableType = "PenDown";
-  private static final int ARGUMENT_SIZE = 2; //id, penDown?
 
-  public PenDownExecutable(){
-    super();
-    argSize = ARGUMENT_SIZE;
+  @Override
+  public void execute(Visualizer visualizer) {
+
+  }
+
+  public void addMove(int id, boolean penDown){
+
   }
 
   @Override
-  public String getCommand() {
+  public String getCommandName(String language) {
     return null;
-  } //TODO
-
-  /**
-   * Returns the string value to be shown on the executable history.
-   * @return Executable Name.
-   */
-  public String getString(){
-    return getExecutableName(executableType);
   }
-
-
 }
