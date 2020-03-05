@@ -4,24 +4,19 @@ import execution.Executable;
 import javafx.collections.ObservableList;
 import parserModel.TokenAnalyzer.TokenType;
 import parserModel.exceptions.CommandMissingListStartException;
-import parserModel.exceptions.InvalidLoopHeaderException;
-import parserModel.exceptions.InvalidLoopStructureException;
-import parserModel.exceptions.MissingCommandBodyException;
-import parserModel.exceptions.MissingLoopBodyException;
-import parserModel.exceptions.NonVariableInLoopHeaderException;
 import parserModel.exceptions.ParsingException;
 import parserModel.exceptions.UnidentifiableTokenException;
 import parserModel.nodes.CommandFactory;
 import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.ListEndNode;
+import parserModel.nodes.SpecialCharacters;
 import parserModel.nodes.control.ListParserNode;
-import parserModel.nodes.control.LoopCounterNode;
-import parserModel.nodes.control.UserDefinedCommandNode;
 import parserModel.nodes.control.VariableNode;
 import parserModel.nodes.mathNodes.ConstantNode;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,6 +37,15 @@ public class TreeParser {
 
     public Collection<String> getLanguageOptions(){
         return getFileNamesInFolder("src/parserModel/languages/commands");
+    }
+    public Iterator<Executable> saveFile(String input, String filePath){
+        try {
+            FileWriter out = new FileWriter(filePath);
+            out.write(input);
+            out.close();
+        } catch (IOException e) {
+            //TODO
+        }
     }
 
     public Iterator<Executable> parseString(String input) throws ParsingException{
@@ -85,58 +89,22 @@ public class TreeParser {
         TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
         return getParserNode(iterator, nextElement, tokenType);
     }
-
-    private LoopCounterNode parseForLoopHeader(InputIterator iterator){
-        if(myTokenAnalyzer.typeOfToken(iterator.next()) != TokenType.ListStart){
-            throw new InvalidLoopStructureException();
-        }
-        String variableName = iterator.next();
-        if(myTokenAnalyzer.typeOfToken(variableName) != TokenType.Variable){
-            throw new NonVariableInLoopHeaderException();
-        }
-        VariableNode variableNode = new VariableNode(variableName);
-        LoopCounterNode loopCounter = new LoopCounterNode(variableNode);
-        ParserNode adding;
-
-        while((adding = parseIteratorElement(iterator)).typeOfNode() != NodeType.LIST_END){
-            loopCounter.addNode(adding);
-        }
-        if(loopCounter.isComplete()) {
-            return loopCounter;
-        } else{
-            throw new InvalidLoopHeaderException();
-        }
-    }
-    private UserDefinedCommandNode parseForCommandDefinition(InputIterator iterator){
-        String commandName = iterator.next();
-        UserDefinedCommandNode newCommand = new UserDefinedCommandNode(commandName); //FIXME
-
-        if (! validateOpenBracket(iterator)){
-            throw new CommandMissingListStartException();
-        }
-
-        String variableName;
-        while(myTokenAnalyzer.typeOfToken((variableName = iterator.next())) != TokenType.ListEnd){
-            newCommand.addVariable(new VariableNode(variableName));
-        }
-        return newCommand;
-    }
     private ParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {
         switch (tokenType) {
             case Command:
                 String key = myTokenAnalyzer.getTokenKey(nextElement);
                 ParserNode root = myCommandFactory.createCommand(key, myContext);
-                if(root.typeOfNode() == NodeType.LOOP){
-                    root.addNode(parseForLoopHeader(iterator));
-                    root.addNode(parseForLoopBody(iterator));
-                } else if(root.typeOfNode() == NodeType.FUNCTION_DEFINITION){
-                    root = parseForCommandDefinition(iterator);
-                    root.addNode(parseForCommandBody(iterator));
-                } else if(root.typeOfNode() == NodeType.TELL){
+                if(root.typeOfNode() == NodeType.TELL){
                     validateOpenBracket(iterator); //TODO: Throw exception
                 }
                 while(! root.isComplete()) {
-                    root.addNode(parseIteratorElement(iterator));
+                    ParserNode next = parseIteratorElement(iterator);
+                    System.out.println("adding element " + next + " to parent " + root);
+                    if(next instanceof VariableNode){
+                        root.addVariable((VariableNode)next);
+                    } else {
+                        root.addNode(next);
+                    }
                 }
                 return root;
             case Comment:
@@ -148,26 +116,19 @@ public class TreeParser {
             case Variable:
                 return new VariableNode(nextElement);
             case ListStart:
-                return parseForList(iterator);
+                return SpecialCharacters.OPEN_BRACKET;
             case ListEnd:
-                return new ListEndNode();
+                return SpecialCharacters.CLOSE_BRACKET;
             case GroupStart:
-                // TODO
+                return SpecialCharacters.GROUP_START;
             case GroupEnd:
-                // TODO
+                return SpecialCharacters.GROUP_END;
             case Error:
             default:
                 throw new UnidentifiableTokenException(nextElement);
         }
     }
 
-    private ParserNode parseForCommandBody(InputIterator iterator) {
-        return parseForList(iterator, true, new MissingCommandBodyException());
-    }
-
-    private ParserNode parseForLoopBody(InputIterator iterator){
-        return parseForList(iterator, true, new MissingLoopBodyException());
-    }
     private boolean validateOpenBracket(InputIterator iterator){
         return myTokenAnalyzer.typeOfToken(iterator.next()) == TokenType.ListStart;
     }

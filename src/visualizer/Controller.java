@@ -57,7 +57,9 @@ public class Controller {
                         e.printStackTrace();
                     }
                 }
-            } catch (ParsingException e) { }
+            } catch (ParsingException e) {
+                e.printStackTrace();
+            }
             myVisualizer.run();
             myVisualizer.resetCommand();
         }
