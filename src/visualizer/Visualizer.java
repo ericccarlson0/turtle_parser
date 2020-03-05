@@ -1,5 +1,7 @@
 package visualizer;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
@@ -598,11 +600,17 @@ public class Visualizer {
         myTextElements.add(new TextElementButton(turtleImageButton, "NEW_TURTLE_IMAGE"));
         HBox.setHgrow(turtleImageButton, Priority.ALWAYS);
 
+        Button saveFileButton = createButton("SAVE", event-> saveFileButtonClicked(userInputTextArea.getText()));
+        HBox.setHgrow(saveFileButton,Priority.ALWAYS);
+
+        //Button loadFileButton = createButton("SAVE", event-> loadFileButtonClicked());
+        //HBox.setHgrow(saveFileButton,Priority.ALWAYS);
+
         myLanguageBox = createLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
 
-        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,
+        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,saveFileButton,
             myLanguageBox);
         return holderPane;
     }
@@ -673,6 +681,27 @@ public class Visualizer {
             return;
         }
         setTurtleImage(selectedFile);
+    }
+
+    private void saveFileButtonClicked(String text){
+        FileChooser fileToSave = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileToSave.getExtensionFilters().add(extFilter);
+        File file = fileToSave.showSaveDialog(myStage);
+        if (file != null) {
+            saveTextToFile(text, file);
+        }
+    }
+
+    private void saveTextToFile(String textToSave, File fileToSave){
+        try {
+            FileWriter fileWriter = null;
+            fileWriter = new FileWriter(fileToSave);
+            fileWriter.write(textToSave);
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void changeLineStrokeWidth(double incrementSize){
