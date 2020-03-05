@@ -72,26 +72,18 @@ public class TreeParser {
         InputIterator iterator = new InputIterator(input);
         double returning;
         while (iterator.hasNext()) {
-            ParserNode returner = parseIteratorElement(iterator);
+            ParserNode returner = getParserNode(iterator);
             System.out.println(returner); // ***
             returning = returner.execute(myContext);
             System.out.println(""+returning); // ***
         }
     }
 
-    /**
-     * A recursive method that leverages a tree-like data structure to correctly order and generate
-     * various commands.
-     */
-    private ParserNode parseIteratorElement(InputIterator iterator) {
+    private ParserNode getParserNode(InputIterator iterator) {
         String nextElement = iterator.next();
-        return getParserNode(iterator, nextElement);
-    }
-
-    private ParserNode getParserNode(InputIterator iterator, String nextElement) {
         ParserNode root = myTokenAnalyzer.fetchNode(nextElement, myContext);
         while (!root.isComplete()) {
-            ParserNode next = parseIteratorElement(iterator);
+            ParserNode next = getParserNode(iterator);
             System.out.println("fetching child node :" + next);
             if (next instanceof VariableNode) {
                 root.addVariable((VariableNode) next);
