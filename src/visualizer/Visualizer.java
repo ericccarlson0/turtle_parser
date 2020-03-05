@@ -14,7 +14,12 @@ import javafx.animation.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -58,6 +63,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+
+import javafx.util.StringConverter;
 import visualizer.languageSensitive.TextElement;
 import visualizer.languageSensitive.TextElementButton;
 import visualizer.languageSensitive.TextElementText;
@@ -282,7 +289,7 @@ public class Visualizer {
 
     public void setLeadTurtle(List<List<Double>> args) {
         for (List<Double> arg : args) {
-            fillSummaryBox(arg.get(0), arg.get(1), arg.get(2), arg.get(3), arg.get(4));
+            //fillSummaryBox(arg.get(0), arg.get(1), arg.get(2), arg.get(3), arg.get(4));
         }
     }
 
@@ -456,16 +463,42 @@ public class Visualizer {
     }
 
     private void fillSummaryBox(double id, double x, double y, double heading, double penDown) {
+        Turtle myTurtle = myTurtles.get(0);
+        myTurtle.translateXProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println(newValue);
+            }
+        });
         leadTurtleIndex = (int) id;
         summaryBox.getChildren().clear();
         Text leadText = new Text("LEAD TURTLE STATISTICS: ");
-        Text idText = new Text(String.format("%s %.0f", "ID:\t\t", id));
-        Text xText = new Text(String.format("%s %.2f", "X:\t\t", x));
-        Text yText = new Text(String.format("%s %.2f", "Y:\t\t", y));
-        Text headingText = new Text(String.format("%s %.2f", "HEADING:\t", heading));
+        Text idText = new Text();
+        StringConverter<Number> sc = new StringConverter<Number>() {
+            @Override
+            public String toString(Number object) {
+                if (object != null)
+                    return Double.toString(object.doubleValue() + myTurtle.getWidth() / 2.0);
+                else
+                    return null;
+            }
+
+            @Override
+            public Double fromString(String string) {
+                double d = Double.parseDouble(string);
+                idText.textProperty().setValue(Integer.toString((int) Math.round(d)));
+                return d;
+            }
+        };
+
+        Bindings.bindBidirectional(idText.textProperty(), myTurtle.translateXProperty(), sc);//String.format("%s %.0f", "ID:\t\t", id));
+        Text xText = new Text(String.format("X:\t\t %.2f", x));
+        Text yText = new Text(String.format("Y:\t\t %.2f", y));
+        Text headingText = new Text(String.format("%HEADING:\t %.2f"", heading));
         Text penDownText = new Text(String.format("%s %.1f", "PEN DOWN:\t", penDown));
         summaryBox.getChildren().addAll(leadText, idText, xText, yText, headingText, penDownText);
     }
+    private StringConverter<Number> getStringConverter(String format, )
 
     private Node createHistoryArea() {
         VBox holder = new VBox(NODE_GAP);

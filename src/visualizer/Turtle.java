@@ -30,6 +30,13 @@ public class Turtle extends ImageView {
         setRotate(RIGHT_ANGLE);
     }
 
+    public double getWidth(){
+        return getBoundsInLocal().getWidth();
+    }
+    public double getHeight(){
+        return getBoundsInLocal().getHeight();
+    }
+
     /**
      * Turtle() - constructor for the turtle using image, x position, and y position.
      * @param image image for the turtle.
