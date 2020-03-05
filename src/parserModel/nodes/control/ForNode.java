@@ -22,60 +22,62 @@ import java.util.List;
  * @author Mariusz Derezinski-Choo
  */
 public class ForNode extends ControlParserNode {
+    private static final int LOOP_HEADER_SIZE = 3;
+
     private VariableNode myVariableNode;
     private List<ParserNode> myLoop;
     private ListParserNode myBodyNode;
-    private int stage;
+    private AddingStatus status;
 
     public ForNode(){
         super();
         myBodyNode = null;
         myLoop = new ArrayList<>();
-        stage = 0;
+        status = AddingStatus.FETCH_HEADER_OPEN_BRACKET;
     }
 
     @Override
     public void addNode(ParserNode node) {
-        switch(stage){
-            case 0:
+        switch(status){
+            case FETCH_HEADER_OPEN_BRACKET:
                 if(!node.equals(SpecialCharacters.OPEN_BRACKET)){
                     throw new InvalidLoopStructureException();
                 }
-                stage++;
+                status = AddingStatus.FETCH_VARIABLE;
                 break;
-            case 1:
+            case FETCH_VARIABLE:
                 throw new NonVariableInLoopHeaderException();
-            case 2:
+            case FETCH_HEADER_NODES:
                 myLoop.add(node);
-                if(myLoop.size() >= 3){
-                    stage++;
+                if(myLoop.size() >= LOOP_HEADER_SIZE){
+                    status = AddingStatus.FETCH_HEADER_CLOSE_BRACKET;
                 }
                 break;
-            case 3:
+            case FETCH_HEADER_CLOSE_BRACKET:
                 if(!node.equals(SpecialCharacters.CLOSE_BRACKET)){
                     throw new InvalidLoopStructureException();
                 }
-                stage++;
+                status = AddingStatus.FETCH_BODY_OPEN_BRACKET;
                 break;
-            case 4:
+            case FETCH_BODY_OPEN_BRACKET:
                 if(!node.equals(SpecialCharacters.OPEN_BRACKET)){
                     throw new InvalidLoopStructureException();
                 }
                 myBodyNode = new ListParserNode();
-                stage++;
+                status = AddingStatus.FETCH_BODY;
                 break;
-            case 5:
+            case FETCH_BODY:
                 myBodyNode.addNode(node);
         }
     }
 
     @Override
     public void addVariable(VariableNode node) {
-        if(stage != 1){
+        if(status != AddingStatus.FETCH_VARIABLE){
             addNode(node);
         } else{
             myVariableNode = node;
-            stage++;
+            status = AddingStatus.FETCH_HEADER_NODES;
         }
     }
 
