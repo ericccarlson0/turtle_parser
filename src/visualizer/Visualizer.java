@@ -1,6 +1,7 @@
 package visualizer;
 
 import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
@@ -8,8 +9,7 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
-
-import javafx.animation.*;
+import javafx.animation.Animation;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
