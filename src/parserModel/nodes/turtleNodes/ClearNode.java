@@ -31,8 +31,8 @@ public class ClearNode extends CommandParserNode {
             double startX = td.getX();
             double startY = td.getY();
             td.clear();
-            moveExecutable.addArg(List.of(id, startX, startY, 0.0, 0.0));
-            clearExecutable.addArg(List.of(id));
+            moveExecutable.addMove((int) id, startX, startY, 0, 0);
+            clearExecutable.addMove((int) id);
         }
         context.addToQueue(moveExecutable);
         context.addToQueue(clearExecutable);

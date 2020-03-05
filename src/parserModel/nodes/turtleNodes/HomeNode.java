@@ -32,7 +32,7 @@ public class HomeNode extends CommandParserNode {
             double startX = td.getX();
             double startY = td.getY();
             td.clear();
-            moveExecutable.addArg(List.of(id, startX, startY, 0.0, 0.0));
+            moveExecutable.addMove((int)id, startX, startY, 0, 0);
         }
         context.addToQueue(moveExecutable);
         return SUCCESS;

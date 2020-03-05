@@ -36,7 +36,8 @@ public class BackwardNode extends CommandParserNode {
             td.backward(distance);
             double endX = td.getX();
             double endY = td.getY();
-            executable.addArg(List.of(id, startX, startY, endX, endY));
+            //TODO: throw exception
+            executable.addMove((int)id, startX, startY, endX, endY);
         }
         context.addToQueue(executable);
         return distance;

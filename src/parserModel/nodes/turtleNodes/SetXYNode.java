@@ -47,7 +47,7 @@ public class SetXYNode extends CommandParserNode {
             double startY = td.getY();
             td.setX(endX);
             td.setY(endY);
-            executable.addArg(List.of(id, startX, startY, endX, endY));
+            executable.addMove((int)id, startX, startY, endX, endY);
         }
         context.addToQueue(executable);
         return endX; //?

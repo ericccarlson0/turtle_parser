@@ -27,7 +27,7 @@ public class ShowNode extends CommandParserNode {
         for(double id : context.getActiveTurtles()){
             TurtleData td = context.getData().turtleData(id);
             td.hide();
-            hideExecutable.addArg(List.of(id, 0.0)); // 0.0 for don't hide?
+            hideExecutable.addMove((int)id, false);
         }
         context.addToQueue(hideExecutable);
         return 0;

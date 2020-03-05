@@ -44,7 +44,8 @@ public class LeftTurnNode extends CommandParserNode {
             double startHeading = td.getHeading();
             td.turnCounterClockwise(degrees);
             double endHeading = td.getHeading();
-            rotateExecutable.addArg(List.of(id, startHeading, endHeading));
+            //TODO: throw exception
+            rotateExecutable.addMove((int)id, startHeading, endHeading);
         }
         context.addToQueue(rotateExecutable);
         return degrees;

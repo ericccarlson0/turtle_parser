@@ -35,7 +35,7 @@ public class ForwardNode extends CommandParserNode {
             td.forward(distance);
             double endX = td.getX();
             double endY = td.getY();
-            executable.addArg(List.of(id, startX, startY, endX, endY));
+            executable.addMove((int)id, startX, startY, endX, endY);
         }
         context.addToQueue(executable);
         return distance;

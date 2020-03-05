@@ -31,7 +31,7 @@ public class PenUpNode extends CommandParserNode {
         for(double id : context.getActiveTurtles()) {
             TurtleData td = context.getData().turtleData(id);
             td.penUp();
-            penDownExecutable.addArg(new ArrayList<>(List.of(id, 1.0)));
+            penDownExecutable.addMove((int)id, false);
         }
         context.addToQueue(penDownExecutable);
         return SUCCESS;

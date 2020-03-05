@@ -1,13 +1,10 @@
 package parserModel.nodes.turtleNodes;
 
 import execution.RotateExecutable;
-import parserModel.nodes.CommandParserNode;
-import parserModel.GlobalData;
-import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
-
-import java.util.List;
+import parserModel.nodes.CommandParserNode;
+import parserModel.nodes.ParserNode;
 
 /**
  * A node that when executed, rotates the turtle
@@ -49,7 +46,7 @@ public class TowardsNode extends CommandParserNode {
             double startHeading = td.getHeading();
             td.setHeading(degrees);
             double endHeading = td.getHeading();
-            rotateExecutable.addArg(List.of(id, startHeading, endHeading));
+            rotateExecutable.addMove((int)id, startHeading, endHeading);
         }
         context.addToQueue(rotateExecutable);
         return SUCCESS;
