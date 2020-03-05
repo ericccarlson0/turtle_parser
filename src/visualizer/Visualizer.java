@@ -1,8 +1,10 @@
 package visualizer;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
@@ -603,14 +605,14 @@ public class Visualizer {
         Button saveFileButton = createButton("SAVE", event-> saveFileButtonClicked(userInputTextArea.getText()));
         HBox.setHgrow(saveFileButton,Priority.ALWAYS);
 
-        //Button loadFileButton = createButton("SAVE", event-> loadFileButtonClicked());
-        //HBox.setHgrow(saveFileButton,Priority.ALWAYS);
+        Button loadFileButton = createButton("LOAD", event-> loadFileButtonClicked());
+        HBox.setHgrow(saveFileButton,Priority.ALWAYS);
 
         myLanguageBox = createLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
 
-        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,saveFileButton,
+        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,saveFileButton, loadFileButton,
             myLanguageBox);
         return holderPane;
     }
@@ -702,6 +704,22 @@ public class Visualizer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadFileButtonClicked(){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setTitle("Open Resource File");
+        File fileToLoad = fileChooser.showOpenDialog(myStage);
+        try {
+            Scanner scanned = new Scanner(fileToLoad);
+            scanned.useDelimiter("\\Z");
+            userInputTextArea.setText(scanned.next());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void changeLineStrokeWidth(double incrementSize){
