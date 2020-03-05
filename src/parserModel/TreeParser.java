@@ -2,7 +2,6 @@ package parserModel;
 
 import execution.Executable;
 import javafx.collections.ObservableList;
-import parserModel.TokenAnalyzer.TokenType;
 import parserModel.exceptions.ParsingException;
 import parserModel.exceptions.UnidentifiableTokenException;
 import parserModel.nodes.CommandFactory;
@@ -86,53 +85,24 @@ public class TreeParser {
      */
     private ParserNode parseIteratorElement(InputIterator iterator) {
         String nextElement = iterator.next();
-        TokenType tokenType = myTokenAnalyzer.typeOfToken(nextElement);
-        return getParserNode(iterator, nextElement, tokenType);
+        return getParserNode(iterator, nextElement);
     }
 
-    private ParserNode getParserNode(InputIterator iterator, String nextElement, TokenType tokenType) {
-        switch (tokenType) {
-            case Command:
-                String key = myTokenAnalyzer.getTokenKey(nextElement);
-                ParserNode root = myCommandFactory.createCommand(key, myContext);
-                if(root.typeOfNode() == NodeType.TELL){
-                    validateOpenBracket(iterator); //TODO: Throw exception
-                }
-                while(! root.isComplete()) {
-                    ParserNode next = parseIteratorElement(iterator);
-                    System.out.println("adding element " + next + " to parent " + root);
-                    if(next instanceof VariableNode){
-                        root.addVariable((VariableNode)next);
-                    } else {
-                        root.addNode(next);
-                    }
-                }
-                return root;
-            case Comment:
-                if (iterator.hasNext()) {
-                    return parseIteratorElement(iterator);
-                }
-            case Constant:
-                return new ConstantNode(Double.parseDouble(nextElement));
-            case Variable:
-                return new VariableNode(nextElement);
-            case ListStart:
-                return SpecialCharacters.OPEN_BRACKET;
-            case ListEnd:
-                return SpecialCharacters.CLOSE_BRACKET;
-            case GroupStart:
-                return SpecialCharacters.GROUP_START;
-            case GroupEnd:
-                return SpecialCharacters.GROUP_END;
-            case Error:
-                // TODO
-            default:
-                throw new UnidentifiableTokenException(nextElement);
+    private ParserNode getParserNode(InputIterator iterator, String nextElement) {
+        ParserNode root = myTokenAnalyzer.fetchNode(nextElement, myContext);
+        while (!root.isComplete()) {
+            ParserNode next = parseIteratorElement(iterator);
+            System.out.println("fetching child node :" + next);
+            if (next instanceof VariableNode) {
+                root.addVariable((VariableNode) next);
+            } else {
+                root.addNode(next);
+            }
+            //throw new UnidentifiableTokenException(nextElement);
         }
+        return root;
     }
-    private boolean validateOpenBracket(InputIterator iterator){
-        return myTokenAnalyzer.typeOfToken(iterator.next()) == TokenType.ListStart;
-    }
+
 
     private List<String> getPropertiesFilenames(String folderPath) {
         List<String> filenames = new ArrayList<>();
