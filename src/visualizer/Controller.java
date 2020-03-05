@@ -56,8 +56,7 @@ public class Controller {
                 while(newCommands.hasNext()){
                     try {
                         Executable nextExecutable = newCommands.next();
-                        Method animationMethod = myVisualizer.getClass().getDeclaredMethod(nextExecutable.getCommand(), new Class<?>[]{List.class});
-                        animationMethod.invoke(myVisualizer, nextExecutable.getArgs());
+                        nextExecutable.execute(myVisualizer);
                         myVisualizer.addExecutedHistory(nextExecutable.toString());
                     } catch (Exception e) {
                         e.printStackTrace();

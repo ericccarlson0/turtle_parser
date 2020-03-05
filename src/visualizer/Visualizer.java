@@ -91,7 +91,7 @@ public class Visualizer {
     private Pane myParserPane;
     private Group parserField;
     private Group trailsGroup;
-    private Map<Double, Turtle> myTurtles;
+    private Map<Integer, Turtle> myTurtles;
     private int turtleIndex = 0;
     private Text executedHistory;
     private ScrollPane inputPane;
@@ -136,79 +136,19 @@ public class Visualizer {
         }
     }
 
-    public void setPosition(List<List<Double>> args){
+    public void setPosition(List<Integer> ids, List<Double> startXs, List<Double> startYs, List<Double> endXs, List<Double> endYs) {
         ParallelTransition root = new ParallelTransition();
-        for(List<Double> arg : args) {
-            Turtle currentTurlte = currentTurlte = myTurtles.get(arg.get(0).doubleValue());
-            if(currentTurlte == null){
-                //e.printStackTrace();
-                Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
-                parserField.getChildren().add(initialTurtle);
-                initialTurtle.setTranslateX(-20); //FIXME
-                initialTurtle.setTranslateY(-20);
-                myTurtles.put(arg.get(0), initialTurtle);
-                currentTurlte = initialTurtle;
-            }
-            double startX = arg.get(1);
-            double startY = arg.get(2);
-            double endX = arg.get(3);
-            double endY = arg.get(4);
-            SequentialTransition seq = new SequentialTransition();
-            double length = Math.sqrt(Math.pow(startX - endX, 2) + Math.pow(startY - endY, 2));
-            int segments = length >= 10 ? (int) (length / 10) : 1;
-            double lengthPerSegment = length / segments;
-            double time = lengthPerSegment / TURTLE_SPEED_FPS;
-            for (int i = 0; i < segments; i++) {
-                double dX = endX - startX;
-                double dY = endY - startY;
-                double adjustStartX, adjustStartY;
-                double tempStartX = startX + (i / ((double) (segments))) * dX;
-                double tempStartY = startY + (i / ((double) (segments))) * dY;
-                if (tempStartX >= 0) {
-                    adjustStartX = (FIELD_SIZE / 2.0 + tempStartX) % FIELD_SIZE - FIELD_SIZE / 2.0;
-
-                } else {
-                    adjustStartX = (FIELD_SIZE / 2.0) - (FIELD_SIZE / 2.0 - tempStartX) % FIELD_SIZE;
-                }
-                if (tempStartY >= 0) {
-                    adjustStartY = (FIELD_SIZE / 2.0 + tempStartY) % FIELD_SIZE - FIELD_SIZE / 2.0;
-                } else {
-                    adjustStartY = (FIELD_SIZE / 2.0) - (FIELD_SIZE / 2.0 - tempStartY) % FIELD_SIZE;
-                }
-                double adjustEndX = adjustStartX + (1 / ((double) (segments))) * dX;
-                double adjustEndY = adjustStartY + (1 / ((double) (segments))) * dY;
-
-                Line line = new Line();
-                line.setStartX(adjustStartX);
-                line.setStartY(adjustStartY);
-                line.setEndX(adjustEndX);
-                line.setEndY(adjustEndY);
-                Line displayLine = new Line();
-                displayLine.strokeWidthProperty().bind(strokeWidthChosen);
-                trailsGroup.getChildren().add(displayLine);
-                displayLine.setOpacity(0.0);
-                displayLine.setEndX(adjustEndX);
-                displayLine.setEndY(adjustEndY);
-                displayLine.setStartY(adjustStartY);
-                displayLine.setStartX(adjustStartX);
-                displayLine.layoutXProperty().bind(Bindings.divide(myParserPane.widthProperty(), 2.0));
-                displayLine.layoutYProperty().bind(Bindings.divide(myParserPane.heightProperty(), 2.0));
-                PathTransition emptyTransition = new PathTransition();
-                emptyTransition.setDuration(Duration.seconds(time));
-                emptyTransition.setOnFinished(event -> {
-                    displayLine.strokeWidthProperty().unbind();
-                    displayLine.setOpacity(1.0);
-                });
-                emptyTransition.setNode(currentTurlte);
-                emptyTransition.setPath(line);
-
-                seq.getChildren().add(emptyTransition);
-            }
-            root.getChildren().add(seq);
+        //TODO: Throw exception if sizes don't align
+        Iterator<Integer> idIterator = ids.iterator();
+        Iterator<Double> startXIterator = startXs.iterator();
+        Iterator<Double> startYIterator = startYs.iterator();
+        Iterator<Double> endXIterator = endXs.iterator();
+        Iterator<Double> endYIterator = endYs.iterator();
+        while (idIterator.hasNext()) {
+            root.getChildren().add(getSinglePositionTransition(idIterator.next(), startXIterator.next(), startYIterator.next(), endXIterator.next(), endYIterator.next()));
         }
-            root.rateProperty().bind(speedProperty);
-            myTransitionQueue.add(root); //pathTransition);//allTogether);
-
+        root.rateProperty().bind(speedProperty);
+        myTransitionQueue.add(root);
     }
     /**
      * setTurtlePen() - setter for the turtle's pen status.
@@ -221,19 +161,23 @@ public class Visualizer {
     /**
      * setTurtleAngle() - setter for turtle's heading (angle).
      */
-    public void setTurtleAngle(List<List<Double>> args){//double startAngle, double endAngle, double duration) {
+    public void setTurtleAngle(Iterable<Integer> ids, Iterable<Double> startAngles, Iterable<Double> endAngles){
         ParallelTransition transtion = new ParallelTransition();
-        for(List<Double> arg : args) {
-            RotateTransition rt = new RotateTransition(Duration.millis(1), myTurtles.get(arg.get(0)));
-            double startAngle = arg.get(1);
-            double endAngle = arg.get(2);
+        //todo: throw exception
+        Iterator<Integer> idIterator = ids.iterator();
+        Iterator<Double> startAngleIterator = startAngles.iterator();
+        Iterator<Double> endAngleIterator = endAngles.iterator();
+        while(idIterator.hasNext()) {
+            Turtle targetTurtle = fetchTurtle(idIterator.next());
+            RotateTransition rt = new RotateTransition(Duration.millis(1), targetTurtle);
+            double startAngle = startAngleIterator.next();
+            double endAngle = endAngleIterator.next();
             rt.setFromAngle(90 + startAngle);
             rt.setToAngle(90 + endAngle);
             rt.setCycleCount(1);
             transtion.getChildren().add(rt);
         }
         myTransitionQueue.add(transtion);
-        //myTurtles.get(turtleIndex).setAngle(angle);
     }
 
     /**
@@ -270,9 +214,9 @@ public class Visualizer {
     /**
      * clearScreen() - clears the screen and resets the animation.
      */
-    public void clearScreen(List<List<Double>> args) {
+    public void clearScreen(Iterable<Integer> ids) {
         ParallelTransition transition = new ParallelTransition();
-        for(List<Double> arg : args) {
+        for(int id : ids) {
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setCycleCount(1);
@@ -295,13 +239,16 @@ public class Visualizer {
     /**
      * hide() - hides the turtle.
      */
-    public void hide(List<List<Double>> args) {
+    public void hide(Iterable<Integer> ids, Iterable<Boolean> hides) {
         ParallelTransition pt = new ParallelTransition();
-        for(List<Double> arg : args) {
+        Iterator<Integer> idIterator = ids.iterator();
+        Iterator<Boolean> hideIterator = hides.iterator();
+        while(idIterator.hasNext()) {
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setOnFinished(event -> {
-                myTurtles.get(arg.get(0)).setVisible(arg.get(1) == 0.0);
+
+                fetchTurtle(idIterator.next()).setVisible(!hideIterator.next());
             });
             pt.getChildren().add(pathTransition);
         }
@@ -391,7 +338,7 @@ public class Visualizer {
         parserField = new Group();
         trailsGroup = new Group();
         Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
-        myTurtles.put(0.0, initialTurtle);
+        myTurtles.put(0, initialTurtle);
         parserField.getChildren().add(initialTurtle);
         initialTurtle.setTranslateX(-20); //FIXME
         initialTurtle.setTranslateY(-20);
@@ -661,5 +608,91 @@ public class Visualizer {
         int G = penColorChoice.getG();
         int B = penColorChoice.getB();
         Color penColor = Color.color(R / MAX_RGB, G / MAX_RGB, B / MAX_RGB);
+    }
+
+
+    /**
+     * Private Animation methods
+     * @author Mariusz
+     */
+
+    private Animation getSinglePositionTransition(int id, double startX, double startY, double endX, double endY) {
+        SequentialTransition ret = new SequentialTransition();
+
+        Turtle currentTurtle = fetchTurtle(id);
+        double length = Math.sqrt(Math.pow(startX - endX, 2) + Math.pow(startY - endY, 2));
+        int segments = length >= 10 ? (int) (length / 10) : 1;
+        double lengthPerSegment = length / segments;
+        double time = lengthPerSegment / TURTLE_SPEED_FPS;
+
+        for (int i = 0; i < segments; i++) {
+            PathTransition emptyTransition = getLocalTransition(startX, startY, endX, endY, currentTurtle, segments, time, i);
+            ret.getChildren().add(emptyTransition);
+        }
+        return ret;
+    }
+
+    private PathTransition getLocalTransition(double startX, double startY, double endX, double endY, Turtle currentTurlte, int segments, double time, int i) {
+        double dX = endX - startX;
+        double dY = endY - startY;
+        double adjustStartX, adjustStartY;
+        double tempStartX = startX + (i / ((double) (segments))) * dX;
+        double tempStartY = startY + (i / ((double) (segments))) * dY;
+        if (tempStartX >= 0) {
+            adjustStartX = (FIELD_SIZE / 2.0 + tempStartX) % FIELD_SIZE - FIELD_SIZE / 2.0;
+
+        } else {
+            adjustStartX = (FIELD_SIZE / 2.0) - (FIELD_SIZE / 2.0 - tempStartX) % FIELD_SIZE;
+        }
+        if (tempStartY >= 0) {
+            adjustStartY = (FIELD_SIZE / 2.0 + tempStartY) % FIELD_SIZE - FIELD_SIZE / 2.0;
+        } else {
+            adjustStartY = (FIELD_SIZE / 2.0) - (FIELD_SIZE / 2.0 - tempStartY) % FIELD_SIZE;
+        }
+        double adjustEndX = adjustStartX + (1 / ((double) (segments))) * dX;
+        double adjustEndY = adjustStartY + (1 / ((double) (segments))) * dY;
+
+        Line line = getLine(adjustStartX, adjustStartY, adjustEndX, adjustEndY);
+        Line displayLine = getDisplayLine(adjustStartX, adjustStartY, adjustEndX, adjustEndY);
+        PathTransition emptyTransition = new PathTransition();
+        emptyTransition.setDuration(Duration.seconds(time));
+        emptyTransition.setOnFinished(event -> {
+            displayLine.strokeWidthProperty().unbind();
+            displayLine.setOpacity(1.0);
+        });
+        emptyTransition.setNode(currentTurlte);
+        emptyTransition.setPath(line);
+        return emptyTransition;
+    }
+
+    private Line getDisplayLine(double adjustStartX, double adjustStartY, double adjustEndX, double adjustEndY) {
+        Line displayLine = getLine(adjustStartX, adjustStartY, adjustEndX, adjustEndY);
+        displayLine.strokeWidthProperty().bind(strokeWidthChosen);
+        trailsGroup.getChildren().add(displayLine);
+        displayLine.setOpacity(0.0);
+        displayLine.layoutXProperty().bind(Bindings.divide(myParserPane.widthProperty(), 2.0));
+        displayLine.layoutYProperty().bind(Bindings.divide(myParserPane.heightProperty(), 2.0));
+        return displayLine;
+    }
+
+    private Line getLine(double adjustStartX, double adjustStartY, double adjustEndX, double adjustEndY) {
+        Line line = new Line();
+        line.setStartX(adjustStartX);
+        line.setStartY(adjustStartY);
+        line.setEndX(adjustEndX);
+        line.setEndY(adjustEndY);
+        return line;
+    }
+
+    private Turtle fetchTurtle(int id) {
+        if (myTurtles.containsKey(id)) {
+            return myTurtles.get(id);
+        }
+        Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
+        parserField.getChildren().add(initialTurtle);
+        initialTurtle.setTranslateX(-20); //FIXME
+        initialTurtle.setTranslateY(-20);
+        myTurtles.put(id, initialTurtle);
+        return initialTurtle;
     }
 }
