@@ -474,6 +474,8 @@ public class Visualizer {
         VBox holder = new VBox(NODE_GAP);
         holder.setPrefWidth(HISTORY_AREA_WIDTH);
         holder.setMaxWidth(HISTORY_AREA_WIDTH);
+        holder.setPrefHeight(HISTORY_AREA_WIDTH);
+        holder.setMaxHeight(HISTORY_AREA_WIDTH);
 
         Pane holderPane = new Pane(holder);
         holder.prefHeightProperty().bind(holderPane.heightProperty());
@@ -499,11 +501,14 @@ public class Visualizer {
             ScrollPane.ScrollBarPolicy.ALWAYS, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         inputPane.prefViewportWidthProperty().bind(holder.widthProperty());
         VBox.setVgrow(inputPane, Priority.ALWAYS);
+        inputPane.setMaxHeight(SCROLLPANE_SIZE);
 
         ScrollPane executedPane = createScrollPane(executedHistory, ScrollPane.ScrollBarPolicy.NEVER,
             ScrollPane.ScrollBarPolicy.ALWAYS, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         executedPane.prefViewportWidthProperty().bind(holder.widthProperty());
         VBox.setVgrow(executedPane, Priority.ALWAYS);
+        executedPane.setMaxHeight(SCROLLPANE_SIZE);
+
 
         inputPane.prefViewportHeightProperty().bindBidirectional(executedPane.prefViewportHeightProperty());
         holder.getChildren().addAll(inputPane, executedPane);

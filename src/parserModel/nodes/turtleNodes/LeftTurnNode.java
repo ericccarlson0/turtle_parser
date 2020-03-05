@@ -12,6 +12,6 @@ import parserModel.TurtleData;
 public class LeftTurnNode extends TurnNode {
     @Override
     protected void turn(TurtleData td, double degrees) {
-        td.turnCounterClockwise(degrees);
+        td.turnClockwise(degrees);
     }
 }

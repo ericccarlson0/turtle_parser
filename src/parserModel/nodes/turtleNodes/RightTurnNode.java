@@ -13,7 +13,7 @@ public class RightTurnNode extends TurnNode {
 
     @Override
     protected void turn(TurtleData td, double degrees) {
-        td.turnClockwise(degrees);
+        td.turnCounterClockwise(degrees);
     }
 
     @Override
