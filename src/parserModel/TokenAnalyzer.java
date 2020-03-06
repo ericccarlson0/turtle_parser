@@ -13,8 +13,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class TokenAnalyzer {
-    private static final String DEFAULT_LANGUAGE = "English";
-    private static final String COMMAND_LANGUAGE_FOLDER = "parserModel.languages.commands.";
+    private static final String DEFAULT_LANGUAGE = "ENGLISH";
+    private static final String COMMAND_LANGUAGE_FOLDER = "commands.";
 
     private static final String COMMENT = "Comment";
     private static final String CONSTANT = "Constant";
@@ -33,8 +33,8 @@ public class TokenAnalyzer {
     private ResourceBundle LANGUAGE;
 
     public TokenAnalyzer() {
-        LANGUAGE = ResourceBundle.getBundle(COMMAND_LANGUAGE_FOLDER + DEFAULT_LANGUAGE);
-        SYNTAX = ResourceBundle.getBundle("parserModel.parsing.syntax");
+        LANGUAGE = ResourceBundle.getBundle(String.format("%s%s", COMMAND_LANGUAGE_FOLDER, DEFAULT_LANGUAGE));
+        SYNTAX = ResourceBundle.getBundle("syntax");
         initializeCommands();
         initializePatterns();
         initializeTokenMap();
@@ -46,8 +46,12 @@ public class TokenAnalyzer {
         System.out.println("language set to " + language);
     }
 
-    public ParserNode fetchNode(String token, TurtleContext context){
-        return myTokens.getOrDefault(getTokenType(token),null).renderNode(getTokenKey(token),context);
+    public ParserNode fetchNode(String token, TurtleContext context) {
+        System.out.println(token);
+        System.out.println(myTokens.getOrDefault(getTokenType(token), null));
+
+        return myTokens.getOrDefault(getTokenType(token),null)
+            .renderNode(getTokenKey(token),context);
     }
 
     private String getTokenType(String text) {
@@ -86,7 +90,7 @@ public class TokenAnalyzer {
         mySymbols = createEntryList(SYNTAX);
     }
 
-    private void initializeTokenMap(){
+    private void initializeTokenMap (){
         myTokens = new HashMap<>();
         myTokens.put(COMMENT, TokenType.Comment);
         myTokens.put(COMMAND, TokenType.Command);
