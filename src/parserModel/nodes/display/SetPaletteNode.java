@@ -10,6 +10,14 @@ public class SetPaletteNode extends CommandParserNode {
     private ParserNode myRed;
     private ParserNode myGreen;
     private ParserNode myBlue;
+
+    public SetPaletteNode(){
+        myIndex = null;
+        myRed = null;
+        myGreen = null;
+        myBlue = null;
+    }
+
     @Override
     public void addNode(ParserNode node) {
         if(myIndex == null){

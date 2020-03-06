@@ -1,15 +1,9 @@
 package parserModel.nodes.turtleNodes;
 
-import execution.ClearExecutable;
-import execution.MoveExecutable;
 import execution.RotateExecutable;
-import parserModel.nodes.CommandParserNode;
-import parserModel.GlobalData;
-import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
-
-import java.util.List;
+import parserModel.nodes.ParserNode;
 
 /**
  * A node that when executed, rotates the turtle
@@ -18,14 +12,7 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class LeftTurnNode extends CommandParserNode {
-    private ParserNode myRotationNode;
-
-    public LeftTurnNode(){
-        super();
-        myRotationNode = null;
-    }
-
+public class LeftTurnNode extends TurnNode {
     @Override
     public void addNode(ParserNode node) {
         if (myRotationNode == null){
@@ -53,5 +40,8 @@ public class LeftTurnNode extends CommandParserNode {
 
     public boolean isComplete() {
         return myRotationNode != null;
+    }
+    protected void turn(TurtleData td, double degrees) {
+        td.turnClockwise(degrees);
     }
 }

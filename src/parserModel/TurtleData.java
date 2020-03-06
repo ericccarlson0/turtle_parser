@@ -6,6 +6,8 @@ public class TurtleData {
   public static final double DEFAULT_MIN_WIDTH = 2;
   public static final double DEFAULT_PEN_WIDTH = 4;
   public static final double ENVIRONMENT_SIZE = 650;
+  private static final double DEGREES_TO_RADIANS = Math.PI / 180.0;
+  private static final double RADIANS_TO_DEGREES = 1 / DEGREES_TO_RADIANS;
 
   private double xPos;
   private double yPos;
@@ -71,10 +73,10 @@ public class TurtleData {
   public void setX(double newXPos) { xPos = newXPos % ENVIRONMENT_SIZE; }
   public void setY(double newYPos) { yPos = newYPos % ENVIRONMENT_SIZE; }
   public void turnClockwise(double degrees) {
-    heading -= degrees * Math.PI/180;
+    heading -= degrees * DEGREES_TO_RADIANS;
   }
   public void turnCounterClockwise(double degrees) {
-    heading += degrees * Math.PI/180;
+    heading += degrees * DEGREES_TO_RADIANS;
   }
   public void setHeading(double degrees) { heading = 360 % degrees; }
   public void penDown() { penDown = true; }
@@ -86,7 +88,7 @@ public class TurtleData {
   public double getX() { return xPos; };
   public double getY() { return yPos; };
   public double getHeading() {
-    return heading * 180.0 / Math.PI;
+    return heading * RADIANS_TO_DEGREES;
   }
   public boolean getPenDown(){ return penDown;}
   public double getPenColor(){

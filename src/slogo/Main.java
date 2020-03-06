@@ -55,7 +55,7 @@ public class Main extends Application {
 
     private Node createInformationText() {
         VBox information = new VBox();
-        Text title = new Text(String.format("%s\n%s", "Welcome To SLOGO", "by MARIUSZ, ERIC, CEMAL and LORNE"));
+        Text title = new Text(String.format("%s%n%s", "Welcome To SLOGO", "by MARIUSZ, ERIC, CEMAL and LORNE"));
         Text instructions = new Text("Press the button to create a new workspace: ");
         information.getChildren().addAll(title, instructions);
         return information;

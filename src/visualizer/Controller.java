@@ -24,7 +24,6 @@ public class Controller {
         myVisualizer = new Visualizer();
         myVisualizer.setVariableList(myTreeParser.observableVariables());
         myVisualizer.setCommandList(myTreeParser.observableCommands());
-        myVisualizer.setLanguageOptions(myTreeParser.getLanguageOptions());
         myVisualizer.getLanguageProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -47,16 +46,7 @@ public class Controller {
     private void step () {
         if (! myVisualizer.getUserInput().equals("")) {
             try {
-                Iterator<Executable> newCommands = myTreeParser.parseString(myVisualizer.getUserInput());
-                while (newCommands.hasNext()) {
-                    try {
-                        Executable nextExecutable = newCommands.next();
-                        nextExecutable.execute(myVisualizer);
-                        myVisualizer.addExecutedHistory(nextExecutable.toString());
-                    } catch (Exception e) {
-                        // e.printStackTrace();
-                    }
-                }
+                executeCommand();
             } catch (ParsingException e) { }
             // TODO: make sure that this updates the summary statistics well on each run
             double turtleIndex = myVisualizer.getLeadTurtleIndex();
@@ -66,6 +56,19 @@ public class Controller {
             myVisualizer.setLeadTurtle(List.of(turtleSummary));
             myVisualizer.run();
             myVisualizer.resetUserInput();
+        }
+    }
+
+    private void executeCommand() {
+        Iterator<Executable> newCommands = myTreeParser.parseString(myVisualizer.getUserInput());
+        while (newCommands.hasNext()) {
+            try {
+                Executable nextExecutable = newCommands.next();
+                nextExecutable.execute(myVisualizer);
+                myVisualizer.addExecutedHistory(nextExecutable.toString());
+            } catch (Exception e) {
+                // e.printStackTrace();
+            }
         }
     }
 }
