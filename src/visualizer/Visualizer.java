@@ -448,6 +448,7 @@ public class Visualizer {
 
         HBox strokeWidthBox = createStrokeWidthBox();
 
+
         holder.getChildren().addAll(commandsPage.getScrollPane(), variablesPage.getScrollPane(),
             summaryBox, envColorChoice.getVisual(), penColorChoice.getVisual(), colorButtons,
             speedSlider, strokeWidthBox);
@@ -524,7 +525,10 @@ public class Visualizer {
         strokeWidthVisual.setStartX(0);
         strokeWidthVisual.setEndX(NODE_GAP*3);
 
-        holder.getChildren().addAll(strokeWidthText, decreaseStrokeButton, increaseStrokeButton, strokeWidthVisual);
+        Button penOnOff = new Button("Toggle");
+        penOnOff.setOnAction(e -> myTurtles.get(turtleIndex).setVisible(!myTurtles.get(turtleIndex).isVisible()));
+
+        holder.getChildren().addAll(strokeWidthText, decreaseStrokeButton, increaseStrokeButton, strokeWidthVisual, penOnOff);
         holder.setAlignment(Pos.CENTER);
         return holder;
     }
