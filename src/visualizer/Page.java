@@ -25,6 +25,7 @@ public class Page {
 
     private void setScrollPane() {
         textPane = new ScrollPane(myListView);
+        myListView.setOnMouseClicked(e -> System.out.println("Zzzzzzzzzzz"));
         textPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         textPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         textPane.setFitToHeight(true);

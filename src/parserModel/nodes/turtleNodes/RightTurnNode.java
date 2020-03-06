@@ -40,7 +40,7 @@ public class RightTurnNode extends CommandParserNode {
         for(double id : context.getActiveTurtles()) {
             TurtleData td = context.getData().turtleData(id);
             double startHeading = td.getHeading();
-            td.turnClockwise(degrees);
+            td.turnCounterClockwise(degrees);
             double endHeading = td.getHeading();
             rotateExecutable.addMove((int)id, startHeading, endHeading);
         }

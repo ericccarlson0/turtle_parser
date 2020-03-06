@@ -42,7 +42,7 @@ public class LeftTurnNode extends CommandParserNode {
             TurtleData td = context.getData().turtleData(id);
 
             double startHeading = td.getHeading();
-            td.turnCounterClockwise(degrees);
+            td.turnClockwise(degrees);
             double endHeading = td.getHeading();
             //TODO: throw exception
             rotateExecutable.addMove((int)id, startHeading, endHeading);

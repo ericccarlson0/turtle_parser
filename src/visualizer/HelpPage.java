@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 public class HelpPage {
     private final String language = ResourceBundle.getBundle("languages.LanguageChoice").getString("Language");
-    private final ResourceBundle commands = ResourceBundle.getBundle("parserModel.languages."+language);
+    private final ResourceBundle commands = ResourceBundle.getBundle("parserModel.languages.commands."+language);
     private static final int SCREEN_SIZE = 500;
 
     public HelpPage() {
