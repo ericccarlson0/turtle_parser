@@ -24,7 +24,8 @@ public class CommandFactory {
                 Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor();
                 return (ParserNode) constructor.newInstance();
             } catch (Exception e) {
-                e.printStackTrace(); //TODO: catch the exception
+                System.out.println("no identifier for : " + identifier);
+                e.printStackTrace(); //TODO: return errorNode.
             }
         }
         try {

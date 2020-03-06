@@ -2,13 +2,10 @@ package parserModel.nodes.turtleNodes;
 
 import execution.ClearExecutable;
 import execution.MoveExecutable;
-import parserModel.GlobalData;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
-import parserModel.TurtleContext;
-
-import java.util.List;
 
 /**
  * A node that when executed, clears the

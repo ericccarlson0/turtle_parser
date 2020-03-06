@@ -21,11 +21,6 @@ public enum SpecialCharacters implements ParserNode {
 
     @Override
     public double execute(TurtleContext context) {
-        try{
-            throw new Exception();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
         throw new UnsupportedOperationException();
     }
 
