@@ -1,0 +1,6 @@
+tell [ 100 ] fd 50
+couple of things
+a
+a
+$$
+aesd
