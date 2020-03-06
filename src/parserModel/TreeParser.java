@@ -79,7 +79,7 @@ public class TreeParser {
         ParserNode root = myTokenAnalyzer.fetchNode(nextElement, myContext);
         while (!root.isComplete()) {
             ParserNode next = getParserNode(iterator);
-            System.out.println("fetching child node :" + next);
+            System.out.println("Fetching child node: " + next);
             if (next instanceof VariableNode) {
                 root.addVariable((VariableNode) next);
             } else {
