@@ -1,6 +1,17 @@
 package visualizer;
 
+
+import java.awt.geom.Point2D;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
+import java.util.ResourceBundle;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.RotateTransition;
@@ -8,8 +19,7 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
-
-import javafx.animation.*;
+import javafx.animation.Animation;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -119,11 +129,15 @@ public class Visualizer {
     private String currentInput = "";
     private Page variablesPage;
     private Page commandsPage;
+    private double TURTLE_IMAGE_CENTER = 20;
     private ComboBox<String> myLanguageBox;
     private Timeline myAnimation;
     private Queue<Transition> myTransitionQueue;
     private Queue<Transition> myLastExecuted;
+
     private List<TextElement> myTextElements;
+    private Map<String, String> languageTagMap;
+
     private DoubleProperty speedProperty;
     private DoubleProperty strokeWidth = new SimpleDoubleProperty(1);
 
@@ -150,9 +164,17 @@ public class Visualizer {
             });
         }
         if (transitionIterator.hasNext()) {
-            System.out.println("PLAYING!");
             transitionIterator.next().play();
         }
+    }
+    public void setPenSize(double size){
+        ScaleTransition dummyTransition = new ScaleTransition();
+        dummyTransition.setDuration(Duration.millis(1));
+        dummyTransition.setCycleCount(1);
+        dummyTransition.setOnFinished(event -> {
+            strokeWidth.setValue(size);
+        });
+        myTransitionQueue.add(dummyTransition);
     }
 
     public void setPosition(List<Integer> ids, List<Double> startXs, List<Double> startYs, List<Double> endXs, List<Double> endYs) {
@@ -192,6 +214,7 @@ public class Visualizer {
             RotateTransition rt = new RotateTransition(Duration.millis(1), targetTurtle);
             double startAngle = startAngleIterator.next();
             double endAngle = endAngleIterator.next();
+            System.out.println("rotating from "+ startAngle + " to " + endAngle);
             rt.setFromAngle(90 + startAngle);
             rt.setToAngle(90 + endAngle);
             rt.setCycleCount(1);
@@ -235,17 +258,17 @@ public class Visualizer {
      * clearScreen() - clears the screen and resets the animation.
      */
     public void clearScreen(Iterable<Integer> ids) {
+        System.out.println("clearing ids are: " + ids);
         ParallelTransition transition = new ParallelTransition();
         for(int id : ids) {
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setCycleCount(1);
             pathTransition.setOnFinished(event -> {
-
+                System.out.println("finished with scaling");
                 trailsGroup.getChildren().clear();
-                System.out.println("DONE"); // ***
             });
-            transition.getChildren().add(transition);
+            transition.getChildren().add(pathTransition);
         }
         myTransitionQueue.add(transition);
     }
@@ -265,12 +288,12 @@ public class Visualizer {
         Iterator<Integer> idIterator = ids.iterator();
         Iterator<Boolean> hideIterator = hides.iterator();
         while(idIterator.hasNext()) {
-
+            double id = idIterator.next();
+            boolean visible = ! hideIterator.next();
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setOnFinished(event -> {
-
-                fetchTurtle(idIterator.next()).setVisible(!hideIterator.next());
+                fetchTurtle((int)id).setVisible(visible);
             });
             pt.getChildren().add(pathTransition);
         }
@@ -324,11 +347,6 @@ public class Visualizer {
         currentInput = input;
     }
 
-    public void setLanguageOptions(Collection<String> options) {
-        myLanguageBox.getItems().clear();
-        myLanguageBox.getItems().addAll(options);
-    }
-
     public ObjectProperty<String> getLanguageProperty() {
         return myLanguageBox.valueProperty();
     }
@@ -336,7 +354,8 @@ public class Visualizer {
     private void languageBox() {
         String language = myLanguageBox.getValue();
         for (TextElement element: myTextElements) {
-            element.changeLanguage(language);
+            String tag = languageTagMap.get(language);
+            element.changeLanguage(tag);
         }
     }
 
@@ -464,46 +483,26 @@ public class Visualizer {
 
     private void fillSummaryBox(double id, double x, double y, double heading, double penDown) {
         Turtle myTurtle = myTurtles.get(0);
-        myTurtle.translateXProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println(newValue);
-            }
-        });
         leadTurtleIndex = (int) id;
         summaryBox.getChildren().clear();
+        String defaultTemplate = "%s %.2f";
         Text leadText = new Text("LEAD TURTLE STATISTICS: ");
-        Text idText = new Text();
-        StringConverter<Number> sc = new StringConverter<Number>() {
-            @Override
-            public String toString(Number object) {
-                if (object != null)
-                    return Double.toString(object.doubleValue() + myTurtle.getWidth() / 2.0);
-                else
-                    return null;
-            }
 
-            @Override
-            public Double fromString(String string) {
-                double d = Double.parseDouble(string);
-                idText.textProperty().setValue(Integer.toString((int) Math.round(d)));
-                return d;
-            }
-        };
+        Text idText = new Text(String.format("%s %.0f", "ID:\t\t", id));
+        Text xText = new Text(String.format(defaultTemplate, "X:\t\t", x));
+        Text yText = new Text(String.format(defaultTemplate, "Y:\t\t", y));
+        Text headingText = new Text(String.format(defaultTemplate, "HEADING:\t", heading));
 
-        Bindings.bindBidirectional(idText.textProperty(), myTurtle.translateXProperty(), sc);//String.format("%s %.0f", "ID:\t\t", id));
-        Text xText = new Text(String.format("X:\t\t %.2f", x));
-        Text yText = new Text(String.format("Y:\t\t %.2f", y));
-        Text headingText = new Text(String.format("%HEADING:\t %.2f"", heading));
         Text penDownText = new Text(String.format("%s %.1f", "PEN DOWN:\t", penDown));
         summaryBox.getChildren().addAll(leadText, idText, xText, yText, headingText, penDownText);
     }
-    private StringConverter<Number> getStringConverter(String format, )
 
     private Node createHistoryArea() {
         VBox holder = new VBox(NODE_GAP);
         holder.setPrefWidth(HISTORY_AREA_WIDTH);
         holder.setMaxWidth(HISTORY_AREA_WIDTH);
+        holder.setPrefHeight(HISTORY_AREA_WIDTH);
+        holder.setMaxHeight(HISTORY_AREA_WIDTH);
 
         Pane holderPane = new Pane(holder);
         holder.prefHeightProperty().bind(holderPane.heightProperty());
@@ -529,11 +528,14 @@ public class Visualizer {
             ScrollPane.ScrollBarPolicy.ALWAYS, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         inputPane.prefViewportWidthProperty().bind(holder.widthProperty());
         VBox.setVgrow(inputPane, Priority.ALWAYS);
+        inputPane.setMaxHeight(SCROLLPANE_SIZE);
 
         ScrollPane executedPane = createScrollPane(executedHistory, ScrollPane.ScrollBarPolicy.NEVER,
             ScrollPane.ScrollBarPolicy.ALWAYS, SCROLLPANE_SIZE, SCROLLPANE_SIZE);
         executedPane.prefViewportWidthProperty().bind(holder.widthProperty());
         VBox.setVgrow(executedPane, Priority.ALWAYS);
+        executedPane.setMaxHeight(SCROLLPANE_SIZE);
+
 
         inputPane.prefViewportHeightProperty().bindBidirectional(executedPane.prefViewportHeightProperty());
         holder.getChildren().addAll(inputPane, executedPane);
@@ -631,11 +633,20 @@ public class Visualizer {
         myTextElements.add(new TextElementButton(turtleImageButton, "NEW_TURTLE_IMAGE"));
         HBox.setHgrow(turtleImageButton, Priority.ALWAYS);
 
-        myLanguageBox = createLanguageBox();
+        Button saveFileButton = createButton("SAVE", event-> saveFileButtonClicked(userInputTextArea.getText()));
+        HBox.setHgrow(saveFileButton,Priority.ALWAYS);
+        //Button loadFileButton = createButton("SAVE", event-> loadFileButtonClicked());
+        //HBox.setHgrow(saveFileButton,Priority.ALWAYS);
+        
+        initializeLanguageBox();
+        Button loadFileButton = createButton("LOAD", event-> loadFileButtonClicked());
+        HBox.setHgrow(saveFileButton,Priority.ALWAYS);
+
+        initializeLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
 
-        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,
+        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,saveFileButton, loadFileButton,
             myLanguageBox);
         return holderPane;
     }
@@ -668,11 +679,37 @@ public class Visualizer {
       return bg;
     }
 
-    private ComboBox createLanguageBox() {
-        ComboBox lb = new ComboBox();
-        lb.setPromptText("SELECT LANGUAGE: ");
-        lb.setOnAction(e -> languageBox());
-        return lb;
+    private void initializeLanguageBox() {
+        myLanguageBox = new ComboBox();
+        myLanguageBox.setPromptText("SELECT LANGUAGE: ");
+        myLanguageBox.setOnAction(e -> languageBox());
+
+        List<String> languages = generateLanguages();
+        setLanguageOptions(languages);
+    }
+
+    private List<String> generateLanguages() {
+        languageTagMap = new HashMap<>();
+        List<String> languages = new ArrayList<>();
+        String rootDirectory = "src/parserModel/languages/commands"; // ***
+        File[] files = new File(rootDirectory).listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                String filename = file.getName();
+                String language = filename.replace(".properties", "");
+                languages.add(language);
+                ResourceBundle rb = ResourceBundle.getBundle
+                    (String.format("%s%s", "parserModel.languages.commands.", language)); // ***
+                String tag = rb.getString("languageTag");
+                languageTagMap.put(language, tag);
+            }
+        }
+        return languages;
+    }
+
+    public void setLanguageOptions(Collection<String> options) {
+        myLanguageBox.getItems().clear();
+        myLanguageBox.getItems().addAll(options);
     }
 
     private Button createButton(String text, EventHandler<ActionEvent> onClicked) {
@@ -708,6 +745,43 @@ public class Visualizer {
         setTurtleImage(selectedFile);
     }
 
+    private void saveFileButtonClicked(String text){
+        FileChooser fileToSave = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileToSave.getExtensionFilters().add(extFilter);
+        File file = fileToSave.showSaveDialog(myStage);
+        if (file != null) {
+            saveTextToFile(text, file);
+        }
+    }
+
+    private void saveTextToFile(String textToSave, File fileToSave){
+        try {
+            FileWriter fileWriter = null;
+            fileWriter = new FileWriter(fileToSave);
+            fileWriter.write(textToSave);
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFileButtonClicked(){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setTitle("Open Resource File");
+        File fileToLoad = fileChooser.showOpenDialog(myStage);
+        try {
+            Scanner scanned = new Scanner(fileToLoad);
+            scanned.useDelimiter("\\Z");
+            userInputTextArea.setText(scanned.next());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void changeLineStrokeWidth(double incrementSize){
         strokeWidth.set(strokeWidth.doubleValue() + incrementSize);
     }
@@ -732,6 +806,7 @@ public class Visualizer {
      */
 
     private Animation getSinglePositionTransition(int id, double startX, double startY, double endX, double endY) {
+
         SequentialTransition ret = new SequentialTransition();
 
         Turtle currentTurtle = fetchTurtle(id);
@@ -741,18 +816,20 @@ public class Visualizer {
         double time = lengthPerSegment / TURTLE_SPEED_FPS;
 
         for (int i = 0; i < segments; i++) {
-            PathTransition emptyTransition = getLocalTransition(startX, startY, endX, endY, currentTurtle, segments, time, i);
+            Point2D.Double start = new Point2D.Double(startX, startY);
+            Point2D.Double end = new Point2D.Double(endX, endY);
+            PathTransition emptyTransition = getLocalTransition(start, end, currentTurtle, segments, time, i);
             ret.getChildren().add(emptyTransition);
         }
         return ret;
     }
 
-    private PathTransition getLocalTransition(double startX, double startY, double endX, double endY, Turtle currentTurlte, int segments, double time, int i) {
-        double dX = endX - startX;
-        double dY = endY - startY;
+    private PathTransition getLocalTransition(Point2D.Double startPoint, Point2D.Double endPoint, Turtle currentTurlte, int segments, double time, int i) {
+        double dX = endPoint.x - startPoint.x;
+        double dY = endPoint.y - startPoint.y;
         double adjustStartX, adjustStartY;
-        double tempStartX = startX + (i / ((double) (segments))) * dX;
-        double tempStartY = startY + (i / ((double) (segments))) * dY;
+        double tempStartX = startPoint.x + (i / ((double) (segments))) * dX;
+        double tempStartY = startPoint.y + (i / ((double) (segments))) * dY;
         if (tempStartX >= 0) {
             adjustStartX = (FIELD_SIZE / 2.0 + tempStartX) % FIELD_SIZE - FIELD_SIZE / 2.0;
 
@@ -805,8 +882,8 @@ public class Visualizer {
         }
         Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
         parserField.getChildren().add(initialTurtle);
-        initialTurtle.setTranslateX(-20); //FIXME
-        initialTurtle.setTranslateY(-20);
+        initialTurtle.setTranslateX(-TURTLE_IMAGE_CENTER); //FIXME
+        initialTurtle.setTranslateY(-TURTLE_IMAGE_CENTER);
         myTurtles.put(id, initialTurtle);
         return initialTurtle;
     }

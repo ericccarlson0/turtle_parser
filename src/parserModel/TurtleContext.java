@@ -1,6 +1,8 @@
 package parserModel;
 
 import execution.Executable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,10 +14,10 @@ import java.util.Queue;
 public class TurtleContext {
     private Queue<Executable> myExecutableQueue;
     private GlobalData myData;
-    private List<Double> myActiveTurtles;
+    private ObservableList<Double> myActiveTurtles;
 
     public TurtleContext() {
-        myActiveTurtles = new ArrayList<>();
+        myActiveTurtles = FXCollections.observableArrayList();
         myData = new GlobalData();
         myExecutableQueue = new LinkedList<>();
     }
@@ -39,7 +41,9 @@ public class TurtleContext {
     public void addActiveTurtles(Collection<Double> ids){
         myActiveTurtles.addAll(ids);
     }
-
+    public ObservableList<Double> myActiveTurtles(){
+        return myActiveTurtles;
+    }
     public GlobalData getData(){
         return myData;
     }

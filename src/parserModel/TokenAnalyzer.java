@@ -1,5 +1,7 @@
 package parserModel;
 
+import parserModel.nodes.ParserNode;
+
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,18 +32,6 @@ public class TokenAnalyzer {
     private ResourceBundle SYNTAX;
     private ResourceBundle LANGUAGE;
 
-    public enum TokenType {
-        Comment,
-        Constant,
-        Variable,
-        Command,
-        ListStart,
-        ListEnd,
-        GroupStart,
-        GroupEnd,
-        Error
-    }
-
     public TokenAnalyzer() {
         LANGUAGE = ResourceBundle.getBundle(COMMAND_LANGUAGE_FOLDER + DEFAULT_LANGUAGE);
         SYNTAX = ResourceBundle.getBundle("parserModel.parsing.syntax");
@@ -56,8 +46,8 @@ public class TokenAnalyzer {
         System.out.println("language set to " + language);
     }
 
-    public TokenType typeOfToken(String token) {
-        return myTokens.getOrDefault(getTokenType(token), TokenType.Error);
+    public ParserNode fetchNode(String token, TurtleContext context){
+        return myTokens.getOrDefault(getTokenType(token),null).renderNode(getTokenKey(token),context);
     }
 
     private String getTokenType(String text) {
