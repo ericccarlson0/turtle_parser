@@ -41,7 +41,6 @@ public class SetVariableNode extends SimpleParserNode {
     @Override
     public double execute(TurtleContext context) {
         double value = myAssignmentNode.execute(context);
-        System.out.println("setting variable" + myVariableNode + "to " + value);
         context.getData().setVariable(myVariableNode.toString(), value);
         return value;
     }
