@@ -99,6 +99,7 @@ public class Visualizer {
     private static final String TITLE_TEXT = " SLOGO ";
     private static final String SAVE = "SAVE";
     private static final String LOAD = "LOAD";
+    private static final String PALETTE = "PALETTE";
     private static final String TOGGLE_PEN = "TOGGLE";
     public static final Insets MARGINS = new Insets(10,10,10,10);
     public static final double FIELD_SIZE = 500;
@@ -110,6 +111,7 @@ public class Visualizer {
     public static final double STROKE_INCREMENT_SIZE = 0.3;
     public static final int HISTORY_AREA_WIDTH = 300;
     public static final int NODE_GAP = 8;
+    private static final double SCREEN_SIZE = 500;
 
     private Stage myStage;
     private Scene myScene;
@@ -131,6 +133,12 @@ public class Visualizer {
     private ColorChoice penColorChoice;
     private Color penColor;
     private Paint backgroundColor;
+
+    private List<Integer> ids;
+    private List<Double> reds;
+    private List<Double> greens;
+    private List<Double> blues;
+    private VBox palettes;
 
     private String currentInput = "";
     private Page variablesPage;
@@ -186,9 +194,12 @@ public class Visualizer {
     public void setBackground(int myBackground) {
         //TODO!
     }
-    public void setPallete(List<Integer> ids, List<Double> reds, List<Double> greens,
+    public void setPalette(List<Integer> ids, List<Double> reds, List<Double> greens,
                             List<Double> blues) {
-        //TODO!
+        this.ids.addAll(ids);
+        this.reds.addAll(reds);
+        this.greens.addAll(greens);
+        this.blues.addAll(blues);
     }
 
     public void printToTerminal(String message){
@@ -384,6 +395,10 @@ public class Visualizer {
     private void setUpEnvironment() {
         myTurtles = new HashMap<>();
         myTextElements = new ArrayList<>();
+        ids = new ArrayList<Integer>();
+        blues = new ArrayList<Double>();
+        reds = new ArrayList<Double>();
+        greens = new ArrayList<Double>();
         setUpParserPane();
 
         HBox inputBox = setUpInputBox();
@@ -676,14 +691,42 @@ public class Visualizer {
         myTextElements.add(new TextElementButton(loadFileButton, LOAD));
         HBox.setHgrow(saveFileButton,Priority.ALWAYS);
 
+        Button paletteButton = createButton(PALETTE, event -> paletteButtonClicked());
+        HBox.setHgrow(paletteButton,Priority.ALWAYS);
+
         initializeLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
 
         holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,
-            saveFileButton, loadFileButton,
+            saveFileButton, loadFileButton, paletteButton,
             myLanguageBox);
         return holderPane;
+    }
+
+    private void paletteButtonClicked() {
+        palettes = new VBox();
+        palettes.getChildren().add(new Text("PALETTE"));
+        for(int i=0; i<ids.size(); i++){
+            String paletteString = ids.get(i) + " " + reds.get(i) + " " + blues.get(i) + " "
+                    + greens.get(i);
+            palettes.getChildren().add(new Text(paletteString));
+            palettes.getChildren().add(new Text("NEW"));
+        }
+        Stage stage = new Stage();
+        Group group = new Group();
+        ScrollPane palettePane = new ScrollPane(palettes);
+        palettePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        palettePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        palettePane.setFitToHeight(true);
+        palettePane.setFitToWidth(true);
+        palettePane.setPrefSize(SCREEN_SIZE, SCREEN_SIZE);
+        group.getChildren().add(palettePane);
+        Scene scene = new Scene(group);
+        stage.setScene(scene);
+        String stylesheet = String.format("%s%s", Visualizer.RESOURCE_FOLDER, Visualizer.STYLESHEET);
+        scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+        stage.show();
     }
 
     private void runEmptyCycle() {
