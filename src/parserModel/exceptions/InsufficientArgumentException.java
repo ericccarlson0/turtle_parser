@@ -1,4 +1,4 @@
 package parserModel.exceptions;
 
-public class InsufficientArgumentException {
+public class InsufficientArgumentException extends RuntimeException {
 }

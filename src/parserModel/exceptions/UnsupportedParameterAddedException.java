@@ -1,4 +1,4 @@
 package parserModel.exceptions;
 
-public class UnsupportedParameterAddedException {
+public class UnsupportedParameterAddedException extends RuntimeException {
 }

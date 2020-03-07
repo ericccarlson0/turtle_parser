@@ -3,8 +3,9 @@ package parserModel;
 import parserModel.nodes.CommandFactory;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.SpecialCharacters;
-import parserModel.nodes.control.VariableNode;
-import parserModel.nodes.mathNodes.ConstantNode;
+import parserModel.nodes.control.GroupNode;
+import parserModel.nodes.leafNodes.VariableNode;
+import parserModel.nodes.leafNodes.ConstantNode;
 
 public enum TokenType {
     Comment {
@@ -46,19 +47,13 @@ public enum TokenType {
     GroupStart {
         @Override
         public ParserNode renderNode(String identifier, TurtleContext context) {
-            return SpecialCharacters.GROUP_END;
+            return new GroupNode();
         }
     },
     GroupEnd {
         @Override
         public ParserNode renderNode(String identifier, TurtleContext context) {
             return SpecialCharacters.GROUP_END;
-        }
-    },
-    Error {
-        @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
-            return null;
         }
     };
 
