@@ -25,6 +25,7 @@ public class SetPaletteNode extends MultiOperandNode {
             double blue = iterator.next().execute(context);
             executable.addMove(id, red, green, blue);
         }
+        context.addToQueue(executable);
         return id;
     }
 

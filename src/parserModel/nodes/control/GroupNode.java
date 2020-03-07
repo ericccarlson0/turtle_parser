@@ -1,9 +1,8 @@
 package parserModel.nodes.control;
 
 import parserModel.TurtleContext;
-import parserModel.exceptions.UnsupportedParameterAddedException;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.SpecialCharacters;
+import parserModel.nodes.leafNodes.SpecialCharacters;
 import parserModel.nodes.leafNodes.VariableNode;
 
 public class GroupNode implements ParserNode {

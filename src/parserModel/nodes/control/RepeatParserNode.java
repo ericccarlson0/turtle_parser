@@ -3,7 +3,7 @@ package parserModel.nodes.control;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.nodes.SimpleParserNode;
-import parserModel.nodes.SpecialCharacters;
+import parserModel.nodes.leafNodes.SpecialCharacters;
 import parserModel.nodes.leafNodes.VariableNode;
 
 /**

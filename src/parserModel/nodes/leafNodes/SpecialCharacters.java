@@ -1,12 +1,13 @@
-package parserModel.nodes;
+package parserModel.nodes.leafNodes;
 
 import parserModel.TurtleContext;
+import parserModel.nodes.ParserNode;
+import parserModel.nodes.leafNodes.LeafNode;
 import parserModel.nodes.leafNodes.VariableNode;
 
 public enum SpecialCharacters implements ParserNode {
     OPEN_BRACKET,
     CLOSE_BRACKET,
-    GROUP_START,
     GROUP_END;
 
     @Override

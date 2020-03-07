@@ -38,6 +38,21 @@ public class TreeParser {
         return null;
     }
 
+    public ObservableList<String> observableVariables(){
+        return myContext.getData().observableVariableList();
+    }
+    public ObservableList<String> observableCommands() {
+        return myContext.getData().observableCommandList();
+    }
+
+    public void setLanguage(String language) {
+        myTokenAnalyzer.setLanguage(language);
+    }
+
+    public List<Double> getTurtleSummary (double id) {
+        return myContext.getData().turtleData(id).getSummaryList();
+    }
+
     public Iterator<Executable> parseString(String input) throws ParsingException {
         String[] inputLines = input.split("\n");
         List<String> inputElements = new ArrayList<>();
@@ -86,18 +101,5 @@ public class TreeParser {
         return root;
     }
 
-    public ObservableList<String> observableVariables(){
-        return myContext.getData().observableVariableList();
-    }
-    public ObservableList<String> observableCommands() {
-        return myContext.getData().observableCommandList();
-    }
 
-    public void setLanguage(String language) {
-        myTokenAnalyzer.setLanguage(language);
-    }
-
-    public List<Double> getTurtleSummary (double id) {
-        return myContext.getData().turtleData(id).getSummaryList();
-    }
 }
