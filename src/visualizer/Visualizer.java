@@ -696,7 +696,7 @@ public class Visualizer {
         initializeLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
-        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, saveFileButton, loadFileButton,
+        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, saveFileButton, loadFileButton,paletteButton,
             myTurtleImageBox, myLanguageBox);
         return holderPane;
     }
