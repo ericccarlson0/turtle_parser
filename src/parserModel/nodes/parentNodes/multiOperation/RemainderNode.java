@@ -18,7 +18,7 @@ public class RemainderNode extends MultiOperandNode {
 
     protected void validateArguments(){
         if(arguments.size() < myMinArguments){
-            throw new InsufficientArgumentException();
+            throw new InsufficientArgumentException(toString());
         }
     }
 

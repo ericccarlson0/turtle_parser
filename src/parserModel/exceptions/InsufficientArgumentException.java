@@ -1,4 +1,15 @@
 package parserModel.exceptions;
 
-public class InsufficientArgumentException extends RuntimeException {
+import parserModel.nodes.ParserNode;
+
+public class InsufficientArgumentException extends ParsingException {
+
+    public InsufficientArgumentException(String argument){
+
+    }
+
+    @Override
+    public ParserNode renderNode() {
+        return null;
+    }
 }

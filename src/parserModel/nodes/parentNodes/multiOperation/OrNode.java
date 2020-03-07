@@ -24,7 +24,7 @@ public class OrNode extends MultiOperandNode {
 
     protected void validateArguments(){
         if(arguments.size() < 2){
-            throw new InsufficientArgumentException();
+            throw new InsufficientArgumentException(toString());
         }
     }
 

@@ -22,7 +22,7 @@ public abstract class UnaryOperationNode extends ParentNode {
     @Override
     protected void validateArguments(){
         if(arguments.size() < myMinArguments){
-            throw new InsufficientArgumentException();
+            throw new InsufficientArgumentException(toString());
         }
     }
 

@@ -24,7 +24,7 @@ public abstract class UnaryOperatorAllExecutionNode<T extends Executable> extend
     @Override
     protected void validateArguments(){
         if(arguments.size() < myMinArguments){
-            throw new InsufficientArgumentException();
+            throw new InsufficientArgumentException(toString());
         }
     }
 

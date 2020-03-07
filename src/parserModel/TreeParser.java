@@ -3,7 +3,6 @@ package parserModel;
 import execution.Executable;
 import javafx.collections.ObservableList;
 import parserModel.exceptions.ParsingException;
-import parserModel.nodes.CommandFactory;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.leafNodes.VariableNode;
 
@@ -63,19 +62,13 @@ public class TreeParser {
 
     private void parseList(List<String> input) {
         InputIterator iterator = new InputIterator(input);
-        double returning;
         try {
             while (iterator.hasNext()) {
                 ParserNode returner = getParserNode(iterator);
-                System.out.println(returner); // ***
-                returning = returner.execute(myContext);
-                System.out.println("" + returning); // ***
+                returner.execute(myContext);
             }
         } catch (ParsingException e){
             e.renderNode().execute(myContext);
-            return;
-        } catch (Exception e){
-            e.printStackTrace();
         }
     }
 
@@ -89,7 +82,6 @@ public class TreeParser {
             } else {
                 root.addNode(next);
             }
-            //throw new UnidentifiableTokenException(nextElement);
         }
         return root;
     }

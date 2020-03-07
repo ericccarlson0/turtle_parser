@@ -25,7 +25,7 @@ public class TowardsNode extends MultiOperandMultiOperationNode<RotateExecutable
     @Override
     protected void validateArguments() {
         if(arguments.size() < 2){
-            throw new InsufficientArgumentException();
+            throw new InsufficientArgumentException(toString());
         }
     }
 

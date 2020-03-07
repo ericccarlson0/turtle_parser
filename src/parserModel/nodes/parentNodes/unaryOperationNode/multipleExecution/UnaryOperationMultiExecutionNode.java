@@ -20,7 +20,7 @@ public abstract class UnaryOperationMultiExecutionNode<T extends Executable> ext
     @Override
     protected void validateArguments(){
         if(arguments.size() < myMinArguments){
-            throw new InsufficientArgumentException();
+            throw new InsufficientArgumentException(toString());
         }
     }
 

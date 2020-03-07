@@ -7,6 +7,7 @@ import parserModel.exceptions.UnexpectedParsingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -23,11 +24,11 @@ public class CommandFactory {
      * @return              Returns subclass of ParserNode.
      */
     public ParserNode createCommand(String identifier, String textEntered, TurtleContext context) {
-        String NodeClassPath = ROOT_NODE_PACKAGE + commandNameResource.getString(identifier);
         try {
+            String NodeClassPath = ROOT_NODE_PACKAGE + commandNameResource.getString(identifier);
             Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor(String.class);
             return (ParserNode) constructor.newInstance(textEntered);
-        } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+        } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | MissingResourceException e) {
             throw new UnexpectedParsingException();
         } catch (ClassNotFoundException e) {
             return context.getData().getCommand(identifier);
