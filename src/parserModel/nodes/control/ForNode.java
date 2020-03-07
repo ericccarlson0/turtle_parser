@@ -5,10 +5,12 @@ import parserModel.exceptions.NonVariableInLoopHeaderException;
 import parserModel.nodes.ControlParserNode;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
+import parserModel.nodes.SimpleParserNode;
 import parserModel.nodes.SpecialCharacters;
-import parserModel.nodes.booleanNodes.NotEqualNode;
-import parserModel.nodes.mathNodes.ConstantNode;
-import parserModel.nodes.mathNodes.SumNode;
+import parserModel.nodes.leafNodes.VariableNode;
+import parserModel.nodes.parentNodes.multiOperation.NotEqualNode;
+import parserModel.nodes.leafNodes.ConstantNode;
+import parserModel.nodes.parentNodes.multiOperation.SumNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ForNode extends ControlParserNode {
+public class ForNode extends SimpleParserNode {
     private static final int LOOP_HEADER_SIZE = 3;
 
     private VariableNode myVariableNode;
@@ -29,8 +31,8 @@ public class ForNode extends ControlParserNode {
     private ListParserNode myBodyNode;
     private AddingStatus status;
 
-    public ForNode(){
-        super();
+    public ForNode(String text){
+        super(text);
         myBodyNode = null;
         myLoop = new ArrayList<>();
         status = AddingStatus.FETCH_HEADER_OPEN_BRACKET;
@@ -87,14 +89,14 @@ public class ForNode extends ControlParserNode {
         initializerNode.addNode(new ConstantNode(myLoop.get(0).execute(context)));
         initializerNode.execute(context);
 
-        ParserNode myIteratingNode = new NotEqualNode();
+        ParserNode myIteratingNode = new NotEqualNode("notequal");
         ParserNode incrementNode = new SetVariableNode(myVariableNode);
 
 
         myIteratingNode.addNode(incrementNode);
         myIteratingNode.addNode(new ConstantNode(myLoop.get(1).execute(context)));
 
-        SumNode adder = new SumNode();
+        SumNode adder = new SumNode("+");
         incrementNode.addNode(adder);
         adder.addNode(myVariableNode);
         adder.addNode(new ConstantNode(myLoop.get(2).execute(context)));

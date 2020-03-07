@@ -1,23 +1,28 @@
 package parserModel.nodes.control;
 
-import parserModel.nodes.CommandParserNode;
-import parserModel.GlobalData;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
+import parserModel.nodes.SimpleParserNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
 /**
  * A Node that sets a variable equal to the value
  * returned by the assignment node
  */
-public class SetVariableNode extends CommandParserNode {
+public class SetVariableNode extends SimpleParserNode {
     private VariableNode myVariableNode;
     private ParserNode myAssignmentNode;
+
+    public SetVariableNode(String text){
+        super(text);
+    }
 
     /**
      * Construct a SetVariableNode object
      * @param node the Variable that is to be set
      */
     public SetVariableNode(VariableNode node){
+        super(node.toString());
         myVariableNode = node;
     }
 
@@ -29,9 +34,15 @@ public class SetVariableNode extends CommandParserNode {
     }
 
     @Override
+    public void addVariable(VariableNode node) {
+        myVariableNode = node;
+    }
+
+    @Override
     public double execute(TurtleContext context) {
         double value = myAssignmentNode.execute(context);
-        context.getData().setVariable(myVariableNode.name(), value);
+        System.out.println("setting variable" + myVariableNode + "to " + value);
+        context.getData().setVariable(myVariableNode.toString(), value);
         return value;
     }
 
