@@ -1,4 +1,4 @@
-package execution.newExecutables;
+package execution;
 
 import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
@@ -16,7 +16,7 @@ public class SetBackgroundExecutable extends ExecutableSuperClass {
     }
     @Override
     public void execute(Visualizer visualizer) {
-        visualizer.set
+        visualizer.setBackground(myBackground);
     }
 
     @Override
