@@ -49,7 +49,7 @@ public class MoveExecutable implements Executable {
   }
 
   @Override
-  public String getCommandName(String language) {
+  public String getName() {
     return name;
   }
 

@@ -6,8 +6,6 @@ import parserModel.TurtleData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 
-import java.util.ResourceBundle;
-
 /**
  * A node that, when executed, moves the turtle forward.
  *
@@ -35,7 +33,7 @@ public class ForwardNode extends CommandParserNode {
             double endY = td.getY();
             executable.addMove((int)id, startX, startY, endX, endY);
         }
-        executable.setName(commandNameResource.getString("Forward")+" "+ distance);
+        executable.setName(String.format("%s %.2f", "Forward", distance));
         context.addToQueue(executable);
         return distance;
     }

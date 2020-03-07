@@ -1,6 +1,5 @@
 package execution.newExecutables;
 
-import execution.Executable;
 import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
 
@@ -16,7 +15,7 @@ public class SetPaletteExecutable extends ExecutableSuperClass {
     }
 
     @Override
-    public String getCommandName(String language) {
+    public String getName() {
         return name;
     }
     @Override

@@ -38,7 +38,7 @@ public class SetHeadingNode extends CommandParserNode {
             double endHeading = td.getHeading();
             rotateExecutable.addMove((int)id, startHeading, endHeading);
         }
-        rotateExecutable.setName(commandNameResource.getString("SetHeading"));
+        rotateExecutable.setName("SetHeading");
 
         context.addToQueue(rotateExecutable);
         return degrees;

@@ -34,7 +34,7 @@ public class LeftTurnNode extends TurnNode {
             //TODO: throw exception
             rotateExecutable.addMove((int)id, startHeading, endHeading);
         }
-        rotateExecutable.setName(commandNameResource.getString("Left")+" "+ degrees);
+        rotateExecutable.setName(String.format("%s %.2f", "Left", degrees));
         context.addToQueue(rotateExecutable);
         return degrees;
     }

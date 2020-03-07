@@ -36,7 +36,7 @@ public class BackwardNode extends CommandParserNode {
             //TODO: throw exception
             executable.addMove((int)id, startX, startY, endX, endY);
         }
-        executable.setName(commandNameResource.getString("Backward")+" "+ distance);
+        executable.setName(String.format("%s %.2f", "Backward", distance));
 
         context.addToQueue(executable);
         return distance;

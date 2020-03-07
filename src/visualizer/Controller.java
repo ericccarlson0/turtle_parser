@@ -8,7 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import parserModel.exceptions.ParsingException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +64,7 @@ public class Controller {
             try {
                 Executable nextExecutable = newCommands.next();
                 nextExecutable.execute(myVisualizer);
-                myVisualizer.addExecutedHistory(nextExecutable.getCommandName("English"));
+                myVisualizer.addExecutedHistory(nextExecutable.getName());
             } catch (Exception e) {
                 // e.printStackTrace();
             }

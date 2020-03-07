@@ -15,7 +15,7 @@ public class SetBackgroundExecutable extends ExecutableSuperClass {
     }
 
     @Override
-    public String getCommandName(String language) {
+    public String getName() {
         return name;
     }
 

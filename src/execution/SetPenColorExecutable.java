@@ -1,8 +1,5 @@
 package execution;
 
-import execution.Executable;
-import execution.ExecutableSuperClass;
-import parserModel.TurtleContext;
 import visualizer.Visualizer;
 
 public class SetPenColorExecutable extends ExecutableSuperClass {
@@ -18,7 +15,7 @@ public class SetPenColorExecutable extends ExecutableSuperClass {
     }
 
     @Override
-    public String getCommandName(String language) {
+    public String getName() {
         return name;
     }
     @Override

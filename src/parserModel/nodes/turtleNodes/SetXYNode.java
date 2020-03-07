@@ -46,7 +46,7 @@ public class SetXYNode extends CommandParserNode {
             td.setY(endY);
             executable.addMove((int)id, startX, startY, endX, endY);
         }
-        executable.setName(commandNameResource.getString("SetPosition"));
+        executable.setName("SetPosition");
 
         context.addToQueue(executable);
         return endX; //?

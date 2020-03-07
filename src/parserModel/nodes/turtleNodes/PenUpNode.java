@@ -28,7 +28,7 @@ public class PenUpNode extends CommandParserNode {
             td.penUp();
             penDownExecutable.addMove((int)id, false);
         }
-        penDownExecutable.setName(commandNameResource.getString("PenUp"));
+        penDownExecutable.setName("PenUp");
 
         context.addToQueue(penDownExecutable);
         return SUCCESS;
