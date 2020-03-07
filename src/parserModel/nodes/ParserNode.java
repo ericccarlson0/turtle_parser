@@ -18,6 +18,10 @@ public interface ParserNode {
      */
     void addNode(ParserNode node);
 
+    /**
+     * Add a variable to the current node to be used as a child
+     * @param node the variable to be added
+     */
     void addVariable(VariableNode node);
 
     /**

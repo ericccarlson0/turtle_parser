@@ -11,7 +11,7 @@ public class ConstantNode extends LeafNode {
     private double myValue;
 
     /**
-     * Construct a constant
+     * Construct a constant from a string
      * @param value the numerical value of this constant
      */
     public ConstantNode(String value){
@@ -19,6 +19,10 @@ public class ConstantNode extends LeafNode {
         myValue = Double.parseDouble(value);
     }
 
+    /**
+     * Construct a constant from a double
+     * @param value the double value of this constant
+     */
     public ConstantNode(double value){
         super(Double.toString(value));
         myValue = value;

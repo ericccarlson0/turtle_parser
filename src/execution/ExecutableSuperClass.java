@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  */
 public abstract class ExecutableSuperClass implements Executable {
   public static final String RESOURCES = "parserModel.languages.";
-  private String languageChoice = ResourceBundle.getBundle("languages.LanguageChoice").getString("Language");
+  private String languageChoice = "LanguageChoice";
 
   /**
    * This is a helper method for subclasses' toString method, which returns the command's name in
@@ -19,7 +19,7 @@ public abstract class ExecutableSuperClass implements Executable {
    * @return The command's name in the user's language
    */
   protected String getExecutableName(String executableType){
-    return ResourceBundle.getBundle(RESOURCES+languageChoice).getString(executableType).split("\\|")[0];
+    return ResourceBundle.getBundle(languageChoice).getString(executableType).split("\\|")[0];
 
   }
 

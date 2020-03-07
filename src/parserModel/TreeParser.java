@@ -16,14 +16,12 @@ import java.util.List;
 
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
-    private CommandFactory myCommandFactory;
     private TurtleContext myContext;
 
     public TreeParser() {
         myContext = new TurtleContext();
         myContext.setWorkingTurtle(0);
         myTokenAnalyzer = new TokenAnalyzer();
-        myCommandFactory = new CommandFactory();
     }
 
     public ObservableList<Double> getActiveTurtles(){
@@ -73,6 +71,9 @@ public class TreeParser {
                 returning = returner.execute(myContext);
                 System.out.println("" + returning); // ***
             }
+        } catch (ParsingException e){
+            e.renderNode().execute(myContext);
+            return;
         } catch (Exception e){
             e.printStackTrace();
         }

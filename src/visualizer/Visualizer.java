@@ -182,6 +182,19 @@ public class Visualizer {
         myTransitionQueue.add(dummyTransition);
     }
 
+
+    public void setBackground(int myBackground) {
+        //TODO!
+    }
+    public void setPallete(List<Integer> ids, List<Double> reds, List<Double> greens,
+                            List<Double> blues) {
+        //TODO!
+    }
+
+    public void printToTerminal(String message){
+        userInputBox.getChildren().add(new Text(message));
+    }
+
     public void setPosition(List<Integer> ids, List<Double> startXs, List<Double> startYs,
         List<Double> endXs, List<Double> endYs) {
         ParallelTransition root = new ParallelTransition();
@@ -864,6 +877,7 @@ public class Visualizer {
 
         Line turtleLine = getLine(startX, startY, endX, endY);
         Line displayLine = getDisplayLine(startX, startY, endX, endY);
+        displayLine.setOpacity(0.0);
         PathTransition transition = new PathTransition();
         transition.setDuration(Duration.seconds(time));
         transition.setOnFinished(event -> {
@@ -927,4 +941,5 @@ public class Visualizer {
         String tag = languageTagMap.getOrDefault(language, "EN"); // ***
         return new Locale(tag);
     }
+
 }

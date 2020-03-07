@@ -12,6 +12,10 @@ import parserModel.TurtleContext;
  */
 public class VariableNode extends LeafNode {
 
+    /**
+     * Construct a VariableNode object
+     * @param text
+     */
     public VariableNode(String text) {
         super(text);
     }
