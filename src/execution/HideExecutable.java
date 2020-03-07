@@ -31,7 +31,7 @@ public class HideExecutable implements Executable {
   }
 
   @Override
-  public String getCommandName(String language) {
+  public String getName() {
     return name;
   }
 

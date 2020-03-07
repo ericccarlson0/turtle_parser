@@ -1,6 +1,5 @@
 package visualizer.languageSensitive;
 
-import java.util.Locale;
 import javafx.scene.text.Text;
 
 public class TextElementText extends TextElement {

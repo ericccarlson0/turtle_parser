@@ -48,7 +48,7 @@ public class TowardsNode extends CommandParserNode {
             double endHeading = td.getHeading();
             rotateExecutable.addMove((int)id, startHeading, endHeading);
         }
-        rotateExecutable.setName(commandNameResource.getString("SetTowards"));
+        rotateExecutable.setName("SetTowards");
 
         context.addToQueue(rotateExecutable);
         return SUCCESS;

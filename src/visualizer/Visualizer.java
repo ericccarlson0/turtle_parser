@@ -68,6 +68,7 @@ import java.util.Map;
 import java.util.Queue;
 import visualizer.languageSensitive.TextElement;
 import visualizer.languageSensitive.TextElementButton;
+import visualizer.languageSensitive.TextElementCommand;
 import visualizer.languageSensitive.TextElementText;
 
 /**
@@ -303,10 +304,15 @@ public class Visualizer {
     /**
      * addExecutedHistory() - add a String to the executed commands.
      */
-    public void addExecutedHistory(String executed) {
-        if (! executed.isEmpty()) {
-            executedHistory.getChildren().add(new Text(executed));
-            // TODO: make this language sensitive by creating a TextElement
+    public void addExecutedHistory(String historyLine) {
+        if (! historyLine.isEmpty()) {
+            Text historyNode = new Text(historyLine);
+            executedHistory.getChildren().add(historyNode);
+
+            TextElement historyElement = new TextElementCommand(historyNode, historyLine);
+            Locale currLocale = getLocaleFromBox();
+            historyElement.changeLanguage(currLocale);
+            myTextElements.add(historyElement);
         }
     }
 

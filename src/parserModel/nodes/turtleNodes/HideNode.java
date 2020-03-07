@@ -27,7 +27,7 @@ public class HideNode extends CommandParserNode {
             td.hide();
             hideExecutable.addMove((int)id, true);
         }
-        hideExecutable.setName(commandNameResource.getString("HideTurtle"));
+        hideExecutable.setName("HideTurtle");
 
         context.addToQueue(hideExecutable);
         return 0;

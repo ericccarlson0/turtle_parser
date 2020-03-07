@@ -7,8 +7,6 @@ import parserModel.TurtleData;
 import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 
-import java.util.ResourceBundle;
-
 /**
  * A node that when executed, clears the
  * turtle screen
@@ -33,7 +31,7 @@ public class ClearNode extends CommandParserNode {
             moveExecutable.addMove((int) id, startX, startY, 0, 0);
             clearExecutable.addMove((int) id);
         }
-        clearExecutable.setName(commandNameResource.getString("ClearScreen"));
+        clearExecutable.setName("ClearScreen");
         context.addToQueue(moveExecutable);
         context.addToQueue(clearExecutable);
         return SUCCESS;
