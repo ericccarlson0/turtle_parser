@@ -25,6 +25,6 @@ public class UnidentifiableTokenException extends ParsingException {
 
     @Override
     public ParserNode renderNode(){
-        return new ErrorNode(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY));
+        return new ErrorNode(String.format(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY),myErrorToken));
     }
 }
