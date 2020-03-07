@@ -22,12 +22,7 @@ import javafx.animation.Animation;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,6 +39,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -72,9 +68,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import javafx.util.StringConverter;
 import visualizer.languageSensitive.TextElement;
 import visualizer.languageSensitive.TextElementButton;
+import visualizer.languageSensitive.TextElementCombo;
 import visualizer.languageSensitive.TextElementCommand;
 import visualizer.languageSensitive.TextElementText;
 
@@ -145,6 +141,7 @@ public class Visualizer {
     private Page commandsPage;
     private double TURTLE_IMAGE_CENTER = 20;
     private ComboBox<String> myLanguageBox;
+    private ComboBox<String> myTurtleImageBox;
     private Timeline myAnimation;
     private Queue<Transition> myTransitionQueue;
     private Queue<Transition> myLastExecuted;
@@ -155,10 +152,11 @@ public class Visualizer {
     private DoubleProperty strokeWidth = new SimpleDoubleProperty(1);
 
     /**
-     * visualizer() - constructor for the visualizer.
+     * Visualizer() - constructor for the visualizer.
      */
     public Visualizer() {
         myTransitionQueue = new LinkedList<>();
+        myLastExecuted = new LinkedList<>(); // Just in case.
         start();
     }
 
@@ -180,14 +178,15 @@ public class Visualizer {
             transitionIterator.next().play();
         }
     }
-    public void setPenSize(double size){
-        ScaleTransition dummyTransition = new ScaleTransition();
-        dummyTransition.setDuration(Duration.millis(1));
-        dummyTransition.setCycleCount(1);
-        dummyTransition.setOnFinished(event -> {
+
+    public void setPenSize(double size) {
+        ScaleTransition transition = new ScaleTransition();
+        transition.setDuration(Duration.millis(1));
+        transition.setCycleCount(1);
+        transition.setOnFinished(event -> {
             strokeWidth.setValue(size);
         });
-        myTransitionQueue.add(dummyTransition);
+        myTransitionQueue.add(transition);
     }
 
 
@@ -227,7 +226,7 @@ public class Visualizer {
      * @param pen boolean turtle's pen status.
      */
     public void setTurtlePen(boolean pen) {
-        myTurtles.get(turtleIndex).setPen(pen);
+        myTurtles.get(turtleIndex).setPenDown(pen);
     }
 
     /**
@@ -240,7 +239,7 @@ public class Visualizer {
         Iterator<Double> startAngleIterator = startAngles.iterator();
         Iterator<Double> endAngleIterator = endAngles.iterator();
         while(idIterator.hasNext()) {
-            Turtle targetTurtle = fetchTurtle(idIterator.next());
+            Turtle targetTurtle = getTurtle(idIterator.next());
             RotateTransition rt = new RotateTransition(Duration.millis(1), targetTurtle);
             double startAngle = startAngleIterator.next();
             double endAngle = endAngleIterator.next();
@@ -322,7 +321,7 @@ public class Visualizer {
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setOnFinished(event -> {
-                fetchTurtle((int)id).setVisible(visible);
+                getTurtle((int)id).setVisible(visible);
             });
             pt.getChildren().add(pathTransition);
         }
@@ -437,20 +436,21 @@ public class Visualizer {
         parserField = new Group();
         displayLineGroup = new Group();
         // TODO: in the future, TURTLE_IMAGE will not be a constant
-        Turtle turt = createTurtle(TURTLE_IMAGE, 0);
-        myTurtles.put(0, turt);
-        myParserPane.getChildren().addAll(turt, parserField, displayLineGroup);
-        turt.setTranslateX(-20); // FIXME
-        turt.setTranslateY(-20); // FIXME
+        Turtle turtle = createTurtle(TURTLE_IMAGE);
+        myTurtles.put(0, turtle);
+        turtle.setTranslateX(-TURTLE_IMAGE_CENTER); // FIXME
+        turtle.setTranslateY(-TURTLE_IMAGE_CENTER);
+        parserField.getChildren().add(turtle);
+        myParserPane.getChildren().addAll(turtle, parserField, displayLineGroup);
     }
 
-    private Turtle createTurtle(Image turtleImage, int turtleIndex) {
-        Turtle turt = new visualizer.Turtle(turtleImage, turtleIndex);
-        turt.layoutXProperty().bind(Bindings.add(Bindings.divide(myParserPane.widthProperty(), 2),
-            Bindings.divide(turt.fitWidthProperty(), -1.0)));
-        turt.layoutYProperty().bind(Bindings.add(Bindings.divide(myParserPane.heightProperty(), 2),
-            Bindings.divide(turt.fitHeightProperty(), -1.0)));
-        return turt;
+    private Turtle createTurtle(Image turtleImage) {
+        Turtle turtle = new visualizer.Turtle(turtleImage);
+        turtle.layoutXProperty().bind(Bindings.add(Bindings.divide(myParserPane.widthProperty(), 2),
+            Bindings.divide(turtle.fitWidthProperty(), -1.0)));
+        turtle.layoutYProperty().bind(Bindings.add(Bindings.divide(myParserPane.heightProperty(), 2),
+            Bindings.divide(turtle.fitHeightProperty(), -1.0)));
+        return turtle;
     }
 
     private HBox setUpInputBox() {
@@ -520,7 +520,7 @@ public class Visualizer {
     }
 
     private void fillSummaryBox(double id, double x, double y, double heading, double penDown) {
-        Turtle myTurtle = myTurtles.get(0);
+        // Turtle myTurtle = myTurtles.get(0);
         leadTurtleIndex = (int) id;
         summaryBox.getChildren().clear();
         String defaultTemplate = "%s %.2f";
@@ -595,7 +595,8 @@ public class Visualizer {
 
         Button penOnOff = new Button(TOGGLE_PEN);
         myTextElements.add(new TextElementButton(penOnOff, TOGGLE_PEN));
-        penOnOff.setOnAction(e -> myTurtles.get(turtleIndex).setVisible(!myTurtles.get(turtleIndex).isVisible()));
+        Turtle turtle = myTurtles.get(turtleIndex);
+        penOnOff.setOnAction(e -> turtle.setVisible(! turtle.isVisible()));
 
         holder.getChildren().addAll(strokeWidthText, decreaseStrokeButton, increaseStrokeButton, strokeWidthVisual, penOnOff);
         holder.setAlignment(Pos.CENTER);
@@ -679,9 +680,7 @@ public class Visualizer {
         myTextElements.add(new TextElementButton(helpButton, "HELP"));
         HBox.setHgrow(helpButton, Priority.ALWAYS);
 
-        Button turtleImageButton = createButton("NEW TURTLE IMAGE", event -> turtleImageButton());
-        myTextElements.add(new TextElementButton(turtleImageButton, "NEW_TURTLE_IMAGE"));
-        HBox.setHgrow(turtleImageButton, Priority.ALWAYS);
+        initializeTurtleImageBox();
 
         Button saveFileButton = createButton(SAVE, event -> saveFileButtonClicked(userInputTextArea.getText()));
         myTextElements.add(new TextElementButton(saveFileButton, SAVE));
@@ -697,10 +696,8 @@ public class Visualizer {
         initializeLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
-
-        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,
-            saveFileButton, loadFileButton, paletteButton,
-            myLanguageBox);
+        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, saveFileButton, loadFileButton,
+            myTurtleImageBox, myLanguageBox);
         return holderPane;
     }
 
@@ -771,7 +768,7 @@ public class Visualizer {
     private List<String> generateLanguages() {
         languageTagMap = new HashMap<>();
         List<String> languages = new ArrayList<>();
-        String rootDirectory = "resources/commands"; // ***
+        String rootDirectory = "./resources/commands"; // ***
         File[] files = new File(rootDirectory).listFiles();
         for (File file : files) {
             if (file.isFile()) {
@@ -792,6 +789,38 @@ public class Visualizer {
         myLanguageBox.getItems().addAll(options);
     }
 
+    private void initializeTurtleImageBox() {
+        myTurtleImageBox = new ComboBox();
+        myTurtleImageBox.setPromptText("SELECT TURTLE IMAGE");
+        myTurtleImageBox.setOnAction(e -> turtleImageBox());
+
+        List<String> turtleOptions = generateTurtleOptions();
+        setTurtleOptions(turtleOptions);
+
+//        myTextElements.add(new TextElementCombo(myTurtleImageBox, "NEW_TURTLE_IMAGE"));
+//        HBox.setHgrow(myTurtleImageBox, Priority.ALWAYS);
+    }
+
+    private List<String> generateTurtleOptions() {
+        List<String> options = new ArrayList<>();
+        String rootDirectory = "./resources/images";
+        File[] files = new File(rootDirectory).listFiles();
+        for (File file: files) {
+            if (file.isFile()) {
+                String filename = file.getName();
+                int dotIndex = filename.indexOf(".");
+                filename = filename.substring(0, dotIndex);
+                options.add(filename);
+            }
+        }
+        return options;
+    }
+
+    public void setTurtleOptions(Collection<String> options) {
+        myTurtleImageBox.getItems().clear();
+        myTurtleImageBox.getItems().addAll(options);
+    }
+
     private Button createButton(String text, EventHandler<ActionEvent> onClicked) {
         Button myButton = new Button();
         myButton.setMaxWidth(Double.MAX_VALUE);
@@ -810,19 +839,17 @@ public class Visualizer {
         return sp;
     }
 
-    private void setTurtleImage(File imageFile){
-        myTurtles.get((double) turtleIndex).setImage(new Image(imageFile.toURI().toString()));
+    private void setTurtleImage(File imageFile) {
+        System.out.println(imageFile.getName()); // ***
+        Image turtleImage = new Image(imageFile.toURI().toString());
+        myTurtles.get(turtleIndex).setImage(turtleImage);
     }
 
-    private void turtleImageButton() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        File selectedFile = fileChooser.showOpenDialog(myStage);
-        if (selectedFile == null) {
-            System.out.println("You must select a file");
-            return;
-        }
-        setTurtleImage(selectedFile);
+    private void turtleImageBox() {
+        String chosen = myTurtleImageBox.getValue();
+        String imageDirectory = String.format("%s%s", "./resources/images/", chosen);
+        File imageFile = new File(imageDirectory);
+        setTurtleImage(imageFile); // ***
     }
 
     private void saveFileButtonClicked(String text){
@@ -891,7 +918,7 @@ public class Visualizer {
         double endX, double endY) {
         SequentialTransition ret = new SequentialTransition();
 
-        Turtle currentTurtle = fetchTurtle(id);
+        Turtle currentTurtle = getTurtle(id);
         double totalLength = Math.sqrt(Math.pow(startX - endX, 2) + Math.pow(startY - endY, 2));
         int segments = totalLength >= 10 ? (int) (totalLength / 10) : 1;
         double segmentLength = totalLength / segments;
@@ -962,16 +989,16 @@ public class Visualizer {
         return line;
     }
 
-    private Turtle fetchTurtle(int id) {
+    private Turtle getTurtle(int id) {
         if (myTurtles.containsKey(id)) {
             return myTurtles.get(id);
         }
-        Turtle initialTurtle = createTurtle(TURTLE_IMAGE, turtleIndex);
-        parserField.getChildren().add(initialTurtle);
-        initialTurtle.setTranslateX(-TURTLE_IMAGE_CENTER); //FIXME
-        initialTurtle.setTranslateY(-TURTLE_IMAGE_CENTER);
-        myTurtles.put(id, initialTurtle);
-        return initialTurtle;
+        Turtle turtle = createTurtle(TURTLE_IMAGE);
+        parserField.getChildren().add(turtle);
+        turtle.setTranslateX(-TURTLE_IMAGE_CENTER); //FIXME
+        turtle.setTranslateY(-TURTLE_IMAGE_CENTER);
+        myTurtles.put(id, turtle);
+        return turtle;
     }
 
     public double getLeadTurtleIndex () {
