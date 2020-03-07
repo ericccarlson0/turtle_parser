@@ -30,8 +30,10 @@ public class HomeNode extends CommandParserNode {
             td.clear();
             moveExecutable.addMove((int)id, startX, startY, 0, 0);
         }
+        moveExecutable.setName(commandNameResource.getString("Home"));
         context.addToQueue(moveExecutable);
         return SUCCESS;
+
     }
 
     @Override

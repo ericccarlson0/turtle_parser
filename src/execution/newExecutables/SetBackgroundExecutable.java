@@ -4,6 +4,7 @@ import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
 
 public class SetBackgroundExecutable extends ExecutableSuperClass {
+    private String name;
 
     public SetBackgroundExecutable(int id){
 
@@ -15,6 +16,11 @@ public class SetBackgroundExecutable extends ExecutableSuperClass {
 
     @Override
     public String getCommandName(String language) {
-        return null;
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

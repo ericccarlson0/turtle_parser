@@ -65,7 +65,7 @@ public class Controller {
             try {
                 Executable nextExecutable = newCommands.next();
                 nextExecutable.execute(myVisualizer);
-                myVisualizer.addExecutedHistory(nextExecutable.toString());
+                myVisualizer.addExecutedHistory(nextExecutable.getCommandName("English"));
             } catch (Exception e) {
                 // e.printStackTrace();
             }

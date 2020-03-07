@@ -6,6 +6,8 @@ import parserModel.TurtleContext;
 import visualizer.Visualizer;
 
 public class SetPenColorExecutable extends ExecutableSuperClass {
+    private String name;
+
     @Override
     public void execute(Visualizer visualizer) {
 
@@ -17,6 +19,10 @@ public class SetPenColorExecutable extends ExecutableSuperClass {
 
     @Override
     public String getCommandName(String language) {
-        return null;
+        return name;
+    }
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

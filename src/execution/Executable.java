@@ -13,4 +13,6 @@ public interface Executable {
   void execute(Visualizer visualizer);
 
   String getCommandName(String language);
+
+  void setName(String name);
 }

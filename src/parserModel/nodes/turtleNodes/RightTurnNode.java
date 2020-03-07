@@ -25,6 +25,8 @@ public class RightTurnNode extends TurnNode {
             double endHeading = td.getHeading();
             rotateExecutable.addMove((int) id, startHeading, endHeading);
         }
+        rotateExecutable.setName(commandNameResource.getString("Right")+" "+ degrees);
+
         context.addToQueue(rotateExecutable);
         return degrees;
     }

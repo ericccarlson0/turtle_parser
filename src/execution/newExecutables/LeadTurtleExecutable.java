@@ -6,6 +6,7 @@ import visualizer.Visualizer;
 public class LeadTurtleExecutable extends ExecutableSuperClass {
   private static final String EXECUTABLE_TYPE = "LeadTurtle";
   private static final int ARGUMENT_SIZE = 5;
+  private String name;
 
   public LeadTurtleExecutable() {
     super();
@@ -25,6 +26,11 @@ public class LeadTurtleExecutable extends ExecutableSuperClass {
 
   @Override
   public String getCommandName(String language) {
-    return null;
+    return name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
   }
 }

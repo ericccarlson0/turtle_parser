@@ -14,6 +14,7 @@ import parserModel.nodes.ParserNode;
 public class BackwardNode extends CommandParserNode {
     private ParserNode myLength;
 
+
     /**
      * Construct a BackwardNode
      */
@@ -35,6 +36,8 @@ public class BackwardNode extends CommandParserNode {
             //TODO: throw exception
             executable.addMove((int)id, startX, startY, endX, endY);
         }
+        executable.setName(commandNameResource.getString("Backward")+" "+ distance);
+
         context.addToQueue(executable);
         return distance;
     }

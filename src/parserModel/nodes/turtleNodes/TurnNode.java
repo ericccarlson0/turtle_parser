@@ -35,6 +35,8 @@ public abstract class TurnNode extends CommandParserNode {
             //TODO: throw exception
             rotateExecutable.addMove((int)id, startHeading, endHeading);
         }
+        rotateExecutable.setName(commandNameResource.getString("Right"));
+
         context.addToQueue(rotateExecutable);
         return degrees;
     }

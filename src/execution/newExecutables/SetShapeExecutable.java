@@ -5,6 +5,7 @@ import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
 
 public class SetShapeExecutable extends ExecutableSuperClass {
+    private String name;
 
 
     @Override
@@ -14,6 +15,11 @@ public class SetShapeExecutable extends ExecutableSuperClass {
 
     @Override
     public String getCommandName(String language) {
-        return null;
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }
