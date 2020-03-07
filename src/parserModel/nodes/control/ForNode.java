@@ -2,7 +2,6 @@ package parserModel.nodes.control;
 
 import parserModel.exceptions.InvalidLoopStructureException;
 import parserModel.exceptions.NonVariableInLoopHeaderException;
-import parserModel.nodes.ControlParserNode;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.nodes.SimpleParserNode;
