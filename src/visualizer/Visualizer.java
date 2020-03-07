@@ -127,7 +127,6 @@ public class Visualizer {
     private Timeline myAnimation;
     private Queue<Transition> myTransitionQueue;
     private Queue<Transition> myLastExecuted;
-
     private List<TextElement> myTextElements;
     private Map<String, String> languageTagMap;
 
@@ -251,6 +250,7 @@ public class Visualizer {
      * clearScreen() - clears the screen and resets the animation.
      */
     public void clearScreen(Iterable<Integer> ids) {
+
         ParallelTransition transition = new ParallelTransition();
         for(int id : ids) {
             ScaleTransition pathTransition = new ScaleTransition();
@@ -258,11 +258,12 @@ public class Visualizer {
             pathTransition.setCycleCount(1);
             pathTransition.setOnFinished(event -> {
 
-                trailsGroup.getChildren().clear();
+
                 System.out.println("DONE"); // ***
             });
             transition.getChildren().add(transition);
         }
+        trailsGroup.getChildren().clear();
         myTransitionQueue.add(transition);
     }
 
