@@ -1,53 +1,37 @@
-package parserModel.nodes.display;
+package parserModel.nodes.parentNodes.multiOperation;
 
-import execution.newExecutables.SetPaletteExecutable;
+import execution.SetPaletteExecutable;
 import parserModel.TurtleContext;
+import parserModel.exceptions.InvalidGroupingException;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.leafNodes.VariableNode;
 
-public class SetPaletteNode implements ParserNode {
-    private ParserNode myIndex;
-    private ParserNode myRed;
-    private ParserNode myGreen;
-    private ParserNode myBlue;
+import java.util.Iterator;
 
-    public SetPaletteNode(){
-        myIndex = null;
-        myRed = null;
-        myGreen = null;
-        myBlue = null;
+public class SetPaletteNode extends MultiOperandNode {
+
+    public SetPaletteNode(String text) {
+        super(text);
     }
 
     @Override
-    public void addNode(ParserNode node) {
-        if(myIndex == null){
-            myIndex = node;
-        } else if (myRed == null){
-            myRed = node;
-        } else if (myGreen == null){
-            myGreen = node;
-        } else if (myBlue == null){
-            myBlue = node;
+    protected double runValidated(TurtleContext context) {
+        SetPaletteExecutable executable = new SetPaletteExecutable();
+        Iterator<ParserNode> iterator = arguments.iterator();
+        int id = 0;
+        while(iterator.hasNext()){
+            id = (int)iterator.next().execute(context);
+            double red = iterator.next().execute(context);
+            double green = iterator.next().execute(context);
+            double blue = iterator.next().execute(context);
+            executable.addMove(id, red, green, blue);
         }
+        return id;
     }
 
     @Override
-    public void addVariable(VariableNode node) {
-
-    }
-
-    @Override
-    public double execute(TurtleContext context) {
-        double colorIndex = myIndex.execute(context);
-        double red = myRed.execute(context);
-        double green = myGreen.execute(context);
-        double blue = myBlue.execute(context);
-        context.addToQueue(new SetPaletteExecutable(colorIndex,red, green, blue));
-        return colorIndex;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return myBlue != null;
+    protected void validateArguments() {
+        if(arguments.size() % 4 != 0){
+            throw new InvalidGroupingException(this.toString(), "arguments must be multiples of 4!");
+        }
     }
 }

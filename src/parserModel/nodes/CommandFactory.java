@@ -17,16 +17,14 @@ public class CommandFactory {
      * @param identifier    A particular string associated with a particular type of ParserNode.
      * @return              Returns subclass of ParserNode.
      */
-    public ParserNode createCommand(String identifier, TurtleContext context) {
-        //debug();
+    public ParserNode createCommand(String identifier, String textEntered, TurtleContext context) {
+        debug();
         if (commandNameResource.containsKey(identifier)) {
             try {
-                System.out.println("the identifier is: " + identifier);
                 String NodeClassPath = "parserModel.nodes."+ commandNameResource.getString(identifier);
                 Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor(String.class);
-                return (ParserNode) constructor.newInstance(identifier);
+                return (ParserNode) constructor.newInstance(textEntered);
             } catch (Exception e) {
-                System.out.println("no identifier for : " + identifier);
                 e.printStackTrace(); //TODO: return errorNode.
             }
         }
@@ -40,7 +38,6 @@ public class CommandFactory {
         for (Iterator<String> it = commandNameResource.getKeys().asIterator(); it.hasNext(); ) {
             String test = it.next();
             try{
-                System.out.println("testing " + test);
                 String NodeClassPath = "parserModel.nodes."+ commandNameResource.getString(test);
                 Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor(String.class);
                 constructor.newInstance(test);
