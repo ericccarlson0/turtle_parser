@@ -17,6 +17,7 @@ public class MoveExecutable implements Executable {
   private List<Double> myStartYs;
   private List<Double> myEndXs;
   private List<Double> myEndYs;
+  private String name;
 
   public MoveExecutable(){
     myIDs = new ArrayList<>();
@@ -48,8 +49,13 @@ public class MoveExecutable implements Executable {
   }
 
   @Override
-  public String getCommandName(String language) {
-    return "";
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
   }
 
 }

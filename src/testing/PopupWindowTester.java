@@ -22,7 +22,7 @@ import javafx.util.Duration;
 import visualizer.languageSensitive.TextElement;
 import visualizer.languageSensitive.TextElementText;
 
-public class TextElementTester {
+public class PopupWindowTester {
 
   private static final String RESOURCE_FOLDER = "/stylesheets";
   private static final String STYLESHEET = "/default.css";
@@ -34,7 +34,6 @@ public class TextElementTester {
   private static final String TITLE = "TESTING";
   public static final int DELAY = 10;
   private ComboBox myLanguageBox;
-  private TestingScreen myTestingScreen;
   private Stage myStage;
   private Scene myScene;
   private Group myRoot;
@@ -42,7 +41,7 @@ public class TextElementTester {
   private List<TextElement> myTextElements;
   private List<String> textList = Arrays.asList(new String[]{"start", "stop", "turtle", "pen"});
 
-  public TextElementTester() {
+  public PopupWindowTester() {
     myStage = new Stage();
     setUpScene();
     myStage.setScene(myScene);
@@ -51,7 +50,6 @@ public class TextElementTester {
   }
 
   private void setUpScene() {
-    myTestingScreen = new TestingScreen(); // ***
     myLanguageBox = createLanguageBox();
     setUpRoot();
 
@@ -121,10 +119,6 @@ public class TextElementTester {
   }
 
   private void languageBox() {
-    String language = (String) myLanguageBox.getValue();
-    for (TextElement element: myTextElements) {
-      element.changeLanguage(language);
-    }
   }
 
   public ObjectProperty<String> getLanguageProperty(){

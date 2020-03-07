@@ -1,11 +1,10 @@
 package execution.newExecutables;
 
-import execution.Executable;
 import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
 
 public class SetPaletteExecutable extends ExecutableSuperClass {
-
+    private String name;
     public SetPaletteExecutable(double colorIndex, double red, double green, double blue) {
         super();
     }
@@ -16,7 +15,11 @@ public class SetPaletteExecutable extends ExecutableSuperClass {
     }
 
     @Override
-    public String getCommandName(String language) {
-        return null;
+    public String getName() {
+        return name;
+    }
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

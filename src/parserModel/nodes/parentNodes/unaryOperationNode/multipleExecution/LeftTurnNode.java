@@ -1,6 +1,9 @@
 package parserModel.nodes.parentNodes.unaryOperationNode.multipleExecution;
 
+import execution.RotateExecutable;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
+import parserModel.nodes.ParserNode;
 
 /**
  * A node that when executed, rotates the turtle
@@ -14,7 +17,6 @@ public class LeftTurnNode extends TurnNode {
         super(text);
     }
 
-    @Override
     protected void turn(TurtleData td, double degrees) {
         td.turnClockwise(degrees);
     }

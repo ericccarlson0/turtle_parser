@@ -22,6 +22,6 @@ public class TestingMain extends Application {
     launch(args);
   }
   public void start(Stage stage) throws IOException {
-    TextElementTester test = new TextElementTester();
+    PopupWindowTester test = new PopupWindowTester();
   }
 }

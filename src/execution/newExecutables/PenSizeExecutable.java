@@ -5,6 +5,7 @@ import visualizer.Visualizer;
 
 public class PenSizeExecutable extends ExecutableSuperClass {
     private double myStrokeWidth;
+    private String name;
 
     public PenSizeExecutable(double strokeWidth){
         myStrokeWidth = strokeWidth;
@@ -16,7 +17,12 @@ public class PenSizeExecutable extends ExecutableSuperClass {
     }
 
     @Override
-    public String getCommandName(String language) {
-        return null;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

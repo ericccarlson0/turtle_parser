@@ -30,7 +30,9 @@ public class HomeNode extends LeafNode {
             td.clear();
             moveExecutable.addMove((int)id, startX, startY, 0, 0);
         }
+        moveExecutable.setName("Home");
         context.addToQueue(moveExecutable);
         return SUCCESS;
+
     }
 }

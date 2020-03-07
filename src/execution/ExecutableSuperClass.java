@@ -20,6 +20,7 @@ public abstract class ExecutableSuperClass implements Executable {
    */
   protected String getExecutableName(String executableType){
     return ResourceBundle.getBundle(RESOURCES+languageChoice).getString(executableType).split("\\|")[0];
+
   }
 
 }

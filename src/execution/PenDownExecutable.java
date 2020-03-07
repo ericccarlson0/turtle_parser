@@ -7,6 +7,7 @@ import visualizer.Visualizer;
  * object for PenDown command.
  */
 public class PenDownExecutable extends ExecutableSuperClass {
+  private String name;
 
   @Override
   public void execute(Visualizer visualizer) {
@@ -18,7 +19,12 @@ public class PenDownExecutable extends ExecutableSuperClass {
   }
 
   @Override
-  public String getCommandName(String language) {
-    return null;
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
   }
 }

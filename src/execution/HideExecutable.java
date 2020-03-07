@@ -13,6 +13,7 @@ public class HideExecutable implements Executable {
 
   private List<Integer> myIDs;
   private List<Boolean> myHides;
+  private String name;
 
   public HideExecutable(){
     myIDs = new ArrayList<>();
@@ -30,7 +31,12 @@ public class HideExecutable implements Executable {
   }
 
   @Override
-  public String getCommandName(String language) {
-    return null;
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
   }
 }

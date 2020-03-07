@@ -6,22 +6,21 @@ import javafx.scene.Node;
 
 public abstract class TextElement {
   public static final String BUNDLE_DIRECTORY = "TextElements";
-  public static final String DEFAULT_LANGUAGE = "ENGLISH";
+  protected static final Locale defaultLocale = Locale.ENGLISH;
 
-
-  private String myString;
+  protected String myString;
 
   public TextElement(Node node, String text) {
-    myString = text.toUpperCase();
+    myString = text;
   }
 
-  public void changeLanguage(String tag) {
-    Locale locale = new Locale(tag);
+  public void changeLanguage(Locale locale) {
     ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_DIRECTORY, locale);
     String newText = bundle.getString(myString);
     putText(newText);
   }
 
+  @Deprecated
   protected String replaceUnderscores(String text) {
     StringBuilder builder = new StringBuilder();
     for (int i=0; i < text.length(); i++) {

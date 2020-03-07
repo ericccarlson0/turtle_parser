@@ -10,6 +10,7 @@ import java.util.List;
  * object for RightTurn command.
  */
 public class RotateExecutable implements Executable{
+  private String name;
 
   private List<Integer> myIDs;
   private List<Double> myStartAngles;
@@ -33,7 +34,12 @@ public class RotateExecutable implements Executable{
   }
 
   @Override
-  public String getCommandName(String language) {
-    return null;
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
   }
 }

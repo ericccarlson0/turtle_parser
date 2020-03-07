@@ -9,8 +9,7 @@ import visualizer.Visualizer;
  * executable can be added using this interface.
  */
 public interface Executable {
-
   void execute(Visualizer visualizer);
-
-  String getCommandName(String language);
+  String getName();
+  void setName(String name);
 }

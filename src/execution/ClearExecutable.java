@@ -10,6 +10,7 @@ import java.util.HashSet;
  * object for Clear command.
  */
 public class ClearExecutable implements Executable {
+  private String name;
 
   private Collection<Integer> myIDs;
 
@@ -27,7 +28,12 @@ public class ClearExecutable implements Executable {
   }
 
   @Override
-  public String getCommandName(String language) {
-    return null;
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public void setName(String name) {
+    this.name = name;
   }
 }

@@ -41,6 +41,7 @@ public class ClearNode extends SimpleParserNode {
             moveExecutable.addMove((int) id, startX, startY, 0, 0);
             clearExecutable.addMove((int) id);
         }
+        clearExecutable.setName("ClearScreen");
         context.addToQueue(moveExecutable);
         context.addToQueue(clearExecutable);
         return SUCCESS;

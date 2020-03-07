@@ -1,6 +1,5 @@
 package execution.newExecutables;
 
-import execution.Executable;
 import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
 
@@ -10,6 +9,7 @@ import java.util.List;
 public class SetShapeExecutable extends ExecutableSuperClass {
     private List<Integer> ids;
     private List<Integer> indexs;
+    private String name;
 
     public SetShapeExecutable(){
         ids = new ArrayList<>();
@@ -28,7 +28,12 @@ public class SetShapeExecutable extends ExecutableSuperClass {
 
 
     @Override
-    public String getCommandName(String language) {
-        return null;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

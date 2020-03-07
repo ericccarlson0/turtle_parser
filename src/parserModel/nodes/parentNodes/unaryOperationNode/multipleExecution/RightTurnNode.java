@@ -1,5 +1,7 @@
 package parserModel.nodes.parentNodes.unaryOperationNode.multipleExecution;
 
+import execution.RotateExecutable;
+import parserModel.TurtleContext;
 import parserModel.TurtleData;
 
 /**
@@ -10,7 +12,6 @@ import parserModel.TurtleData;
  * @author Mariusz Derezinski-Choo
  */
 public class RightTurnNode extends TurnNode {
-
     public RightTurnNode(String text) {
         super(text);
     }
