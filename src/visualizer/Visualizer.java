@@ -39,7 +39,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -108,6 +107,7 @@ public class Visualizer {
     public static final int HISTORY_AREA_WIDTH = 300;
     public static final int NODE_GAP = 8;
     private static final double SCREEN_SIZE = 500;
+    public static final int INSETS = 50;
 
     private Stage myStage;
     private Scene myScene;
@@ -395,15 +395,18 @@ public class Visualizer {
     private void setUpEnvironment() {
         myTurtles = new HashMap<>();
         myTextElements = new ArrayList<>();
-        ids = new ArrayList<Integer>();
-        blues = new ArrayList<Double>();
-        reds = new ArrayList<Double>();
-        greens = new ArrayList<Double>();
+        ids = new ArrayList<>();
+        blues = new ArrayList<>();
+        reds = new ArrayList<>();
+        greens = new ArrayList<>();
         setUpParserPane();
 
         HBox inputBox = setUpInputBox();
         BorderPane layoutPane = new BorderPane();
-        layoutPane.setCenter(myParserPane);
+
+        Group centerGroup = setUpCenterGroup();
+
+        layoutPane.setCenter(centerGroup);
         BorderPane.setAlignment(parserField, Pos.CENTER);
         layoutPane.setBottom(inputBox);
         BorderPane.setAlignment(inputBox, Pos.CENTER);
@@ -423,23 +426,36 @@ public class Visualizer {
         myScene = new Scene(layoutPane);
     }
 
+    private Group setUpCenterGroup() {
+        Rectangle background = new Rectangle(FIELD_SIZE+2*INSETS/3, FIELD_SIZE+2*INSETS/3);
+        background.setTranslateX(-INSETS/3);
+        background.setTranslateY(-INSETS/3);
+        background.setId("turtle-UI");
+
+        Group group = new Group();
+        myParserPane.setBackground(new Background(new BackgroundFill(Color.color
+            (1.0, 1.0, 1.0), CornerRadii.EMPTY, Insets.EMPTY)));
+        group.getChildren().addAll(background, myParserPane);
+        return group;
+    }
+
     /**
-     * This method sets up myParserPane, parserField, and trailsGroup, which make up the "parser
+     * This method sets up myParserPane, parserField, and displayLineGroup, which make up the "parser
      * pane", or the environment in which the turtles are seen and move around.
      */
     private void setUpParserPane() {
         myParserPane = new Pane();
         myParserPane.setId("turtle-UI");
-        myParserPane.setPadding(new Insets(50, 50, 50, 50));
+        myParserPane.setPadding(new Insets(INSETS, INSETS,INSETS, INSETS));
         myParserPane.setMinSize(FIELD_SIZE, FIELD_SIZE);
         myParserPane.setPrefSize(FIELD_SIZE, FIELD_SIZE);
 
         parserField = new Group();
         displayLineGroup = new Group();
-        // TODO: in the future, TURTLE_IMAGE will not be a constant
+
         Turtle turtle = createTurtle(TURTLE_IMAGE);
         myTurtles.put(0, turtle);
-        turtle.setTranslateX(-TURTLE_IMAGE_CENTER); // FIXME
+        turtle.setTranslateX(-TURTLE_IMAGE_CENTER);
         turtle.setTranslateY(-TURTLE_IMAGE_CENTER);
         parserField.getChildren().add(turtle);
         myParserPane.getChildren().addAll(turtle, parserField, displayLineGroup);
@@ -705,7 +721,7 @@ public class Visualizer {
     private void paletteButtonClicked() {
         palettes = new VBox();
         palettes.getChildren().add(new Text("PALETTE"));
-        for(int i=0; i<ids.size(); i++){
+        for (int i=0; i<ids.size(); i++) {
             String paletteString = "ID: " + ids.get(i) + " RED: " + reds.get(i) + " GREEN: " + greens.get(i) + " BLUES: "
                     + blues.get(i);
             palettes.getChildren().add(new Text(paletteString));
@@ -744,12 +760,14 @@ public class Visualizer {
         HelpPage popup = new HelpPage(getLocaleFromBox()); // ***
     }
 
+    @Deprecated
     private Rectangle createField(int x, int y, int width, int height) {
         Rectangle fld = new Rectangle(x, y, width, height);
         fld.setFill(Color.color(1.0, 1.0, 1.0));
         return fld;
     }
 
+    @Deprecated
     private Shape createBackground(int x, int y, int width, int height, int border) {
       Shape bg = new Rectangle(x - border/2, y - border/2,
           width + border, height + border);
