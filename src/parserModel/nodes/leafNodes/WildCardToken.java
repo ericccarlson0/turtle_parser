@@ -1,4 +1,4 @@
-package parserModel.nodes;
+package parserModel.nodes.leafNodes;
 
 import parserModel.TurtleContext;
 import parserModel.exceptions.UnidentifiableTokenException;

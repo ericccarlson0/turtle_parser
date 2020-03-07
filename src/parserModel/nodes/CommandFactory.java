@@ -3,10 +3,10 @@ package parserModel.nodes;
 import parserModel.TurtleContext;
 import parserModel.exceptions.NoSuchCommandException;
 import parserModel.exceptions.UnexpectedParsingException;
+import parserModel.nodes.leafNodes.WildCardToken;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 

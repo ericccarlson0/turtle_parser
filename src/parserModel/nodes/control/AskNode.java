@@ -2,10 +2,9 @@ package parserModel.nodes.control;
 
 import parserModel.TurtleContext;
 import parserModel.exceptions.InvalidLoopStructureException;
-import parserModel.exceptions.NonVariableInLoopHeaderException;
 import parserModel.nodes.ParserNode;
 import parserModel.nodes.SimpleParserNode;
-import parserModel.nodes.SpecialCharacters;
+import parserModel.nodes.leafNodes.SpecialCharacters;
 import parserModel.nodes.leafNodes.VariableNode;
 
 import java.util.ArrayList;
