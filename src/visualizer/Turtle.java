@@ -8,49 +8,43 @@ import javafx.scene.image.ImageView;
  * @version 1.0
  */
 public class Turtle extends ImageView {
-    private final static String TURTLE_FILE = "images/ball.jpg";
-    private final static Image TURTLE_IMAGE = new Image(TURTLE_FILE);
+    private static final String DEFAULT_FILE = "images/turtle.jpg";
+    private static final Image DEFAULT_IMAGE = new Image(DEFAULT_FILE);
     private static final int RIGHT_ANGLE = 90;
-    private boolean pen = true;
+    private boolean penDown = true;
 
     /**
      * Turtle() - constructor for the turtle.
      */
     public Turtle() {
-        super(TURTLE_IMAGE);
-        setAngle(0);
-        setRotate(RIGHT_ANGLE);
+        super(DEFAULT_IMAGE);
+        setAngle(0); setRotate(RIGHT_ANGLE);
     }
 
     public double getWidth(){
         return getBoundsInLocal().getWidth();
     }
-    public double getHeight(){
-        return getBoundsInLocal().getHeight();
+    public double getHeight(){ return getBoundsInLocal().getHeight(); }
+    public boolean getPenDown(){
+        return penDown;
     }
 
     /**
      * Turtle() - constructor for the turtle using image, x position, and y position.
      * @param image image for the turtle.
      */
-    public Turtle(Image image, int turtleIndex) {
+    public Turtle(Image image) {
         super(image);
-        setAngle(0);
-        setRotate(RIGHT_ANGLE);
+        setAngle(0); setRotate(RIGHT_ANGLE);
     }
 
-    public boolean getPen(){
-        return pen;
-    }
+    /**
+     * setPenDown() - setter for the turtle's pen status.
+     * @param penDown turtle's pen status.
+     */
+    public void setPenDown(boolean penDown) { this.penDown = penDown; }
 
     public void setAngle(double angle){
         setRotate(angle + RIGHT_ANGLE);
     }
-
-    /**
-     * setPen() - setter for the turtle's pen status.
-     * @param pen turtle's pen status.
-     */
-    public void setPen(boolean pen) { this.pen = pen; }
-
 }

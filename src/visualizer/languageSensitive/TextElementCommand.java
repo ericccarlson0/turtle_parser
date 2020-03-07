@@ -2,7 +2,6 @@ package visualizer.languageSensitive;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 import javafx.scene.text.Text;
 
 public class TextElementCommand extends TextElement {
@@ -23,7 +22,8 @@ public class TextElementCommand extends TextElement {
 
     String newText = "";
     for (String token: tokenArray) {
-      if (token.matches("^[a-zA-Z]*$")) {
+      if ((token.length() > 1) & token.matches("^[a-zA-Z]*$")) {
+        // token.length() > 1 used to prevent searching for non-commands.
         token = bundle.getString(token); // Should return, for instance, forward|fd.
       }
       newText = String.format("%s %s", newText, token);
