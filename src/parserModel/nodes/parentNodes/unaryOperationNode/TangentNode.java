@@ -11,6 +11,10 @@ import parserModel.TurtleContext;
 public class TangentNode extends UnaryOperationNode {
     private static final double RADIANS_TO_DEGREES = Math.PI/180.0;
 
+    /**
+     * Construct a Tangent Node
+     * @param text the user-inputted text associated with this construction
+     */
     public TangentNode(String text) {
         super(text);
     }

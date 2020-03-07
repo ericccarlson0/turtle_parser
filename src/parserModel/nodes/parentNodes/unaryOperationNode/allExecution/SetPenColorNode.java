@@ -3,12 +3,18 @@ package parserModel.nodes.parentNodes.unaryOperationNode.allExecution;
 import execution.SetPenColorExecutable;
 import parserModel.TurtleContext;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.parentNodes.ParentNode;
 
-import java.util.List;
-
+/**
+ * A Node that sets the pen color for all turtles
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class SetPenColorNode extends UnaryOperatorAllExecutionNode<SetPenColorExecutable> {
 
+    /**
+     * Construct a Pen Color Object
+     * @param text
+     */
     public SetPenColorNode(String text) {
         super(text);
     }

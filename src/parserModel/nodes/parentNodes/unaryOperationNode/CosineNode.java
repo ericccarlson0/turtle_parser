@@ -11,6 +11,10 @@ import parserModel.TurtleContext;
 public class CosineNode extends UnaryOperationNode {
     private static final double RADIANS_TO_DEGREES = Math.PI/180.0;
 
+    /**
+     * Construct a CosineNode
+     * @param text the user-inputted text associated with this construction
+     */
     public CosineNode(String text) {
         super(text);
     }

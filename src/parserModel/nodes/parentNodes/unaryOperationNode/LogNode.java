@@ -10,6 +10,10 @@ import parserModel.TurtleContext;
  */
 public class LogNode extends UnaryOperationNode {
 
+    /**
+     * Construct a LogNode
+     * @param text the user-inputted text associated with this construction
+     */
     public LogNode(String text) {
         super(text);
     }

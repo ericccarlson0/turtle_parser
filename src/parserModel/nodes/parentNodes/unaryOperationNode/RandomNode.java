@@ -10,6 +10,11 @@ import parserModel.TurtleContext;
  * @author Mariusz Derezinski-Choo
  */
 public class RandomNode extends UnaryOperationNode {
+
+    /**
+     * Construct a Random Node
+     * @param text the user-inputted text associated with this construction
+     */
     public RandomNode(String text) {
         super(text);
     }

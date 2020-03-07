@@ -3,11 +3,18 @@ package parserModel.nodes.parentNodes.unaryOperationNode.allExecution;
 import execution.newExecutables.SetShapeExecutable;
 import parserModel.TurtleContext;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.parentNodes.ParentNode;
 
-import javax.swing.text.html.parser.Parser;
-
+/**
+ * A Node that sets the Shape index for all turtles
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class SetShapeNode extends UnaryOperatorAllExecutionNode<SetShapeExecutable> {
+
+    /**
+     * Construct a SetShapeIndex object
+     * @param text the user-jnputted text associated with this construction
+     */
     public SetShapeNode(String text) {
         super(text);
     }

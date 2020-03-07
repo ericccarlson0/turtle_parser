@@ -13,6 +13,10 @@ public class NotNode extends UnaryOperationNode {
     private static final double TRUE = 1.0;
     private static final double FALSE = 0.0;
 
+    /**
+     * Construct a Not Node
+     * @param text the user-inputted text associated with this construction
+     */
     public NotNode(String text) {
         super(text);
     }

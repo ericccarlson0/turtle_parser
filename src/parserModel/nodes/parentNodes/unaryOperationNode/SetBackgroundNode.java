@@ -6,6 +6,10 @@ import parserModel.nodes.ParserNode;
 
 public class SetBackgroundNode extends UnaryOperationNode {
 
+    /**
+     * Construct a SetBackgroundNode
+     * @param text the user-inputted text associated with this construction
+     */
     public SetBackgroundNode(String text) {
         super(text);
     }
