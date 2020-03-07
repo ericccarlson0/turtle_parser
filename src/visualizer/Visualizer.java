@@ -185,6 +185,14 @@ public class Visualizer {
 
     public void setBackground(int myBackground) {
         //TODO!
+        float hue = ((float) myBackground/10)*1.0f; //hue
+        float saturation = ((float) myBackground/10)*1.0f; //saturation
+        float brightness = ((float) myBackground/10)*1.0f; //brightness
+
+
+        java.awt.Color myRGBColor = java.awt.Color.getHSBColor(hue, saturation, brightness);
+        myParserPane.setBackground(new Background(new BackgroundFill(Color.color
+            (myRGBColor.getRed()/MAX_RGB, myRGBColor.getGreen()/MAX_RGB, myRGBColor.getBlue()/MAX_RGB), CornerRadii.EMPTY, Insets.EMPTY)));
     }
     public void setPallete(List<Integer> ids, List<Double> reds, List<Double> greens,
                             List<Double> blues) {

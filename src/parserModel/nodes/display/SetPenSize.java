@@ -5,7 +5,7 @@ import parserModel.nodes.parentNodes.ParentNode;
 
 public class SetPenSize extends ParentNode {
 
-    protected SetPenSize(String text) {
+    public SetPenSize(String text) {
         super(1, text);
     }
 
