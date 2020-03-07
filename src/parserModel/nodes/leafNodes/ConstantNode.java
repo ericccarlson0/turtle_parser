@@ -1,7 +1,5 @@
-package parserModel.nodes.parentNodes.unaryOperationNode;
+package parserModel.nodes.leafNodes;
 
-import parserModel.nodes.MultipleExecutionNode;
-import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 
 /**
@@ -9,34 +7,25 @@ import parserModel.TurtleContext;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ConstantNode extends MultipleExecutionNode {
+public class ConstantNode extends LeafNode {
     private double myValue;
 
     /**
      * Construct a constant
      * @param value the numerical value of this constant
      */
-    public ConstantNode(double value){
-        myValue = value;
+    public ConstantNode(String value){
+        super(value);
+        myValue = Double.parseDouble(value);
     }
 
-    @Override
-    public void addNode(ParserNode node) {
-        throw new UnsupportedOperationException();
+    public ConstantNode(double value){
+        super(Double.toString(value));
+        myValue = value;
     }
 
     @Override
     public double execute(TurtleContext context) {
         return myValue;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
-    }
-
-    @Override
-    public String toString(){
-        return "" + myValue;
     }
 }

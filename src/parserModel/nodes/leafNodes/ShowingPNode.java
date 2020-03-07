@@ -1,25 +1,15 @@
-package parserModel.nodes.turtleQueries;
+package parserModel.nodes.leafNodes;
 
-import parserModel.nodes.CommandParserNode;
-import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 
-public class ShowingPNode extends CommandParserNode {
+public class ShowingPNode extends LeafNode {
 
-  public void addNode(ParserNode node) {
-    throw new UnsupportedOperationException();
+  public ShowingPNode(String text) {
+    super(text);
   }
 
   public double execute(TurtleContext context) {
-    return 0.0; //GlobalData.getInstance().g FIXME
+    return context.getWorkingTurtle().isShowing() ? 1.0 : 0.0;
   }
 
-  public boolean isComplete() {
-    return true;
-  }
-
-  @Override
-  public String toString(){
-    return "SHOWINGP";
-  }
 }

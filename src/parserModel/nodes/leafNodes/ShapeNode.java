@@ -1,22 +1,15 @@
-package parserModel.nodes.display;
+package parserModel.nodes.leafNodes;
 
 import parserModel.TurtleContext;
 import parserModel.nodes.ParserNode;
 
-public class ShapeNode extends MultipleExecutionNode {
-    @Override
-    public void addNode(ParserNode node) {
-        throw new UnsupportedOperationException();
+public class ShapeNode extends LeafNode {
+    public ShapeNode(String text) {
+        super(text);
     }
 
     @Override
     public double execute(TurtleContext context) {
-        //return GlobalData.getInstance().turtleData().getShapeIndex();
-        return 0.0; //FIXME!
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
+        return context.getWorkingTurtle().getShapeIndex();
     }
 }

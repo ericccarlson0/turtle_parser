@@ -1,8 +1,11 @@
-package parserModel.nodes.leafNodes;
+package parserModel.nodes.leafNodes.multiExecution;
 
 import execution.HideExecutable;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
+import parserModel.nodes.leafNodes.LeafNode;
+
+import java.util.List;
 
 /**
  * A node that when executed, Hides the turtle from
@@ -10,25 +13,24 @@ import parserModel.TurtleData;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class HideNode extends LeafNode{
+public class HideNode extends LeafNode {
     private static final double SUCCESS = 0.0;
 
-
-    public double singleExecution(TurtleContext context, HideExecutable executable) {
-        double id = context.getWorkingID();
-        TurtleData td = context.getData().turtleData(id);
-        td.hide();
-        executable.addMove((int)id, true);
-        return SUCCESS;
-    }
-
-
-    public HideExecutable fetchExecutable() {
-        return new HideExecutable();
+    public HideNode(String text) {
+        super(text);
     }
 
     @Override
     public double execute(TurtleContext context) {
-        return 0;
+        List<Double> activeTurtles = context.getActiveTurtles();
+        HideExecutable executable = new HideExecutable();
+        for(double id : activeTurtles){
+            context.setWorkingTurtle(id);
+            context.getWorkingTurtle().hide();
+            executable.addMove((int)id, true);
+        }
+        context.addToQueue(executable);
+        context.replaceActiveTurtles(activeTurtles);
+        return SUCCESS;
     }
 }

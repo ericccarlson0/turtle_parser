@@ -1,7 +1,5 @@
-package parserModel.nodes.mathNodes;
+package parserModel.nodes.leafNodes;
 
-import parserModel.nodes.CommandParserNode;
-import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 
 /**
@@ -9,14 +7,12 @@ import parserModel.TurtleContext;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class PiNode extends CommandParserNode {
-    public void addNode(ParserNode node) {
-        throw new UnsupportedOperationException();
+public class PiNode extends LeafNode {
+    public PiNode(String text) {
+        super(text);
     }
+
     public double execute(TurtleContext context) {
         return Math.PI;
-    }
-    public boolean isComplete() {
-        return true;
     }
 }

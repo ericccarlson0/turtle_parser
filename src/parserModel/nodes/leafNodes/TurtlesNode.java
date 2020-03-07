@@ -1,23 +1,14 @@
-package parserModel.nodes.turtleQueries;
+package parserModel.nodes.leafNodes;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.CommandParserNode;
-import parserModel.nodes.ParserNode;
 
-public class TurtlesNode extends CommandParserNode {
-
-    @Override
-    public void addNode(ParserNode node) {
-        throw new UnsupportedOperationException();
+public class TurtlesNode extends LeafNode {
+    public TurtlesNode(String text) {
+        super(text);
     }
 
     @Override
     public double execute(TurtleContext context) {
         return context.getData().getAllTurtles().size();
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
     }
 }

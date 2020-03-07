@@ -1,10 +1,9 @@
-package parserModel.nodes.leafNodes;
+package parserModel.nodes.leafNodes.multiExecution;
 
-import execution.PenDownExecutable;
 import parserModel.TurtleContext;
-import parserModel.TurtleData;
-import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.leafNodes.LeafNode;
+
+import java.util.List;
 
 /**
  * A node that when executed, sets the pen up
@@ -13,10 +12,19 @@ import parserModel.nodes.control.VariableNode;
  * @author Mariusz Derezinski-Choo
  */
 public class PenUpNode extends LeafNode {
-    private static final double TRUE = 1.0;
-    private static final double FALSE = 0.0;
+    private static final double SUCCESS = 0.0;
+
+    public PenUpNode(String text) {
+        super(text);
+    }
 
     public double execute(TurtleContext context) {
-        return context.getWorkingTurtle().getPenDown()? FALSE : TRUE;
+        List<Double> activeTurtles = context.getActiveTurtles();
+        for(double d : activeTurtles){
+            context.setWorkingTurtle(d);
+            context.getWorkingTurtle().penUp();
+        }
+        context.replaceActiveTurtles(activeTurtles);
+        return SUCCESS;
     }
 }

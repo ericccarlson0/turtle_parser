@@ -1,10 +1,11 @@
-package parserModel.nodes.display;
+package parserModel.nodes.leafNodes.multiExecution;
 
 import execution.MoveExecutable;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.leafNodes.LeafNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
 /**
  * A node that when executed, moves the turtle back to the
@@ -12,23 +13,17 @@ import parserModel.nodes.control.VariableNode;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class HomeNode implements ParserNode {
+public class HomeNode extends LeafNode {
     private static final double SUCCESS = 0.0;
 
-    @Override
-    public void addNode(ParserNode node) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void addVariable(VariableNode node) {
-
+    public HomeNode(String text) {
+        super(text);
     }
 
     @Override
     public double execute(TurtleContext context) {
         MoveExecutable moveExecutable = new MoveExecutable();
-        for(double id : context.getData().getAllTurtles()) {
+        for(double id : context.getActiveTurtles()) {
             TurtleData td = context.getData().turtleData(id);
             double startX = td.getX();
             double startY = td.getY();
@@ -37,10 +32,5 @@ public class HomeNode implements ParserNode {
         }
         context.addToQueue(moveExecutable);
         return SUCCESS;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
     }
 }

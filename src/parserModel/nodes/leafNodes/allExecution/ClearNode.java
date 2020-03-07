@@ -1,11 +1,12 @@
-package parserModel.nodes.display;
+package parserModel.nodes.leafNodes.allExecution;
 
 import execution.ClearExecutable;
 import execution.MoveExecutable;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.SimpleParserNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
 /**
  * A node that when executed, clears the
@@ -13,8 +14,12 @@ import parserModel.nodes.control.VariableNode;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ClearNode implements ParserNode {
+public class ClearNode extends SimpleParserNode {
     private static final double SUCCESS = 0.0;
+
+    public ClearNode(String text) {
+        super(text);
+    }
 
     @Override
     public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }

@@ -1,10 +1,9 @@
-package parserModel.nodes.display;
+package parserModel.nodes.leafNodes.multiExecution;
 
-import execution.PenDownExecutable;
 import parserModel.TurtleContext;
-import parserModel.TurtleData;
-import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.leafNodes.LeafNode;
+
+import java.util.List;
 
 /**
  * A node that when executed, sets the pen down
@@ -12,30 +11,20 @@ import parserModel.nodes.control.VariableNode;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class PenDownNode implements ParserNode {
+public class PenDownNode extends LeafNode {
+    private static final double SUCCESS = 1.0;
 
-    public void addNode(ParserNode node) {
-        throw new UnsupportedOperationException();
+    public PenDownNode(String text) {
+        super(text);
     }
 
-    @Override
-    public void addVariable(VariableNode node) {
-
-    }
-
-    @Override
     public double execute(TurtleContext context) {
-        PenDownExecutable penDownExecutable = new PenDownExecutable();
-        for(double id : context.getActiveTurtles()) {
-            TurtleData td = context.getData().turtleData(id);
-            td.penUp();
-            penDownExecutable.addMove((int)id, true);
+        List<Double> activeTurtles = context.getActiveTurtles();
+        for(double d : activeTurtles){
+            context.setWorkingTurtle(d);
+            context.getWorkingTurtle().penDown();
         }
-        context.addToQueue(penDownExecutable);
-        return 0.0;
-    }
-
-    public boolean isComplete() {
-        return true;
+        context.replaceActiveTurtles(activeTurtles);
+        return SUCCESS;
     }
 }
