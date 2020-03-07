@@ -10,52 +10,52 @@ import parserModel.nodes.leafNodes.ConstantNode;
 public enum TokenType {
     Comment {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
+        public ParserNode renderNode(String identifier, String textEntered, TurtleContext context) {
             return null;
         }
     },
     Constant {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
+        public ParserNode renderNode(String identifier, String textEntered,  TurtleContext context) {
             return new ConstantNode(Double.parseDouble(identifier));
         }
     },
     Variable {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
+        public ParserNode renderNode(String identifier, String textEntered,  TurtleContext context) {
             return new VariableNode(identifier);
         }
     },
     Command {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
-            return new CommandFactory().createCommand(identifier, context);
+        public ParserNode renderNode(String identifier, String textEntered,  TurtleContext context) {
+            return new CommandFactory().createCommand(identifier, textEntered, context);
         }
     },
     ListStart {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
+        public ParserNode renderNode(String identifier, String textEntered,  TurtleContext context) {
             return SpecialCharacters.OPEN_BRACKET;
         }
     },
     ListEnd {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
+        public ParserNode renderNode(String identifier, String textEntered,  TurtleContext context) {
             return SpecialCharacters.CLOSE_BRACKET;
         }
     },
     GroupStart {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
+        public ParserNode renderNode(String identifier, String textEntered,  TurtleContext context) {
             return new GroupNode();
         }
     },
     GroupEnd {
         @Override
-        public ParserNode renderNode(String identifier, TurtleContext context) {
+        public ParserNode renderNode(String identifier, String textEntered,  TurtleContext context) {
             return SpecialCharacters.GROUP_END;
         }
     };
 
-    public abstract ParserNode renderNode(String identifier, TurtleContext context);
+    public abstract ParserNode renderNode(String identifier, String textEntered,  TurtleContext context);
 }

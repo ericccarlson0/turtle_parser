@@ -43,15 +43,11 @@ public class TokenAnalyzer {
     public void setLanguage(String language){
         LANGUAGE = ResourceBundle.getBundle(COMMAND_LANGUAGE_FOLDER + language);
         initializeCommands();
-        System.out.println("language set to " + language);
     }
 
     public ParserNode fetchNode(String token, TurtleContext context) {
-        System.out.println(token);
-        System.out.println(myTokens.getOrDefault(getTokenType(token), null));
-
         return myTokens.getOrDefault(getTokenType(token),null)
-            .renderNode(getTokenKey(token),context);
+            .renderNode(getTokenKey(token),token, context);
     }
 
     private String getTokenType(String text) {
