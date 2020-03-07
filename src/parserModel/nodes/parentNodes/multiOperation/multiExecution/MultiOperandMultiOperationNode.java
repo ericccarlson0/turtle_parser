@@ -2,7 +2,6 @@ package parserModel.nodes.parentNodes.multiOperation.multiExecution;
 
 import execution.Executable;
 import parserModel.TurtleContext;
-import parserModel.exceptions.InsufficientArgumentException;
 import parserModel.nodes.parentNodes.ParentNode;
 
 import java.util.List;

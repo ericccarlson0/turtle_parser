@@ -14,8 +14,8 @@ import java.util.Iterator;
  * @author Mariusz Derezinski-Choo
  */
 public class OrNode extends MultiOperandNode {
-    private static final double RETURN_TRUE = 1.0;
-    private static final double RETURN_FALSE = 0.0;
+    private static final double RETURN_T = 1.0;
+    private static final double RETURN_F = 0.0;
     private static final double FALSE = 0.0;
 
     public OrNode(String text) {
@@ -32,11 +32,11 @@ public class OrNode extends MultiOperandNode {
     public double runValidated(TurtleContext context) {
         Iterator<ParserNode> iterator = arguments.iterator();
         System.out.println("iterator contents are: ");
-        boolean ret = true;
+        boolean ret = false;
         while(iterator.hasNext()){
             double nextValue = iterator.next().execute(context);
             ret = ret || nextValue != FALSE;
         }
-        return ret ? RETURN_TRUE : RETURN_FALSE;
+        return ret ? RETURN_T : RETURN_F;
     }
 }

@@ -16,6 +16,7 @@ import java.util.Iterator;
  * @author Mariusz Derezinski-Choo
  */
 public class TowardsNode extends MultiOperandMultiOperationNode<RotateExecutable> {
+    private static final double RADIANS_TO_DEGREES = 180 / Math.PI;
 
     public TowardsNode(String text) {
         super(text);
@@ -44,7 +45,7 @@ public class TowardsNode extends MultiOperandMultiOperationNode<RotateExecutable
         //FIXME: bounds on arctan!
         double degrees = Math.atan(xTowards/yTowards);
         double startHeading = td.getHeading();
-        td.setHeading(degrees * 180 / Math.PI);
+        td.setHeading(degrees * RADIANS_TO_DEGREES);
         double endHeading = td.getHeading();
         executable.addMove((int)id, startHeading, endHeading);
         return endHeading - startHeading;
