@@ -23,7 +23,6 @@ public class CommandFactory {
      * @return              Returns subclass of ParserNode.
      */
     public ParserNode createCommand(String identifier, String textEntered, TurtleContext context) {
-        debug();
         String NodeClassPath = ROOT_NODE_PACKAGE + commandNameResource.getString(identifier);
         try {
             Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor(String.class);
@@ -34,18 +33,6 @@ public class CommandFactory {
             return context.getData().getCommand(identifier);
         } catch(NoSuchCommandException e){
             return new WildCardToken(identifier);
-        }
-    }
-    private void debug(){
-        for (Iterator<String> it = commandNameResource.getKeys().asIterator(); it.hasNext(); ) {
-            String test = it.next();
-            try{
-                String NodeClassPath = "parserModel.nodes."+ commandNameResource.getString(test);
-                Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor(String.class);
-                constructor.newInstance(test);
-            } catch(Exception e){
-                e.printStackTrace();
-            }
         }
     }
 }

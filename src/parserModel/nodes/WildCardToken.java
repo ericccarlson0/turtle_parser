@@ -1,33 +1,20 @@
 package parserModel.nodes;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.leafNodes.VariableNode;
+import parserModel.exceptions.UnidentifiableTokenException;
+import parserModel.nodes.leafNodes.LeafNode;
 
-public class WildCardToken implements ParserNode {
+public class WildCardToken extends LeafNode {
     private String myName;
 
     public WildCardToken(String identifier) {
+        super(identifier);
         myName = identifier;
     }
 
     @Override
-    public void addNode(ParserNode node) {
-
-    }
-
-    @Override
-    public void addVariable(VariableNode node) {
-
-    }
-
-    @Override
     public double execute(TurtleContext context) {
-        return 0;
-    }
-
-    @Override
-    public boolean isComplete() {
-        return true;
+        throw new UnidentifiableTokenException(myName);
     }
 
     @Override
