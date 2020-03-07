@@ -3,14 +3,11 @@ package visualizer;
 
 import java.awt.geom.Point2D;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import javafx.animation.AnimationTimer;
 import java.util.ResourceBundle;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
@@ -79,8 +76,8 @@ import visualizer.languageSensitive.TextElementText;
  */
 public class Visualizer {
 
-    private static final String RESOURCE_FOLDER = "/stylesheets";
-    private static final String STYLESHEET = "/default.css";
+    public static final String RESOURCE_FOLDER = "/stylesheets";
+    public static final String STYLESHEET = "/default.css";
     private static final String TURTLE_FILE = "images/turtle.jpg";
     private static final Image TURTLE_IMAGE = new Image(TURTLE_FILE);
     private static final String BACKGROUND_COLOR = "BG_COLOR";
@@ -91,16 +88,19 @@ public class Visualizer {
     public static final String PEN_STROKE = "PEN_STROKE";
     private static final String TERMINAL = "TERMINAL";
     private static final String TITLE_TEXT = " SLOGO ";
-    private static final Insets MARGINS = new Insets(10,10,10,10);
-    private static final double FIELD_SIZE = 500;
-    private static final int SCROLLPANE_SIZE = 250;
-    private static final int TEXT_INPUT_WIDTH = 400;
-    private static final int TEXT_INPUT_SIZE = 150;
+    private static final String SAVE = "SAVE";
+    private static final String LOAD = "LOAD";
+    private static final String TOGGLE_PEN = "TOGGLE";
+    public static final Insets MARGINS = new Insets(10,10,10,10);
+    public static final double FIELD_SIZE = 500;
+    public static final int SCROLLPANE_SIZE = 250;
+    public static final int TEXT_INPUT_WIDTH = 400;
+    public static final int TEXT_INPUT_SIZE = 150;
     public static final int MAX_RGB = 255;
-    private static final double TURTLE_SPEED_FPS = 100;
-    private static final double STROKE_INCREMENT_SIZE = 0.3;
+    public static final double TURTLE_SPEED_FPS = 100;
+    public static final double STROKE_INCREMENT_SIZE = 0.3;
     public static final int HISTORY_AREA_WIDTH = 300;
-    private static final int NODE_GAP = 8;
+    public static final int NODE_GAP = 8;
 
     private Stage myStage;
     private Scene myScene;
@@ -345,10 +345,9 @@ public class Visualizer {
     }
 
     private void languageBox() {
-        String language = myLanguageBox.getValue();
+        Locale currLocale = getLocaleFromBox();
         for (TextElement element: myTextElements) {
-            String tag = languageTagMap.get(language);
-            element.changeLanguage(tag);
+            element.changeLanguage(currLocale);
         }
     }
 
@@ -546,7 +545,8 @@ public class Visualizer {
         strokeWidthVisual.setStartX(0);
         strokeWidthVisual.setEndX(NODE_GAP*3);
 
-        Button penOnOff = new Button("Toggle");
+        Button penOnOff = new Button(TOGGLE_PEN);
+        myTextElements.add(new TextElementButton(penOnOff, TOGGLE_PEN));
         penOnOff.setOnAction(e -> myTurtles.get(turtleIndex).setVisible(!myTurtles.get(turtleIndex).isVisible()));
 
         holder.getChildren().addAll(strokeWidthText, decreaseStrokeButton, increaseStrokeButton, strokeWidthVisual, penOnOff);
@@ -619,7 +619,13 @@ public class Visualizer {
         myTextElements.add(new TextElementButton(replayButton, "REPLAY"));
         HBox.setHgrow(replayButton, Priority.ALWAYS);
 
-        Button helpButton = createButton("HELP", event -> { helpButton(); });
+        Button helpButton = createButton("HELP", event -> {
+            try {
+                helpButton();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         myTextElements.add(new TextElementButton(helpButton, "HELP"));
         HBox.setHgrow(helpButton, Priority.ALWAYS);
 
@@ -627,20 +633,20 @@ public class Visualizer {
         myTextElements.add(new TextElementButton(turtleImageButton, "NEW_TURTLE_IMAGE"));
         HBox.setHgrow(turtleImageButton, Priority.ALWAYS);
 
-        Button saveFileButton = createButton("SAVE", event-> saveFileButtonClicked(userInputTextArea.getText()));
+        Button saveFileButton = createButton(SAVE, event -> saveFileButtonClicked(userInputTextArea.getText()));
+        myTextElements.add(new TextElementButton(saveFileButton, SAVE));
         HBox.setHgrow(saveFileButton,Priority.ALWAYS);
-        //Button loadFileButton = createButton("SAVE", event-> loadFileButtonClicked());
-        //HBox.setHgrow(saveFileButton,Priority.ALWAYS);
-        
-        initializeLanguageBox();
-        Button loadFileButton = createButton("LOAD", event-> loadFileButtonClicked());
+
+        Button loadFileButton = createButton(LOAD, event -> loadFileButtonClicked());
+        myTextElements.add(new TextElementButton(loadFileButton, LOAD));
         HBox.setHgrow(saveFileButton,Priority.ALWAYS);
 
         initializeLanguageBox();
         HBox.setHgrow(myLanguageBox, Priority.ALWAYS);
 
 
-        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,saveFileButton, loadFileButton,
+        holder.getChildren().addAll(title, resetButton, replayButton, helpButton, turtleImageButton,
+            saveFileButton, loadFileButton,
             myLanguageBox);
         return holderPane;
     }
@@ -655,9 +661,8 @@ public class Visualizer {
         return cb;
     }
 
-    private void helpButton() {
-        // TODO: create the help page
-        HelpPage popup = new HelpPage();
+    private void helpButton() throws FileNotFoundException {
+        HelpPage popup = new HelpPage(getLocaleFromBox()); // ***
     }
 
     private Rectangle createField(int x, int y, int width, int height) {
@@ -685,7 +690,7 @@ public class Visualizer {
     private List<String> generateLanguages() {
         languageTagMap = new HashMap<>();
         List<String> languages = new ArrayList<>();
-        String rootDirectory = "src/parserModel/languages/commands"; // ***
+        String rootDirectory = "resources/commands"; // ***
         File[] files = new File(rootDirectory).listFiles();
         for (File file : files) {
             if (file.isFile()) {
@@ -693,7 +698,7 @@ public class Visualizer {
                 String language = filename.replace(".properties", "");
                 languages.add(language);
                 ResourceBundle rb = ResourceBundle.getBundle
-                    (String.format("%s%s", "parserModel.languages.commands.", language)); // ***
+                    (String.format("%s%s", "commands.", language)); // ***
                 String tag = rb.getString("languageTag");
                 languageTagMap.put(language, tag);
             }
@@ -760,18 +765,20 @@ public class Visualizer {
         }
     }
 
-    private void loadFileButtonClicked(){
+    private void loadFileButtonClicked() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("OPEN Resource File");
         File fileToLoad = fileChooser.showOpenDialog(myStage);
         try {
             Scanner scanned = new Scanner(fileToLoad);
             scanned.useDelimiter("\\Z");
             userInputTextArea.setText(scanned.next());
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            // TODO: provide support for when the user clicks 'cancel' (in this case, no error
+            //  message should be thrown).
+            e.printStackTrace(); // ***
         }
 
     }
@@ -880,7 +887,14 @@ public class Visualizer {
         myTurtles.put(id, initialTurtle);
         return initialTurtle;
     }
+
     public double getLeadTurtleIndex () {
         return leadTurtleIndex;
+    }
+
+    public Locale getLocaleFromBox () {
+        String language = myLanguageBox.getValue();
+        String tag = languageTagMap.getOrDefault(language, "EN"); // ***
+        return new Locale(tag);
     }
 }

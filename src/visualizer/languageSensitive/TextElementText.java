@@ -1,5 +1,6 @@
 package visualizer.languageSensitive;
 
+import java.util.Locale;
 import javafx.scene.text.Text;
 
 public class TextElementText extends TextElement {
@@ -8,7 +9,7 @@ public class TextElementText extends TextElement {
   public TextElementText(Text textControl, String text) {
     super(textControl, text);
     myNode = textControl;
-    changeLanguage(DEFAULT_LANGUAGE);
+    changeLanguage(defaultLocale);
   }
 
   protected void putText(String newText) {

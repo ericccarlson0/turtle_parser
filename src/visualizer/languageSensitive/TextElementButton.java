@@ -8,7 +8,7 @@ public class TextElementButton extends TextElement {
   public TextElementButton(Button button, String text) {
     super(button, text);
     myNode = button;
-    changeLanguage(DEFAULT_LANGUAGE);
+    changeLanguage(defaultLocale);
   }
 
   protected void putText(String newText) {

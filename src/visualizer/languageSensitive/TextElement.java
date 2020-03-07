@@ -7,7 +7,7 @@ import javafx.scene.Node;
 public abstract class TextElement {
   public static final String BUNDLE_DIRECTORY = "TextElements";
   public static final String DEFAULT_LANGUAGE = "ENGLISH";
-
+  protected static final Locale defaultLocale = Locale.ENGLISH;
 
   private String myString;
 
@@ -15,8 +15,7 @@ public abstract class TextElement {
     myString = text.toUpperCase();
   }
 
-  public void changeLanguage(String tag) {
-    Locale locale = new Locale(tag);
+  public void changeLanguage(Locale locale) {
     ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_DIRECTORY, locale);
     String newText = bundle.getString(myString);
     putText(newText);
