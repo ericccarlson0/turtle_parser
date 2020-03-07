@@ -14,6 +14,10 @@ import java.util.List;
 public class PenUpNode extends LeafNode {
     private static final double SUCCESS = 0.0;
 
+    /**
+     * Construct a Pen Up Node
+     * @param text the user inputted text associated with this call of Pen Up
+     */
     public PenUpNode(String text) {
         super(text);
     }

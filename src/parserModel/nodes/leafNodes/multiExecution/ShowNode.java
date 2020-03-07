@@ -2,8 +2,6 @@ package parserModel.nodes.leafNodes.multiExecution;
 
 import execution.HideExecutable;
 import parserModel.TurtleContext;
-import parserModel.TurtleData;
-import parserModel.nodes.ParserNode;
 import parserModel.nodes.leafNodes.LeafNode;
 
 import java.util.List;
@@ -16,10 +14,15 @@ import java.util.List;
 public class ShowNode extends LeafNode {
     private static final double SUCCESS = 1.0;
 
+    /**
+     * Construct a Show Node
+     * @param text the user-inputted text associated with this call to ShowNode
+     */
     public ShowNode(String text) {
         super(text);
     }
 
+    @Override
     public double execute(TurtleContext context) {
         List<Double> activeTurtles = context.getActiveTurtles();
         HideExecutable executable = new HideExecutable();

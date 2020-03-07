@@ -21,14 +21,28 @@ public class ClearNode extends SimpleParserNode {
         super(text);
     }
 
+    /**
+     * add a child node to the current Node
+     * @param node the child node to be added
+     */
     @Override
     public void addNode(ParserNode node) { throw new UnsupportedOperationException(); }
 
+    /**
+     * Add a variable to the current node to be used as a child
+     * @param node the variable to be added
+     */
     @Override
     public void addVariable(VariableNode node) {
-
+        addNode(node);
     }
 
+    /**
+     * execute this Node by iterating through all turtles and creating a move and a clear
+     * executable for them
+     * @param context the context within which this command should be executed
+     * @return double the result of the execution
+     */
     @Override
     public double execute(TurtleContext context) {
         MoveExecutable moveExecutable = new MoveExecutable();
@@ -41,12 +55,15 @@ public class ClearNode extends SimpleParserNode {
             moveExecutable.addMove((int) id, startX, startY, 0, 0);
             clearExecutable.addMove((int) id);
         }
-        clearExecutable.setName("ClearScreen");
         context.addToQueue(moveExecutable);
         context.addToQueue(clearExecutable);
         return SUCCESS;
     }
 
+    /**
+     * check if the Node is complete (requires no more children)
+     * @return a boolean denoting whether the Node is complete
+     */
     @Override
     public boolean isComplete() {
         return true;

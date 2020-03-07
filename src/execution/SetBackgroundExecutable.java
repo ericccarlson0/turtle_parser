@@ -16,7 +16,7 @@ public class SetBackgroundExecutable extends ExecutableSuperClass {
     }
     @Override
     public void execute(Visualizer visualizer) {
-
+        visualizer.set
     }
 
     @Override
