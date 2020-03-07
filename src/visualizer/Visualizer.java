@@ -263,13 +263,12 @@ public class Visualizer {
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setCycleCount(1);
             pathTransition.setOnFinished(event -> {
-                
+
                 displayLineGroup.getChildren().clear();
                 System.out.println("DONE"); // ***
             });
             transition.getChildren().add(transition);
         }
-        trailsGroup.getChildren().clear();
         myTransitionQueue.add(transition);
     }
 
