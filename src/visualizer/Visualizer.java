@@ -196,7 +196,7 @@ public class Visualizer {
     }
 
     public void setPosition(List<Integer> ids, List<Double> startXs, List<Double> startYs,
-        List<Double> endXs, List<Double> endYs) {
+        List<Double> endXs, List<Double> endYs, List<Boolean> draws) {
         ParallelTransition root = new ParallelTransition();
         //TODO: Throw exception if sizes don't align
         Iterator<Integer> idIterator = ids.iterator();
@@ -204,8 +204,9 @@ public class Visualizer {
         Iterator<Double> startYIterator = startYs.iterator();
         Iterator<Double> endXIterator = endXs.iterator();
         Iterator<Double> endYIterator = endYs.iterator();
+        Iterator<Boolean> drawIterator = draws.iterator();
         while (idIterator.hasNext()) {
-            root.getChildren().add(getSinglePositionTransition(idIterator.next(), startXIterator.next(), startYIterator.next(), endXIterator.next(), endYIterator.next()));
+            root.getChildren().add(getSinglePositionTransition(idIterator.next(), startXIterator.next(), startYIterator.next(), endXIterator.next(), endYIterator.next(),drawIterator.next()));
         }
         root.rateProperty().bind(speedProperty);
         myTransitionQueue.add(root);
@@ -846,7 +847,7 @@ public class Visualizer {
      * @author Mariusz
      */
     private Animation getSinglePositionTransition(int id, double startX, double startY,
-        double endX, double endY) {
+        double endX, double endY, boolean draw) {
         SequentialTransition ret = new SequentialTransition();
 
         Turtle currentTurtle = fetchTurtle(id);
@@ -858,14 +859,14 @@ public class Visualizer {
         for (int i = 0; i < segments; i++) {
             Point2D.Double start = new Point2D.Double(startX, startY);
             Point2D.Double end = new Point2D.Double(endX, endY);
-            PathTransition transition = getLocalTransition(start, end, currentTurtle, segments, time, i);
+            PathTransition transition = getLocalTransition(start, end, currentTurtle, segments, time, i, draw);
             ret.getChildren().add(transition);
         }
         return ret;
     }
 
     private PathTransition getLocalTransition(Point2D.Double startPoint, Point2D.Double endPoint,
-        Turtle turtle, int segments, double time, int i) {
+        Turtle turtle, int segments, double time, int i, boolean draw) {
         double dX = endPoint.x - startPoint.x;
         double dY = endPoint.y - startPoint.y;
         double startX = startPoint.x + dX*(i /(double) segments);
@@ -875,15 +876,17 @@ public class Visualizer {
         double endX = startX + dX*(1 / (double) segments);
         double endY = startY + dY*(1/ (double) segments);
 
-        Line turtleLine = getLine(startX, startY, endX, endY);
-        Line displayLine = getDisplayLine(startX, startY, endX, endY);
-        displayLine.setOpacity(0.0);
         PathTransition transition = new PathTransition();
+        Line turtleLine = getLine(startX, startY, endX, endY);
         transition.setDuration(Duration.seconds(time));
-        transition.setOnFinished(event -> {
-            displayLine.strokeWidthProperty().unbind();
-            displayLine.setOpacity(1.0);
-        });
+        if(draw) {
+            Line displayLine = getDisplayLine(startX, startY, endX, endY);
+            displayLine.setOpacity(0.0);
+            transition.setOnFinished(event -> {
+                displayLine.strokeWidthProperty().unbind();
+                displayLine.setOpacity(1.0);
+            });
+        }
         transition.setNode(turtle);
         transition.setPath(turtleLine);
         return transition;

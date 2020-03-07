@@ -52,7 +52,7 @@ public class ClearNode extends SimpleParserNode {
             double startX = td.getX();
             double startY = td.getY();
             td.clear();
-            moveExecutable.addMove((int) id, startX, startY, 0, 0);
+            moveExecutable.addMove((int) id, startX, startY, 0, 0,context.getData().turtleData(id).getPenDown());
             clearExecutable.addMove((int) id);
         }
         context.addToQueue(moveExecutable);

@@ -43,7 +43,7 @@ public class SetXYNode extends MultiOperandMultiOperationNode<MoveExecutable> {
         double startY = td.getY();
         td.setX(endX);
         td.setY(endY);
-        executable.addMove((int)id, startX, startY, endX, endY);
+        executable.addMove((int)id, startX, startY, endX, endY,context.getData().turtleData(id).getPenDown());
         return endX; //FIXME?
     }
 

@@ -34,7 +34,7 @@ public class BackwardNode extends UnaryOperationMultiExecutionNode<MoveExecutabl
         double endX = td.getX();
         double endY = td.getY();
         //TODO: throw exception
-        executable.addMove((int)id, startX, startY, endX, endY);
+        executable.addMove((int)id, startX, startY, endX, endY,context.getData().turtleData(id).getPenDown());
         return distance;
     }
 

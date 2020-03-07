@@ -31,7 +31,7 @@ public class HomeNode extends LeafNode {
             double startX = td.getX();
             double startY = td.getY();
             td.clear();
-            moveExecutable.addMove((int)id, startX, startY, 0, 0);
+            moveExecutable.addMove((int)id, startX, startY, 0, 0,context.getData().turtleData(id).getPenDown());
         }
         context.addToQueue(moveExecutable);
         return SUCCESS;

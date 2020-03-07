@@ -13,6 +13,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *  the core external API for the backend, allows the user to pass command strings
+ *  that are queried, and a model of Turtles is updated and converted into concrete
+ *  commands that a visualizer can use to update the apearance
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class TreeParser {
     private TokenAnalyzer myTokenAnalyzer;
     private TurtleContext myContext;
