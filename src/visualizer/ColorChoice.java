@@ -58,8 +58,8 @@ public class ColorChoice {
   private int textToRGB(TextField colorField) {
     String colorStr = colorField.getText();
     int colorInt = Integer.parseInt(colorStr);
-    if (colorInt > Visualizer.MAX_RGB) {
-      colorInt = Visualizer.MAX_RGB;
+    if (colorInt > (int) Visualizer.MAX_RGB) {
+      colorInt = (int) Visualizer.MAX_RGB;
     } else if (colorInt < 0) {
       colorInt = 0;
     }
