@@ -1,4 +1,4 @@
-package parserModel.nodes.parentNodes.binaryOperation;
+package parserModel.nodes.parentNodes.multiOperation;
 
 import parserModel.TurtleContext;
 import parserModel.exceptions.InsufficientArgumentException;
@@ -11,11 +11,19 @@ import java.util.Iterator;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class RemainderNode extends BinaryOperationSingleExecutionNode {
-    public double execute(TurtleContext context) {
+public class RemainderNode extends MultiOperandNode {
+    public RemainderNode(String text) {
+        super(text);
+    }
+
+    protected void validateArguments(){
         if(arguments.size() < myMinArguments){
             throw new InsufficientArgumentException();
         }
+    }
+
+    @Override
+    public double runValidated(TurtleContext context) {
         Iterator<ParserNode> iterator = arguments.iterator();
         double returning = iterator.next().execute(context);
         while(iterator.hasNext()){
