@@ -12,6 +12,13 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+/**
+ * A class that analyzes a token inputted by the user and can fetch ParserNodes based on the token
+ *
+ * Based partially on code discussed in class by Robert Duvall
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class TokenAnalyzer {
     private static final String DEFAULT_LANGUAGE = "ENGLISH";
     private static final String COMMAND_LANGUAGE_FOLDER = "commands.";
@@ -32,6 +39,9 @@ public class TokenAnalyzer {
     private ResourceBundle SYNTAX;
     private ResourceBundle LANGUAGE;
 
+    /**
+     * Construct a TokenAnalyzer object
+     */
     public TokenAnalyzer() {
         LANGUAGE = ResourceBundle.getBundle(String.format("%s%s", COMMAND_LANGUAGE_FOLDER, DEFAULT_LANGUAGE));
         SYNTAX = ResourceBundle.getBundle("syntax");
@@ -40,11 +50,21 @@ public class TokenAnalyzer {
         initializeTokenMap();
     }
 
+    /**
+     * Set the language that the tokens should be parsed at
+     * @param language the language to be switched into
+     */
     public void setLanguage(String language){
         LANGUAGE = ResourceBundle.getBundle(COMMAND_LANGUAGE_FOLDER + language);
         initializeCommands();
     }
 
+    /**
+     * Fetch teh node from the given token within the given context
+     * @param token the token to be parsed
+     * @param context the context that user-defined commands should be fetched from, should this command not be built-in
+     * @return a ParserNode fetched from the token
+     */
     public ParserNode fetchNode(String token, TurtleContext context) {
         return myTokens.getOrDefault(getTokenType(token),null)
             .renderNode(getTokenKey(token),token, context);
@@ -70,7 +90,7 @@ public class TokenAnalyzer {
     }
 
     private List<Entry<String, Pattern>> createEntryList(ResourceBundle bundle) {
-        List<Entry<String, Pattern>> newEntryList = new ArrayList();
+        List<Entry<String, Pattern>> newEntryList = new ArrayList<>();
         for (String key : Collections.list(bundle.getKeys())) {
             String regex = bundle.getString(key);
             newEntryList.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));

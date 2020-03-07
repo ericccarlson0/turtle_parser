@@ -42,7 +42,6 @@ public class GlobalData {
      * @param value the value of the variable to be stored.
      */
     public void setVariable(String name, double value) {
-        System.out.println("setting variable: " + name);
         myVariables.put(name, value);
         if(! myObservableVariables.contains(name)){
             myObservableVariables.add(name);
@@ -55,7 +54,6 @@ public class GlobalData {
      * @return the value of the variable, or DEFAULT_VARIABLE_VALUE if the variable does not exist.
      */
     public double getVariable(String name){
-        System.out.println("fetching variable: " + name);
         return myVariables.getOrDefault(name, DEFAULT_VARIABLE_VALUE);
     }
 
@@ -100,8 +98,11 @@ public class GlobalData {
         return myTurtles.get(id);
     }
 
+    /**
+     * Create a set of turtles
+     * @param id the id from which all turtles lower than this value should be created
+     */
     public void createTurtles(double id){
-            System.out.println("creating turtle(s) of ID: " + id);
             for (int i = 0; i <= id; i++) {
                 myTurtles.putIfAbsent(id, new TurtleData());
             }

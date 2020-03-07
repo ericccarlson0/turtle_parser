@@ -23,6 +23,7 @@ public class SetPaletteExecutable extends ExecutableSuperClass {
 
     @Override
     public void execute(Visualizer visualizer) {
+        System.out.println("executing");
         visualizer.setPalette(myIDs, myReds, myGreens, myBlues);
     }
     public void addMove(int id, double red, double green, double blue){

@@ -708,10 +708,9 @@ public class Visualizer {
         palettes = new VBox();
         palettes.getChildren().add(new Text("PALETTE"));
         for(int i=0; i<ids.size(); i++){
-            String paletteString = ids.get(i) + " " + reds.get(i) + " " + blues.get(i) + " "
-                    + greens.get(i);
+            String paletteString = "ID: " + ids.get(i) + " RED: " + reds.get(i) + " GREEN: " + greens.get(i) + " BLUES: "
+                    + blues.get(i);
             palettes.getChildren().add(new Text(paletteString));
-            palettes.getChildren().add(new Text("NEW"));
         }
         Stage stage = new Stage();
         Group group = new Group();

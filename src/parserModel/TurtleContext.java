@@ -24,7 +24,6 @@ public class TurtleContext {
 
     public TurtleContext() {
         myActiveTurtles = FXCollections.observableArrayList();
-        //myActiveTurtles.addListener((ListChangeListener<Double>) c -> Collections.sort(myActiveTurtles));
         myData = new GlobalData();
         myExecutableQueue = new LinkedList<>();
         myWorkingTurtle = new SimpleDoubleProperty(1);
