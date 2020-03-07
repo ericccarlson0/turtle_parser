@@ -13,6 +13,10 @@ import parserModel.nodes.ParserNode;
 public class ForwardNode extends UnaryOperationMultiExecutionNode<MoveExecutable> {
     private ParserNode myLength;
 
+    /**
+     * Construct a ForwardNode
+     * @param text the user-inputted text associated with this construction
+     */
     public ForwardNode(String text){
         super(text);
     }

@@ -7,6 +7,11 @@ import parserModel.nodes.parentNodes.ParentNode;
 
 import java.util.List;
 
+/**
+ * An abstract class that represents a ParentNode that only takes on child, but whose
+ * child must be executed across the range of all turtles that are active
+ * @param <T> the executable that must be fetched (is generic to reflect template method design pattern)
+ */
 public abstract class UnaryOperationMultiExecutionNode<T extends Executable> extends ParentNode {
     public UnaryOperationMultiExecutionNode(String text) {
         super(1, text);
@@ -23,7 +28,6 @@ public abstract class UnaryOperationMultiExecutionNode<T extends Executable> ext
     protected double runValidated(TurtleContext context) {
         double ret = 0.0;
         List<Double> ids = context.getActiveTurtles();
-        System.out.println("the active ids are: " + ids);
         T executable = fetchExecutable();
         for(double id : ids){
             context.setWorkingTurtle(id);

@@ -11,13 +11,16 @@ import parserModel.TurtleData;
  */
 public class SetHeadingNode extends TurnNode {
 
+    /**
+     * Construct a SetHeadingNode
+     * @param text the user-inputted text associated with this construction
+     */
     public SetHeadingNode(String text) {
         super(text);
     }
 
     @Override
     protected void turn(TurtleData td, double degrees) {
-        System.out.println("setting heading to "+ degrees);
         td.setHeading(degrees);
     }
 }

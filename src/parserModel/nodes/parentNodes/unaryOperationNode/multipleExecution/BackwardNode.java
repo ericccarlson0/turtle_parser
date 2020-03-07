@@ -11,10 +11,10 @@ import parserModel.nodes.ParserNode;
  * @author Mariusz Derezinski-Choo
  */
 public class BackwardNode extends UnaryOperationMultiExecutionNode<MoveExecutable> {
-    private ParserNode myLength;
 
     /**
-     * Construct a BackwardNode
+     * Construct a Backward Node
+     * @param text the user-inputted text associated with this construction
      */
     public BackwardNode(String text){
         super(text);
