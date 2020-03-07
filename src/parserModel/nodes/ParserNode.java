@@ -1,7 +1,7 @@
 package parserModel.nodes;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
 /**
  * Defines core functionality of a ParserNode, a Node that the parser can create and
@@ -32,10 +32,4 @@ public interface ParserNode {
      * @return a boolean denoting whether the Node is complete
      */
     boolean isComplete();
-
-    /**
-     * return the type of Node
-     * @return the type of Node
-     */
-    NodeType typeOfNode();
 }

@@ -1,7 +1,7 @@
 package parserModel.nodes;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
 public class WildCardToken implements ParserNode {
     private String myName;
@@ -28,11 +28,6 @@ public class WildCardToken implements ParserNode {
     @Override
     public boolean isComplete() {
         return true;
-    }
-
-    @Override
-    public NodeType typeOfNode() {
-        return null;
     }
 
     @Override

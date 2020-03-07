@@ -1,14 +1,21 @@
 package parserModel.nodes.display;
 
-import execution.newExecutables.PenSizeExecutable;
 import parserModel.TurtleContext;
-import parserModel.nodes.UnaryOperationNode;
+import parserModel.nodes.parentNodes.ParentNode;
 
-public class SetPenSize extends UnaryOperationNode {
+public class SetPenSize extends ParentNode {
+
+    protected SetPenSize(String text) {
+        super(1, text);
+    }
+
     @Override
-    public double execute(TurtleContext context) {
-        double penSize = myArgumentNode.execute(context);
-        //context.getExecutableQueue().add(new PenSizeExecutable(penSize));FIXME
-        return penSize;
+    protected double runValidated(TurtleContext context) {
+        return 0;
+    }
+
+    @Override
+    protected void validateArguments() {
+
     }
 }

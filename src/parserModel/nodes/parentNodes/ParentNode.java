@@ -1,22 +1,31 @@
-package parserModel.nodes.parentNodes.unaryOperationNode;
+package parserModel.nodes.parentNodes;
 
-import execution.Executable;
-import parserModel.nodes.MultipleExecutionNode;
+import parserModel.TurtleContext;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.SimpleParserNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
-import javax.swing.text.html.parser.Parser;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ParentNode implements ParserNode {
+public abstract class ParentNode extends SimpleParserNode {
     protected List<ParserNode> arguments;
     protected int myMinArguments;
 
-    protected ParentNode(int minArguments){
+    public ParentNode(int minArguments, String text){
+        super(text);
         myMinArguments = minArguments;
         arguments = new ArrayList<>();
     }
+
+    @Override
+    public double execute(TurtleContext context){
+        validateArguments();
+        return runValidated(context);
+    }
+    protected abstract double runValidated(TurtleContext context);
+
+    protected abstract void validateArguments();
 
     public void addVariable(VariableNode node){
         addNode(node);
