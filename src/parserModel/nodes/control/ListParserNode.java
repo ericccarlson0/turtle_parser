@@ -1,9 +1,9 @@
 package parserModel.nodes.control;
 
-import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
 import parserModel.TurtleContext;
 import parserModel.nodes.SpecialCharacters;
+import parserModel.nodes.leafNodes.VariableNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class ListParserNode extends CommandParserNode {
+public class ListParserNode implements ParserNode {
     private static final double DEFAULT_RETURN = 0.0;
 
     private boolean complete;
@@ -36,6 +36,11 @@ public class ListParserNode extends CommandParserNode {
         } else {
             myChildren.add(node);
         }
+    }
+
+    @Override
+    public void addVariable(VariableNode node) {
+        addNode(node);
     }
 
     @Override

@@ -4,6 +4,7 @@ import parserModel.TurtleContext;
 import parserModel.exceptions.NoSuchCommandException;
 
 import java.lang.reflect.Constructor;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 
@@ -17,12 +18,13 @@ public class CommandFactory {
      * @return              Returns subclass of ParserNode.
      */
     public ParserNode createCommand(String identifier, TurtleContext context) {
+        //debug();
         if (commandNameResource.containsKey(identifier)) {
             try {
+                System.out.println("the identifier is: " + identifier);
                 String NodeClassPath = "parserModel.nodes."+ commandNameResource.getString(identifier);
-                System.out.println(NodeClassPath);
-                Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor();
-                return (ParserNode) constructor.newInstance();
+                Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor(String.class);
+                return (ParserNode) constructor.newInstance(identifier);
             } catch (Exception e) {
                 System.out.println("no identifier for : " + identifier);
                 e.printStackTrace(); //TODO: return errorNode.
@@ -32,6 +34,19 @@ public class CommandFactory {
             return context.getData().getCommand(identifier);
         } catch (NoSuchCommandException e){
             return new WildCardToken(identifier);
+        }
+    }
+    private void debug(){
+        for (Iterator<String> it = commandNameResource.getKeys().asIterator(); it.hasNext(); ) {
+            String test = it.next();
+            try{
+                System.out.println("testing " + test);
+                String NodeClassPath = "parserModel.nodes."+ commandNameResource.getString(test);
+                Constructor<?> constructor = Class.forName(NodeClassPath).getConstructor(String.class);
+                constructor.newInstance(test);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }

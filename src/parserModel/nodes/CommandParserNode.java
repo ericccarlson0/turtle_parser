@@ -1,8 +1,7 @@
 package parserModel.nodes;
 
-import parserModel.nodes.control.VariableNode;
 
-import java.util.ResourceBundle;
+import parserModel.nodes.leafNodes.VariableNode;
 
 public abstract class CommandParserNode implements ParserNode {
 //  public static final String RESOURCE_PATH = "parserModel.nodes.CommandNodeReflection";

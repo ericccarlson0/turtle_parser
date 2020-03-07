@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import parserModel.exceptions.ParsingException;
 import parserModel.nodes.CommandFactory;
 import parserModel.nodes.ParserNode;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class TreeParser {
 
     public TreeParser() {
         myContext = new TurtleContext();
-        myContext.addActiveTurtles(List.of(0.0));
+        myContext.setWorkingTurtle(0);
         myTokenAnalyzer = new TokenAnalyzer();
         myCommandFactory = new CommandFactory();
     }
@@ -66,11 +66,15 @@ public class TreeParser {
     private void parseList(List<String> input) {
         InputIterator iterator = new InputIterator(input);
         double returning;
-        while (iterator.hasNext()) {
-            ParserNode returner = getParserNode(iterator);
-            System.out.println(returner); // ***
-            returning = returner.execute(myContext);
-            System.out.println(""+returning); // ***
+        try {
+            while (iterator.hasNext()) {
+                ParserNode returner = getParserNode(iterator);
+                System.out.println(returner); // ***
+                returning = returner.execute(myContext);
+                System.out.println("" + returning); // ***
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -79,7 +83,6 @@ public class TreeParser {
         ParserNode root = myTokenAnalyzer.fetchNode(nextElement, myContext);
         while (!root.isComplete()) {
             ParserNode next = getParserNode(iterator);
-            System.out.println("Fetching child node: " + next);
             if (next instanceof VariableNode) {
                 root.addVariable((VariableNode) next);
             } else {

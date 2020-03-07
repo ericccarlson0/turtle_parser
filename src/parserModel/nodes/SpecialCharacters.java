@@ -1,7 +1,7 @@
 package parserModel.nodes;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.control.VariableNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
 public enum SpecialCharacters implements ParserNode {
     OPEN_BRACKET,
@@ -29,8 +29,4 @@ public enum SpecialCharacters implements ParserNode {
         return true;
     }
 
-    @Override
-    public NodeType typeOfNode() {
-        return null;
-    }
 }

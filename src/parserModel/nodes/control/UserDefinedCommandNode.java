@@ -1,13 +1,12 @@
 package parserModel.nodes.control;
 
-import parserModel.GlobalData;
 import parserModel.exceptions.CommandMissingListStartException;
-import parserModel.exceptions.InvalidLoopStructureException;
-import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
 
 import parserModel.TurtleContext;
+import parserModel.nodes.SimpleParserNode;
 import parserModel.nodes.SpecialCharacters;
+import parserModel.nodes.leafNodes.VariableNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class UserDefinedCommandNode implements ParserNode {
+public class UserDefinedCommandNode extends SimpleParserNode {
     private static final double SUCCESS = 1.0;
 
     private List<VariableNode> myVariables;
@@ -26,8 +25,8 @@ public class UserDefinedCommandNode implements ParserNode {
     private int stage;
 
 
-    public UserDefinedCommandNode(){
-        System.out.println("we made it!");
+    public UserDefinedCommandNode(String text){
+        super(text);
         myVariables = new ArrayList<>();
         myExecutionNode = new ListParserNode();
         stage = 0;
@@ -90,10 +89,5 @@ public class UserDefinedCommandNode implements ParserNode {
     @Override
     public boolean isComplete() {
         return myExecutionNode.isComplete();
-    }
-
-    @Override
-    public NodeType typeOfNode() {
-        return NodeType.FUNCTION_DEFINITION;
     }
 }

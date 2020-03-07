@@ -22,7 +22,12 @@ import javafx.animation.Animation;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -66,6 +71,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+
+import javafx.util.StringConverter;
 import visualizer.languageSensitive.TextElement;
 import visualizer.languageSensitive.TextElementButton;
 import visualizer.languageSensitive.TextElementCommand;
@@ -162,7 +169,6 @@ public class Visualizer {
             });
         }
         if (transitionIterator.hasNext()) {
-            System.out.println("PLAYING!");
             transitionIterator.next().play();
         }
     }
@@ -214,6 +220,7 @@ public class Visualizer {
             RotateTransition rt = new RotateTransition(Duration.millis(1), targetTurtle);
             double startAngle = startAngleIterator.next();
             double endAngle = endAngleIterator.next();
+            System.out.println("rotating from "+ startAngle + " to " + endAngle);
             rt.setFromAngle(90 + startAngle);
             rt.setToAngle(90 + endAngle);
             rt.setCycleCount(1);
@@ -257,18 +264,15 @@ public class Visualizer {
      * clearScreen() - clears the screen and resets the animation.
      */
     public void clearScreen(Iterable<Integer> ids) {
-
         ParallelTransition transition = new ParallelTransition();
         for(int id : ids) {
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setCycleCount(1);
             pathTransition.setOnFinished(event -> {
-
                 displayLineGroup.getChildren().clear();
-                System.out.println("DONE"); // ***
             });
-            transition.getChildren().add(transition);
+            transition.getChildren().add(pathTransition);
         }
 
         myTransitionQueue.add(transition);
@@ -289,12 +293,12 @@ public class Visualizer {
         Iterator<Integer> idIterator = ids.iterator();
         Iterator<Boolean> hideIterator = hides.iterator();
         while(idIterator.hasNext()) {
-
+            double id = idIterator.next();
+            boolean visible = ! hideIterator.next();
             ScaleTransition pathTransition = new ScaleTransition();
             pathTransition.setDuration(Duration.millis(1));
             pathTransition.setOnFinished(event -> {
-
-                fetchTurtle(idIterator.next()).setVisible(!hideIterator.next());
+                fetchTurtle((int)id).setVisible(visible);
             });
             pt.getChildren().add(pathTransition);
         }
@@ -318,7 +322,7 @@ public class Visualizer {
 
     public void setLeadTurtle(List<List<Double>> args) {
         for (List<Double> arg : args) {
-            fillSummaryBox(arg.get(0), arg.get(1), arg.get(2), arg.get(3), arg.get(4));
+            //fillSummaryBox(arg.get(0), arg.get(1), arg.get(2), arg.get(3), arg.get(4));
         }
     }
 
@@ -488,14 +492,17 @@ public class Visualizer {
     }
 
     private void fillSummaryBox(double id, double x, double y, double heading, double penDown) {
+        Turtle myTurtle = myTurtles.get(0);
         leadTurtleIndex = (int) id;
         summaryBox.getChildren().clear();
         String defaultTemplate = "%s %.2f";
         Text leadText = new Text("LEAD TURTLE STATISTICS: ");
+
         Text idText = new Text(String.format("%s %.0f", "ID:\t\t", id));
         Text xText = new Text(String.format(defaultTemplate, "X:\t\t", x));
         Text yText = new Text(String.format(defaultTemplate, "Y:\t\t", y));
         Text headingText = new Text(String.format(defaultTemplate, "HEADING:\t", heading));
+
         Text penDownText = new Text(String.format("%s %.1f", "PEN DOWN:\t", penDown));
         summaryBox.getChildren().addAll(leadText, idText, xText, yText, headingText, penDownText);
     }
@@ -825,7 +832,6 @@ public class Visualizer {
      * private Animation methods
      * @author Mariusz
      */
-
     private Animation getSinglePositionTransition(int id, double startX, double startY,
         double endX, double endY) {
         SequentialTransition ret = new SequentialTransition();

@@ -4,10 +4,15 @@ import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
 
 public class SetBackgroundExecutable extends ExecutableSuperClass {
+    private int myBackground;
     private String name;
 
-    public SetBackgroundExecutable(int id){
+    public SetBackgroundExecutable(){
 
+    }
+
+    public void addMove(int background){
+        myBackground = background;
     }
     @Override
     public void execute(Visualizer visualizer) {

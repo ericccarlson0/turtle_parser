@@ -2,10 +2,10 @@ package parserModel.nodes.display;
 
 import execution.newExecutables.SetPaletteExecutable;
 import parserModel.TurtleContext;
-import parserModel.nodes.CommandParserNode;
 import parserModel.nodes.ParserNode;
+import parserModel.nodes.leafNodes.VariableNode;
 
-public class SetPaletteNode extends CommandParserNode {
+public class SetPaletteNode implements ParserNode {
     private ParserNode myIndex;
     private ParserNode myRed;
     private ParserNode myGreen;
@@ -29,6 +29,11 @@ public class SetPaletteNode extends CommandParserNode {
         } else if (myBlue == null){
             myBlue = node;
         }
+    }
+
+    @Override
+    public void addVariable(VariableNode node) {
+
     }
 
     @Override

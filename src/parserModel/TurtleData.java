@@ -16,7 +16,6 @@ public class TurtleData {
   private boolean penDown;
   private boolean isShowing;
   private double myPenColorIndex;
-  private double myShapeIndex;
   /**
    * There are three constructors for the tree most common use cases.
    */
@@ -67,6 +66,9 @@ public class TurtleData {
     xPos += xDiff;
     yPos += yDiff;
   }
+  public boolean isShowing(){
+    return isShowing;
+  }
   public void backward(double distance) {
     forward(-1 * distance);
   }
@@ -78,9 +80,9 @@ public class TurtleData {
   public void turnCounterClockwise(double degrees) {
     heading += degrees * DEGREES_TO_RADIANS;
   }
-  public void setHeading(double degrees) { heading = 360 % degrees; }
+  public void setHeading(double degrees) { heading = (degrees % 360) * DEGREES_TO_RADIANS;}
   public void penDown() { penDown = true; }
-  public void penUp() { penDown = true; }
+  public void penUp() { penDown = false; }
   public void setPenColor(double index){
     myPenColorIndex = index;
   }
@@ -88,6 +90,7 @@ public class TurtleData {
   public double getX() { return xPos; };
   public double getY() { return yPos; };
   public double getHeading() {
+    System.out.println("the heading was fetched as being: " + heading);
     return heading * RADIANS_TO_DEGREES;
   }
   public boolean getPenDown(){ return penDown;}
@@ -113,5 +116,8 @@ public class TurtleData {
       newWidth = minPenWidth;
     }
     return newWidth;
+  }
+  public double getShapeIndex(){
+    return 0.0; //FIXME;
   }
 }

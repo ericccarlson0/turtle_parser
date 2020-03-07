@@ -1,30 +1,47 @@
 package parserModel.nodes.control;
 
-import execution.newExecutables.LeadTurtleExecutable;
 import parserModel.TurtleContext;
-import parserModel.TurtleData;
-import parserModel.nodes.NodeType;
 import parserModel.nodes.ParserNode;
+import parserModel.nodes.SimpleParserNode;
+import parserModel.nodes.SpecialCharacters;
+import parserModel.nodes.leafNodes.VariableNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TellNode implements ParserNode {
+public class TellNode extends SimpleParserNode {
     private List<ParserNode> myNodes;
     private boolean isComplete;
+    private int stage;
 
-    public TellNode(){
+    public TellNode(String text){
+        super(text);
         myNodes = new ArrayList<>();
     }
 
     @Override
     public void addNode(ParserNode node) {
-        if (node.typeOfNode() == NodeType.LIST_END){
-            isComplete = true;
-            return;
+        switch(stage){
+            case 0:
+                if(!node.equals(SpecialCharacters.OPEN_BRACKET)){
+                    //throw execption
+                }
+                stage++;
+                break;
+            case 1:
+                if(node.equals(SpecialCharacters.CLOSE_BRACKET)){
+                    stage++;
+                    isComplete = true;
+                }
+                else{
+                    myNodes.add(node);
+                }
+                break;
+            case 2:
+                //throw exception
+
         }
-        myNodes.add(node);
     }
 
     @Override
@@ -38,23 +55,10 @@ public class TellNode implements ParserNode {
         for(ParserNode node : myNodes) {
             activeTurtleIds.add(node.execute(context));
         }
-        /*
-        double leadId = activeTurtleIds.get(0);
-        TurtleData leadData = context.getData().turtleData(leadId);
-
-        LeadTurtleExecutable executable = new LeadTurtleExecutable();
-        List summaryList = new ArrayList<Double>();
-        summaryList.add(leadId);
-        summaryList.addAll(leadData.getSummaryList());
-        executable.addArg(summaryList);
-        context.addToQueue(executable);
-*/
         Collections.sort(activeTurtleIds);
         double currId = activeTurtleIds.get(activeTurtleIds.size()-1);
         context.getData().createTurtles(currId);
-
-        context.clearActiveTurtles();
-        context.addActiveTurtles(activeTurtleIds);
+        context.replaceActiveTurtles(activeTurtleIds);
         return 1;
     }
 
@@ -63,8 +67,4 @@ public class TellNode implements ParserNode {
         return isComplete;
     }
 
-    @Override
-    public NodeType typeOfNode() {
-        return NodeType.TELL;
-    }
 }
