@@ -1,5 +1,8 @@
 package parserModel.exceptions;
 
+import parserModel.nodes.ParserNode;
+import parserModel.nodes.leafNodes.ErrorNode;
+
 /**
  * An Exception that represents when a token is unidentifiable
  * i.e it does not match any of the regexes
@@ -21,7 +24,7 @@ public class UnidentifiableTokenException extends ParsingException {
     }
 
     @Override
-    public String errorMessage() {
-        return String.format(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY), myErrorToken);
+    public ParserNode renderNode(){
+        return new ErrorNode(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY));
     }
 }

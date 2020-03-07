@@ -10,5 +10,6 @@ import java.util.ResourceBundle;
  */
 public abstract class ParsingException extends RuntimeException{
     protected static final ResourceBundle ERROR_MESSAGE_RESOURCES = ResourceBundle.getBundle("parserModel.exceptions.resources.English");
-    public abstract String errorMessage();
+    public abstract ParserNode renderNode();
+
 }

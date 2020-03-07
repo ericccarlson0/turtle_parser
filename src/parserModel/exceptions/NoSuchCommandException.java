@@ -1,6 +1,8 @@
 package parserModel.exceptions;
 
 
+import parserModel.nodes.ParserNode;
+import parserModel.nodes.leafNodes.ErrorNode;
 
 /**
  * An Exception that represents when a Command does not exist
@@ -15,15 +17,16 @@ public class NoSuchCommandException extends ParsingException {
 
     /**
      * Construct a NoSuchCommandException
+     *
      * @param command the name of the command that does not exist
      */
-    public NoSuchCommandException(String command){
+    public NoSuchCommandException(String command) {
         super();
         myCommand = command;
     }
 
     @Override
-    public String errorMessage() {
-        return String.format(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY),myCommand);
-    }
+    public ParserNode renderNode() {
+        return new ErrorNode(String.format(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY),myCommand));
+}
 }

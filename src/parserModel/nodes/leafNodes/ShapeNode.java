@@ -1,9 +1,18 @@
 package parserModel.nodes.leafNodes;
 
 import parserModel.TurtleContext;
-import parserModel.nodes.ParserNode;
 
+/**
+ * A leaf node that fetches the index of the current Turtle's shape
+ *
+ * @author Mariusz Derezinski-Choo
+ */
 public class ShapeNode extends LeafNode {
+
+    /**
+     * Construct a Shape Node
+     * @param text the user-inputted text associated with the construction of this Node
+     */
     public ShapeNode(String text) {
         super(text);
     }

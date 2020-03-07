@@ -1,6 +1,8 @@
 package parserModel.exceptions;
 
 
+import parserModel.nodes.ParserNode;
+import parserModel.nodes.leafNodes.ErrorNode;
 
 /**
  * An Exception that represents when a loop does not have
@@ -14,7 +16,7 @@ public class MissingLoopBodyException extends ParsingException {
     private static final String ERROR_MESSAGE_KEY = "MissingLoopBody";
 
     @Override
-    public String errorMessage() {
-        return ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY);
+    public ParserNode renderNode(){
+        return new ErrorNode(ERROR_MESSAGE_RESOURCES.getString(ERROR_MESSAGE_KEY));
     }
 }

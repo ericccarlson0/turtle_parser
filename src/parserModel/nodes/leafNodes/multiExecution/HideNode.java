@@ -2,7 +2,6 @@ package parserModel.nodes.leafNodes.multiExecution;
 
 import execution.HideExecutable;
 import parserModel.TurtleContext;
-import parserModel.TurtleData;
 import parserModel.nodes.leafNodes.LeafNode;
 
 import java.util.List;
@@ -16,10 +15,19 @@ import java.util.List;
 public class HideNode extends LeafNode {
     private static final double SUCCESS = 0.0;
 
+    /**
+     * Construct a hide node
+     * @param text the text input that is associated with this command
+     */
     public HideNode(String text) {
         super(text);
     }
 
+    /**
+     * Execute this command within the given context to create a hide executable
+     * @param context the context within which this command should be executed
+     * @return double 0 by default
+     */
     @Override
     public double execute(TurtleContext context) {
         List<Double> activeTurtles = context.getActiveTurtles();

@@ -1,23 +1,29 @@
-package execution.newExecutables;
+package execution;
 
 import execution.ExecutableSuperClass;
 import visualizer.Visualizer;
 
-public class SetPaletteExecutable extends ExecutableSuperClass {
+public class SetBackgroundExecutable extends ExecutableSuperClass {
+    private int myBackground;
     private String name;
-    public SetPaletteExecutable(double colorIndex, double red, double green, double blue) {
-        super();
+
+    public SetBackgroundExecutable(){
+
     }
 
+    public void addMove(int background){
+        myBackground = background;
+    }
     @Override
     public void execute(Visualizer visualizer) {
-
+        visualizer.setBackground(myBackground);
     }
 
     @Override
     public String getName() {
         return name;
     }
+
     @Override
     public void setName(String name) {
         this.name = name;
