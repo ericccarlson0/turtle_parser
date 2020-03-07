@@ -118,6 +118,7 @@ public class Visualizer {
     private Group parserField;
     private Group displayLineGroup;
     private Map<Integer, Turtle> myTurtles;
+    private Map<Integer, java.awt.Color> myColorIndexMap;
     private int turtleIndex = 0;
     private double leadTurtleIndex = 0;
     private VBox executedHistory;
@@ -185,18 +186,29 @@ public class Visualizer {
 
     public void setBackground(int myBackground) {
         //TODO!
-        float hue = ((float) myBackground/10)*1.0f; //hue
-        float saturation = ((float) myBackground/10)*1.0f; //saturation
-        float brightness = ((float) myBackground/10)*1.0f; //brightness
-
-
-        java.awt.Color myRGBColor = java.awt.Color.getHSBColor(hue, saturation, brightness);
+        java.awt.Color myRGBColor = getColorForTheIndex(myBackground);
         myParserPane.setBackground(new Background(new BackgroundFill(Color.color
             (myRGBColor.getRed()/MAX_RGB, myRGBColor.getGreen()/MAX_RGB, myRGBColor.getBlue()/MAX_RGB), CornerRadii.EMPTY, Insets.EMPTY)));
     }
+
+    private java.awt.Color getColorForTheIndex(int myBackground) {
+        float hue = (myBackground /10)*1.0f; //hue
+        float saturation = (myBackground /10)*1.0f; //saturation
+        float brightness = (myBackground /10)*1.0f; //brightness
+        return java.awt.Color.getHSBColor(hue, saturation, brightness);
+    }
+
     public void setPallete(List<Integer> ids, List<Double> reds, List<Double> greens,
                             List<Double> blues) {
-        //TODO!
+        for(int i=0; i<ids.size();i++){
+            if(myColorIndexMap.containsKey(ids.get(i))){
+                for(int i=0; i<ids.size();i++){
+                    if(myColorIndexMap.containsKey(ids.get(i))){
+                        my
+                    }
+                }
+            }
+        }
     }
 
     public void printToTerminal(String message){
