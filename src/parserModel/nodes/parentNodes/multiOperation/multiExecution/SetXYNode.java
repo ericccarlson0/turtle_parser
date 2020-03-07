@@ -1,9 +1,13 @@
-package parserModel.nodes.parentNodes.multiOperation.multipleExecution;
+package parserModel.nodes.parentNodes.multiOperation.multiExecution;
 
+import execution.Executable;
 import execution.MoveExecutable;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
+import parserModel.exceptions.InsufficientArgumentException;
 import parserModel.nodes.ParserNode;
+
+import java.util.Iterator;
 
 /**
  * A node that when executed, Sets the X and
@@ -12,45 +16,40 @@ import parserModel.nodes.ParserNode;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class SetXYNode extends MultipleExecutionNode {
-    private ParserNode myXNode;
-    private ParserNode myYNode;
+public class SetXYNode extends MultiOperandMultiOperationNode<MoveExecutable> {
 
-    public SetXYNode(){
-        super();
-        myXNode = null;
-        myYNode = null;
+    public SetXYNode(String text) {
+        super(text);
     }
 
     @Override
-    public void addNode(ParserNode node) {
-        if (myXNode == null) {
-            myXNode = node;
-        } else if (myYNode == null) {
-            myYNode = node;
-        } else {
-            throw new UnsupportedOperationException();
+    protected void validateArguments() {
+        if(arguments.size() < 2){
+            throw new InsufficientArgumentException();
         }
     }
+
     @Override
-    public double execute(TurtleContext context) {
-        double endX = myXNode.execute(context);
-        double endY = myYNode.execute(context);
-        MoveExecutable executable = new MoveExecutable();
-        for(double id : context.getActiveTurtles()) {
-            TurtleData td = context.getData().turtleData(id);
-            double startX = td.getX();
-            double startY = td.getY();
-            td.setX(endX);
-            td.setY(endY);
-            executable.addMove((int)id, startX, startY, endX, endY);
+    protected double singleExecution(TurtleContext context, MoveExecutable executable) {
+        Iterator<ParserNode> iterator = arguments.iterator();
+        double endX = iterator.next().execute(context);
+        double endY = iterator.next().execute(context);
+        while(iterator.hasNext()){
+            endX = endY;
+            endY = iterator.next().execute(context);
         }
-        context.addToQueue(executable);
-        return endX; //?
+        double id = context.getWorkingID();
+        TurtleData td = context.getData().turtleData(id);
+        double startX = td.getX();
+        double startY = td.getY();
+        td.setX(endX);
+        td.setY(endY);
+        executable.addMove((int)id, startX, startY, endX, endY);
+        return endX; //FIXME?
     }
 
     @Override
-    public boolean isComplete() {
-        return myYNode != null;
+    protected MoveExecutable fetchExecutable() {
+        return new MoveExecutable();
     }
 }

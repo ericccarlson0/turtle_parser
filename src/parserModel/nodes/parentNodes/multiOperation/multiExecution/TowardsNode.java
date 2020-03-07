@@ -1,9 +1,12 @@
-package parserModel.nodes.parentNodes.multiOperation.multipleExecution;
+package parserModel.nodes.parentNodes.multiOperation.multiExecution;
 
 import execution.RotateExecutable;
 import parserModel.TurtleContext;
 import parserModel.TurtleData;
+import parserModel.exceptions.InsufficientArgumentException;
 import parserModel.nodes.ParserNode;
+
+import java.util.Iterator;
 
 /**
  * A node that when executed, rotates the turtle
@@ -12,47 +15,43 @@ import parserModel.nodes.ParserNode;
  *
  * @author Mariusz Derezinski-Choo
  */
-public class TowardsNode extends MultipleExecutionNode {
-    private static final double SUCCESS = 0.0;
+public class TowardsNode extends MultiOperandMultiOperationNode<RotateExecutable> {
 
-    private ParserNode myXNode;
-    private ParserNode myYNode;
-
-    public TowardsNode(){
-        super();
+    public TowardsNode(String text) {
+        super(text);
     }
 
     @Override
-    public void addNode(ParserNode node) {
-        if (myXNode == null) {
-            myXNode = node;
-        } else if (myYNode == null) {
-            myYNode = node;
-        } else {
-            throw new UnsupportedOperationException();
+    protected void validateArguments() {
+        if(arguments.size() < 2){
+            throw new InsufficientArgumentException();
         }
     }
+
     @Override
-    public double execute(TurtleContext context) {
-        double xInput = myXNode.execute(context);
-        double yInput = myYNode.execute(context);
-        RotateExecutable rotateExecutable = new RotateExecutable();
-        for(double id : context.getActiveTurtles()) {
-            TurtleData td = context.getData().turtleData(id);
-            double xTowards = xInput - td.getX();
-            double yTowards = yInput - td.getY();
-            double degrees = Math.atan(xTowards/yTowards);
-            double startHeading = td.getHeading();
-            td.setHeading(degrees);
-            double endHeading = td.getHeading();
-            rotateExecutable.addMove((int)id, startHeading, endHeading);
+    protected double singleExecution(TurtleContext context, RotateExecutable executable) {
+        Iterator<ParserNode> iterator = arguments.iterator();
+        double endX = iterator.next().execute(context);
+        double endY = iterator.next().execute(context);
+        while(iterator.hasNext()){
+            endX = endY;
+            endY = iterator.next().execute(context);
         }
-        context.addToQueue(rotateExecutable);
-        return SUCCESS;
+        double id = context.getWorkingID();
+        TurtleData td = context.getData().turtleData(id);
+        double xTowards = endX - td.getX();
+        double yTowards = endY - td.getY();
+        //FIXME: bounds on arctan!
+        double degrees = Math.atan(xTowards/yTowards);
+        double startHeading = td.getHeading();
+        td.setHeading(degrees * 180 / Math.PI);
+        double endHeading = td.getHeading();
+        executable.addMove((int)id, startHeading, endHeading);
+        return endHeading - startHeading;
     }
 
     @Override
-    public boolean isComplete() {
-        return myYNode != null;
+    protected RotateExecutable fetchExecutable() {
+        return new RotateExecutable();
     }
 }
