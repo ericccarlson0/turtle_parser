@@ -10,7 +10,7 @@ import java.util.Iterator;
 public class SetPaletteNode extends MultiOperandNode {
 
     public SetPaletteNode(String text) {
-        super(text);
+        super(text, 4);
     }
 
     @Override

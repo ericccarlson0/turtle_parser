@@ -6,4 +6,8 @@ public abstract class MultiOperandNode extends ParentNode {
     public MultiOperandNode(String text){
         super(2, text);
     }
+
+    public MultiOperandNode(String text, int args){
+        super(args, text);
+    }
 }
